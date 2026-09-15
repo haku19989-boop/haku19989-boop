@@ -1,0 +1,2568 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Japanese Learning App</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* ---- 神戸女子大学 インスパイア（透明感のあるセルリアンブルー） ---- */
+    --kobe-blue: #1486AD;
+    --kobe-blue-dark: #0D6380;
+    --kobe-blue-sub: #4AA7D7;
+    --kobe-blue-light: #EEF7FB;
+    --kobe-blue-border: #80BFE0;
+    --kobe-navy: #2F3D5C;
+
+    /* ---- SHElikes調のニュアンスパステル ＆ レベル別カラー ---- */
+    --shigaku-green: #128068;
+    --shigaku-green-bg: #EBF6F3;
+    --shigaku-green-border: #92D4C6;
+
+    --bunni-yellow: #C87D18;
+    --bunni-yellow-bg: #FFF8E8;
+    --bunni-yellow-border: #F0D488;
+
+    --botanist-pink: #C4688A;
+    --botanist-pink-bg: #FDF2F5;
+    --botanist-pink-border: #E8B4C4;
+
+    --lavender-purple: #6B5B95;
+    --lavender-purple-bg: #F4F1FA;
+    --lavender-purple-border: #BDB4DC;
+
+    --apricot-orange: #C46445;
+    --apricot-orange-bg: #FAF2EE;
+    --apricot-orange-border: #E4B5A5;
+
+    /* ベース背景・テキスト */
+    --bg-page: #F3F8FC;
+    --card-bg: #FFFFFF;
+    --text-main: #2A3644;
+    --text-sub: #607284;
+    --border-soft: #E2ECF2;
+    --sidebar-width: 290px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    background: var(--bg-page);
+    color: var(--text-main);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+  .jp-font { font-family: "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; }
+
+  /* ---- Left Sidebar Drawer ---- */
+  .sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 50, 75, 0.38);
+    backdrop-filter: blur(2px);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.28s ease;
+  }
+  .sidebar-overlay.open {
+    opacity: 1;
+    visibility: visible;
+  }
+  .sidebar-drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: var(--sidebar-width);
+    background: white;
+    box-shadow: 8px 0 32px rgba(20, 134, 173, 0.12);
+    z-index: 999;
+    transform: translateX(-100%);
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+  }
+  .sidebar-drawer.open {
+    transform: translateX(0);
+  }
+  .sidebar-top {
+    background: linear-gradient(135deg, var(--kobe-blue) 0%, var(--kobe-blue-dark) 100%);
+    color: white;
+    padding: 26px 22px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .sidebar-brand-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+  }
+  .sidebar-brand-sub {
+    font-size: 0.76rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .sidebar-close-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+  }
+  .sidebar-close-btn:hover { background: rgba(255, 255, 255, 0.35); }
+
+  .sidebar-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .nav-group-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-sub);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0 10px;
+    margin-bottom: 8px;
+  }
+  .sidebar-menu-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .sidebar-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: 14px;
+    color: var(--text-main);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: all 0.18s ease;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+  }
+  .sidebar-nav-item:hover {
+    background: var(--kobe-blue-light);
+    color: var(--kobe-blue);
+    border-color: var(--kobe-blue-border);
+    transform: translateX(3px);
+  }
+  .sidebar-nav-item.active {
+    background: var(--kobe-blue-light);
+    color: var(--kobe-blue);
+    border-color: var(--kobe-blue-border);
+  }
+  .sidebar-icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--kobe-blue);
+    flex-shrink: 0;
+  }
+  .sidebar-badge-new {
+    font-size: 0.65rem;
+    font-weight: 700;
+    background: var(--bunni-yellow-bg);
+    color: var(--bunni-yellow);
+    border: 1px solid var(--bunni-yellow-border);
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-left: auto;
+  }
+  .sidebar-footer {
+    padding: 18px 22px;
+    border-top: 1px solid var(--border-soft);
+    font-size: 0.78rem;
+    color: var(--text-sub);
+    background: #F8FBFE;
+  }
+
+  /* ---- Header Bar (神戸女子大ブルー) ---- */
+  header {
+    background: linear-gradient(135deg, #1486AD 0%, #0E6B8B 100%);
+    color: white;
+    box-shadow: 0 4px 24px rgba(20, 134, 173, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 900;
+  }
+  .top-status-bar {
+    border-bottom: 1px solid rgba(255,255,255,0.14);
+    padding: 10px 24px;
+    font-size: 0.82rem;
+  }
+  .top-status-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .top-left-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .menu-toggle-btn {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.84rem;
+    font-weight: 600;
+    transition: background 0.18s;
+  }
+  .menu-toggle-btn:hover { background: rgba(255,255,255,0.32); }
+
+  .points-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 248, 232, 0.28);
+    border: 1px solid rgba(255, 248, 232, 0.45);
+    color: #FFFCE8;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.78rem;
+  }
+  .streak-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.16);
+    color: white;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.78rem;
+  }
+  .mypage-trigger-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    padding: 5px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: background 0.18s;
+  }
+  .mypage-trigger-btn:hover { background: rgba(255,255,255,0.32); }
+
+  /* Hero bar (SHElikes風の洗練された余白) */
+  .hero-bar {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 30px 24px 26px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .hero-kana {
+    font-family: "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    font-size: 0.88rem;
+    opacity: 0.85;
+    letter-spacing: 2.5px;
+  }
+  .hero-title {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    line-height: 1.18;
+    margin-top: 2px;
+  }
+  .hero-sub {
+    font-size: 0.88rem;
+    opacity: 0.88;
+    margin-top: 5px;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 12px;
+  }
+  .stat-card {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 16px;
+    padding: 10px 18px;
+    text-align: center;
+    min-width: 86px;
+  }
+  .stat-num {
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  .stat-label {
+    font-size: 0.65rem;
+    opacity: 0.8;
+    margin-top: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Progress track */
+  .progress-strip {
+    background: rgba(13, 85, 110, 0.45);
+    padding: 8px 24px;
+  }
+  .progress-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .progress-label {
+    color: rgba(255,255,255,0.85);
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+  .progress-track {
+    flex: 1;
+    height: 6px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: #5EEAD4;
+    border-radius: 4px;
+    width: 4%;
+  }
+  .progress-pct {
+    color: rgba(255,255,255,0.9);
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  /* ---- Main Container (SHElikes風の豊かな余白) ---- */
+  .container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 32px 20px 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+  }
+
+  /* ---- Diagnostic Test Banner (SHElikes風グラデーション) ---- */
+  .diagnostic-card {
+    background: linear-gradient(135deg, #1486AD 0%, #0D6380 60%, #1A4D6E 100%);
+    border-radius: 24px;
+    padding: 28px 32px;
+    color: white;
+    box-shadow: 0 10px 32px rgba(20, 134, 173, 0.16);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    position: relative;
+    overflow: hidden;
+  }
+  .diagnostic-card::after {
+    content: '';
+    position: absolute;
+    right: -40px;
+    bottom: -40px;
+    width: 160px;
+    height: 160px;
+    background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .diag-content { max-width: 650px; position: relative; z-index: 1; }
+  .diag-badge {
+    background: rgba(255, 248, 232, 0.25);
+    border: 1px solid rgba(255, 248, 232, 0.5);
+    color: #FFFCE8;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  .diag-title {
+    font-size: 1.45rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    font-family: 'Inter', "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  }
+  .diag-desc {
+    font-size: 0.86rem;
+    opacity: 0.9;
+    line-height: 1.55;
+  }
+  .diag-start-btn {
+    background: white;
+    color: var(--kobe-blue-dark);
+    border: none;
+    border-radius: 16px;
+    padding: 14px 28px;
+    font-size: 0.94rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.22s ease;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 1;
+  }
+  .diag-start-btn:hover {
+    background: var(--bunni-yellow-bg);
+    color: var(--bunni-yellow);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  }
+
+  /* ---- Daily Pickup Word / Flashcard Widget (開くたびに変わる単語) ---- */
+  .daily-word-widget {
+    background: white;
+    border-radius: 24px;
+    padding: 26px 30px;
+    border: 1.5px solid var(--kobe-blue-border);
+    box-shadow: 0 6px 24px rgba(20, 134, 173, 0.06);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .daily-word-widget::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--kobe-blue), var(--kobe-blue-light), var(--shigaku-green));
+  }
+  .daily-word-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .daily-word-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .daily-word-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--kobe-blue-light);
+    color: var(--kobe-blue);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    border: 1px solid var(--kobe-blue-border);
+    width: fit-content;
+  }
+  .daily-word-title {
+    font-size: 1.18rem;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+  .daily-word-sub {
+    font-size: 0.8rem;
+    color: var(--text-sub);
+  }
+  .daily-word-source-tabs {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .word-source-tab {
+    background: #F1F6FA;
+    border: 1px solid var(--border-soft);
+    color: var(--text-sub);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .word-source-tab:hover {
+    border-color: var(--kobe-blue);
+    color: var(--kobe-blue);
+  }
+  .word-source-tab.active {
+    background: var(--kobe-blue);
+    border-color: var(--kobe-blue);
+    color: white;
+    box-shadow: 0 2px 8px rgba(20, 134, 173, 0.25);
+  }
+
+  .daily-word-card-body {
+    background: #FAFDFE;
+    border: 1px solid var(--kobe-blue-border);
+    border-radius: 20px;
+    padding: 22px 24px;
+    transition: opacity 0.2s ease;
+  }
+  .word-main-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .word-kanji-wrap {
+    display: flex;
+    flex-direction: column;
+  }
+  .word-kanji {
+    font-size: 1.95rem;
+    font-weight: 700;
+    color: var(--kobe-blue);
+    font-family: "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+  }
+  .word-kana {
+    font-size: 0.96rem;
+    color: var(--text-sub);
+    font-weight: 500;
+    margin-top: 4px;
+  }
+  .word-actions-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .widget-tts-btn, .widget-star-btn, .widget-shuffle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 12px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .widget-tts-btn {
+    background: var(--kobe-blue-light);
+    color: var(--kobe-blue);
+    border: 1px solid var(--kobe-blue-border);
+  }
+  .widget-tts-btn:hover { background: #DCEDF8; }
+  .widget-star-btn {
+    background: #FFFDF0;
+    color: #9E7400;
+    border: 1px solid #E8D482;
+  }
+  .widget-star-btn:hover { background: #FFF9D4; }
+  .widget-star-btn.starred {
+    background: #FDF4C8;
+    color: #856100;
+    border-color: #D6B738;
+  }
+  .widget-shuffle-btn {
+    background: white;
+    color: var(--text-main);
+    border: 1px solid var(--border-soft);
+  }
+  .widget-shuffle-btn:hover {
+    border-color: var(--kobe-blue);
+    color: var(--kobe-blue);
+    background: #F5FAFD;
+  }
+
+  .word-translations-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .trans-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    background: white;
+    border: 1px solid var(--border-soft);
+    padding: 5px 12px;
+    border-radius: 10px;
+    color: var(--text-main);
+  }
+  .trans-lang {
+    font-weight: 700;
+    color: var(--kobe-blue);
+    font-size: 0.72rem;
+  }
+
+  .word-example-box {
+    background: white;
+    border: 1px solid #DCEAF2;
+    border-radius: 14px;
+    padding: 12px 18px;
+  }
+  .example-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: var(--kobe-blue);
+    margin-bottom: 4px;
+  }
+  .example-jp {
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: var(--text-main);
+    font-family: "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    margin-bottom: 2px;
+  }
+  .example-trans {
+    font-size: 0.82rem;
+    color: var(--text-sub);
+  }
+
+  /* ---- Smart Search Card (神戸女子大ブルーの枠線) ---- */
+  .smart-search-card {
+    background: white;
+    border-radius: 24px;
+    padding: 26px 30px;
+    border: 1.5px solid var(--kobe-blue-border);
+    box-shadow: 0 6px 24px rgba(20, 134, 173, 0.06);
+  }
+  .smart-search-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .smart-search-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--kobe-blue);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .smart-search-sub {
+    font-size: 0.8rem;
+    color: var(--text-sub);
+  }
+  .smart-search-row {
+    display: flex;
+    gap: 12px;
+  }
+  #smart-search-input {
+    flex: 1;
+    border: 2px solid var(--kobe-blue-border);
+    border-radius: 16px;
+    padding: 13px 20px;
+    font-size: 1rem;
+    font-family: 'Inter', "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    color: var(--text-main);
+    outline: none;
+    transition: border-color 0.2s;
+    background: #FAFDFE;
+  }
+  #smart-search-input:focus { border-color: var(--kobe-blue); background: white; }
+  .smart-search-btn {
+    background: var(--kobe-blue);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    padding: 13px 26px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .smart-search-btn:hover { background: var(--kobe-blue-dark); }
+  .smart-tags-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .smart-tag-label {
+    font-size: 0.75rem;
+    color: var(--text-sub);
+    font-weight: 600;
+  }
+  .smart-tag-btn {
+    background: var(--kobe-blue-light);
+    border: 1px solid var(--kobe-blue-border);
+    color: var(--kobe-blue);
+    padding: 4px 13px;
+    border-radius: 16px;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-decoration: none;
+  }
+  .smart-tag-btn:hover { background: var(--kobe-blue); color: white; border-color: var(--kobe-blue); }
+
+  /* ---- 2-Column Dashboard Row (SHElikes風の丸みと余白) ---- */
+  .dashboard-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  @media (max-width: 800px) {
+    .dashboard-row { grid-template-columns: 1fr; }
+  }
+
+  /* My List Card */
+  .dash-card {
+    background: white;
+    border-radius: 24px;
+    padding: 26px;
+    border: 1.5px solid var(--border-soft);
+    box-shadow: 0 6px 24px rgba(20, 134, 173, 0.04);
+    display: flex;
+    flex-direction: column;
+  }
+  .dash-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .dash-card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--kobe-blue);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dash-card-badge {
+    font-size: 0.7rem;
+    background: var(--shigaku-green-bg);
+    color: var(--shigaku-green);
+    border: 1px solid var(--shigaku-green-border);
+    padding: 3px 10px;
+    border-radius: 14px;
+    font-weight: 600;
+  }
+  .mylist-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 14px;
+    border-bottom: 1.5px solid var(--border-soft);
+    padding-bottom: 8px;
+    overflow-x: auto;
+  }
+  .mylist-tab-btn {
+    border: none;
+    background: none;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-sub);
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .mylist-tab-btn:hover { color: var(--kobe-blue); background: var(--kobe-blue-light); }
+  .mylist-tab-btn.active {
+    background: var(--kobe-blue-light);
+    color: var(--kobe-blue);
+  }
+  .mylist-pool-box {
+    background: #FAFDFE;
+    border: 1.5px solid var(--kobe-blue-border);
+    border-radius: 16px;
+    padding: 14px;
+    flex: 1;
+  }
+  .pool-hint {
+    font-size: 0.76rem;
+    color: var(--text-sub);
+    margin-bottom: 10px;
+  }
+  .pool-items {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .pool-item {
+    background: white;
+    border: 1px solid var(--border-soft);
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 0.84rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .pool-item-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .pool-item-jp { font-family: "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; font-weight: 600; color: var(--kobe-blue); }
+  .pool-item-en { color: var(--text-sub); font-size: 0.76rem; }
+  .pool-star-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--bunni-yellow);
+    font-size: 1rem;
+  }
+
+  /* Daily Tasks Card */
+  .tasks-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .task-item {
+    background: #F8FBFE;
+    border: 1px solid var(--border-soft);
+    border-radius: 14px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .task-item:hover { background: var(--kobe-blue-light); }
+  .task-check {
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    border: 2px solid var(--kobe-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .task-check.done {
+    background: var(--kobe-blue);
+    color: white;
+  }
+  .task-text {
+    font-size: 0.86rem;
+    font-weight: 500;
+  }
+  .task-tag {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 8px;
+    margin-left: auto;
+    font-weight: 600;
+  }
+  .tag-done { background: var(--shigaku-green-bg); color: var(--shigaku-green); }
+  .tag-todo { background: var(--kobe-blue-light); color: var(--kobe-blue); }
+
+  /* Character encouragement banner (bunnikonbiny風のかわいいイエロー) */
+  .char-speech-card {
+    background: var(--bunni-yellow-bg);
+    border: 1.5px solid var(--bunni-yellow-border);
+    border-radius: 16px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: auto;
+  }
+  .char-avatar-badge {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: white;
+    border: 1.5px solid var(--bunni-yellow-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--bunni-yellow);
+    flex-shrink: 0;
+  }
+  .char-speech-text {
+    font-size: 0.84rem;
+    color: #6E4400;
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  /* ---- Section Header ---- */
+  .section-block {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .section-title-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--border-soft);
+    padding-bottom: 10px;
+  }
+  .section-main-heading {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--kobe-blue);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-tagline {
+    font-size: 0.8rem;
+    color: var(--text-sub);
+  }
+
+  /* Grid of cards (SHElikes風の3カラムカード) */
+  .modules-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 18px;
+  }
+
+  /* Module Card (SHElikes風の洗練されたカードデザイン) */
+  .module-card {
+    background: white;
+    border: 1.5px solid var(--border-soft);
+    border-radius: 20px;
+    padding: 24px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.22s ease;
+    position: relative;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.02);
+  }
+  .module-card.available {
+    cursor: pointer;
+    border-color: var(--kobe-blue-border);
+  }
+  .module-card.available:hover {
+    box-shadow: 0 10px 30px rgba(20, 134, 173, 0.12);
+    transform: translateY(-3px);
+  }
+  .module-card.locked {
+    opacity: 0.65;
+    background: #FAFBFD;
+    cursor: default;
+  }
+  .card-top-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .module-icon-box {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .icon-kobe { background: var(--kobe-blue-light); color: var(--kobe-blue); border: 1px solid var(--kobe-blue-border); }
+  .icon-shigaku { background: var(--shigaku-green-bg); color: var(--shigaku-green); border: 1px solid var(--shigaku-green-border); }
+  .icon-bunni { background: var(--bunni-yellow-bg); color: var(--bunni-yellow); border: 1px solid var(--bunni-yellow-border); }
+  .icon-botanist { background: var(--botanist-pink-bg); color: var(--botanist-pink); border: 1px solid var(--botanist-pink-border); }
+  .icon-lavender { background: var(--lavender-purple-bg); color: var(--lavender-purple); border: 1px solid var(--lavender-purple-border); }
+
+  .status-badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 12px;
+    letter-spacing: 0.3px;
+  }
+  .status-ready { background: var(--shigaku-green-bg); color: var(--shigaku-green); border: 1px solid var(--shigaku-green-border); }
+  .status-coming { background: #F1F5F8; color: var(--text-sub); border: 1px solid var(--border-soft); }
+
+  .module-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 6px;
+  }
+  .module-title .jp { font-family: "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; }
+  .module-desc {
+    font-size: 0.82rem;
+    color: var(--text-sub);
+    line-height: 1.5;
+    margin-bottom: 14px;
+    flex: 1;
+  }
+  .module-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .mod-tag {
+    font-size: 0.7rem;
+    padding: 3px 9px;
+    border-radius: 10px;
+    background: #F4F8FA;
+    border: 1px solid var(--border-soft);
+    color: var(--text-sub);
+    font-weight: 500;
+  }
+
+  /* ---- カリキュラムロードマップ（レベル別に色を変えるスタイル） ---- */
+  .stages-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .stage-box {
+    background: white;
+    border-radius: 22px;
+    padding: 24px;
+    border: 1.5px solid var(--border-soft);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.02);
+  }
+  /* レベル別の左アクセントボーダー ＆ ヘッダーカラー */
+  .stage-s1 { border-left: 5px solid var(--kobe-blue); }
+  .stage-s2 { border-left: 5px solid var(--shigaku-green); }
+  .stage-s3 { border-left: 5px solid var(--bunni-yellow); }
+  .stage-s4 { border-left: 5px solid var(--botanist-pink); }
+  .stage-s5 { border-left: 5px solid var(--lavender-purple); }
+  .stage-s6 { border-left: 5px solid var(--apricot-orange); }
+
+  .stage-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .stage-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+  .stage-s1 .stage-title { color: var(--kobe-blue); }
+  .stage-s2 .stage-title { color: var(--shigaku-green); }
+  .stage-s3 .stage-title { color: var(--bunni-yellow); }
+  .stage-s4 .stage-title { color: var(--botanist-pink); }
+  .stage-s5 .stage-title { color: var(--lavender-purple); }
+  .stage-s6 .stage-title { color: var(--apricot-orange); }
+
+  .stage-goal {
+    font-size: 0.8rem;
+    color: var(--text-sub);
+  }
+  .lessons-pill-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+  }
+  .lesson-pill {
+    background: #F8FBFE;
+    border: 1.5px solid var(--border-soft);
+    border-radius: 16px;
+    padding: 14px;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: all 0.2s ease;
+    position: relative;
+  }
+  .lesson-pill.active {
+    background: white;
+    border-color: var(--kobe-blue-border);
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(20, 134, 173, 0.08);
+  }
+  .lesson-pill.active:hover {
+    border-color: var(--kobe-blue);
+    transform: translateY(-2px);
+  }
+  .lesson-pill.locked {
+    opacity: 0.55;
+    cursor: default;
+  }
+  .lp-num {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-sub);
+    margin-bottom: 2px;
+  }
+  .lp-title {
+    font-family: "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: var(--text-main);
+  }
+  .lesson-pill.active .lp-title { color: var(--kobe-blue); }
+  .lp-sub {
+    font-size: 0.74rem;
+    color: var(--text-sub);
+    margin-top: 3px;
+  }
+  .lp-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 8px;
+  }
+
+  /* ---- My Page Modal ---- */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 50, 75, 0.4);
+    backdrop-filter: blur(2px);
+    z-index: 995;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .mypage-modal-box {
+    background: white;
+    border-radius: 24px;
+    max-width: 620px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(20, 134, 173, 0.18);
+    position: relative;
+    padding: 32px;
+  }
+  .mypage-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #F1F5F8;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-sub);
+    transition: background 0.15s;
+  }
+  .mypage-close-btn:hover { background: #CBD5E1; }
+  .mypage-header-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--kobe-blue);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .mypage-header-sub {
+    font-size: 0.82rem;
+    color: var(--text-sub);
+    margin-bottom: 22px;
+  }
+  .mypage-nav-tabs {
+    display: flex;
+    gap: 6px;
+    border-bottom: 2px solid var(--border-soft);
+    padding-bottom: 10px;
+    margin-bottom: 22px;
+    overflow-x: auto;
+  }
+  .mypage-tab-btn {
+    border: none;
+    background: none;
+    padding: 7px 14px;
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: var(--text-sub);
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .mypage-tab-btn:hover { color: var(--kobe-blue); background: var(--kobe-blue-light); }
+  .mypage-tab-btn.active {
+    background: var(--kobe-blue);
+    color: white;
+  }
+  .mypage-section { display: none; }
+  .mypage-section.active { display: block; }
+  .mypage-card-row {
+    background: #F8FBFE;
+    border: 1px solid var(--border-soft);
+    border-radius: 16px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+  }
+  .mypage-card-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--kobe-blue);
+    margin-bottom: 4px;
+  }
+  .mypage-card-desc {
+    font-size: 0.8rem;
+    color: var(--text-sub);
+    line-height: 1.5;
+  }
+  .invite-code-box {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .invite-input {
+    flex: 1;
+    border: 1.5px solid var(--border-soft);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 0.88rem;
+    outline: none;
+    background: white;
+  }
+  .invite-input:focus { border-color: var(--kobe-blue); }
+  .invite-btn {
+    background: var(--kobe-blue);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 18px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.18s;
+  }
+  .invite-btn:hover { background: var(--kobe-blue-dark); }
+
+  /* ---- Footer ---- */
+  footer {
+    max-width: 1080px;
+    margin: 40px auto 0;
+    padding: 24px 20px 0;
+    border-top: 1px solid var(--border-soft);
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-sub);
+  }
+</style>
+</head>
+<body>
+
+<!-- Left Sidebar Overlay -->
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<!-- Left Sidebar Drawer -->
+<aside class="sidebar-drawer" id="sidebar-drawer">
+  <div class="sidebar-top">
+    <div>
+      <div class="sidebar-brand-title">Japanese Learning App</div>
+      <div class="sidebar-brand-sub">にほんごがくしゅう</div>
+    </div>
+    <button class="sidebar-close-btn" onclick="closeSidebar()" title="メニューを閉じる">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <div class="sidebar-body">
+    <div>
+      <div class="nav-group-label">学習メニュー</div>
+      <ul class="sidebar-menu-list">
+        <li>
+          <a href="japanese_learning_app.html" class="sidebar-nav-item active">
+            <span class="sidebar-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </span>
+            <span>ホーム</span>
+          </a>
+        </li>
+        <li>
+          <a href="lesson1_complete_starter.html" class="sidebar-nav-item">
+            <span class="sidebar-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </span>
+            <span>第1課 テキスト</span>
+            <span class="sidebar-badge-new">公開中</span>
+          </a>
+        </li>
+        <li>
+          <a href="diagnostic.html" class="sidebar-nav-item">
+            <span class="sidebar-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </span>
+            <span>実力診断テスト</span>
+            <span class="sidebar-badge-new">新機能</span>
+          </a>
+        </li>
+        <li>
+          <a href="jlpt_vocab.html" class="sidebar-nav-item">
+            <span class="sidebar-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            </span>
+            <span>JLPT単語リスト（五十音順）</span>
+          </a>
+        </li>
+        <li>
+          <a href="dictionary.html" class="sidebar-nav-item">
+            <span class="sidebar-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </span>
+            <span>日本語多言語辞書 (6.8万語)</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="nav-group-label">マイアカウント ＆ 先生連携</div>
+      <ul class="sidebar-menu-list">
+        <li>
+          <div class="sidebar-nav-item" onclick="closeSidebar(); openMyPageTab('news');">
+            <span class="sidebar-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            </span>
+            <span>お知らせ</span>
+          </div>
+        </li>
+        <li>
+          <div class="sidebar-nav-item" onclick="closeSidebar(); openMyPageTab('student');">
+            <span class="sidebar-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            </span>
+            <span>学生連携（招待コード）</span>
+          </div>
+        </li>
+        <li>
+          <div class="sidebar-nav-item" onclick="closeSidebar(); openMyPageTab('teacher');">
+            <span class="sidebar-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            </span>
+            <span>導入を検討している先生へ</span>
+          </div>
+        </li>
+        <li>
+          <div class="sidebar-nav-item" onclick="closeSidebar(); openMyPageTab('settings');">
+            <span class="sidebar-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </span>
+            <span>設定</span>
+          </div>
+        </li>
+        <li>
+          <div class="sidebar-nav-item" onclick="closeSidebar(); openMyPageTab('contact');">
+            <span class="sidebar-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </span>
+            <span>お問い合わせ</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sidebar-footer">
+    保有ポイント: <strong>120 pt</strong> (連続7日ログイン中)
+  </div>
+</aside>
+
+<!-- Header -->
+<header>
+  <div class="top-status-bar">
+    <div class="top-status-inner">
+      <div class="top-left-actions">
+        <!-- Sidebar Menu Hamburger Button -->
+        <button class="menu-toggle-btn" onclick="openSidebar()" title="メニューを開く">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          メニュー
+        </button>
+
+        <div class="points-badge">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          120 pt (ログインボーナス +10)
+        </div>
+      </div>
+
+      <div style="display:flex; align-items:center; gap:8px;">
+        <div class="streak-badge">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+          7日連続
+        </div>
+
+        <button class="mypage-trigger-btn" onclick="openMyPageModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          マイページ
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-bar">
+    <div class="hero-left">
+      <div class="hero-kana">にほんごがくしゅう</div>
+      <div class="hero-title">Japanese Learning App</div>
+      <div class="hero-sub">みんなの日本語カリキュラム準拠 · 自習＆レッスン連動型プラットフォーム</div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-num">1 / 25</div>
+        <div class="stat-label">Lessons</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">68,000</div>
+        <div class="stat-label">Dictionary</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">8,910</div>
+        <div class="stat-label">JLPT Words</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="progress-strip">
+    <div class="progress-inner">
+      <span class="progress-label">初級I 全体進捗:</span>
+      <div class="progress-track">
+        <div class="progress-fill"></div>
+      </div>
+      <span class="progress-pct">Stage 1 (Lesson 1 / 25)</span>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- 実力診断テスト (新機能バナー) -->
+  <div class="diagnostic-card" id="diagnostic">
+    <div class="diag-content">
+      <span class="diag-badge">レベルチェック（10分・無料）</span>
+      <div class="diag-title">日本語 実力診断テスト</div>
+      <div class="diag-desc">
+        語彙・文法・読解の3分野から、現在の推定レベル（初級入門 / N5〜N3）と、おすすめの学習スタート位置を自動判定します。
+      </div>
+    </div>
+    <button class="diag-start-btn" onclick="startDiagnostic()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      テストを受ける (Start)
+    </button>
+  </div>
+
+  <!-- 開くたびに変わる 今日のピックアップ単語 / フラッシュカード ウィジェット -->
+  <div class="daily-word-widget" id="dailyWordWidget">
+    <div class="daily-word-header">
+      <div class="daily-word-title-group">
+        <span class="daily-word-badge">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          開くたびに変わる単語ウィジェット
+        </span>
+        <div class="daily-word-title">今日のピックアップ単語（Daily Flashcard）</div>
+        <div class="daily-word-sub">ホーム画面を開くたびに新しい単語が届きます。マイリストやJLPTレベル別にも切り替え可能</div>
+      </div>
+      
+      <div class="daily-word-source-tabs">
+        <button class="word-source-tab active" onclick="switchWordSource('mylist', this)">⭐️ マイリスト</button>
+        <button class="word-source-tab" onclick="switchWordSource('n5', this)">JLPT N5</button>
+        <button class="word-source-tab" onclick="switchWordSource('n4', this)">JLPT N4</button>
+        <button class="word-source-tab" onclick="switchWordSource('phrase', this)">日常フレーズ</button>
+      </div>
+    </div>
+
+    <div class="daily-word-card-body" id="dailyWordBody">
+      <div class="word-main-row">
+        <div class="word-kanji-wrap">
+          <div class="word-kanji" id="widgetWordKanji">初めまして</div>
+          <div class="word-kana" id="widgetWordKana">はじめまして</div>
+        </div>
+        
+        <div class="word-actions-top">
+          <button class="widget-tts-btn" onclick="playWidgetAudio()" title="発音を聴く (0.92倍速)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            <span>発音 (0.92x)</span>
+          </button>
+          <button class="widget-star-btn" id="widgetStarBtn" onclick="toggleWidgetStar()" title="マイリストに保存">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span id="widgetStarText">★ マイリスト</span>
+          </button>
+          <button class="widget-shuffle-btn" onclick="shuffleDailyWord()" title="別の単語を見る">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/><polyline points="23 20 23 14 17 14"/><path d="M20.49 9a9 9 0 0 0-2.13 9.36L23 14"/></svg>
+            <span>次の単語</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="word-translations-row" id="widgetTranslations">
+        <!-- JSでレンダリング -->
+      </div>
+
+      <div class="word-example-box">
+        <div class="example-label">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          例文
+        </div>
+        <div class="example-jp" id="widgetExampleJp">「初めまして、田中です。よろしくお願いします。」</div>
+        <div class="example-trans" id="widgetExampleTrans">"Nice to meet you, I'm Tanaka. Pleased to meet you."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- スマート検索バー（辞書 ＆ 自然な日本語訳 一体型） -->
+  <div class="smart-search-card">
+    <div class="smart-search-header">
+      <div class="smart-search-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        スマート検索バー（68,000語 多言語辞書 ＆ 例文）
+      </div>
+      <div class="smart-search-sub">母国語（英語・中国語・仏語）または日本語（漢字・かな・ローマ字）を入力</div>
+    </div>
+    <div class="smart-search-row">
+      <input type="text" id="smart-search-input"
+        placeholder="これ日本語で何て言う？ / 日本語を辞書で引く… (例: 食べる / eat / 吃饭 / gakkou)"
+        onkeydown="if(event.key==='Enter') executeSmartSearch()">
+      <button class="smart-search-btn" onclick="executeSmartSearch()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        検索
+      </button>
+    </div>
+    <div class="smart-tags-row">
+      <span class="smart-tag-label">クイック検索:</span>
+      <a href="dictionary.html" class="smart-tag-btn">辞書トップを開く</a>
+      <a href="dictionary.html" onclick="sessionStorage.setItem('dict_q','食べる')" class="smart-tag-btn">食べる (eat)</a>
+      <a href="dictionary.html" onclick="sessionStorage.setItem('dict_q','学校')" class="smart-tag-btn">学校 (school)</a>
+      <a href="dictionary.html" onclick="sessionStorage.setItem('dict_q','ともだち')" class="smart-tag-btn">ともだち (friend)</a>
+      <a href="dictionary.html" onclick="sessionStorage.setItem('dict_q','ありがとう')" class="smart-tag-btn">ありがとう</a>
+      <a href="jlpt_vocab.html" class="smart-tag-btn">JLPT単語一覧（五十音順）</a>
+    </div>
+  </div>
+
+  <!-- 2カラム（マイリスト＆今日の授業プール ＋ 今日の学習計画） -->
+  <div class="dashboard-row">
+
+    <!-- マイリスト＆今日の授業プール -->
+    <div class="dash-card">
+      <div class="dash-card-header">
+        <div class="dash-card-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          マイリスト ＆ 今日の授業プール
+        </div>
+        <span class="dash-card-badge">自動プール</span>
+      </div>
+
+      <div class="mylist-tabs">
+        <button class="mylist-tab-btn active" onclick="switchPoolTab(this, 'vocab')">単語 (12)</button>
+        <button class="mylist-tab-btn" onclick="switchPoolTab(this, 'grammar')">文法 (5)</button>
+        <button class="mylist-tab-btn" onclick="switchPoolTab(this, 'phrase')">フレーズ (8)</button>
+        <button class="mylist-tab-btn" onclick="switchPoolTab(this, 'notes')">復習ノート</button>
+      </div>
+
+      <div class="mylist-pool-box">
+        <div class="pool-hint">授業で使った言葉やチェックした単語が自動保存されています（★を押してマイリストに固定）:</div>
+        <div class="pool-items">
+          <div class="pool-item">
+            <div class="pool-item-left">
+              <span class="pool-item-jp">はじめまして</span>
+              <span class="pool-item-en">Nice to meet you</span>
+            </div>
+            <button class="pool-star-btn" title="マイリストに追加">★</button>
+          </div>
+          <div class="pool-item">
+            <div class="pool-item-left">
+              <span class="pool-item-jp">〜じゃありません</span>
+              <span class="pool-item-en">is not (negative)</span>
+            </div>
+            <button class="pool-star-btn" title="マイリストに追加">★</button>
+          </div>
+          <div class="pool-item">
+            <div class="pool-item-left">
+              <span class="pool-item-jp">よろしくお願いします</span>
+              <span class="pool-item-en">Pleased to meet you</span>
+            </div>
+            <button class="pool-star-btn" title="マイリストに追加">★</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 今日の学習計画（3つのタスク ＋ 田中さんの励まし） -->
+    <div class="dash-card">
+      <div class="dash-card-header">
+        <div class="dash-card-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          今日のやること（学習計画）
+        </div>
+        <span class="dash-card-badge" style="background:var(--bunni-yellow-bg);color:var(--bunni-yellow);border-color:var(--bunni-yellow-border)">1 / 3 完了</span>
+      </div>
+
+      <div class="tasks-list">
+        <div class="task-item" onclick="toggleTask(this)">
+          <div class="task-check done">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <span class="task-text">1. 第1課の単語カード復習 (+10 pt)</span>
+          <span class="task-tag tag-done">完了</span>
+        </div>
+
+        <div class="task-item" onclick="toggleTask(this)">
+          <div class="task-check"></div>
+          <span class="task-text">2. 第1課の文法ドリル（練習問題⑤〜⑦）</span>
+          <span class="task-tag tag-todo">予定</span>
+        </div>
+
+        <div class="task-item" onclick="toggleTask(this)">
+          <div class="task-check"></div>
+          <span class="task-text">3. AIロールプレイ会話（同僚・田中さんと挨拶）</span>
+          <span class="task-tag tag-todo">予定</span>
+        </div>
+      </div>
+
+      <div class="char-speech-card">
+        <div class="char-avatar-badge">田中</div>
+        <div class="char-speech-text">
+          「今日も一緒に頑張りましょう！まずは第1課のドリルから進めてみてくださいね。」
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 1. メイン学習（授業＆自習連動） -->
+  <div class="section-block">
+    <div class="section-title-wrap">
+      <div class="section-main-heading">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        1. メイン学習（授業 ＆ 自習連動）
+      </div>
+      <div class="section-tagline">教科書完全準拠のオリジナル教材 · 4言語対訳 · ドリル採点</div>
+    </div>
+
+    <div class="modules-grid-3">
+      <!-- テキスト -->
+      <a href="lesson1_complete_starter.html" class="module-card available">
+        <div class="card-top-row">
+          <div class="module-icon-box icon-kobe">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <span class="status-badge status-ready">利用可能</span>
+        </div>
+        <div class="module-title"><span class="jp">レッスン教材</span>（第1課〜）</div>
+        <div class="module-desc">会話・文法図解・例文・スライド発表モード・0.92倍速自然TTS音声を完全搭載。</div>
+        <div class="module-tags">
+          <span class="mod-tag">第1課 公開中</span>
+          <span class="mod-tag">6言語対応</span>
+          <span class="mod-tag">スライド機能</span>
+        </div>
+      </a>
+
+      <!-- 練習問題 -->
+      <div class="module-card locked">
+        <div class="card-top-row">
+          <div class="module-icon-box icon-shigaku">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+          <span class="status-badge status-coming">準備中</span>
+        </div>
+        <div class="module-title"><span class="jp">練習問題 ＆ 採点</span></div>
+        <div class="module-desc">問題5〜7の選択式・全文作成ドリル。自動採点と「間違いノート」の自動保存機能。</div>
+        <div class="module-tags">
+          <span class="mod-tag">自動採点</span>
+          <span class="mod-tag">間違いノート</span>
+        </div>
+      </div>
+
+      <!-- 復習ノート -->
+      <div class="module-card locked">
+        <div class="card-top-row">
+          <div class="module-icon-box icon-bunni">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <span class="status-badge status-coming">準備中</span>
+        </div>
+        <div class="module-title"><span class="jp">先生の復習ノート</span></div>
+        <div class="module-desc">授業後に発行される共有URL復習シート。1分クイズとBefore/After成長記録。</div>
+        <div class="module-tags">
+          <span class="mod-tag">1分クイズ</span>
+          <span class="mod-tag">共有URL</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. 実践会話（AI会話ロールプレイ） -->
+  <div class="section-block">
+    <div class="section-title-wrap">
+      <div class="section-main-heading">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        2. 実践会話（AIとおしゃべりロールプレイ）
+      </div>
+      <div class="section-tagline">相手とレベルを選んでスピーキング特訓</div>
+    </div>
+
+    <div class="module-card locked">
+      <div class="card-top-row">
+        <div class="module-icon-box icon-botanist">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        </div>
+        <span class="status-badge status-coming">準備中</span>
+      </div>
+      <div class="module-title"><span class="jp">AIロールプレイ会話・フリートーク</span></div>
+      <div class="module-desc">
+        ・相手を選択：鈴木さん(友達・タメ口) / 田中さん(同僚・ですます) / 店員さん(お客様・敬語)<br>
+        ・難易度を選択：「習った課の語彙だけで話す」または「制限なしフリートーク」
+      </div>
+      <div class="module-tags">
+        <span class="mod-tag">タメ口モード</span>
+        <span class="mod-tag">同僚モード</span>
+        <span class="mod-tag">敬語モード</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. 上級ビジネス ＆ AI日記添削 -->
+  <div class="section-block">
+    <div class="section-title-wrap">
+      <div class="section-main-heading">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        3. 上級ビジネス ＆ AI日記添削
+      </div>
+      <div class="section-tagline">ビジネスメール・電話ロールプレイ・作文の即時添削</div>
+    </div>
+
+    <div class="modules-grid-3">
+      <div class="module-card locked">
+        <div class="card-top-row">
+          <div class="module-icon-box icon-kobe">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <span class="status-badge status-coming">準備中</span>
+        </div>
+        <div class="module-title"><span class="jp">ビジネスメール特訓</span></div>
+        <div class="module-desc">件名、時候の挨拶、定型文、依頼、お詫びなどのAIマナー添削。</div>
+        <div class="module-tags"><span class="mod-tag">敬語・ビジネスマナー</span></div>
+      </div>
+
+      <div class="module-card locked">
+        <div class="card-top-row">
+          <div class="module-icon-box icon-shigaku">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <span class="status-badge status-coming">準備中</span>
+        </div>
+        <div class="module-title"><span class="jp">ビジネス電話練習</span></div>
+        <div class="module-desc">取り次ぎ、不在時の対応、伝言の受け答えを音声認識でリアルタイム練習。</div>
+        <div class="module-tags"><span class="mod-tag">音声ロールプレイ</span></div>
+      </div>
+
+      <div class="module-card locked">
+        <div class="card-top-row">
+          <div class="module-icon-box icon-lavender">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </div>
+          <span class="status-badge status-coming">準備中</span>
+        </div>
+        <div class="module-title"><span class="jp">AIにっき・作文添削</span></div>
+        <div class="module-desc">自由な文章を瞬時に「自然な表現・理由・タメ口変換・音声」に添削。</div>
+        <div class="module-tags"><span class="mod-tag">マイ日記帳</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. 文字 ＆ つまずき特訓（弱点克服） -->
+  <div class="section-block">
+    <div class="section-title-wrap">
+      <div class="section-main-heading">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+        4. 文字 ＆ つまずき特訓（弱点克服）
+      </div>
+      <div class="section-tagline">文字書き順・動詞活用・敬語・助詞・オノマトペ</div>
+    </div>
+
+    <div class="modules-grid-3">
+      <div class="module-card locked">
+        <div class="card-top-row">
+          <div class="module-icon-box icon-bunni"><span style="font-weight:700">字</span></div>
+          <span class="status-badge status-coming">準備中</span>
+        </div>
+        <div class="module-title"><span class="jp">文字ストローク</span></div>
+        <div class="module-desc">かな・漢字の筆順なぞり書き練習。</div>
+        <div class="module-tags"><span class="mod-tag">なぞり書き</span></div>
+      </div>
+
+      <div class="module-card locked">
+        <div class="card-top-row">
+          <div class="module-icon-box icon-kobe">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <span class="status-badge status-coming">準備中</span>
+        </div>
+        <div class="module-title"><span class="jp">漢字練習帳 PDF</span></div>
+        <div class="module-desc">印刷して手書き練習できるマス目付きA4シート。</div>
+        <div class="module-tags"><span class="mod-tag">印刷用DL</span></div>
+      </div>
+
+      <div class="module-card locked">
+        <div class="card-top-row">
+          <div class="module-icon-box icon-shigaku">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          </div>
+          <span class="status-badge status-coming">準備中</span>
+        </div>
+        <div class="module-title"><span class="jp">動詞の活用マシーン</span></div>
+        <div class="module-desc">て形・ない形・た形・辞書形の瞬発変換特訓。</div>
+        <div class="module-tags"><span class="mod-tag">活用ドリル</span></div>
+      </div>
+
+      <div class="module-card locked">
+        <div class="card-top-row">
+          <div class="module-icon-box icon-botanist">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          </div>
+          <span class="status-badge status-coming">準備中</span>
+        </div>
+        <div class="module-title"><span class="jp">敬語ゲージ</span></div>
+        <div class="module-desc">丁寧度Lv.1（タメ口）〜Lv.5（最高敬語）の使い分け。</div>
+        <div class="module-tags"><span class="mod-tag">丁寧度診断</span></div>
+      </div>
+
+      <div class="module-card locked">
+        <div class="card-top-row">
+          <div class="module-icon-box icon-lavender">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          </div>
+          <span class="status-badge status-coming">準備中</span>
+        </div>
+        <div class="module-title"><span class="jp">助詞の使い分け</span></div>
+        <div class="module-desc">「は」と「が」、「に」と「で」の直感的グラフィック解説。</div>
+        <div class="module-tags"><span class="mod-tag">助詞特効薬</span></div>
+      </div>
+
+      <div class="module-card locked">
+        <div class="card-top-row">
+          <div class="module-icon-box icon-bunni">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+          </div>
+          <span class="status-badge status-coming">準備中</span>
+        </div>
+        <div class="module-title"><span class="jp">オノマトペ図鑑</span></div>
+        <div class="module-desc">ドキドキ、ペコペコなどの擬音語・擬態語をイラストで。</div>
+        <div class="module-tags"><span class="mod-tag">日常表現</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. 読解 ＆ 試験対策 ＆ 講師レッスン -->
+  <div class="section-block">
+    <div class="section-title-wrap">
+      <div class="section-main-heading">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        5. 読解 ＆ 試験対策 ＆ 講師レッスン
+      </div>
+      <div class="section-tagline">ニュース読解 · JLPT総合対策 · 1-on-1レッスン</div>
+    </div>
+
+    <div class="modules-grid-3">
+      <!-- JLPT 単語リスト -->
+      <a href="jlpt_vocab.html" class="module-card available">
+        <div class="card-top-row">
+          <div class="module-icon-box icon-kobe">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          </div>
+          <span class="status-badge status-ready">利用可能</span>
+        </div>
+        <div class="module-title">JLPT <span class="jp">単語リスト（五十音順）</span></div>
+        <div class="module-desc">N5〜N1の全8,910語を五十音順に網羅。あ行〜わ行のクイックジャンプ・例文付き。</div>
+        <div class="module-tags">
+          <span class="mod-tag">8,910語</span>
+          <span class="mod-tag">あいうえお順</span>
+          <span class="mod-tag">例文TTS</span>
+        </div>
+      </a>
+
+      <!-- ニュース読解 -->
+      <div class="module-card locked">
+        <div class="card-top-row">
+          <div class="module-icon-box icon-shigaku">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1m2 13a2 2 0 0 1-2-2V7m2 13a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+          </div>
+          <span class="status-badge status-coming">準備中</span>
+        </div>
+        <div class="module-title"><span class="jp">やさしいニュース読解</span></div>
+        <div class="module-desc">N5〜N3レベルに応じたルビ付きニュース読解と単語ワンタップ辞書。</div>
+        <div class="module-tags"><span class="mod-tag">ルビ切替</span></div>
+      </div>
+
+      <!-- 1-on-1レッスン予約 -->
+      <div class="module-card locked">
+        <div class="card-top-row">
+          <div class="module-icon-box icon-botanist">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <span class="status-badge status-coming">準備中</span>
+        </div>
+        <div class="module-title"><span class="jp">ネイティブ講師レッスン</span></div>
+        <div class="module-desc">アプリと完全連動したマンツーマンレッスン予約・質問窓口。</div>
+        <div class="module-tags"><span class="mod-tag">1-on-1予約</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- カリキュラムロードマップ（全25課・レベル別に彩る6ステージ体系） -->
+  <div class="section-block">
+    <div class="section-title-wrap">
+      <div class="section-main-heading">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+        カリキュラムロードマップ（初級I 全25課 · 全6ステージ体系）
+      </div>
+      <div class="section-tagline">『みんなの日本語 初級I』全25課完全網羅 · レベル別カラー展開</div>
+    </div>
+
+    <div class="stages-container">
+      <!-- Stage 1 (神戸女子大ブルー) -->
+      <div class="stage-box stage-s1">
+        <div class="stage-header">
+          <div class="stage-title">Stage 1 (基礎①): 出会いと身の回り・存在と位置</div>
+          <div class="stage-goal">出会い・挨拶・国籍・職業・持ち物・場所・存在 (あります/います)</div>
+        </div>
+        <div class="lessons-pill-grid">
+          <a href="lesson1_complete_starter.html" class="lesson-pill active">
+            <span class="lp-badge" style="background:var(--shigaku-green-bg);color:var(--shigaku-green)">✓ 完成</span>
+            <div class="lp-num">第1課</div>
+            <div class="lp-title">はじめまして</div>
+            <div class="lp-sub">挨拶 · 〜は〜です · 助詞「は/も/の」</div>
+          </a>
+          <div class="lesson-pill locked">
+            <span class="lp-badge" style="background:#F1F5F8;color:#888">作成中</span>
+            <div class="lp-num">第2課</div>
+            <div class="lp-title">これ・それ・あれ</div>
+            <div class="lp-sub">持ち物 · この/その/あの · 何ですか</div>
+          </div>
+          <div class="lesson-pill locked">
+            <span class="lp-badge" style="background:#F1F5F8;color:#888">待機</span>
+            <div class="lp-num">第3課</div>
+            <div class="lp-title">ここ・そこ・あそこ</div>
+            <div class="lp-sub">場所案内 · どこ · いくら</div>
+          </div>
+          <div class="lesson-pill locked">
+            <span class="lp-badge" style="background:#F1F5F8;color:#888">★前倒し統合</span>
+            <div class="lp-num">第10課統合</div>
+            <div class="lp-title">あります・います</div>
+            <div class="lp-sub">人や物の存在 · 位置 (上/下/前/後)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage 2 (東京私学エメラルドグリーン) -->
+      <div class="stage-box stage-s2">
+        <div class="stage-header">
+          <div class="stage-title">Stage 2 (基礎②): 日常ルーティンと街歩き</div>
+          <div class="stage-goal">時間・日程・交通・食事・日常行動・道具と手段</div>
+        </div>
+        <div class="lessons-pill-grid">
+          <div class="lesson-pill locked">
+            <div class="lp-num">第4課</div>
+            <div class="lp-title">いま何時ですか</div>
+            <div class="lp-sub">時間 · 起きます/寝ます · 〜から〜まで</div>
+          </div>
+          <div class="lesson-pill locked">
+            <div class="lp-num">第5課</div>
+            <div class="lp-title">どこへ行きますか</div>
+            <div class="lp-sub">移動と交通 · 電車で行きます · いつ</div>
+          </div>
+          <div class="lesson-pill locked">
+            <div class="lp-num">第6課</div>
+            <div class="lp-title">いっしょに行きませんか</div>
+            <div class="lp-sub">食事 · 日常行動 · 勧誘 (~ませんか)</div>
+          </div>
+          <div class="lesson-pill locked">
+            <div class="lp-num">第7課(前半)</div>
+            <div class="lp-title">これで食べます</div>
+            <div class="lp-sub">道具と手段 · 箸で食べます · 言語手段</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage 3 (bunnikonbiny バターミルクイエロー) -->
+      <div class="stage-box stage-s3">
+        <div class="stage-header">
+          <div class="stage-title">Stage 3 (表現力): 描写・好み・比較・願望</div>
+          <div class="stage-goal">形容詞・好き嫌い・数量詞・過去の感想・比較・願望</div>
+        </div>
+        <div class="lessons-pill-grid">
+          <div class="lesson-pill locked">
+            <div class="lp-num">第8課</div>
+            <div class="lp-title">富士山は高いです</div>
+            <div class="lp-sub">い形容詞 · な形容詞 · どんな街/人</div>
+          </div>
+          <div class="lesson-pill locked">
+            <div class="lp-num">第9課</div>
+            <div class="lp-title">日本語が好きです</div>
+            <div class="lp-sub">感情 · 能力 · 上手/下手 · 理由 (~から)</div>
+          </div>
+          <div class="lesson-pill locked">
+            <div class="lp-num">第11課</div>
+            <div class="lp-title">りんごを幾つ買いましたか</div>
+            <div class="lp-sub">数量詞 · 期間 · 1週間に〜回</div>
+          </div>
+          <div class="lesson-pill locked">
+            <div class="lp-num">第12課</div>
+            <div class="lp-title">京都は静かでした</div>
+            <div class="lp-sub">過去の感想 · 比較 (AとBどちらが)</div>
+          </div>
+          <div class="lesson-pill locked">
+            <div class="lp-num">第13課</div>
+            <div class="lp-title">〜がほしいです</div>
+            <div class="lp-sub">願望 (~たい) · 移動の目的 (~に行きます)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage 4 (BOTANIST春限定 サクラモーブピンク) -->
+      <div class="stage-box stage-s4">
+        <div class="stage-header">
+          <div class="stage-title">Stage 4 (初級の山場): て形・ない形の世界</div>
+          <div class="stage-goal">依頼・許可・禁止・状態の継続・手順・義務・ルール</div>
+        </div>
+        <div class="lessons-pill-grid">
+          <div class="lesson-pill locked">
+            <div class="lp-num">第14課</div>
+            <div class="lp-title">ちょっと待ってください</div>
+            <div class="lp-sub">て形の変換 · 依頼 (~てください)</div>
+          </div>
+          <div class="lesson-pill locked">
+            <div class="lp-num">第15課</div>
+            <div class="lp-title">入ってもいいですか</div>
+            <div class="lp-sub">許可 (~てもいい) · 禁止 · 状態継続</div>
+          </div>
+          <div class="lesson-pill locked">
+            <div class="lp-num">第16課</div>
+            <div class="lp-title">朝起きて散歩します</div>
+            <div class="lp-sub">動作の連続 · 〜てから · 描写</div>
+          </div>
+          <div class="lesson-pill locked">
+            <div class="lp-num">第17課</div>
+            <div class="lp-title">忘れないでください</div>
+            <div class="lp-sub">ない形 · 義務 (~なければならない)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage 5 (洗練ラベンダーパープル) -->
+      <div class="stage-box stage-s5">
+        <div class="stage-header">
+          <div class="stage-title">Stage 5 (会話の自立): 辞書形・た形・タメ口会話</div>
+          <div class="stage-goal">能力・趣味・経験・親しい友人とのカジュアル会話</div>
+        </div>
+        <div class="lessons-pill-grid">
+          <div class="lesson-pill locked">
+            <div class="lp-num">第18課</div>
+            <div class="lp-title">泳ぐことができます</div>
+            <div class="lp-sub">辞書形 · 可能表現 · 趣味は〜です</div>
+          </div>
+          <div class="lesson-pill locked">
+            <div class="lp-num">第19課</div>
+            <div class="lp-title">富士山に登ったことがあります</div>
+            <div class="lp-sub">た形 · 経験 (~たことがある) · 例示</div>
+          </div>
+          <div class="lesson-pill locked">
+            <div class="lp-num">第20課</div>
+            <div class="lp-title">明日暇？ (普通体会話)</div>
+            <div class="lp-sub">普通形 · タメ口会話 · 親しい人とのトーク</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage 6 (あたたかいアプリコット) -->
+      <div class="stage-box stage-s6">
+        <div class="stage-header">
+          <div class="stage-title">Stage 6 (初級完成): 思考・修飾・授受・条件</div>
+          <div class="stage-goal">意見表明・名詞修飾・思いやりの授受表現・条件表現</div>
+        </div>
+        <div class="lessons-pill-grid">
+          <div class="lesson-pill locked">
+            <div class="lp-num">第21課</div>
+            <div class="lp-title">〜と思います</div>
+            <div class="lp-sub">意見表明 · 引用 · 推量 (~でしょう)</div>
+          </div>
+          <div class="lesson-pill locked">
+            <div class="lp-num">第22課</div>
+            <div class="lp-title">私が作ったケーキ</div>
+            <div class="lp-sub">名詞修飾節 · 長い文の組み立て</div>
+          </div>
+          <div class="lesson-pill locked">
+            <div class="lp-num">第23課</div>
+            <div class="lp-title">〜とき・〜と</div>
+            <div class="lp-sub">時と状況 · 道案内</div>
+          </div>
+          <div class="lesson-pill locked">
+            <div class="lp-num">第24課統合</div>
+            <div class="lp-title">あげます・もらいます・くれます</div>
+            <div class="lp-sub">授受表現完全合体 · 親切と思いやりの日本語</div>
+          </div>
+          <div class="lesson-pill locked">
+            <div class="lp-num">第25課</div>
+            <div class="lp-title">雨が降ったら〜</div>
+            <div class="lp-sub">条件表現 (~たら/~ても) · 初級総仕上げ</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>Japanese Learning App · Master Plan Architecture</p>
+    <p style="margin-top:4px;font-size:0.75rem;color:#8A9AA8">All lessons, drills, and dictionary resources are strictly aligned with Japanese pedagogical standards.</p>
+  </footer>
+
+</div>
+
+<!-- マイページ モーダル -->
+<div class="modal-overlay" id="mypage-modal" onclick="closeMyPageModal(event)">
+  <div class="mypage-modal-box">
+    <button class="mypage-close-btn" onclick="closeMyPageModal()">✕</button>
+    <div class="mypage-header-title">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      マイページ ＆ アカウント管理
+    </div>
+    <div class="mypage-header-sub">プラン状況、生徒・先生連携コード、各種設定を確認できます。</div>
+
+    <div class="mypage-nav-tabs">
+      <button class="mypage-tab-btn active" id="tab-btn-news" onclick="switchMyPageTab('news')">お知らせ</button>
+      <button class="mypage-tab-btn" id="tab-btn-student" onclick="switchMyPageTab('student')">学生（生徒連携）</button>
+      <button class="mypage-tab-btn" id="tab-btn-teacher" onclick="switchMyPageTab('teacher')">導入を検討している先生へ</button>
+      <button class="mypage-tab-btn" id="tab-btn-settings" onclick="switchMyPageTab('settings')">設定</button>
+      <button class="mypage-tab-btn" id="tab-btn-contact" onclick="switchMyPageTab('contact')">お問い合わせ</button>
+    </div>
+
+    <!-- 1. お知らせ -->
+    <div class="mypage-section active" id="mypage-news">
+      <div class="mypage-card-row">
+        <div class="mypage-card-title">日本語多言語辞書が68,000語に拡充されました</div>
+        <div class="mypage-card-desc">中国語訳（46,400語以上）およびフランス語訳（25,200語以上）に対応し、多言語から瞬時に検索できるようになりました。</div>
+      </div>
+      <div class="mypage-card-row">
+        <div class="mypage-card-title">JLPT単語リストが全8,910語の「五十音順」に対応</div>
+        <div class="mypage-card-desc">あ行〜わ行の行ジャンプ機能により、辞書のように直感的に単語を学習できるようになりました。</div>
+      </div>
+    </div>
+
+    <!-- 2. 学生（生徒連携） -->
+    <div class="mypage-section" id="mypage-student">
+      <div class="mypage-card-row">
+        <div class="mypage-card-title">先生からの招待コードをお持ちの方</div>
+        <div class="mypage-card-desc">担当の先生から共有された招待コードを入力すると、全教材および専用ドリルが完全無料でアンロックされます。</div>
+        <div class="invite-code-box">
+          <input type="text" class="invite-input" id="invite-code-input" placeholder="招待コードを入力 (例: SENSEI-FREE-2026)">
+          <button class="invite-btn" onclick="applyInviteCode()">適用する</button>
+        </div>
+      </div>
+      <div class="mypage-card-row">
+        <div class="mypage-card-title">保有ポイント ＆ 連続ログイン</div>
+        <div class="mypage-card-desc">現在の保有ポイント: <strong>120 pt</strong>（連続ログイン7日達成中）。100ptで好きな課のテキストをアンロックできます。</div>
+      </div>
+    </div>
+
+    <!-- 3. 導入を検討している先生へ -->
+    <div class="mypage-section" id="mypage-teacher">
+      <div class="mypage-card-row" style="background:var(--kobe-blue-light); border-color:var(--kobe-blue-border);">
+        <div class="mypage-card-title">先生の生徒さんは完全無料でご招待いただけます</div>
+        <div class="mypage-card-desc">
+          「先生向けアカウント」をご登録いただくと、先生専用の招待コードが発行され、生徒さんは追加料金なしでアプリを学習サポート教材としてご利用いただけます。<br>
+          Canva等でのスライド作りが不要になる「画面共有用スライド発表モード」や、宿題配信、生徒の間違いノート共有機能をご活用いただけます。
+        </div>
+      </div>
+      <div class="mypage-card-row">
+        <div class="mypage-card-title">先生向けプランの目安</div>
+        <div class="mypage-card-desc">
+          ・スタータープラン: 月額 $9.99 (生徒5名まで無料招待可能)<br>
+          ・プロフェッショナル: 月額 $19.99 (生徒20名まで無料招待可能 ＋ 進捗分析)
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. 設定 -->
+    <div class="mypage-section" id="mypage-settings">
+      <div class="mypage-card-row">
+        <div class="mypage-card-title">表示言語の切り替え</div>
+        <div class="mypage-card-desc" style="margin-bottom:8px">解説文やボタンの言語を選択します。</div>
+        <select style="padding:8px 14px; border-radius:10px; border:1.5px solid var(--border-soft); font-size:0.86rem; background:white;">
+          <option value="en">English (英語)</option>
+          <option value="zh">中文 简体 (中国語 簡体字)</option>
+          <option value="tc">中文 繁體 (中国語 繁体字)</option>
+          <option value="ko">한국어 (韓国語)</option>
+          <option value="fr">Français (フランス語)</option>
+        </select>
+      </div>
+      <div class="mypage-card-row">
+        <div class="mypage-card-title">音声再生速度 (TTS)</div>
+        <div class="mypage-card-desc" style="margin-bottom:8px">リスニング・発音練習の基本再生速度を設定します。</div>
+        <select style="padding:8px 14px; border-radius:10px; border:1.5px solid var(--border-soft); font-size:0.86rem; background:white;">
+          <option value="0.92">0.92倍速 (初級者推奨・明瞭スピード)</option>
+          <option value="0.80">0.80倍速 (ゆっくり)</option>
+          <option value="1.00">1.00倍速 (通常ネイティブスピード)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- 5. お問い合わせ -->
+    <div class="mypage-section" id="mypage-contact">
+      <div class="mypage-card-row">
+        <div class="mypage-card-title">お問い合わせ・フィードバック窓口</div>
+        <div class="mypage-card-desc">アプリの改善要望、教材リクエスト、不具合の報告などは以下のフォームまたはメールよりお寄せください。</div>
+        <div style="margin-top:10px;">
+          <input type="text" class="invite-input" style="width:100%;margin-bottom:8px" placeholder="お名前または受講生ID">
+          <textarea class="invite-input" style="width:100%;height:80px;margin-bottom:8px;resize:none" placeholder="メッセージ・ご質問内容を入力してください"></textarea>
+          <button class="invite-btn" onclick="alert('お問い合わせを受け付けました。順次ご返信いたします。')">送信する</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openSidebar() {
+    document.getElementById('sidebar-drawer').classList.add('open');
+    document.getElementById('sidebar-overlay').classList.add('open');
+  }
+  function closeSidebar() {
+    document.getElementById('sidebar-drawer').classList.remove('open');
+    document.getElementById('sidebar-overlay').classList.remove('open');
+  }
+
+  function openMyPageModal() {
+    document.getElementById('mypage-modal').classList.add('open');
+  }
+  function closeMyPageModal(event) {
+    if (!event || event.target === document.getElementById('mypage-modal')) {
+      document.getElementById('mypage-modal').classList.remove('open');
+    }
+  }
+
+  function openMyPageTab(tabName) {
+    openMyPageModal();
+    switchMyPageTab(tabName);
+  }
+
+  function switchMyPageTab(tabName) {
+    document.querySelectorAll('.mypage-tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.mypage-section').forEach(s => s.classList.remove('active'));
+
+    const btn = document.getElementById('tab-btn-' + tabName);
+    const sec = document.getElementById('mypage-' + tabName);
+    if (btn) btn.classList.add('active');
+    if (sec) sec.classList.add('active');
+  }
+
+  function applyInviteCode() {
+    const code = document.getElementById('invite-code-input').value.trim();
+    if (code) {
+      alert('招待コード「' + code + '」が正常に適用されました！\n先生と共有された全教材が無料でアンロックされました。');
+      closeMyPageModal();
+    } else {
+      alert('招待コードを入力してください。');
+    }
+  }
+
+  function startDiagnostic() {
+    window.location.href = 'diagnostic.html';
+  }
+
+  function executeSmartSearch() {
+    const q = document.getElementById('smart-search-input').value.trim();
+    if (q) {
+      window.location.href = 'dictionary.html?q=' + encodeURIComponent(q);
+    } else {
+      window.location.href = 'dictionary.html';
+    }
+  }
+
+  function toggleTask(elem) {
+    const check = elem.querySelector('.task-check');
+    const tag = elem.querySelector('.task-tag');
+    check.classList.toggle('done');
+    if (check.classList.contains('done')) {
+      check.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+      tag.className = 'task-tag tag-done';
+      tag.textContent = '完了';
+    } else {
+      check.innerHTML = '';
+      tag.className = 'task-tag tag-todo';
+      tag.textContent = '予定';
+    }
+  }
+
+  function switchPoolTab(btn, type) {
+    document.querySelectorAll('.mylist-tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  /* ---- Daily Pickup Word / Flashcard Widget Logic ---- */
+  const DAILY_WORDS_DATA = {
+    mylist: [
+      {
+        kanji: "初めまして", kana: "はじめまして",
+        audio: "はじめまして",
+        en: "Nice to meet you", zh: "初次見面 / 很高興認識你", ko: "처음 뵙겠습니다", fr: "Enchanté(e)",
+        exJp: "初めまして、田中です。よろしくお願いします。",
+        exEn: "Nice to meet you, I'm Tanaka. Pleased to meet you."
+      },
+      {
+        kanji: "よろしくお願いします", kana: "よろしくおねがいします",
+        audio: "よろしくおねがいします",
+        en: "Pleased to meet you / Best regards", zh: "請多指教", ko: "잘 부탁드립니다", fr: "Ravi(e) de faire votre connaissance",
+        exJp: "どうぞ よろしく お願いします。",
+        exEn: "Pleased to meet you (formal)."
+      },
+      {
+        kanji: "〜じゃありません", kana: "〜じゃありません",
+        audio: "じゃありません",
+        en: "is not / am not (negative)", zh: "不是", ko: "~이/가 아닙니다", fr: "ne pas être",
+        exJp: "わたしは 学生じゃ ありません。会社員です。",
+        exEn: "I am not a student. I am a company employee."
+      },
+      {
+        kanji: "お名前は？", kana: "おなまえは？",
+        audio: "おなまえは",
+        en: "What is your name?", zh: "您的大名是？", ko: "이름이 어떻게 되세요?", fr: "Comment vous vous appelez ?",
+        exJp: "失礼ですが、お名前は？",
+        exEn: "Excuse me, but what is your name?"
+      },
+      {
+        kanji: "〜も", kana: "〜も",
+        audio: "も",
+        en: "also / too", zh: "也", ko: "~도", fr: "aussi",
+        exJp: "鈴木さんも 会社員ですか。",
+        exEn: "Is Suzuki-san also a company employee?"
+      }
+    ],
+    n5: [
+      {
+        kanji: "食べる", kana: "たべる",
+        audio: "たべる",
+        en: "to eat", zh: "吃", ko: "먹다", fr: "manger",
+        exJp: "毎朝 パンを 食べます。",
+        exEn: "I eat bread every morning."
+      },
+      {
+        kanji: "行く", kana: "いく",
+        audio: "いく",
+        en: "to go", zh: "去", ko: "가だ", fr: "aller",
+        exJp: "電車で 学校へ 行きます。",
+        exEn: "I go to school by train."
+      },
+      {
+        kanji: "おいしい", kana: "おいしい",
+        audio: "おいしい",
+        en: "delicious / tasty", zh: "美味 / 好吃", ko: "맛있다", fr: "délicieux",
+        exJp: "この 料理は とても おいしいです。",
+        exEn: "This dish is very delicious."
+      },
+      {
+        kanji: "大きい", kana: "おおきい",
+        audio: "おおきい",
+        en: "big / large", zh: "大的", ko: "크다", fr: "grand",
+        exJp: "東京は 大きな 町です。",
+        exEn: "Tokyo is a big city."
+      },
+      {
+        kanji: "勉強する", kana: "べんきょうする",
+        audio: "べんきょうする",
+        en: "to study", zh: "學習", ko: "공부하다", fr: "étudier",
+        exJp: "毎日 1時間 日本語を 勉強します。",
+        exEn: "I study Japanese for one hour every day."
+      }
+    ],
+    n4: [
+      {
+        kanji: "案内する", kana: "あんないする",
+        audio: "あんないする",
+        en: "to guide / show around", zh: "引導 / 帶路", ko: "안내하다", fr: "guider / faire visiter",
+        exJp: "明日 京都を 案内します。",
+        exEn: "I will show you around Kyoto tomorrow."
+      },
+      {
+        kanji: "役に立つ", kana: "やくにたつ",
+        audio: "やくにたつ",
+        en: "to be useful / helpful", zh: "有用 / 有幫助", ko: "도움이 되다", fr: "être utile",
+        exJp: "この アプリは とても 役に立ちます。",
+        exEn: "This app is very useful."
+      },
+      {
+        kanji: "調べる", kana: "しらべる",
+        audio: "しらべる",
+        en: "to investigate / check / look up", zh: "調查 / 查詢", ko: "조사하다 / 알아보다", fr: "chercher / vérifier",
+        exJp: "辞書で 単語の 意味を 調べます。",
+        exEn: "I look up the word's meaning in the dictionary."
+      },
+      {
+        kanji: "約束する", kana: "やくそくする",
+        audio: "やくそくする",
+        en: "to promise / make an appointment", zh: "約定", ko: "약속하다", fr: "promettre",
+        exJp: "友だちと 会う 約束を しました。",
+        exEn: "I made an appointment to meet a friend."
+      }
+    ],
+    phrase: [
+      {
+        kanji: "お疲れ様でした", kana: "おつかれさまでした",
+        audio: "おつかれさまでした",
+        en: "Thank you for your hard work / Good job", zh: "辛苦了", ko: "수고하셨습니다", fr: "Merci pour votre bon travail",
+        exJp: "今日の レッスンは これで 終わりです。お疲れ様でした！",
+        exEn: "That's all for today's lesson. Good job today!"
+      },
+      {
+        kanji: "少々お待ちください", kana: "しょうしょうおまちください",
+        audio: "しょうしょうおまちください",
+        en: "Please wait a moment (polite)", zh: "請稍候", ko: "잠시만 기다려 주십시오", fr: "Un instant s'il vous plaît",
+        exJp: "確認いたしますので、少々お待ちください。",
+        exEn: "I will confirm it, please wait a moment."
+      },
+      {
+        kanji: "助かりました", kana: "たすかりました",
+        audio: "たすかりました",
+        en: "That was a big help / You saved me", zh: "幫了大忙了", ko: "도움이 되었습니다", fr: "Ça m'a beaucoup aidé",
+        exJp: "教えてくださって ありがとうございます。本当に 助かりました！",
+        exEn: "Thank you for teaching me. It was really a big help!"
+      },
+      {
+        kanji: "お待たせしました", kana: "おまたせしました",
+        audio: "おまたせしました",
+        en: "Sorry to have kept you waiting", zh: "讓您久等了", ko: "오래 기다리셨습니다", fr: "Désolé(e) de vous avoir fait attendre",
+        exJp: "大変 お待たせいたしました。",
+        exEn: "Thank you very much for waiting."
+      }
+    ]
+  };
+
+  let currentSource = 'mylist';
+  let currentWord = null;
+
+  function switchWordSource(sourceKey, btnElem) {
+    currentSource = sourceKey;
+    document.querySelectorAll('.word-source-tab').forEach(b => b.classList.remove('active'));
+    if (btnElem) btnElem.classList.add('active');
+    shuffleDailyWord();
+  }
+
+  function shuffleDailyWord() {
+    const list = DAILY_WORDS_DATA[currentSource] || DAILY_WORDS_DATA.mylist;
+    let nextWord = list[Math.floor(Math.random() * list.length)];
+    if (list.length > 1 && currentWord && nextWord.kanji === currentWord.kanji) {
+      const filtered = list.filter(w => w.kanji !== currentWord.kanji);
+      nextWord = filtered[Math.floor(Math.random() * filtered.length)];
+    }
+    currentWord = nextWord;
+    renderDailyWord(currentWord);
+  }
+
+  function renderDailyWord(word) {
+    const body = document.getElementById('dailyWordBody');
+    if (body) body.style.opacity = '0.3';
+
+    setTimeout(() => {
+      document.getElementById('widgetWordKanji').textContent = word.kanji;
+      document.getElementById('widgetWordKana').textContent = word.kana;
+      
+      const transContainer = document.getElementById('widgetTranslations');
+      transContainer.innerHTML = `
+        <span class="trans-badge"><span class="trans-lang">EN</span> ${word.en}</span>
+        <span class="trans-badge"><span class="trans-lang">ZH</span> ${word.zh}</span>
+        <span class="trans-badge"><span class="trans-lang">KO</span> ${word.ko}</span>
+        ${word.fr ? `<span class="trans-badge"><span class="trans-lang">FR</span> ${word.fr}</span>` : ''}
+      `;
+
+      document.getElementById('widgetExampleJp').textContent = word.exJp;
+      document.getElementById('widgetExampleTrans').textContent = word.exEn;
+
+      const starBtn = document.getElementById('widgetStarBtn');
+      const starTxt = document.getElementById('widgetStarText');
+      if (starBtn && starTxt) {
+        starBtn.classList.remove('starred');
+        starTxt.textContent = '★ マイリスト';
+      }
+
+      if (body) body.style.opacity = '1';
+    }, 120);
+  }
+
+  function playWidgetAudio() {
+    if (!currentWord) return;
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const uttr = new SpeechSynthesisUtterance(currentWord.audio || currentWord.kana);
+      uttr.lang = 'ja-JP';
+      uttr.rate = 0.92;
+      window.speechSynthesis.speak(uttr);
+    }
+  }
+
+  function toggleWidgetStar() {
+    const starBtn = document.getElementById('widgetStarBtn');
+    const starTxt = document.getElementById('widgetStarText');
+    if (!starBtn || !starTxt) return;
+    starBtn.classList.toggle('starred');
+    if (starBtn.classList.contains('starred')) {
+      starTxt.textContent = '★ 保存済み';
+      alert('「' + currentWord.kanji + '」をマイリストに保存しました！\n授業プールおよび復習リストからいつでも確認できます。');
+    } else {
+      starTxt.textContent = '★ マイリスト';
+    }
+  }
+
+  // 初期化：アプリを開いた瞬間にランダムに単語を表示
+  window.addEventListener('DOMContentLoaded', () => {
+    shuffleDailyWord();
+  });
+</script>
+</body>
+</html>
