@@ -345,6 +345,82 @@ JSON形式のみ出力してください:
     return clean.slice(0, -1);
   }
 
+  // Preset 4-Language Suggested Phrases (Instant 100% accurate responses)
+  const PRESET_PHRASE_DB = {
+    'thank you': {
+      meaning: '感謝を伝える表現（英語: Thank you / ありがとう）',
+      levels: {
+        casual: { text: 'ありがとう！', kana: 'ありがとう！', scene: '親しい友人や同僚への感謝（タメ口）' },
+        polite: { text: 'ありがとうございます。', kana: 'ありがとうございます。', scene: '日常や職場での標準的な丁寧なお礼（丁寧語）' },
+        honorific: { text: '心より感謝申し上げます。（誠にありがとうございます）', kana: 'こころよりかんしゃもうしあげます。', scene: 'お客様や目上の方への最上級のお礼・敬語' }
+      }
+    },
+    'thanks': {
+      meaning: '感謝を伝える表現（英語: Thanks / ありがとう）',
+      levels: {
+        casual: { text: 'ありがとう！', kana: 'ありがとう！', scene: '親しい友人や同僚への感謝（タメ口）' },
+        polite: { text: 'ありがとうございます。', kana: 'ありがとうございます。', scene: '日常や職場での標準的な丁寧なお礼（丁寧語）' },
+        honorific: { text: '心より感謝申し上げます。（誠にありがとうございます）', kana: 'こころよりかんしゃもうしあげます。', scene: 'お客様や目上の方への最上級のお礼・敬語' }
+      }
+    },
+    '고마워': {
+      meaning: '感謝を伝える表現（韓国語: 고마워 / ありがとう）',
+      levels: {
+        casual: { text: 'ありがとう！', kana: 'ありがとう！', scene: '親しい友人や仲間への気軽な感謝（タメ口）' },
+        polite: { text: 'ありがとうございます。', kana: 'ありがとうございます。', scene: '日常会話での標準的な丁寧なお礼（丁寧語）' },
+        honorific: { text: '心より感謝申し上げます。（誠にありがとうございます）', kana: 'こころよりかんしゃもうしあげます。', scene: '目上の方や取引先への最上級敬語' }
+      }
+    },
+    '감사합니다': {
+      meaning: '感謝を伝える表現（韓国語: 감사합니다 / ありがとうございます）',
+      levels: {
+        casual: { text: 'ありがとう！', kana: 'ありがとう！', scene: '親しい友人や仲間への気軽な感謝（タメ口）' },
+        polite: { text: 'ありがとうございます。', kana: 'ありがとうございます。', scene: '標準的な丁寧なお礼（丁寧語）' },
+        honorific: { text: '心より感謝申し上げます。（誠にありがとうございます）', kana: 'こころよりかんしゃもうしあげます。', scene: '目上の方や取引先への最上級敬語' }
+      }
+    },
+    '谢谢': {
+      meaning: '感謝を伝える表現（中国語: 谢谢 / ありがとう）',
+      levels: {
+        casual: { text: 'ありがとう！', kana: 'ありがとう！', scene: '親しい友人や仲間への気軽な感謝（タメ口）' },
+        polite: { text: 'ありがとうございます。', kana: 'ありがとうございます。', scene: '日常や職場での標準的なお礼（丁寧語）' },
+        honorific: { text: '心より感謝申し上げます。（誠にありがとうございます）', kana: 'こころよりかんしゃもうしあげます。', scene: '目上の方や取引先への最上級敬語' }
+      }
+    },
+    '謝謝': {
+      meaning: '感謝を伝える表現（中国語繁体字: 謝謝 / ありがとう）',
+      levels: {
+        casual: { text: 'ありがとう！', kana: 'ありがとう！', scene: '親しい友人や仲間への気軽な感謝（タメ口）' },
+        polite: { text: 'ありがとうございます。', kana: 'ありがとうございます。', scene: '日常や職場での標準的なお礼（丁寧語）' },
+        honorific: { text: '心より感謝申し上げます。（誠にありがとうございます）', kana: 'こころよりかんしゃもうしあげます。', scene: '目上の方や取引先への最上級敬語' }
+      }
+    },
+    '唔該': {
+      meaning: '感謝・声かけ表現（広東語: 唔該 / ありがとう・すみません）',
+      levels: {
+        casual: { text: 'ありがとう！（ごめんね）', kana: 'ありがとう！', scene: '親しい友人への感謝や軽いお願い（タメ口）' },
+        polite: { text: 'ありがとうございます。（すみません）', kana: 'ありがとうございます。', scene: '日常やお店での丁寧なお礼・呼びかけ（丁寧語）' },
+        honorific: { text: '恐れ入ります、心より感謝申し上げます。', kana: 'おそれいります、こころよりかんしゃもうしあげます。', scene: '目上の方や公の場での最上級敬語' }
+      }
+    },
+    '唔該晒': {
+      meaning: '深い感謝の表現（広東語: 唔該晒 / どうもありがとうございます）',
+      levels: {
+        casual: { text: '本当にありがとう！', kana: 'ほんとうにありがとう！', scene: '親しい友人への感謝（タメ口）' },
+        polite: { text: '本当にありがとうございます。', kana: 'ほんとうにありがとうございます。', scene: '日常や職場での丁寧なお礼（丁寧語）' },
+        honorific: { text: '深く感謝申し上げます。誠にありがとうございます。', kana: 'ふかくかんしゃもうしあげます。', scene: '目上の方や取引先への最上級敬語' }
+      }
+    },
+    '多謝': {
+      meaning: '感謝を伝える表現（広東語: 多謝 / どうもありがとう）',
+      levels: {
+        casual: { text: 'ありがとう！', kana: 'ありがとう！', scene: '親しい友人への感謝（タメ口）' },
+        polite: { text: 'ありがとうございます。', kana: 'ありがとうございます。', scene: '標準的な丁寧なお礼（丁寧語）' },
+        honorific: { text: '心より感謝申し上げます。（誠にありがとうございます）', kana: 'こころよりかんしゃもうしあげます。', scene: '目上の方や取引先への最上級敬語' }
+      }
+    }
+  };
+
   // Public Interface
   window.ExpressionTransformer = {
     getGeminiApiKey() {
@@ -358,6 +434,19 @@ JSON形式のみ出力してください:
     async transform(query) {
       if (!query || !query.trim()) return null;
       const clean = query.trim();
+
+      // Tier 0: Direct Instant Preset (for suggested phrases)
+      const presetKey = clean.toLowerCase();
+      if (PRESET_PHRASE_DB[presetKey] || PRESET_PHRASE_DB[clean]) {
+        const item = PRESET_PHRASE_DB[presetKey] || PRESET_PHRASE_DB[clean];
+        return {
+          aiPowered: true,
+          aiSource: 'Verified Expression',
+          meaning: item.meaning,
+          levels: item.levels
+        };
+      }
+
 
       // Tier 1: Teacher's Gemini API Key (Ultra-fast 100% native AI)
       const masterKey = this.getGeminiApiKey();

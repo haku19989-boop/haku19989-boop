@@ -1950,18 +1950,16 @@ rt {
       <div class="quick-search-title-wrap">
         <div class="quick-search-icon">🔍</div>
         <div>
-          <div class="quick-search-title">これ日本語でなんという？（フレーズ・単語AI変換）</div>
-          <div class="quick-search-subtitle">英語・中国語・韓国語や日常フレーズを入力すると、<strong>【タメ口】【丁寧語】【最上級敬語】</strong>の3パターンで即座に提示します</div>
+          <div class="quick-search-title">How do you say this in Japanese? (Phrase & Word AI Converter)</div>
+          <div class="quick-search-subtitle">Enter phrases in English, Korean, Chinese, or Cantonese to instantly get 3 Japanese levels: <strong>Casual, Polite, and Formal Keigo</strong>.</div>
         </div>
       </div>
       <div class="quick-search-quick-tags">
-        <span>おすすめフレーズ:</span>
-        <span class="quick-tag-chip" onclick="quickSearchTag('ありがとう')">ありがとう (Thanks)</span>
-        <span class="quick-tag-chip" onclick="quickSearchTag('ごめんなさい')">ごめんなさい (Sorry)</span>
-        <span class="quick-tag-chip" onclick="quickSearchTag('あとで電話するね')">あとで電話するね (Call later)</span>
-        <span class="quick-tag-chip" onclick="quickSearchTag('手伝おうか？')">手伝おうか？ (Need help?)</span>
-        <span class="quick-tag-chip" onclick="quickSearchTag('おいしい')">おいしい (Delicious)</span>
-        <span class="quick-tag-chip" onclick="quickSearchTag('meeting')">meeting (会議)</span>
+        <span>Suggested phrases:</span>
+        <span class="quick-tag-chip" onclick="quickSearchTag('Thank you')">Thank you (ありがとう)</span>
+        <span class="quick-tag-chip" onclick="quickSearchTag('고마워')">고마워 (ありがとう)</span>
+        <span class="quick-tag-chip" onclick="quickSearchTag('谢谢')">谢谢 (ありがとう)</span>
+        <span class="quick-tag-chip" onclick="quickSearchTag('唔該')">唔該 (ありがとう)</span>
       </div>
     </div>
 
@@ -1969,8 +1967,8 @@ rt {
       <span class="quick-search-input-icon">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       </span>
-      <input type="text" id="quick-search-input" class="quick-search-input" placeholder="言いたいフレーズや単語を入力（例: thank you, 对不起, 電話する, 食べる, meeting, 待って...）" onkeydown="if(event.key==='Enter') executeQuickSearch()">
-      <button class="quick-search-btn" onclick="executeQuickSearch()">日本語表現を調べる</button>
+      <input type="text" id="quick-search-input" class="quick-search-input" placeholder="Type a phrase or word (e.g. Thank you, 고마워, 谢谢, 唔該, meet, delicious...)" onkeydown="if(event.key==='Enter') executeQuickSearch()">
+      <button class="quick-search-btn" onclick="executeQuickSearch()">Search in Japanese</button>
     </div>
 
     <!-- 検索結果表示エリア (3段階レベルカード ＆ 単語ヒット一覧) -->
@@ -2904,7 +2902,7 @@ rt {
     executeQuickSearch();
   }
 
-  function executeQuickSearch() {
+  async function executeQuickSearch() {
     const q = document.getElementById('quick-search-input').value.trim();
     const resBox = document.getElementById('quick-search-results');
     if (!q) {
@@ -2915,7 +2913,7 @@ rt {
     // 1. 3段階レベル変換 (タメ口 / 丁寧語 / 最上級敬語)
     let expressionData = null;
     if (window.ExpressionTransformer) {
-      expressionData = window.ExpressionTransformer.transform(q);
+      expressionData = await window.ExpressionTransformer.transform(q);
     }
 
     // 2. 単語一致検索 (JLPT_VOCAB)
