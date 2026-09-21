@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stage8-総復習：意向形・たほうがいい・命令形・とおりに・ば形のまとめ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-main: #1E5989; --navy-dark: #143D5E;
+    --teal-main: #4FB3BE; --teal-border: #82CBD3; --teal-bg: #F0FAFA; --teal-text: #196168;
+    --yellow-bg: #FFFDEB; --yellow-border: #F0D462; --yellow-text: #8C6500; --yellow-title: #6E4F00;
+    --mid-cyan-bg: #EDF8FA; --mid-cyan-border: #79C2D0; --mid-cyan-text: #165E6D;
+    --pink-bg: #FDF0F3; --pink-border: #D88B9D; --pink-text: #8E3A4F;
+    --blue-bg: #EDF5FB; --blue-border: #89BFE0; --blue-text: #1E5989;
+    --card-bg: #FFFFFF; --text-dark: #232C3A; --text-sub: #576579; --border-light: #E2E8F0;
+    --ruby-color: #C4688A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', '游ゴシック', 'YuGothic', sans-serif; background: #F8FAF9; color: var(--text-dark); line-height: 1.6; padding-bottom: 60px; }
+  header { background: var(--navy-main); color: white; padding: 20px 24px; box-shadow: 0 4px 16px rgba(30, 89, 137, 0.12); position: sticky; top: 0; z-index: 100; }
+  .header-inner { max-width: 920px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .header-title-box { display: flex; align-items: center; gap: 12px; }
+  .badge-stage { background: var(--pink-border); color: white; font-size: 0.75rem; padding: 3px 10px; border-radius: 12px; font-weight: 700; letter-spacing: 0.5px; }
+  .header-title-box h1 { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.3px; }
+  .lang-switcher { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); border-radius: 20px; padding: 4px 10px; }
+  .lang-switcher span { font-size: 0.85rem; }
+  .lang-switcher select { background: white; border: none; border-radius: 14px; padding: 4px 10px; font-size: 0.78rem; font-weight: 600; color: var(--navy-main); cursor: pointer; }
+  .nav-bar { max-width: 920px; margin: 18px auto 0; padding: 0 16px; display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; }
+  .nav-tab-btn { background: white; border: 1.5px solid var(--blue-border); padding: 7px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: var(--navy-main); cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+  .nav-tab-btn:hover, .nav-tab-btn.active { background: var(--navy-main); color: white; border-color: var(--navy-main); }
+  .container { max-width: 920px; margin: 22px auto; padding: 0 16px; display: flex; flex-direction: column; gap: 28px; }
+  .content-card { background: var(--card-bg); border-radius: 18px; padding: 26px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03); border: 1.5px solid var(--border-light); }
+  .card-header-row { border-bottom: 2px solid var(--border-light); padding-bottom: 12px; margin-bottom: 18px; }
+  .step-label { font-size: 0.75rem; font-weight: 700; color: var(--navy-main); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 2px; }
+  .card-main-title { font-size: 1.25rem; font-weight: 700; color: var(--navy-main); }
+  .card-subtitle-en { font-size: 0.88rem; color: var(--text-dark); margin-top: 4px; line-height: 1.45; }
+  .card-subtitle-native { font-size: 0.82rem; color: var(--text-sub); margin-top: 2px; }
+  ruby { font-family: '游ゴシック', 'YuGothic', sans-serif; }
+  ruby rt { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 0.65em; color: var(--ruby-color); font-weight: 600; }
+  .tts-btn { background: none; border: 1px solid var(--border-light); border-radius: 50%; width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; color: var(--navy-main); transition: all 0.2s; padding: 0; vertical-align: middle; margin-left: 6px; flex-shrink: 0; }
+  .tts-btn:hover { background: var(--blue-bg); border-color: var(--blue-border); transform: scale(1.1); }
+  .section-source-tag { display: inline-block; font-size: 0.7rem; font-weight: 700; color: var(--teal-text); background: var(--teal-bg); border: 1px solid var(--teal-border); border-radius: 8px; padding: 1px 8px; margin-left: 6px; vertical-align: middle; }
+  .toggle-item { background: white; border: 1.5px solid var(--blue-border); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; cursor: pointer; }
+  .toggle-prompt-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .toggle-prompt-text { font-size: 0.95rem; font-weight: 600; color: var(--navy-main); font-family: '游ゴシック', 'YuGothic', sans-serif; }
+  .toggle-prompt-en { font-size: 0.82rem; color: var(--text-sub); margin-top: 4px; font-family: 'Inter', sans-serif; font-weight: 500; }
+  .btn-check-reveal { background: var(--blue-bg); color: var(--navy-main); border: 1px solid var(--blue-border); padding: 5px 12px; border-radius: 16px; font-size: 0.78rem; font-weight: 600; flex-shrink: 0; }
+  .toggle-answer-box { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border-light); font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.2rem; font-weight: 600; color: var(--navy-main); }
+  .toggle-answer-box.show { display: block; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: translateY(0); } }
+  .blank-mark { background: var(--pink-bg); color: var(--pink-text); border: 1.5px solid var(--pink-border); border-radius: 6px; padding: 1px 8px; font-weight: 700; }
+  .roleplay-card { background: #FAFBFD; border: 1.5px solid var(--border-light); border-radius: 14px; padding: 16px 20px; margin-bottom: 14px; }
+  .roleplay-title { font-size: 0.92rem; font-weight: 700; color: var(--navy-main); margin-bottom: 12px; }
+  .roleplay-bubble { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
+  .roleplay-bubble:last-child { margin-bottom: 0; }
+  .roleplay-speaker { font-size: 0.76rem; font-weight: 700; padding: 3px 8px; border-radius: 8px; min-width: 60px; text-align: center; flex-shrink: 0; }
+  .speaker-a { background: var(--blue-bg); color: var(--navy-main); border: 1px solid var(--blue-border); }
+  .speaker-b { background: var(--mid-cyan-bg); color: var(--mid-cyan-text); border: 1px solid var(--mid-cyan-border); }
+  .roleplay-lines { flex-grow: 1; }
+  .roleplay-jp { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.12rem; font-weight: 600; color: var(--text-dark); margin-bottom: 2px; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+  .roleplay-trans { font-size: 0.82rem; color: var(--text-sub); }
+  .roleplay-native { font-size: 0.78rem; color: #94A3B8; }
+  .roleplay-blank-item { background: white; border: 1.5px dashed var(--blue-border); border-radius: 10px; padding: 10px 14px; margin-top: 8px; cursor: pointer; }
+  .practice-part-header { display: flex; align-items: center; gap: 10px; margin: 28px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--blue-border); }
+  .practice-part-badge { background: var(--navy-main); color: white; font-size: 0.78rem; font-weight: 700; padding: 3px 10px; border-radius: 12px; }
+  .practice-part-title { font-size: 1.05rem; font-weight: 700; color: var(--navy-main); }
+  .vocab-filter-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; }
+  .filter-btn-group { display: flex; gap: 6px; }
+  .filter-pill { background: white; border: 1px solid var(--border-light); font-size: 0.78rem; font-weight: 600; padding: 4px 12px; border-radius: 14px; cursor: pointer; color: var(--text-sub); transition: all 0.2s; }
+  .filter-pill.active { background: var(--navy-main); color: white; border-color: var(--navy-main); }
+  .word-pool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
+  .word-pool-card { background: white; border: 1px solid var(--border-light); border-radius: 10px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; }
+  .pool-word-jp { font-family: '游ゴシック', 'YuGothic', sans-serif; font-weight: 600; font-size: 1.1rem; color: var(--navy-main); }
+  .pool-word-trans { font-size: 0.78rem; color: var(--text-sub); }
+  .star-btn { background: none; border: none; font-size: 1.25rem; cursor: pointer; color: #CBD5E0; transition: all 0.2s; }
+  .star-btn.active { color: #E2A03F; transform: scale(1.15); }
+  .note-box { background: var(--yellow-bg); border: 1.5px solid var(--yellow-border); border-radius: 12px; padding: 12px 16px; margin: 12px 0; font-size: 0.85rem; color: var(--yellow-title); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title-box">
+      <span class="badge-stage">STAGE 8 - 総復習</span>
+      <h1>意向形・たほうがいい・命令形・とおりに・ば形のまとめ — Stage 8 Comprehensive Review</h1>
+    </div>
+    <div class="lang-switcher">
+      <span>🌐</span>
+      <select id="lang-select" onchange="applyLanguage(this.value)">
+        <option value="all" selected>All / 全部</option>
+        <option value="ko">한국어</option>
+        <option value="zhcn">简体中文</option>
+        <option value="zhtw">繁體中文</option>
+        <option value="cant">粵語（香港）</option>
+      </select>
+    </div>
+  </div>
+</header>
+
+<div class="nav-bar">
+  <button class="nav-tab-btn active" onclick="scrollToSection('sec-fill')">1. 穴埋め問題</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-conv')">2. 会話ドリル</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-trans')">3. 訳問題</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-pool')">4. 語彙復習</button>
+</div>
+
+<div class="container">
+
+  <section class="content-card" id="sec-fill">
+    <div class="card-header-row">
+      <div class="step-label">Part 1</div>
+      <div class="card-main-title">穴埋め問題 — Fill in the Blank</div>
+      <div class="card-subtitle-en">Choose the correct conjugation or word for each blank, drawn from all five lessons of Stage 8 . Tap to reveal the answer.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="Stage 8의 5개 레슨 전체에서 나온 빈칸에 알맞은 활용형이나 단어를 넣으세요. 눌러서 정답을 확인하세요." data-zhcn="从Stage 8全部五课（第31〜35课）中为每个空格选择正确的活用形或单词。点击查看答案。" data-zhtw="從Stage 8全5レッスン中為每個空格選擇正確的活用形或單字。點擊查看答案。" data-cant="由Stage 8全5レッスン入面幫每個空格揀啱嘅變化形或者生字。撳一下睇答案。"></div>
+    </div>
+
+    <div class="toggle-item" onclick="toggleAnswer('f1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">1. あしたから<ruby>料理<rt>りょうり</rt></ruby>を＿＿＿と<ruby>思<rt>おも</rt></ruby>っています。<span class="section-source-tag">Lesson1</span></div><button class="btn-check-reveal" id="btn-f1">Reveal ▼</button></div><div class="toggle-prompt-en">(I'm thinking of learning to cook from tomorrow. — volitional form)</div><div class="toggle-answer-box" id="ans-f1"><span>あしたから<ruby>料理<rt>りょうり</rt></ruby>を<span class="blank-mark">習おう</span>と<ruby>思<rt>おも</rt></ruby>っています。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('あしたから料理を習おうと思っています。')" title="Listen">🔊</button></div></div>
+
+    <div class="toggle-item" onclick="toggleAnswer('f2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">2. <ruby>来月<rt>らいげつ</rt></ruby>、<ruby>大阪支店<rt>おおさかしてん</rt></ruby>で<ruby>働<rt>はたら</rt></ruby>く＿＿＿です。<span class="section-source-tag">Lesson1</span></div><button class="btn-check-reveal" id="btn-f2">Reveal ▼</button></div><div class="toggle-prompt-en">(I'm scheduled to work at the Osaka branch next month. — fixed schedule)</div><div class="toggle-answer-box" id="ans-f2"><span><ruby>来月<rt>らいげつ</rt></ruby>、<ruby>大阪支店<rt>おおさかしてん</rt></ruby>で<ruby>働<rt>はたら</rt></ruby>く<span class="blank-mark">予定</span>です。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('来月、大阪支店で働く予定です。')" title="Listen">🔊</button></div></div>
+
+    <div class="toggle-item" onclick="toggleAnswer('f3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">3. <ruby>週末<rt>しゅうまつ</rt></ruby>は<ruby>家<rt>いえ</rt></ruby>でゆっくりする＿＿＿です。<span class="section-source-tag">Lesson1</span></div><button class="btn-check-reveal" id="btn-f3">Reveal ▼</button></div><div class="toggle-prompt-en">(I intend to relax at home on the weekend. — personal resolve)</div><div class="toggle-answer-box" id="ans-f3"><span><ruby>週末<rt>しゅうまつ</rt></ruby>は<ruby>家<rt>いえ</rt></ruby>でゆっくりする<span class="blank-mark">つもり</span>です。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('週末は家でゆっくりするつもりです。')" title="Listen">🔊</button></div></div>
+
+    <div class="toggle-item" onclick="toggleAnswer('f4')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">4. <ruby>無理<rt>むり</rt></ruby>をし＿＿＿がいいですよ。<span class="section-source-tag">Lesson2</span></div><button class="btn-check-reveal" id="btn-f4">Reveal ▼</button></div><div class="toggle-prompt-en">(You'd better not overdo it.)</div><div class="toggle-answer-box" id="ans-f4"><span><ruby>無理<rt>むり</rt></ruby>をし<span class="blank-mark">ないほう</span>がいいですよ。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('無理をしないほうがいいですよ。')" title="Listen">🔊</button></div></div>
+
+    <div class="toggle-item" onclick="toggleAnswer('f5')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">5. あしたは<ruby>雨<rt>あめ</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>る＿＿＿。<span class="section-source-tag">Lesson2</span></div><button class="btn-check-reveal" id="btn-f5">Reveal ▼</button></div><div class="toggle-prompt-en">(It'll probably rain tomorrow. — uncertain opinion)</div><div class="toggle-answer-box" id="ans-f5"><span>あしたは<ruby>雨<rt>あめ</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>る<span class="blank-mark">でしょう</span>。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('あしたは雨が降るでしょう。')" title="Listen">🔊</button></div></div>
+
+    <div class="toggle-item" onclick="toggleAnswer('f6')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">6. <ruby>薬<rt>くすり</rt></ruby>を<ruby>飲<rt>の</rt></ruby>めば、すぐ<ruby>治<rt>なお</rt></ruby>る＿＿＿。<span class="section-source-tag">Lesson2</span></div><button class="btn-check-reveal" id="btn-f6">Reveal ▼</button></div><div class="toggle-prompt-en">(If you take the medicine, you might get better soon. — possibility)</div><div class="toggle-answer-box" id="ans-f6"><span><ruby>薬<rt>くすり</rt></ruby>を<ruby>飲<rt>の</rt></ruby>めば、すぐ<ruby>治<rt>なお</rt></ruby>る<span class="blank-mark">かもしれません</span>。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('薬を飲めば、すぐ治るかもしれません。')" title="Listen">🔊</button></div></div>
+
+    <div class="toggle-item" onclick="toggleAnswer('f7')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">7. <ruby>危<rt>あぶ</rt></ruby>ない！ここで<ruby>遊<rt>あそ</rt></ruby>ぶ＿＿＿。<span class="section-source-tag">Lesson3</span></div><button class="btn-check-reveal" id="btn-f7">Reveal ▼</button></div><div class="toggle-prompt-en">(Watch out! Don't play here. — prohibitive form)</div><div class="toggle-answer-box" id="ans-f7"><span><ruby>危<rt>あぶ</rt></ruby>ない！ここで<ruby>遊<rt>あそ</rt></ruby>ぶ<span class="blank-mark">な</span>。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('危ない。ここで遊ぶな。')" title="Listen">🔊</button></div></div>
+
+    <div class="toggle-item" onclick="toggleAnswer('f8')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">8. このマークは<ruby>危険<rt>きけん</rt></ruby>という＿＿＿です。<span class="section-source-tag">Lesson3</span></div><button class="btn-check-reveal" id="btn-f8">Reveal ▼</button></div><div class="toggle-prompt-en">(This mark means "Danger".)</div><div class="toggle-answer-box" id="ans-f8"><span>このマークは<ruby>危険<rt>きけん</rt></ruby>という<span class="blank-mark">意味</span>です。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('このマークは危険という意味です。')" title="Listen">🔊</button></div></div>
+
+    <div class="toggle-item" onclick="toggleAnswer('f9')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">9. ミラーさんは<ruby>来週<rt>らいしゅう</rt></ruby><ruby>大阪<rt>おおさか</rt></ruby>へ<ruby>出張<rt>しゅっちょう</rt></ruby>すると＿＿＿いました。<span class="section-source-tag">Lesson3</span></div><button class="btn-check-reveal" id="btn-f9">Reveal ▼</button></div><div class="toggle-prompt-en">(Miller said he was going on a business trip to Osaka next week. — reported speech)</div><div class="toggle-answer-box" id="ans-f9"><span>ミラーさんは<ruby>来週<rt>らいしゅう</rt></ruby><ruby>大阪<rt>おおさか</rt></ruby>へ<ruby>出張<rt>しゅっちょう</rt></ruby>すると<span class="blank-mark">言って</span>いました。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('ミラーさんは来週大阪へ出張すると言っていました。')" title="Listen">🔊</button></div></div>
+
+    <div class="toggle-item" onclick="toggleAnswer('f10')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">10. <ruby>先生<rt>せんせい</rt></ruby>が<ruby>言<rt>い</rt></ruby>った＿＿＿に、<ruby>書<rt>か</rt></ruby>いてください。<span class="section-source-tag">Lesson4</span></div><button class="btn-check-reveal" id="btn-f10">Reveal ▼</button></div><div class="toggle-prompt-en">(Please write it exactly as the teacher said.)</div><div class="toggle-answer-box" id="ans-f10"><span><ruby>先生<rt>せんせい</rt></ruby>が<ruby>言<rt>い</rt></ruby>った<span class="blank-mark">とおり</span>に、<ruby>書<rt>か</rt></ruby>いてください。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('先生が言ったとおりに、書いてください。')" title="Listen">🔊</button></div></div>
+
+    <div class="toggle-item" onclick="toggleAnswer('f11')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">11. <ruby>仕事<rt>しごと</rt></ruby>の＿＿＿で、<ruby>飲<rt>の</rt></ruby>みに<ruby>行<rt>い</rt></ruby>きませんか。<span class="section-source-tag">Lesson4</span></div><button class="btn-check-reveal" id="btn-f11">Reveal ▼</button></div><div class="toggle-prompt-en">(Shall we go for a drink after work?)</div><div class="toggle-answer-box" id="ans-f11"><span><ruby>仕事<rt>しごと</rt></ruby>の<span class="blank-mark">あと</span>で、<ruby>飲<rt>の</rt></ruby>みに<ruby>行<rt>い</rt></ruby>きませんか。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('仕事のあとで、飲みに行きませんか。')" title="Listen">🔊</button></div></div>
+
+    <div class="toggle-item" onclick="toggleAnswer('f12')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">12. しょうゆを＿＿＿<ruby>食<rt>た</rt></ruby>べてください。<span class="section-source-tag">Lesson4</span></div><button class="btn-check-reveal" id="btn-f12">Reveal ▼</button></div><div class="toggle-prompt-en">(Please eat it without putting on soy sauce.)</div><div class="toggle-answer-box" id="ans-f12"><span>しょうゆを<span class="blank-mark">つけないで</span><ruby>食<rt>た</rt></ruby>べてください。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('しょうゆをつけないで食べてください。')" title="Listen">🔊</button></div></div>
+
+    <div class="toggle-item" onclick="toggleAnswer('f13')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">13. その<ruby>ボタン<rt></rt></ruby>を＿＿＿ば、<ruby>開<rt>あ</rt></ruby>きますよ。<span class="section-source-tag">Lesson5</span></div><button class="btn-check-reveal" id="btn-f13">Reveal ▼</button></div><div class="toggle-prompt-en">(It'll open if you press that button. — ば形)</div><div class="toggle-answer-box" id="ans-f13"><span>その<ruby>ボタン<rt></rt></ruby>を<span class="blank-mark">押せ</span>ば、<ruby>開<rt>あ</rt></ruby>きますよ。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('そのボタンを押せば、開きますよ。')" title="Listen">🔊</button></div></div>
+
+    <div class="toggle-item" onclick="toggleAnswer('f14')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">14. <ruby>天気<rt>てんき</rt></ruby>がよければ、<ruby>島<rt>しま</rt></ruby>が＿＿＿。<span class="section-source-tag">Lesson5</span></div><button class="btn-check-reveal" id="btn-f14">Reveal ▼</button></div><div class="toggle-prompt-en">(If the weather's fine, you can see the island.)</div><div class="toggle-answer-box" id="ans-f14"><span><ruby>天気<rt>てんき</rt></ruby>がよければ、<ruby>島<rt>しま</rt></ruby>が<span class="blank-mark">見えます</span>。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('天気がよければ、島が見えます。')" title="Listen">🔊</button></div></div>
+
+    <div class="toggle-item" onclick="toggleAnswer('f15')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">15. 2、3<ruby>日<rt>にち</rt></ruby>＿＿＿、<ruby>箱根<rt>はこね</rt></ruby>がいいと<ruby>思<rt>おも</rt></ruby>います。<span class="section-source-tag">Lesson5</span></div><button class="btn-check-reveal" id="btn-f15">Reveal ▼</button></div><div class="toggle-prompt-en">(If it's for two or three days, I think Hakone would be good.)</div><div class="toggle-answer-box" id="ans-f15"><span>2、3<ruby>日<rt>にち</rt></ruby><span class="blank-mark">なら</span>、<ruby>箱根<rt>はこね</rt></ruby>がいいと<ruby>思<rt>おも</rt></ruby>います。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('2、3日なら、箱根がいいと思います。')" title="Listen">🔊</button></div></div>
+  </section>
+
+  <section class="content-card" id="sec-conv">
+    <div class="card-header-row">
+      <div class="step-label">Part 2</div>
+      <div class="card-main-title">会話ドリル — Conversation Drills</div>
+      <div class="card-subtitle-en">Complete each mini-dialogue with the missing line, drawing on grammar from at least two different lessons in Stage 8.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="Stage 8의 서로 다른 두 과 이상에서 배운 문법을 활용해 각 미니 대화의 빠진 문장을 완성하세요." data-zhcn="运用Stage 8中至少两课学到的语法，补全每段迷你对话中缺少的一句。" data-zhtw="運用Stage 8中至少兩課學到的語法，補全每段迷你對話中缺少的一句。" data-cant="用返Stage 8入面至少兩課學過嘅文法，填埋每段迷你對話缺少嘅一句。"></div>
+    </div>
+
+    <div class="roleplay-card">
+      <div class="roleplay-title">Drill 1: 転勤の支度 — Getting Ready for the Transfer (L1＋L4)</div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-a">小川</div><div class="roleplay-lines"><div class="roleplay-jp"><ruby>大阪<rt>おおさか</rt></ruby>への<ruby>転勤<rt>てんきん</rt></ruby>の<ruby>支度<rt>したく</rt></ruby>はできましたか。</div><div class="roleplay-trans">Have you got ready for the transfer to Osaka?</div></div></div>
+      <div class="roleplay-blank-item" onclick="toggleAnswer('cv1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">ミラー: ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿ (I'll do the paperwork exactly as the instructions say, and I plan to work over there from next month.)</div><button class="btn-check-reveal" id="btn-cv1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-cv1"><span><ruby>説明書<rt>せつめいしょ</rt></ruby>のとおりに<ruby>手続<rt>てつづ</rt></ruby>きをして、<ruby>来月<rt>らいげつ</rt></ruby>から<ruby>向<rt>む</rt></ruby>こうで<ruby>働<rt>はたら</rt></ruby>くつもりです。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('説明書のとおりに手続きをして、来月から向こうで働くつもりです。')" title="Listen">🔊</button></div></div>
+    </div>
+
+    <div class="roleplay-card">
+      <div class="roleplay-title">Drill 2: 顔色が悪い — You Look Unwell (L2＋L5)</div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-a">鈴木</div><div class="roleplay-lines"><div class="roleplay-jp"><ruby>顔色<rt>かおいろ</rt></ruby>が<ruby>悪<rt>わる</rt></ruby>いですね。<ruby>無理<rt>むり</rt></ruby>をしないほうがいいですよ。</div><div class="roleplay-trans">You look unwell. You'd better not overdo it.</div></div></div>
+      <div class="roleplay-blank-item" onclick="toggleAnswer('cv2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">ミラー: ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿ (That's true. I might get better if I rest.)</div><button class="btn-check-reveal" id="btn-cv2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-cv2"><span>そうですね。<ruby>休<rt>やす</rt></ruby>めば、よくなるかもしれません。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('そうですね。休めば、よくなるかもしれません。')" title="Listen">🔊</button></div></div>
+    </div>
+
+    <div class="roleplay-card">
+      <div class="roleplay-title">Drill 3: 「立入禁止」の意味 — What "Keep Out" Means (L3＋L4)</div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-a">ワット</div><div class="roleplay-lines"><div class="roleplay-jp">「<ruby>立入禁止<rt>たちいりきんし</rt></ruby>」はどういう<ruby>意味<rt>いみ</rt></ruby>ですか。</div><div class="roleplay-trans">What does "Tachiiri-kinshi" mean?</div></div></div>
+      <div class="roleplay-blank-item" onclick="toggleAnswer('cv3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">大学職員: ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿ (It means "Don't enter". You'll be able to go in again after the construction finishes.)</div><button class="btn-check-reveal" id="btn-cv3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-cv3"><span><ruby>入<rt>はい</rt></ruby>るなという<ruby>意味<rt>いみ</rt></ruby>です。<ruby>工事<rt>こうじ</rt></ruby>が<ruby>終<rt>お</rt></ruby>わったあとで、また<ruby>入<rt>はい</rt></ruby>れますよ。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('入るなという意味です。工事が終わったあとで、また入れますよ。')" title="Listen">🔊</button></div></div>
+    </div>
+
+    <div class="roleplay-card">
+      <div class="roleplay-title">Drill 4: 週末の予定 — Weekend Plans (L1＋L5)</div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-a">タワポン</div><div class="roleplay-lines"><div class="roleplay-jp"><ruby>週末<rt>しゅうまつ</rt></ruby>、<ruby>温泉<rt>おんせん</rt></ruby>に<ruby>行<rt>い</rt></ruby>こうと<ruby>思<rt>おも</rt></ruby>っているんですが、どこかいい<ruby>所<rt>ところ</rt></ruby>はありませんか。</div><div class="roleplay-trans">I'm thinking of going to a hot spring on the weekend; do you know anywhere good?</div></div></div>
+      <div class="roleplay-blank-item" onclick="toggleAnswer('cv4')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">田中: ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿ (If it's a hot spring, I think Kusatsu is good.)</div><button class="btn-check-reveal" id="btn-cv4">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-cv4"><span><ruby>温泉<rt>おんせん</rt></ruby>なら、<ruby>草津<rt>くさつ</rt></ruby>がいいと<ruby>思<rt>おも</rt></ruby>いますよ。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('温泉なら、草津がいいと思いますよ。')" title="Listen">🔊</button></div></div>
+    </div>
+
+    <div class="roleplay-card">
+      <div class="roleplay-title">Drill 5: 体調不良 — Feeling Unwell (L2＋L3)</div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-a">小川</div><div class="roleplay-lines"><div class="roleplay-jp">シュミットさん、<ruby>無理<rt>むり</rt></ruby>をしないほうがいいですよ。</div><div class="roleplay-trans">Mr. Schmidt, you'd better not overdo it.</div></div></div>
+      <div class="roleplay-blank-item" onclick="toggleAnswer('cv5')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">シュミット: ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿ (The doctor said I'm just tired. But if I take the medicine, I might get better right away.)</div><button class="btn-check-reveal" id="btn-cv5">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-cv5"><span><ruby>医者<rt>いしゃ</rt></ruby>は<ruby>疲<rt>つか</rt></ruby>れているだけだと<ruby>言<rt>い</rt></ruby>っていました。でも、<ruby>薬<rt>くすり</rt></ruby>を<ruby>飲<rt>の</rt></ruby>めば、すぐ<ruby>治<rt>なお</rt></ruby>るかもしれません。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('医者は疲れているだけだと言っていました。でも、薬を飲めば、すぐ治るかもしれません。')" title="Listen">🔊</button></div></div>
+    </div>
+  </section>
+
+  <section class="content-card" id="sec-trans">
+    <div class="card-header-row">
+      <div class="step-label">Part 3</div>
+      <div class="card-main-title">訳問題 — Translation Drills</div>
+      <div class="card-subtitle-en">Each sentence below combines grammar from at least two lessons in Stage 8. Translate each into Japanese, then tap to check.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="아래 문장들은 Stage 8의 두 과 이상에서 배운 문법을 조합했습니다. 일본어로 번역한 후, 눌러서 확인하세요." data-zhcn="下面每个句子都结合了Stage 8中至少两课的语法。把每句翻译成日语，然后点击核对。" data-zhtw="下面每個句子都結合了Stage 8中至少兩課的語法。把每句翻譯成日語，然後點擊核對。" data-cant="下面每句都結合咗Stage 8入面至少兩課嘅文法。將每句譯做日文，然後撳一下對答案。"></div>
+    </div>
+    <div class="toggle-item" onclick="toggleAnswer('t1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">1. I'm thinking of learning to cook, and I also plan to keep living in Tokyo.</div><button class="btn-check-reveal" id="btn-t1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-t1"><span><ruby>料理<rt>りょうり</rt></ruby>を<ruby>習<rt>なら</rt></ruby>おうと<ruby>思<rt>おも</rt></ruby>っています。それに、<ruby>東京<rt>とうきょう</rt></ruby>にずっと<ruby>住<rt>す</rt></ruby>むつもりです。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('料理を習おうと思っています。それに、東京にずっと住むつもりです。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('t2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">2. You should go to the hospital — you might have a fever.</div><button class="btn-check-reveal" id="btn-t2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-t2"><span><ruby>病院<rt>びょういん</rt></ruby>へ<ruby>行<rt>い</rt></ruby>ったほうがいいですよ。<ruby>熱<rt>ねつ</rt></ruby>があるかもしれません。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('病院へ行ったほうがいいですよ。熱があるかもしれません。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('t3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">3. Please do it exactly as I said, and don't touch it after that.</div><button class="btn-check-reveal" id="btn-t3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-t3"><span>わたしが<ruby>言<rt>い</rt></ruby>ったとおりに、してください。そのあとは<ruby>触<rt>さわ</rt></ruby>らないでください。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('わたしが言ったとおりに、してください。そのあとは触らないでください。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('t4')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">4. This mark means "Danger" — he said the road is under construction.</div><button class="btn-check-reveal" id="btn-t4">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-t4"><span>このマークは<ruby>危険<rt>きけん</rt></ruby>という<ruby>意味<rt>いみ</rt></ruby>です。<ruby>彼<rt>かれ</rt></ruby>は<ruby>道路<rt>どうろ</rt></ruby>が<ruby>工事中<rt>こうじちゅう</rt></ruby>だと<ruby>言<rt>い</rt></ruby>っていました。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('このマークは危険という意味です。彼は道路が工事中だと言っていました。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('t5')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">5. If you press the button, the door will open — could you tell Watanabe?</div><button class="btn-check-reveal" id="btn-t5">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-t5"><span><ruby>ボタン<rt></rt></ruby>を<ruby>押<rt>お</rt></ruby>せば、<ruby>ドア<rt></rt></ruby>が<ruby>開<rt>あ</rt></ruby>きます。<ruby>渡辺<rt>わたなべ</rt></ruby>さんに<ruby>伝<rt>つた</rt></ruby>えていただけませんか。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('ボタンを押せば、ドアが開きます。渡辺さんに伝えていただけませんか。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('t6')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">6. I plan to move to Osaka next month, and I'll do it exactly as the instructions say.</div><button class="btn-check-reveal" id="btn-t6">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-t6"><span><ruby>来月<rt>らいげつ</rt></ruby><ruby>大阪<rt>おおさか</rt></ruby>へ<ruby>引<rt>ひ</rt></ruby>っ<ruby>越<rt>こ</rt></ruby>すつもりです。<ruby>説明書<rt>せつめいしょ</rt></ruby>のとおりにします。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('来月大阪へ引っ越すつもりです。説明書のとおりにします。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('t7')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">7. You'd better not overdo it — it might rain tomorrow.</div><button class="btn-check-reveal" id="btn-t7">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-t7"><span><ruby>無理<rt>むり</rt></ruby>をしないほうがいいですよ。あした<ruby>雨<rt>あめ</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>るかもしれません。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('無理をしないほうがいいですよ。あした雨が降るかもしれません。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('t8')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">8. Don't run! It means you shouldn't enter here.</div><button class="btn-check-reveal" id="btn-t8">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-t8"><span><ruby>走<rt>はし</rt></ruby>るな！ここに<ruby>入<rt>はい</rt></ruby>ってはいけないという<ruby>意味<rt>いみ</rt></ruby>です。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('走るな。ここに入ってはいけないという意味です。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('t9')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">9. After finishing work, I ate without putting on any soy sauce.</div><button class="btn-check-reveal" id="btn-t9">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-t9"><span><ruby>仕事<rt>しごと</rt></ruby>が<ruby>終<rt>お</rt></ruby>わったあとで、しょうゆをつけないで<ruby>食<rt>た</rt></ruby>べました。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('仕事が終わったあとで、しょうゆをつけないで食べました。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('t10')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">10. If it's a trip for two or three days, June would be good.</div><button class="btn-check-reveal" id="btn-t10">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-t10"><span>2、3<ruby>日<rt>にち</rt></ruby>の<ruby>旅行<rt>りょこう</rt></ruby>なら、6<ruby>月<rt>がつ</rt></ruby>がいいです。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('2、3日の旅行なら、6月がいいです。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('t11')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">11. I'm planning to attend the meeting, and the teacher said it starts at 2 o'clock.</div><button class="btn-check-reveal" id="btn-t11">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-t11"><span><ruby>会議<rt>かいぎ</rt></ruby>に<ruby>出席<rt>しゅっせき</rt></ruby>するつもりです。<ruby>先生<rt>せんせい</rt></ruby>は2<ruby>時<rt>じ</rt></ruby>から<ruby>始<rt>はじ</rt></ruby>まると<ruby>言<rt>い</rt></ruby>っていました。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('会議に出席するつもりです。先生は2時から始まると言っていました。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('t12')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">12. If you're not feeling well, you'd better rest — I'll do as the doctor said.</div><button class="btn-check-reveal" id="btn-t12">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-t12"><span><ruby>体<rt>からだ</rt></ruby>の<ruby>調子<rt>ちょうし</rt></ruby>が<ruby>悪<rt>わる</rt></ruby>いなら、<ruby>休<rt>やす</rt></ruby>んだほうがいいですよ。<ruby>医者<rt>いしゃ</rt></ruby>が<ruby>言<rt>い</rt></ruby>ったとおりにします。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('体の調子が悪いなら、休んだほうがいいですよ。医者が言ったとおりにします。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('t13')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">13. Please do it exactly as the instructions say, and don't press this button.</div><button class="btn-check-reveal" id="btn-t13">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-t13"><span><ruby>説明書<rt>せつめいしょ</rt></ruby>のとおりにしてください。この<ruby>ボタン<rt></rt></ruby>は<ruby>押<rt>お</rt></ruby>さないでください。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('説明書のとおりにしてください。このボタンは押さないでください。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('t14')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">14. I'm thinking of studying abroad, and if it's about visas, please ask the office.</div><button class="btn-check-reveal" id="btn-t14">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-t14"><span><ruby>留学<rt>りゅうがく</rt></ruby>しようと<ruby>思<rt>おも</rt></ruby>っています。<ruby>ビザ<rt></rt></ruby>のことなら、<ruby>事務所<rt>じむしょ</rt></ruby>に<ruby>聞<rt>き</rt></ruby>いてください。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('留学しようと思っています。ビザのことなら、事務所に聞いてください。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('t15')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">15. He might be late — could you tell Tanaka the meeting starts at 3?</div><button class="btn-check-reveal" id="btn-t15">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-t15"><span><ruby>彼<rt>かれ</rt></ruby>は<ruby>遅<rt>おく</rt></ruby>れるかもしれません。<ruby>田中<rt>たなか</rt></ruby>さんに、<ruby>会議<rt>かいぎ</rt></ruby>は3<ruby>時<rt>じ</rt></ruby>からだと<ruby>伝<rt>つた</rt></ruby>えていただけませんか。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('彼は遅れるかもしれません。田中さんに、会議は3時からだと伝えていただけませんか。')" title="Listen">🔊</button></div></div>
+  </section>
+
+  <section class="content-card" id="sec-pool">
+    <div class="card-header-row">
+      <div class="step-label">Part 4</div>
+      <div class="card-main-title">語彙復習 — Combined Vocabulary Review</div>
+      <div class="card-subtitle-en">Key words from all five lessons of Stage 8 in one place. Star the ones you still need to practice.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="Stage 8의 5개 레슨에서 나온 핵심 단어를 한곳에 모았습니다. 아직 연습이 필요한 단어에 별표를 하세요." data-zhcn="Stage 8全部五课的关键词汇都在这里。给还需要练习的单词加星标。" data-zhtw="Stage 8全5レッスン的關鍵詞彙都在這裡。給還需要練習的單字加星標。" data-cant="Stage 8全5レッスン嘅關鍵生字都喺呢度。幫仲需要練習嘅生字加星標。"></div>
+    </div>
+    <div class="vocab-filter-row">
+      <div class="filter-btn-group">
+        <button class="filter-pill active" onclick="filterVocab('all')">All</button>
+        <button class="filter-pill" onclick="filterVocab('verb')">Verbs</button>
+        <button class="filter-pill" onclick="filterVocab('noun')">Nouns</button>
+        <button class="filter-pill" onclick="filterVocab('other')">Other</button>
+      </div>
+    </div>
+    <div class="word-pool-grid" id="word-pool-grid">
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">転勤</div><div class="pool-word-trans">job transfer</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">本社／支店</div><div class="pool-word-trans">head office / branch office</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">予定／つもり</div><div class="pool-word-trans">fixed schedule / personal intention</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">続けます</div><div class="pool-word-trans">continue</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">無理をします</div><div class="pool-word-trans">overdo it</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">確かめます</div><div class="pool-word-trans">check, make sure of</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">元気／胃</div><div class="pool-word-trans">energy, health / stomach</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">ストレス</div><div class="pool-word-trans">stress</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">逃げます／守ります</div><div class="pool-word-trans">run away / keep, obey</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">伝えます</div><div class="pool-word-trans">convey (a message)</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">罰金／締め切り</div><div class="pool-word-trans">fine / deadline</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">駐車違反</div><div class="pool-word-trans">parking violation</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">磨きます／組み立てます</div><div class="pool-word-trans">brush, polish / assemble</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">説明書</div><div class="pool-word-trans">instruction book</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">茶道</div><div class="pool-word-trans">tea ceremony</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">苦い</div><div class="pool-word-trans">bitter</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">咲きます／変わります</div><div class="pool-word-trans">(flowers) bloom / (colour) change</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">困ります</div><div class="pool-word-trans">be in trouble</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">故障</div><div class="pool-word-trans">breakdown, fault</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">向こう／近所</div><div class="pool-word-trans">over there / neighbourhood</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">機会／許可</div><div class="pool-word-trans">chance, opportunity / permission</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">夜行バス／スキー場</div><div class="pool-word-trans">overnight bus / ski resort</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="other"><div><div class="pool-word-jp">それなら／さあ</div><div class="pool-word-trans">in that case / well, let me see</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="other"><div><div class="pool-word-jp">ほとんど</div><div class="pool-word-trans">almost all / hardly (negative)</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="other"><div><div class="pool-word-jp">どういう〜／〜という意味です</div><div class="pool-word-trans">what kind of ~ / it means ~</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+function toggleAnswer(id) {
+  const box = document.getElementById('ans-' + id);
+  const btn = document.getElementById('btn-' + id);
+  const isShowing = box.classList.contains('show');
+  document.querySelectorAll('.toggle-answer-box.show').forEach(b => b.classList.remove('show'));
+  document.querySelectorAll('.btn-check-reveal').forEach(b => b.textContent = 'Reveal ▼');
+  if (!isShowing) {
+    box.classList.add('show');
+    btn.textContent = 'Hide ▲';
+  }
+}
+function closeAllAnswers() {
+  document.querySelectorAll('.toggle-answer-box.show').forEach(b => b.classList.remove('show'));
+  document.querySelectorAll('.btn-check-reveal').forEach(b => b.textContent = 'Reveal ▼');
+}
+function speakText(text) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'ja-JP';
+  utter.rate = 0.92;
+  window.speechSynthesis.speak(utter);
+}
+function toggleStar(btn) {
+  btn.classList.toggle('active');
+}
+function filterVocab(type) {
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('#word-pool-grid .word-pool-card').forEach(card => {
+    if (type === 'all' || card.dataset.type === type) {
+      card.style.display = 'flex';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+function scrollToSection(id) {
+  document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function applyLanguage(lang) {
+  document.querySelectorAll('.i18n-native').forEach(el => {
+    if (lang === 'all') {
+      const parts = [];
+      ['ko','zhcn','zhtw','cant'].forEach(l => { if (el.dataset[l]) parts.push(el.dataset[l]); });
+      el.textContent = parts.join(' / ');
+      el.style.display = parts.length ? 'block' : 'none';
+    } else if (el.dataset[lang]) {
+      el.textContent = el.dataset[lang];
+      el.style.display = 'block';
+    } else {
+      el.style.display = 'none';
+    }
+  });
+  document.querySelectorAll('.i18n-note').forEach(el => {
+    if (lang === 'all') {
+      el.textContent = el.dataset.en;
+    } else if (el.dataset[lang]) {
+      el.textContent = el.dataset[lang];
+    } else {
+      el.textContent = el.dataset.en;
+    }
+  });
+}
+window.addEventListener('DOMContentLoaded', () => { applyLanguage('all'); });
+</script>
+
+</body>
+</html>

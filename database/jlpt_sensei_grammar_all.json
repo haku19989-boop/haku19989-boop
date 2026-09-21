@@ -1,0 +1,3170 @@
+[
+  {
+    "level": "N5",
+    "pattern": "だ (da) & です (desu)",
+    "meaning": "to be (am, is, are, were, used to)",
+    "page": 9,
+    "sample_ja": "私はクリスです。",
+    "sample_en": "watashi wa kurisu desu."
+  },
+  {
+    "level": "N5",
+    "pattern": "だけ (dake)",
+    "meaning": "only; just; as much as",
+    "page": 12,
+    "sample_ja": "⼀⼈だけ。",
+    "sample_en": "hitori dake."
+  },
+  {
+    "level": "N5",
+    "pattern": "だろう (darou)",
+    "meaning": "I think; it seems; probably; right?",
+    "page": 15,
+    "sample_ja": "嘘だろう。",
+    "sample_en": "uso darou."
+  },
+  {
+    "level": "N5",
+    "pattern": "でも (demo)",
+    "meaning": "but; however",
+    "page": 21,
+    "sample_ja": "Meaning",
+    "sample_en": "but; however"
+  },
+  {
+    "level": "N5",
+    "pattern": "でしょう (deshou)",
+    "meaning": "I think; it seems; probably; right?",
+    "page": 23,
+    "sample_ja": "明⽇は⾬が降るでしょう。",
+    "sample_en": "ashita wa ame ga furu deshou."
+  },
+  {
+    "level": "N5",
+    "pattern": "どんな (donna)",
+    "meaning": "what kind of; what sort of",
+    "page": 26,
+    "sample_ja": "Meaning",
+    "sample_en": "what kind of; what sort of"
+  },
+  {
+    "level": "N5",
+    "pattern": "どうして (doushite)",
+    "meaning": "why; for what reason; how",
+    "page": 28,
+    "sample_ja": "2. To ask how / method",
+    "sample_en": "Example A) why"
+  },
+  {
+    "level": "N5",
+    "pattern": "どうやって (douyatte)",
+    "meaning": "how; in what way; by what means",
+    "page": 30,
+    "sample_ja": "Meaning",
+    "sample_en": "how; in what way; by what means"
+  },
+  {
+    "level": "N5",
+    "pattern": "が (ga)",
+    "meaning": "the particle が has two main meanings, one as a subject",
+    "page": 32,
+    "sample_ja": "",
+    "sample_en": ""
+  },
+  {
+    "level": "N5",
+    "pattern": "があります (ga arimasu) & がある (ga aru)",
+    "meaning": "used to say there is or",
+    "page": 35,
+    "sample_ja": "たくさんの宿題があります。",
+    "sample_en": "takusan no shukudai ga arimasu."
+  },
+  {
+    "level": "N5",
+    "pattern": "がほしい / が欲しい (ga hoshii)",
+    "meaning": "to want something",
+    "page": 38,
+    "sample_ja": "Meaning",
+    "sample_en": "to want something"
+  },
+  {
+    "level": "N5",
+    "pattern": "がいます (ga imasu) & がいる (ga iru)",
+    "meaning": "used to say there is or",
+    "page": 40,
+    "sample_ja": "シャワーには誰かがいます。",
+    "sample_en": "shawaa ni wa dareka ga imasu."
+  },
+  {
+    "level": "N5",
+    "pattern": "⽅がいい / (ほうがいい) (hou ga ii)",
+    "meaning": "had better; it’d be better to;",
+    "page": 43,
+    "sample_ja": "⾏たほうがいい。",
+    "sample_en": "itta hou ga ii."
+  },
+  {
+    "level": "N5",
+    "pattern": "い-adjectives (i-adjectives), also known as い形容詞 (i keiyoushi)",
+    "meaning": "",
+    "page": 45,
+    "sample_ja": "",
+    "sample_en": ""
+  },
+  {
+    "level": "N5",
+    "pattern": "⼀番 「いちばん」 (ichiban)",
+    "meaning": "the most; the best",
+    "page": 48,
+    "sample_ja": "Meaning",
+    "sample_en": "the most; the best"
+  },
+  {
+    "level": "N5",
+    "pattern": "⼀緒に「いっしょに」 (issho ni)",
+    "meaning": "together",
+    "page": 50,
+    "sample_ja": "⼀緒に⾏きませんか︖",
+    "sample_en": "issho ni ikimasen ka?"
+  },
+  {
+    "level": "N5",
+    "pattern": "いつも (itsumo)",
+    "meaning": "always; usually; habitually",
+    "page": 52,
+    "sample_ja": "Meaning",
+    "sample_en": "always; usually; habitually"
+  },
+  {
+    "level": "N5",
+    "pattern": "じゃない (janai) & ではない (dewa nai)",
+    "meaning": "to not be (am not; is not;",
+    "page": 54,
+    "sample_ja": "私はともこ先⽣ではない。",
+    "sample_en": "watashi wa tomoko sensei dewanai."
+  },
+  {
+    "level": "N5",
+    "pattern": "か (ka)",
+    "meaning": "か is a sentence-ending particle used to turn a sentence into",
+    "page": 58,
+    "sample_ja": "Meaning",
+    "sample_en": "question particle"
+  },
+  {
+    "level": "N5",
+    "pattern": "か〜か (ka~ka)",
+    "meaning": "the particle か is used to say “or”",
+    "page": 60,
+    "sample_ja": "Meaning",
+    "sample_en": "or"
+  },
+  {
+    "level": "N5",
+    "pattern": "から (kara)",
+    "meaning": "because; since; from",
+    "page": 62,
+    "sample_ja": "",
+    "sample_en": ""
+  },
+  {
+    "level": "N5",
+    "pattern": "⽅ [かた] (kata)",
+    "meaning": "the way of doing something; how to do",
+    "page": 66,
+    "sample_ja": "⾷べ かた = (たべかた) = the way to eat",
+    "sample_en": "2. how to do something"
+  },
+  {
+    "level": "N5",
+    "pattern": "けど (kedo)",
+    "meaning": "but; however; although",
+    "page": 68,
+    "sample_ja": "Meaning",
+    "sample_en": "but; however; although"
+  },
+  {
+    "level": "N5",
+    "pattern": "けれども (keredo mo)",
+    "meaning": "but; however; although",
+    "page": 70,
+    "sample_ja": "Meaning",
+    "sample_en": "but; however; although"
+  },
+  {
+    "level": "N5",
+    "pattern": "まだ (mada)",
+    "meaning": "still; not yet",
+    "page": 72,
+    "sample_ja": "2. or a noun",
+    "sample_en": "Example A) Verb"
+  },
+  {
+    "level": "N5",
+    "pattern": "まだ〜ていません (mada ~te imasen)",
+    "meaning": "have not yet",
+    "page": 74,
+    "sample_ja": "Meaning",
+    "sample_en": "have not yet"
+  },
+  {
+    "level": "N5",
+    "pattern": "まで (made)",
+    "meaning": "until ~; as far as ~; to (an extent); even ~",
+    "page": 76,
+    "sample_ja": "Meaning",
+    "sample_en": "until ~; as far as ~; to (an extent); even ~"
+  },
+  {
+    "level": "N5",
+    "pattern": "前に 【まえに】 (mae ni)",
+    "meaning": "before ~; in front of ~",
+    "page": 78,
+    "sample_ja": "Meaning",
+    "sample_en": "before ~; in front of ~"
+  },
+  {
+    "level": "N5",
+    "pattern": "ませんか (masen ka)",
+    "meaning": "would you; do you want to; shall we~",
+    "page": 80,
+    "sample_ja": "⾏きませんか。",
+    "sample_en": "iki masen ka."
+  },
+  {
+    "level": "N5",
+    "pattern": "ましょう (mashou)",
+    "meaning": "let’s ~; shall we ~",
+    "page": 82,
+    "sample_ja": "Meaning",
+    "sample_en": "let's ~; shall we ~"
+  },
+  {
+    "level": "N5",
+    "pattern": "ましょうか (mashouka)",
+    "meaning": "shall I ~; used to offer help to the listener",
+    "page": 84,
+    "sample_ja": "Meaning",
+    "sample_en": "shall I ~; used to offer help to the listener"
+  },
+  {
+    "level": "N5",
+    "pattern": "も (mo)",
+    "meaning": "too; also; as well",
+    "page": 86,
+    "sample_ja": "Meaning",
+    "sample_en": "too; also; as well"
+  },
+  {
+    "level": "N5",
+    "pattern": "もう (mou)",
+    "meaning": "already; anymore; again; other",
+    "page": 88,
+    "sample_ja": "2. anymore",
+    "sample_en": "3. other; again; more"
+  },
+  {
+    "level": "N5",
+    "pattern": "な-adjectives (na-adjectives), also known as な形容詞 (na keiyoushi)",
+    "meaning": "",
+    "page": 91,
+    "sample_ja": "",
+    "sample_en": ""
+  },
+  {
+    "level": "N5",
+    "pattern": "なあ (naa)",
+    "meaning": "a sentence-ending particle that can used to express the",
+    "page": 93,
+    "sample_ja": "Meaning",
+    "sample_en": "sentence ending particle; confirmation;"
+  },
+  {
+    "level": "N5",
+    "pattern": "ないで (naide)",
+    "meaning": "without doing~ ; To do [B] without doing [A]",
+    "page": 95,
+    "sample_ja": "Meaning",
+    "sample_en": "without doing~ ; To do [B] without doing [A]"
+  },
+  {
+    "level": "N5",
+    "pattern": "ないでくだあい (naide kudasai)",
+    "meaning": "please don’t do",
+    "page": 97,
+    "sample_ja": "⾏かないでください。",
+    "sample_en": "ika naide kudasai."
+  },
+  {
+    "level": "N5",
+    "pattern": "なくてもいい (naku temo ii)",
+    "meaning": "don’t have to; it’s OK to not do",
+    "page": 99,
+    "sample_ja": "Meaning",
+    "sample_en": "don't have to"
+  },
+  {
+    "level": "N5",
+    "pattern": "なくちゃ (nakucha) / なくちゃダメ (nakucha dame)",
+    "meaning": "must do; need",
+    "page": 101,
+    "sample_ja": "",
+    "sample_en": ""
+  },
+  {
+    "level": "N5",
+    "pattern": "になる・くなる (ni naru / ku naru)",
+    "meaning": "to become",
+    "page": 108,
+    "sample_ja": "Meaning",
+    "sample_en": "to become"
+  },
+  {
+    "level": "N5",
+    "pattern": "んです (ndesu) & んだ (nda)",
+    "meaning": "to explain something; show emphasis",
+    "page": 111,
+    "sample_ja": "2. あついんです (atsui ndesu)",
+    "sample_en": "3. あついんだ (atsui nda)"
+  },
+  {
+    "level": "N5",
+    "pattern": "ね (ne)",
+    "meaning": "the particle ね is a sentence ending particle that is used to",
+    "page": 113,
+    "sample_ja": "Meaning",
+    "sample_en": "isn't it? right? eh?"
+  },
+  {
+    "level": "N5",
+    "pattern": "に (ni)",
+    "meaning": "destination particle; in; at; on; to",
+    "page": 115,
+    "sample_ja": "",
+    "sample_en": ""
+  },
+  {
+    "level": "N5",
+    "pattern": "に⾏く 【にいく】(ni iku)",
+    "meaning": "to go in order to do something; to go for",
+    "page": 118,
+    "sample_ja": "Meaning",
+    "sample_en": "go to do"
+  },
+  {
+    "level": "N5",
+    "pattern": "にする (ni suru) / にします (ni shimasu)",
+    "meaning": "to decide on",
+    "page": 120,
+    "sample_ja": "Meaning",
+    "sample_en": "to decide on"
+  },
+  {
+    "level": "N5",
+    "pattern": "に (ni) & へ (e)",
+    "meaning": "to (indicates direction / destination)",
+    "page": 122,
+    "sample_ja": "学校に⾏く。",
+    "sample_en": "gakkou ni iku."
+  },
+  {
+    "level": "N5",
+    "pattern": "の (no)",
+    "meaning": "の is a particle used to indicate possession",
+    "page": 124,
+    "sample_ja": "Meaning",
+    "sample_en": "possessive particle"
+  },
+  {
+    "level": "N5",
+    "pattern": "のです (no desu) & のだ (noda)",
+    "meaning": "to explain something; show",
+    "page": 126,
+    "sample_ja": "2. あついのです (atsui no desu)",
+    "sample_en": "3. あついのだ (atsui noda)"
+  },
+  {
+    "level": "N5",
+    "pattern": "のが下⼿ 【のがへた】(no ga heta)",
+    "meaning": "to be bad at doing something",
+    "page": 129,
+    "sample_ja": "Simply add のが下⼿ (no ga heta) after a verb in its dictionary form to say you are good at that action.",
+    "sample_en": "スポーツをするのがへただ。"
+  },
+  {
+    "level": "N5",
+    "pattern": "のが上⼿ / のがじょうずです (no ga jouzu desu)",
+    "meaning": "to be good at",
+    "page": 131,
+    "sample_ja": "Simply add のが上⼿ (no ga jouzu) after a verb in its dictionary form to say you are good at that action.",
+    "sample_en": "スポーツをするのが上⼿ですね。"
+  },
+  {
+    "level": "N5",
+    "pattern": "のが好き 【のがすきです】(no ga suki desu)",
+    "meaning": "to like doing",
+    "page": 133,
+    "sample_ja": "Meaning",
+    "sample_en": "to like doing something"
+  },
+  {
+    "level": "N5",
+    "pattern": "の中で[A]が⼀番 【のなかで[A]がいちばん】 (no naka de [A] ga ichiban)",
+    "meaning": "",
+    "page": 135,
+    "sample_ja": "Meaning",
+    "sample_en": "out of this group, [A] is best"
+  },
+  {
+    "level": "N5",
+    "pattern": "ので (node)",
+    "meaning": "because of; given that; since (explains reason for",
+    "page": 137,
+    "sample_ja": "あついので⽔をたくさん飲んでね。",
+    "sample_en": "atsui no de mizu o takusan nonde ne."
+  },
+  {
+    "level": "N5",
+    "pattern": "を (o / wo)",
+    "meaning": "object marker particle",
+    "page": 139,
+    "sample_ja": "Meaning",
+    "sample_en": "object marker particle"
+  },
+  {
+    "level": "N5",
+    "pattern": "をください (o kudasai)",
+    "meaning": "please give me~",
+    "page": 141,
+    "sample_ja": "Meaning",
+    "sample_en": "please give me~"
+  },
+  {
+    "level": "N5",
+    "pattern": "しかし (shikashi)",
+    "meaning": "but; however",
+    "page": 143,
+    "sample_ja": "Meaning",
+    "sample_en": "but; however"
+  },
+  {
+    "level": "N5",
+    "pattern": "すぎる (sugiru)",
+    "meaning": "it is used to say something is too much",
+    "page": 145,
+    "sample_ja": "たべます -> たべます + すぎる",
+    "sample_en": "たべすぎる (tabe sugiru)"
+  },
+  {
+    "level": "N5",
+    "pattern": "たことがある (ta koto ga aru)",
+    "meaning": "to have done something before",
+    "page": 148,
+    "sample_ja": "Meaning",
+    "sample_en": "to have done something before"
+  },
+  {
+    "level": "N5",
+    "pattern": "たい (tai)",
+    "meaning": "want to do something",
+    "page": 150,
+    "sample_ja": "",
+    "sample_en": ""
+  },
+  {
+    "level": "N5",
+    "pattern": "たり〜たり (tari~tari)",
+    "meaning": "do such things as A and B",
+    "page": 153,
+    "sample_ja": "Meaning",
+    "sample_en": "do such things as A and B"
+  },
+  {
+    "level": "N5",
+    "pattern": "てある (te aru)",
+    "meaning": "is/has been done (resulting state)",
+    "page": 155,
+    "sample_ja": "This example will focus on the difference between using past form and てある (te aru) form.",
+    "sample_en": "1.1) Using 作った"
+  },
+  {
+    "level": "N5",
+    "pattern": "ている (te iru)",
+    "meaning": "the progressive tense of a verb which shows that",
+    "page": 158,
+    "sample_ja": "2. Continuous – have been doing",
+    "sample_en": "3. Present situation – what do you do now?"
+  },
+  {
+    "level": "N5",
+    "pattern": "てから (te kara)",
+    "meaning": "after doing~",
+    "page": 164,
+    "sample_ja": "Meaning",
+    "sample_en": "after doing~"
+  },
+  {
+    "level": "N5",
+    "pattern": "てください (te kudasai)",
+    "meaning": "to ask someone to please do ~",
+    "page": 166,
+    "sample_ja": "Meaning",
+    "sample_en": "please do"
+  },
+  {
+    "level": "N5",
+    "pattern": "てはいけない (te wa ikenai) / てはいけません (te wa ikemasen)",
+    "meaning": "",
+    "page": 168,
+    "sample_ja": "Meaning",
+    "sample_en": "must not; may not; cannot"
+  },
+  {
+    "level": "N5",
+    "pattern": "てもいい (temo ii) & てもいいです（か） (temo ii desu ka)",
+    "meaning": "is OK",
+    "page": 170,
+    "sample_ja": "Meaning",
+    "sample_en": "is OK to..; is alright to..; may I..?"
+  },
+  {
+    "level": "N5",
+    "pattern": "と (to)",
+    "meaning": "the connecting particle と can be used to combine multiple",
+    "page": 172,
+    "sample_ja": "⽇本語と英語を話します。",
+    "sample_en": "nihongoto eigo o hanashimasu."
+  },
+  {
+    "level": "N5",
+    "pattern": "時 【とき】(toki)",
+    "meaning": "when; at this time",
+    "page": 174,
+    "sample_ja": "Meaning",
+    "sample_en": "when; at this time"
+  },
+  {
+    "level": "N5",
+    "pattern": "とても (totemo)",
+    "meaning": "very; awfully; exceedingly",
+    "page": 176,
+    "sample_ja": "Meaning",
+    "sample_en": "very; awfully; exceedingly"
+  },
+  {
+    "level": "N5",
+    "pattern": "つもり (tsumori)",
+    "meaning": "used to express that you are planning / intending",
+    "page": 178,
+    "sample_ja": "Meaning",
+    "sample_en": "plan to ~; intend to ~"
+  },
+  {
+    "level": "N5",
+    "pattern": "は (wa)",
+    "meaning": "the particle は follows the topic the speaker is talking about,",
+    "page": 180,
+    "sample_ja": "Meaning",
+    "sample_en": "topic marker"
+  },
+  {
+    "level": "N5",
+    "pattern": "は〜より・・・です (wa ~yori… desu)",
+    "meaning": "[A] is more ~ than [B]",
+    "page": 182,
+    "sample_ja": "Meaning",
+    "sample_en": "[A] is more ~ than [B]"
+  },
+  {
+    "level": "N5",
+    "pattern": "はどうですか (wa dou desu ka)",
+    "meaning": "how about; how is",
+    "page": 184,
+    "sample_ja": "Meaning",
+    "sample_en": "how about; how is"
+  },
+  {
+    "level": "N5",
+    "pattern": "や (ya)",
+    "meaning": "and; or; connecting particle",
+    "page": 186,
+    "sample_ja": "Meaning",
+    "sample_en": "and; or; connecting particle"
+  },
+  {
+    "level": "N5",
+    "pattern": "よ (yo)",
+    "meaning": "The particle よ is used at the end of a sentence to emphasize",
+    "page": 188,
+    "sample_ja": "おいしいよ。",
+    "sample_en": "oishii yo."
+  },
+  {
+    "level": "N5",
+    "pattern": "より〜ほうが (yori ~hou ga)",
+    "meaning": "[A] is more than [B]",
+    "page": 191,
+    "sample_ja": "Meaning",
+    "sample_en": "[A] is more than [B]"
+  },
+  {
+    "level": "N4",
+    "pattern": "間 【あいだ】(aida)",
+    "meaning": "while; during; between",
+    "page": 8,
+    "sample_ja": "",
+    "sample_en": ""
+  },
+  {
+    "level": "N4",
+    "pattern": "間に 【あいだに】(aida ni)",
+    "meaning": "while/during~ something happened",
+    "page": 11,
+    "sample_ja": "",
+    "sample_en": ""
+  },
+  {
+    "level": "N4",
+    "pattern": "あまり〜ない (amari~nai)",
+    "meaning": "not very, not much",
+    "page": 14,
+    "sample_ja": "Meaning",
+    "sample_en": "not very, not much"
+  },
+  {
+    "level": "N4",
+    "pattern": "後で 【あとで】 (ato de)",
+    "meaning": "after ~; later",
+    "page": 16,
+    "sample_ja": "Meaning",
+    "sample_en": "after ~; later"
+  },
+  {
+    "level": "N4",
+    "pattern": "ば (ba)",
+    "meaning": "conditional form; If [A] then [B]",
+    "page": 18,
+    "sample_ja": "⾏く = いく = iku = to go",
+    "sample_en": "ku changes to ke"
+  },
+  {
+    "level": "N4",
+    "pattern": "場合は 【ばあいは】(baai wa)",
+    "meaning": "in the event of; in the case that",
+    "page": 23,
+    "sample_ja": "Meaning",
+    "sample_en": "in the event of; in the case that"
+  },
+  {
+    "level": "N4",
+    "pattern": "ばかり (bakari)",
+    "meaning": "only; nothing but",
+    "page": 25,
+    "sample_ja": "6⽉は⾬ばかりです︕",
+    "sample_en": "roku gatsu wa ame bakari desu!"
+  },
+  {
+    "level": "N4",
+    "pattern": "だけで (dake de)",
+    "meaning": "just by; just by doing; with only",
+    "page": 27,
+    "sample_ja": "Meaning",
+    "sample_en": "just by; just by doing"
+  },
+  {
+    "level": "N4",
+    "pattern": "出す 【だす】(dasu)",
+    "meaning": "to suddenly begin; to suddenly appear",
+    "page": 29,
+    "sample_ja": "Meaning",
+    "sample_en": "to suddenly begin; to suddenly appear"
+  },
+  {
+    "level": "N4",
+    "pattern": "でございます (de gozaimasu)",
+    "meaning": "to be (honorific)",
+    "page": 31,
+    "sample_ja": "Meaning",
+    "sample_en": "to be (honorific)"
+  },
+  {
+    "level": "N4",
+    "pattern": "でも (demo)",
+    "meaning": "…or something",
+    "page": 33,
+    "sample_ja": "Meaning",
+    "sample_en": "... or something"
+  },
+  {
+    "level": "N4",
+    "pattern": "ではないか (dewa nai ka)",
+    "meaning": "right? isn’t it?",
+    "page": 35,
+    "sample_ja": "Meaning",
+    "sample_en": "right?; isn't it?"
+  },
+  {
+    "level": "N4",
+    "pattern": "が必要 【がひつよう】(ga hitsuyou)",
+    "meaning": "need; necessary",
+    "page": 37,
+    "sample_ja": "Meaning",
+    "sample_en": "need; necessary"
+  },
+  {
+    "level": "N4",
+    "pattern": "がする (ga suru)",
+    "meaning": "to smell; hear; or taste",
+    "page": 39,
+    "sample_ja": "Meaning",
+    "sample_en": "to smell; hear; taste"
+  },
+  {
+    "level": "N4",
+    "pattern": "がり (gari)",
+    "meaning": "that someone tends to…; has a tendency to…; has a",
+    "page": 41,
+    "sample_ja": "",
+    "sample_en": ""
+  },
+  {
+    "level": "N4",
+    "pattern": "がる (garu) meaning: to show signs of; to appear; to feel, to think",
+    "meaning": "",
+    "page": 44,
+    "sample_ja": "",
+    "sample_en": ""
+  },
+  {
+    "level": "N4",
+    "pattern": "ございます (gozaimasu)",
+    "meaning": "to be, to exist (the polite form of いる/あ",
+    "page": 47,
+    "sample_ja": "Meaning",
+    "sample_en": "to be, to exist (the polite form of いる/ある)"
+  },
+  {
+    "level": "N4",
+    "pattern": "始める 【はじめる】 (hajimeru)",
+    "meaning": "to start; to begin to ~",
+    "page": 49,
+    "sample_ja": "Meaning",
+    "sample_en": "to start; to begin to ~"
+  },
+  {
+    "level": "N4",
+    "pattern": "はずだ (hazu da)",
+    "meaning": "it must be; it should be (expectation)",
+    "page": 51,
+    "sample_ja": "Meaning",
+    "sample_en": "it must be; it should be (expectation)"
+  },
+  {
+    "level": "N4",
+    "pattern": "はずがない (hazu ga nai)",
+    "meaning": "cannot be (impossible)",
+    "page": 53,
+    "sample_ja": "Meaning",
+    "sample_en": "cannot be (impossible)"
+  },
+  {
+    "level": "N4",
+    "pattern": "必要がある 【ひつようがある】(hitsuyou ga aru)",
+    "meaning": "that one needs to",
+    "page": 55,
+    "sample_ja": "私はもっと勉強する必要がある。",
+    "sample_en": "watashi wa motto benkyou suru hitsuyou ga aru."
+  },
+  {
+    "level": "N4",
+    "pattern": "意向形 【いこうけい】(ikou kei)",
+    "meaning": "volitional form ; let’s do ~",
+    "page": 58,
+    "sample_ja": "",
+    "sample_en": ""
+  },
+  {
+    "level": "N4",
+    "pattern": "いらっしゃる (irassharu)",
+    "meaning": "to be; to come; to go",
+    "page": 61,
+    "sample_ja": "Meaning",
+    "sample_en": "to be; to come; to go (polite version)"
+  },
+  {
+    "level": "N4",
+    "pattern": "いたします (itashimasu)",
+    "meaning": "to do (polite form of する)",
+    "page": 63,
+    "sample_ja": "Meaning",
+    "sample_en": "to do (polite form of する)"
+  },
+  {
+    "level": "N4",
+    "pattern": "じゃないか (janai ka)",
+    "meaning": "right? isn’t it? let’s~; confirmation",
+    "page": 65,
+    "sample_ja": "Meaning",
+    "sample_en": "right? isn't it? let's~; confirmation"
+  },
+  {
+    "level": "N4",
+    "pattern": "かどうか (ka dou ka)",
+    "meaning": "whether or not",
+    "page": 67,
+    "sample_ja": "Meaning",
+    "sample_en": "whether or not"
+  },
+  {
+    "level": "N4",
+    "pattern": "かしら (ka shira)",
+    "meaning": "I wonder",
+    "page": 69,
+    "sample_ja": "Meaning",
+    "sample_en": "I wonder"
+  },
+  {
+    "level": "N4",
+    "pattern": "かい (kai)",
+    "meaning": "turns a sentence into a yes/no question",
+    "page": 71,
+    "sample_ja": "Meaning",
+    "sample_en": "turns a sentence into a yes/no question"
+  },
+  {
+    "level": "N4",
+    "pattern": "かもしれない (kamo shirenai)",
+    "meaning": "might; perhaps; indicates possibility",
+    "page": 73,
+    "sample_ja": "Meaning",
+    "sample_en": "might; perhaps; indicates possibility"
+  },
+  {
+    "level": "N4",
+    "pattern": "かな (kana)",
+    "meaning": "I wonder; should I?",
+    "page": 75,
+    "sample_ja": "Meaning",
+    "sample_en": "I wonder; should I?"
+  },
+  {
+    "level": "N4",
+    "pattern": "から作る 【からつくる】(kara tsukuru)",
+    "meaning": "made from; made with",
+    "page": 77,
+    "sample_ja": "Meaning",
+    "sample_en": "made from; made with"
+  },
+  {
+    "level": "N4",
+    "pattern": "きっと (kitto)",
+    "meaning": "surely; undoubtedly; almost certainly; most likely",
+    "page": 79,
+    "sample_ja": "Meaning",
+    "sample_en": "surely; undoubtedly; almost certainly; most"
+  },
+  {
+    "level": "N4",
+    "pattern": "頃 【 ころ / ごろ 】 (koro / goro)",
+    "meaning": "around; about; when",
+    "page": 81,
+    "sample_ja": "Meaning",
+    "sample_en": "around; about; when"
+  },
+  {
+    "level": "N4",
+    "pattern": "こと (koto)",
+    "meaning": "verb nominalizer",
+    "page": 83,
+    "sample_ja": "Meaning",
+    "sample_en": "Verb nominalizer"
+  },
+  {
+    "level": "N4",
+    "pattern": "ことがある (koto ga aru)",
+    "meaning": "there are times when ~; sometimes do",
+    "page": 85,
+    "sample_ja": "Meaning",
+    "sample_en": "there are times when"
+  },
+  {
+    "level": "N4",
+    "pattern": "ことができる (koto ga dekiru)",
+    "meaning": "can; able to; not able to",
+    "page": 87,
+    "sample_ja": "Let’s first look at the normal potential form for the verb たべる “to eat”.",
+    "sample_en": "たべる -> たべられる"
+  },
+  {
+    "level": "N4",
+    "pattern": "ことになる (koto ni naru)",
+    "meaning": "It has been decided that",
+    "page": 90,
+    "sample_ja": "Meaning",
+    "sample_en": "It has been decided that..; it turns out that.."
+  },
+  {
+    "level": "N4",
+    "pattern": "ことにする (koto ni suru) / ことにします (koto ni shimasu)",
+    "meaning": "to",
+    "page": 92,
+    "sample_ja": "⾏かないことにする。",
+    "sample_en": "ikanai koto ni suru."
+  },
+  {
+    "level": "N4",
+    "pattern": "くする (ku suru)",
+    "meaning": "to make something ~",
+    "page": 94,
+    "sample_ja": "Meaning",
+    "sample_en": "to make something ~"
+  },
+  {
+    "level": "N4",
+    "pattern": "急に (kyuu ni)",
+    "meaning": "suddenly",
+    "page": 96,
+    "sample_ja": "Meaning",
+    "sample_en": "suddenly"
+  },
+  {
+    "level": "N4",
+    "pattern": "までに (made ni)",
+    "meaning": "by; by the time; indicates time limit",
+    "page": 98,
+    "sample_ja": "Meaning",
+    "sample_en": "by; by the time; indicates time limit"
+  },
+  {
+    "level": "N4",
+    "pattern": "まま (mama)",
+    "meaning": "as it is; current state; without changing",
+    "page": 100,
+    "sample_ja": "",
+    "sample_en": ""
+  },
+  {
+    "level": "N4",
+    "pattern": "または (matawa)",
+    "meaning": "both; or; otherwise ; choice between [A] or [B]",
+    "page": 103,
+    "sample_ja": "Meaning",
+    "sample_en": "both; or; otherwise ; choice between [A] or"
+  },
+  {
+    "level": "N4",
+    "pattern": "みたいだ (mitai da)",
+    "meaning": "like, similar to, resembling",
+    "page": 105,
+    "sample_ja": "Meaning",
+    "sample_en": "like, similar to, resembling"
+  },
+  {
+    "level": "N4",
+    "pattern": "みたいな (mitai na)",
+    "meaning": "like, similar to",
+    "page": 107,
+    "sample_ja": "Meaning",
+    "sample_en": "like, similar to"
+  },
+  {
+    "level": "N4",
+    "pattern": "みたいに (mitai ni)",
+    "meaning": "like, similar to",
+    "page": 109,
+    "sample_ja": "Meaning",
+    "sample_en": "like, similar to"
+  },
+  {
+    "level": "N4",
+    "pattern": "も (mo)",
+    "meaning": "as many as; as much as; up to; nearly",
+    "page": 111,
+    "sample_ja": "Meaning",
+    "sample_en": "as many as; as much as; up to; nearly"
+  },
+  {
+    "level": "N4",
+    "pattern": "な (na)",
+    "meaning": "don’t ~ (order somebody to not do something)",
+    "page": 113,
+    "sample_ja": "Meaning",
+    "sample_en": "don’t ~ (order somebody to not do"
+  },
+  {
+    "level": "N4",
+    "pattern": "など (nado)",
+    "meaning": "such as, things like",
+    "page": 115,
+    "sample_ja": "Meaning",
+    "sample_en": "such as, things like"
+  },
+  {
+    "level": "N4",
+    "pattern": "ながら (nagara)",
+    "meaning": "while; during; as; to do two things simultaneously",
+    "page": 117,
+    "sample_ja": "Meaning",
+    "sample_en": "while; during; as; simultaneously"
+  },
+  {
+    "level": "N4",
+    "pattern": "なかなか〜ない (nakanaka~nai)",
+    "meaning": "not easy to; struggling to; not able",
+    "page": 119,
+    "sample_ja": "Meaning",
+    "sample_en": "not easy to; struggling to; not able to~"
+  },
+  {
+    "level": "N4",
+    "pattern": "なければいけない (nakereba ikenai)",
+    "meaning": "must do something; have to do",
+    "page": 121,
+    "sample_ja": "Meaning",
+    "sample_en": "must do something; have to do something"
+  },
+  {
+    "level": "N4",
+    "pattern": "なければならない (nakereba naranai)",
+    "meaning": "must do something; have to",
+    "page": 123,
+    "sample_ja": "Meaning",
+    "sample_en": "must do something; have to do something"
+  },
+  {
+    "level": "N4",
+    "pattern": "なら (nara)",
+    "meaning": "if; in the case that ~",
+    "page": 125,
+    "sample_ja": "Meaning",
+    "sample_en": "if; in the case that ~"
+  },
+  {
+    "level": "N4",
+    "pattern": "なさい (nasai)",
+    "meaning": "do this (soft/firm command)",
+    "page": 127,
+    "sample_ja": "Meaning",
+    "sample_en": "do this (soft/firm command)"
+  },
+  {
+    "level": "N4",
+    "pattern": "なさる (nasaru) / なさいます (nasaimasu)",
+    "meaning": "to do (honorific)",
+    "page": 129,
+    "sample_ja": "Meaning",
+    "sample_en": "to do (honorific)"
+  },
+  {
+    "level": "N4",
+    "pattern": "に気がつく 【にきがつく】(ni ki ga tsuku)",
+    "meaning": "to notice; to realize",
+    "page": 131,
+    "sample_ja": "Meaning",
+    "sample_en": "to notice; to realize"
+  },
+  {
+    "level": "N4",
+    "pattern": "にみえる (ni mieru) / に⾒える",
+    "meaning": "to look; to seem; to appear",
+    "page": 133,
+    "sample_ja": "Meaning",
+    "sample_en": "to look; to seem; to appear"
+  },
+  {
+    "level": "N4",
+    "pattern": "にする (ni suru)",
+    "meaning": "to make something ~",
+    "page": 135,
+    "sample_ja": "Meaning",
+    "sample_en": "to make something ~"
+  },
+  {
+    "level": "N4",
+    "pattern": "にくい (nikui)",
+    "meaning": "difficult to do",
+    "page": 137,
+    "sample_ja": "Meaning",
+    "sample_en": "difficult to do"
+  },
+  {
+    "level": "N4",
+    "pattern": "の中で 【のなかで】(no naka de)",
+    "meaning": "in, among",
+    "page": 139,
+    "sample_ja": "Meaning",
+    "sample_en": "in, among"
+  },
+  {
+    "level": "N4",
+    "pattern": "のに (noni)",
+    "meaning": "although, in spite of, even though",
+    "page": 141,
+    "sample_ja": "Meaning",
+    "sample_en": "although, in spite of, even though"
+  },
+  {
+    "level": "N4",
+    "pattern": "のに (noni)",
+    "meaning": "to (do something); in order to",
+    "page": 143,
+    "sample_ja": "Meaning",
+    "sample_en": "to (do something); in order to"
+  },
+  {
+    "level": "N4",
+    "pattern": "のは〜だ (nowa~da)",
+    "meaning": "[A] is [B]; the reason for [A] is [B]",
+    "page": 145,
+    "sample_ja": "2. Doing [A] is [B].",
+    "sample_en": "Example Sentences"
+  },
+  {
+    "level": "N4",
+    "pattern": "お〜ください (o~kudasai)",
+    "meaning": "please do (honorific)",
+    "page": 147,
+    "sample_ja": "Meaning",
+    "sample_en": "please do (honorific)"
+  },
+  {
+    "level": "N4",
+    "pattern": "お〜になる (o~ni naru)",
+    "meaning": "to do (honorific)",
+    "page": 149,
+    "sample_ja": "Meaning",
+    "sample_en": "to do (honorific)"
+  },
+  {
+    "level": "N4",
+    "pattern": "おきに (oki ni)",
+    "meaning": "repeated at intervals, every",
+    "page": 151,
+    "sample_ja": "Meaning",
+    "sample_en": "repeated at intervals, every"
+  },
+  {
+    "level": "N4",
+    "pattern": "終わる (owaru)",
+    "meaning": "to finish; to end",
+    "page": 153,
+    "sample_ja": "Meaning",
+    "sample_en": "to finish; to end"
+  },
+  {
+    "level": "N4",
+    "pattern": "られる (rareru)",
+    "meaning": "potential form; being able to do something",
+    "page": 155,
+    "sample_ja": "",
+    "sample_en": ""
+  },
+  {
+    "level": "N4",
+    "pattern": "らしい (rashii) / らしくない (rashiku nai)",
+    "meaning": "it seems like; I heard;",
+    "page": 159,
+    "sample_ja": "Meaning",
+    "sample_en": "it seems like; I heard; apparently~"
+  },
+  {
+    "level": "N4",
+    "pattern": "さ (sa)",
+    "meaning": "-ness ; nominalizer for adjectives",
+    "page": 161,
+    "sample_ja": "Meaning",
+    "sample_en": "-ness ; nominalizer for adjective"
+  },
+  {
+    "level": "N4",
+    "pattern": "さっき (sakki)",
+    "meaning": "some time ago; just now; a very short time ago",
+    "page": 163,
+    "sample_ja": "Meaning",
+    "sample_en": "some time ago; just now"
+  },
+  {
+    "level": "N4",
+    "pattern": "させられる (saserareru)",
+    "meaning": "causative-passive form; to be made to do",
+    "page": 165,
+    "sample_ja": "Meaning",
+    "sample_en": "causative-passive; to be made to do"
+  },
+  {
+    "level": "N4",
+    "pattern": "させる (saseru)",
+    "meaning": "causative form",
+    "page": 167,
+    "sample_ja": "2. to let somebody do something.",
+    "sample_en": "Causative form conjugation samples"
+  },
+  {
+    "level": "N4",
+    "pattern": "させてください (sasete kudasai)",
+    "meaning": "please let me do",
+    "page": 170,
+    "sample_ja": "Meaning",
+    "sample_en": "please let me do"
+  },
+  {
+    "level": "N4",
+    "pattern": "さすが (sasuga)",
+    "meaning": "as one would expect; as is to be expected; even",
+    "page": 172,
+    "sample_ja": "Meaning",
+    "sample_en": "as one would expect; as is to be expected;"
+  },
+  {
+    "level": "N4",
+    "pattern": "し (shi)",
+    "meaning": "and; and what’s more",
+    "page": 174,
+    "sample_ja": "See examples 1~5.",
+    "sample_en": "2. To list 2 different things to highlight the contrast."
+  },
+  {
+    "level": "N4",
+    "pattern": "そんなに (sonna ni)",
+    "meaning": "so, so much, like that",
+    "page": 177,
+    "sample_ja": "Meaning",
+    "sample_en": "so much; so; like that"
+  },
+  {
+    "level": "N4",
+    "pattern": "それでも (sore demo)",
+    "meaning": "but still; and yet; even so",
+    "page": 179,
+    "sample_ja": "Meaning",
+    "sample_en": "but still; and yet; even so"
+  },
+  {
+    "level": "N4",
+    "pattern": "そうだ (sou da)",
+    "meaning": "I heard that; it is said that",
+    "page": 181,
+    "sample_ja": "Meaning",
+    "sample_en": "I heard that; it is said that"
+  },
+  {
+    "level": "N4",
+    "pattern": "そうだ (sou da)",
+    "meaning": "it looks like / appears like",
+    "page": 183,
+    "sample_ja": "Meaning",
+    "sample_en": "looks like; appears like"
+  },
+  {
+    "level": "N4",
+    "pattern": "そうに (sou ni) / そうな (sou na)",
+    "meaning": "seems like; looks like",
+    "page": 185,
+    "sample_ja": "Meaning",
+    "sample_en": "seems like; looks like"
+  },
+  {
+    "level": "N4",
+    "pattern": "たばかり (ta bakari)",
+    "meaning": "just finished; something just occurred",
+    "page": 187,
+    "sample_ja": "ゲーム終わったばかりだよ︕",
+    "sample_en": "geemu owatta bakari dayo!"
+  },
+  {
+    "level": "N4",
+    "pattern": "たところ (ta tokoro)",
+    "meaning": "just finished doing, was just doing",
+    "page": 189,
+    "sample_ja": "Meaning",
+    "sample_en": "just finished doing, was just doing"
+  },
+  {
+    "level": "N4",
+    "pattern": "他動詞【たどうし】(tadoushi) & ⾃動詞【じどうし】( jidoushi)",
+    "meaning": "",
+    "page": 191,
+    "sample_ja": "⽥中さんはドアを閉めました。",
+    "sample_en": "tanaka san wa doa o shimemashita."
+  },
+  {
+    "level": "N4",
+    "pattern": "たがる (tagaru)",
+    "meaning": "wants to do (3rd person)",
+    "page": 194,
+    "sample_ja": "友達が留学したがる。",
+    "sample_en": "tomodachi ga ryuugaku shi tagaru."
+  },
+  {
+    "level": "N4",
+    "pattern": "たら (tara)",
+    "meaning": "if, after, when",
+    "page": 197,
+    "sample_ja": "Meaning",
+    "sample_en": "if, after, when"
+  },
+  {
+    "level": "N4",
+    "pattern": "たらどう (tara dou)",
+    "meaning": "why don’t you (used to give advice)",
+    "page": 199,
+    "sample_ja": "Meaning",
+    "sample_en": "why don't you"
+  },
+  {
+    "level": "N4",
+    "pattern": "たらいいですか (tara ii desu ka)",
+    "meaning": "what should I do?; speaker seeking",
+    "page": 201,
+    "sample_ja": "Meaning",
+    "sample_en": "what should I do?; speaker seeking"
+  },
+  {
+    "level": "N4",
+    "pattern": "て / で (te / de)",
+    "meaning": "conjunctive particle; so; because of [A], [B]…",
+    "page": 203,
+    "sample_ja": "Meaning",
+    "sample_en": "conjunctive particle; so; because of [A], [B]..."
+  },
+  {
+    "level": "N4",
+    "pattern": "てあげる (te ageru) / てあげます (te agemasu)",
+    "meaning": "to do for; to do a",
+    "page": 205,
+    "sample_ja": "Meaning",
+    "sample_en": "to do for; to do a favor"
+  },
+  {
+    "level": "N4",
+    "pattern": "て欲しい 【てほしい】(te hoshii)",
+    "meaning": "I want you to; need you to~, used",
+    "page": 207,
+    "sample_ja": "Meaning",
+    "sample_en": "I want you to; need you to~"
+  },
+  {
+    "level": "N4",
+    "pattern": "ていく (te iku) / ていった (te itta)",
+    "meaning": "to start; to continue; to go on",
+    "page": 209,
+    "sample_ja": "Meaning",
+    "sample_en": "to start; to continue; to go on"
+  },
+  {
+    "level": "N4",
+    "pattern": "ていた (te ita) / ていました (te imashita)",
+    "meaning": "was doing something",
+    "page": 211,
+    "sample_ja": "Meaning",
+    "sample_en": "was doing something (past continuous)"
+  },
+  {
+    "level": "N4",
+    "pattern": "ていただけませんか (te itadakemasen ka)",
+    "meaning": "could you please",
+    "page": 213,
+    "sample_ja": "Meaning",
+    "sample_en": "could you please"
+  },
+  {
+    "level": "N4",
+    "pattern": "てくれる (te kureru) / てくれます (te kuremasu) / てくれた (te kureta)",
+    "meaning": "",
+    "page": 215,
+    "sample_ja": "2. express something was done for you.",
+    "sample_en": "The recipient of the favor (usually oneself), should be marked with に."
+  },
+  {
+    "level": "N4",
+    "pattern": "てくる (te kuru) / てきみます (te kimasu)",
+    "meaning": "to do… and come back;",
+    "page": 218,
+    "sample_ja": "Meaning",
+    "sample_en": "to do… and come back; to become; to"
+  },
+  {
+    "level": "N4",
+    "pattern": "てみる (te miru) / てみます (te mimasu)",
+    "meaning": "try doing ~",
+    "page": 220,
+    "sample_ja": "Meaning",
+    "sample_en": "try doing"
+  },
+  {
+    "level": "N4",
+    "pattern": "ておく (te oku)",
+    "meaning": "to do something in advance",
+    "page": 224,
+    "sample_ja": "Meaning",
+    "sample_en": "to do something in advance"
+  },
+  {
+    "level": "N4",
+    "pattern": "てしまう (te shimau) & ちゃう (chau)",
+    "meaning": "to do something by accident,",
+    "page": 226,
+    "sample_ja": "Meaning",
+    "sample_en": "to do something by accident, to finish"
+  },
+  {
+    "level": "N4",
+    "pattern": "てすみません (te sumimasen)",
+    "meaning": "I’m sorry for",
+    "page": 228,
+    "sample_ja": "Meaning",
+    "sample_en": "I’m sorry for"
+  },
+  {
+    "level": "N4",
+    "pattern": "てやる (te yaru)",
+    "meaning": "to do for; to do a favor (casual spoken)",
+    "page": 230,
+    "sample_ja": "Meaning",
+    "sample_en": "to do for; to do a favor (casual)"
+  },
+  {
+    "level": "N4",
+    "pattern": "てよかった (te yokatta)",
+    "meaning": "I’m glad that",
+    "page": 232,
+    "sample_ja": "Meaning",
+    "sample_en": "I’m glad that.."
+  },
+  {
+    "level": "N4",
+    "pattern": "ているところ (teiru tokoro)",
+    "meaning": "in the process of doing; in the middle",
+    "page": 234,
+    "sample_ja": "Meaning",
+    "sample_en": "in the process of doing"
+  },
+  {
+    "level": "N4",
+    "pattern": "ても (temo) & でも (demo)",
+    "meaning": "even; even if; even though",
+    "page": 236,
+    "sample_ja": "Meaning",
+    "sample_en": "even; even if; even though"
+  },
+  {
+    "level": "N4",
+    "pattern": "と (to)",
+    "meaning": "whenever [A] happens, [B] also happens",
+    "page": 239,
+    "sample_ja": "Meaning",
+    "sample_en": "whenever [A] happens, [B] also happens"
+  },
+  {
+    "level": "N4",
+    "pattern": "と⾔ってもいい【といってもいい】(to ittemo ii)",
+    "meaning": "you could say;",
+    "page": 241,
+    "sample_ja": "Meaning",
+    "sample_en": "you could say; one might say; I'd say"
+  },
+  {
+    "level": "N4",
+    "pattern": "と⾔う【という】(to iu)",
+    "meaning": "called; named; that",
+    "page": 243,
+    "sample_ja": "2. to define something.",
+    "sample_en": "3. to emphasize something."
+  },
+  {
+    "level": "N4",
+    "pattern": "ということ (to iu koto)",
+    "meaning": "convert phrase into noun",
+    "page": 246,
+    "sample_ja": "Meaning",
+    "sample_en": "convert phrase into noun"
+  },
+  {
+    "level": "N4",
+    "pattern": "と⾔われている 【といわれている】(to iwarete iru)",
+    "meaning": "it is said",
+    "page": 248,
+    "sample_ja": "Meaning",
+    "sample_en": "it is said that..."
+  },
+  {
+    "level": "N4",
+    "pattern": "と聞いた 【ときいた】(to kiita)",
+    "meaning": "I heard…",
+    "page": 250,
+    "sample_ja": "Meaning",
+    "sample_en": "I heard..."
+  },
+  {
+    "level": "N4",
+    "pattern": "と思う 【とおもう】(to omou)",
+    "meaning": "to think…; I think…; you think…",
+    "page": 252,
+    "sample_ja": "Meaning",
+    "sample_en": "to think…; I think…; you think…"
+  },
+  {
+    "level": "N4",
+    "pattern": "とか〜とか (toka~toka)",
+    "meaning": "among other things; such as; like",
+    "page": 254,
+    "sample_ja": "Meaning",
+    "sample_en": "among other things; such as; like"
+  },
+  {
+    "level": "N4",
+    "pattern": "ところ (tokoro)",
+    "meaning": "just about to; on the verge of doing something",
+    "page": 256,
+    "sample_ja": "Meaning",
+    "sample_en": "just about to; on the verge of doing"
+  },
+  {
+    "level": "N4",
+    "pattern": "続ける 【つづける】(tsuzukeru)",
+    "meaning": "continue to; keen on",
+    "page": 258,
+    "sample_ja": "Meaning",
+    "sample_en": "continue to; keen on"
+  },
+  {
+    "level": "N4",
+    "pattern": "って (tte)",
+    "meaning": "named; called",
+    "page": 261,
+    "sample_ja": "Meaning",
+    "sample_en": "named; called"
+  },
+  {
+    "level": "N4",
+    "pattern": "受⾝形【うけみけい】(ukemi kei)",
+    "meaning": "Japanese passive form or",
+    "page": 263,
+    "sample_ja": "",
+    "sample_en": ""
+  },
+  {
+    "level": "N4",
+    "pattern": "は〜が… は (wa~ga… wa)",
+    "meaning": "[A] but [B]; however; comparison",
+    "page": 266,
+    "sample_ja": "Meaning",
+    "sample_en": "[A] but [B]; however; comparison"
+  },
+  {
+    "level": "N4",
+    "pattern": "やすい (yasui)",
+    "meaning": "easy to; likely to; prone to; have a tendency to",
+    "page": 268,
+    "sample_ja": "Meaning",
+    "sample_en": "easy to; likely to; prone to; have a tendency"
+  },
+  {
+    "level": "N4",
+    "pattern": "やっと (yatto)",
+    "meaning": "at last; finally; barely; narrowly",
+    "page": 270,
+    "sample_ja": "2. barely; narrowly (see examples 8 & 9).",
+    "sample_en": "Example Sentences"
+  },
+  {
+    "level": "N4",
+    "pattern": "より (yori)",
+    "meaning": "than; rather than; more than",
+    "page": 272,
+    "sample_ja": "Meaning",
+    "sample_en": "than; rather than; more than"
+  },
+  {
+    "level": "N4",
+    "pattern": "予定だ 【よていだ】(yoteida)",
+    "meaning": "plan to, intend to",
+    "page": 275,
+    "sample_ja": "Meaning",
+    "sample_en": "plan to, intend to"
+  },
+  {
+    "level": "N4",
+    "pattern": "ようだ (you da)",
+    "meaning": "appears; seems; looks as if",
+    "page": 277,
+    "sample_ja": "Meaning",
+    "sample_en": "appears; seems; looks as if"
+  },
+  {
+    "level": "N4",
+    "pattern": "ように / ような (you ni / you na)",
+    "meaning": "like; as; similar to~",
+    "page": 279,
+    "sample_ja": "Meaning",
+    "sample_en": "like; as; similar to"
+  },
+  {
+    "level": "N4",
+    "pattern": "ようになる (you ni naru)",
+    "meaning": "to reach the point that; to come to be",
+    "page": 281,
+    "sample_ja": "Meaning",
+    "sample_en": "to reach the point that; to come to be that; to"
+  },
+  {
+    "level": "N4",
+    "pattern": "ようにする (you ni suru) / ようにしている (you ni shiteiru)",
+    "meaning": "to try",
+    "page": 283,
+    "sample_ja": "Meaning",
+    "sample_en": "to try to; to make sure that"
+  },
+  {
+    "level": "N4",
+    "pattern": "ようと思う 【ようとおもう】(you to omou)",
+    "meaning": "thinking of doing;",
+    "page": 285,
+    "sample_ja": "Meaning",
+    "sample_en": "thinking of doing; planning to"
+  },
+  {
+    "level": "N4",
+    "pattern": "ぜひ (zehi)",
+    "meaning": "by all means; certainly; definitely",
+    "page": 288,
+    "sample_ja": "Meaning",
+    "sample_en": "by all means; certainly; definitely"
+  },
+  {
+    "level": "N4",
+    "pattern": "全然〜ない 【ぜんぜん〜ない】(zenzen~nai)",
+    "meaning": "(not) at all",
+    "page": 290,
+    "sample_ja": "Meaning",
+    "sample_en": "(not) at all"
+  },
+  {
+    "level": "N4",
+    "pattern": "づらい (zurai)",
+    "meaning": "difficult to do",
+    "page": 292,
+    "sample_ja": "Meaning",
+    "sample_en": "difficult to do"
+  },
+  {
+    "level": "N2",
+    "pattern": "あげく (ageku)",
+    "meaning": "to end up; in the end; finally; after all~",
+    "page": 11,
+    "sample_ja": "Meaning",
+    "sample_en": "to end up; in the end; finally; after all~"
+  },
+  {
+    "level": "N2",
+    "pattern": "あるいは (aruiwa)",
+    "meaning": "or; either; maybe; perhaps; possibly~",
+    "page": 13,
+    "sample_ja": "Meaning",
+    "sample_en": "or; either; maybe; perhaps; possibly~"
+  },
+  {
+    "level": "N2",
+    "pattern": "ばかり (bakari)",
+    "meaning": "about, approximately~",
+    "page": 15,
+    "sample_ja": "Meaning",
+    "sample_en": "about, approximately~"
+  },
+  {
+    "level": "N2",
+    "pattern": "ばかりだ (bakari da)",
+    "meaning": "continue to (go in negative direction)",
+    "page": 17,
+    "sample_ja": "Meaning",
+    "sample_en": "continue to (go in negative direction)"
+  },
+  {
+    "level": "N2",
+    "pattern": "ばかりか (bakari ka / bakarika)",
+    "meaning": "not only",
+    "page": 19,
+    "sample_ja": "Meaning",
+    "sample_en": "not only.. but also; as well as~"
+  },
+  {
+    "level": "N2",
+    "pattern": "ばかりに (bakari ni)",
+    "meaning": "simply because; on account of~ (negative",
+    "page": 21,
+    "sample_ja": "Meaning",
+    "sample_en": "simply because; on account of~ (negative"
+  },
+  {
+    "level": "N2",
+    "pattern": "因みに 【ちなみに】 (chinamini)",
+    "meaning": "by the way; in this connection;",
+    "page": 23,
+    "sample_ja": "Meaning",
+    "sample_en": "by the way; in this connection; incidentally;"
+  },
+  {
+    "level": "N2",
+    "pattern": "ちっとも〜ない (chitto mo~nai)",
+    "meaning": "(not) at all; (not) in the least~",
+    "page": 25,
+    "sample_ja": "Meaning",
+    "sample_en": "(not) at all; (not) in the least~"
+  },
+  {
+    "level": "N2",
+    "pattern": "だけあって (dake atte)",
+    "meaning": "being the case; precisely because; as",
+    "page": 27,
+    "sample_ja": "Meaning",
+    "sample_en": "being the case; precisely because; as"
+  },
+  {
+    "level": "N2",
+    "pattern": "だけましだ (dake mashi da)",
+    "meaning": "it’s better than; one should feel",
+    "page": 29,
+    "sample_ja": "Meaning",
+    "sample_en": "it’s better than; one should feel grateful for~"
+  },
+  {
+    "level": "N2",
+    "pattern": "だけに (dake ni)",
+    "meaning": "being the case; precisely because; as one would",
+    "page": 31,
+    "sample_ja": "Meaning",
+    "sample_en": "being the case; precisely because; as one"
+  },
+  {
+    "level": "N2",
+    "pattern": "だけのことはある (dake no koto wa aru)",
+    "meaning": "no wonder; as expected",
+    "page": 33,
+    "sample_ja": "Meaning",
+    "sample_en": "no wonder; as expected of; not ... for"
+  },
+  {
+    "level": "N2",
+    "pattern": "だけは (dake wa)",
+    "meaning": "to do all that one can",
+    "page": 36,
+    "sample_ja": "Meaning",
+    "sample_en": "to do all that one can"
+  },
+  {
+    "level": "N2",
+    "pattern": "だって (datte)",
+    "meaning": "because; but; after all; even; too",
+    "page": 38,
+    "sample_ja": "Meaning",
+    "sample_en": "because; but; after all; even; too"
+  },
+  {
+    "level": "N2",
+    "pattern": "でしかない (de shika nai)",
+    "meaning": "merely; nothing but; no more than; there",
+    "page": 40,
+    "sample_ja": "Meaning",
+    "sample_en": "merely; nothing but; no more than; there is"
+  },
+  {
+    "level": "N2",
+    "pattern": "どころではない (dokoro dewa nai)",
+    "meaning": "not the time for; not the place",
+    "page": 42,
+    "sample_ja": "Meaning",
+    "sample_en": "not the time for; not the place for; far from;"
+  },
+  {
+    "level": "N2",
+    "pattern": "どころか (dokoro ka)",
+    "meaning": "far from; anything but; let alone; not to",
+    "page": 44,
+    "sample_ja": "Meaning",
+    "sample_en": "far from; anything but; let alone; not to"
+  },
+  {
+    "level": "N2",
+    "pattern": "どうやら (dou yara)",
+    "meaning": "possibly; apparently; seems like; somehow;",
+    "page": 46,
+    "sample_ja": "Meaning",
+    "sample_en": "possibly; apparently; seems like; somehow;"
+  },
+  {
+    "level": "N2",
+    "pattern": "どうせ (douse)",
+    "meaning": "anyhow; in any case; at any rate; after all; no matter",
+    "page": 48,
+    "sample_ja": "Meaning",
+    "sample_en": "anyhow; in any case; at any rate; after all; no"
+  },
+  {
+    "level": "N2",
+    "pattern": "得ない 【えない】(enai)",
+    "meaning": "unable to; cannot; it is not possible to~",
+    "page": 50,
+    "sample_ja": "Meaning",
+    "sample_en": "unable to; cannot; it is not possible to~"
+  },
+  {
+    "level": "N2",
+    "pattern": "得る 【える/うる】(eru/uru)",
+    "meaning": "can; to be able to; is possible to~",
+    "page": 52,
+    "sample_ja": "Meaning",
+    "sample_en": "can; to be able to; is possible to~"
+  },
+  {
+    "level": "N2",
+    "pattern": "再び 【ふたたび】(futatabi)",
+    "meaning": "again; once more",
+    "page": 54,
+    "sample_ja": "Meaning",
+    "sample_en": "again; once more"
+  },
+  {
+    "level": "N2",
+    "pattern": "⾵に 【 ふうに 】(fuu ni)",
+    "meaning": "this way; that way; in such a way; how",
+    "page": 56,
+    "sample_ja": "Meaning",
+    "sample_en": "this way; that way; in such a way; how"
+  },
+  {
+    "level": "N2",
+    "pattern": "をきっかけに (o kikkake ni)",
+    "meaning": "with… as a start; as a result of; taking",
+    "page": 58,
+    "sample_ja": "Meaning",
+    "sample_en": "with… as a start; as a result of; taking"
+  },
+  {
+    "level": "N2",
+    "pattern": "気 【げ】(ge) / げに (ge ni) / げな (ge na)",
+    "meaning": "looks like; seems like;",
+    "page": 60,
+    "sample_ja": "Meaning",
+    "sample_en": "looks like; seems like; appears to~"
+  },
+  {
+    "level": "N2",
+    "pattern": "逆に 【ぎゃくに】(gyaku ni)",
+    "meaning": "conversely; on the contrary~",
+    "page": 63,
+    "sample_ja": "Meaning",
+    "sample_en": "conversely; on the contrary~"
+  },
+  {
+    "level": "N2",
+    "pattern": "反⾯ 【はんめん】(hanmen)",
+    "meaning": "while, although; on the other hand~",
+    "page": 65,
+    "sample_ja": "Meaning",
+    "sample_en": "while, although; on the other hand~"
+  },
+  {
+    "level": "N2",
+    "pattern": "果たして 【はたして】(hatashite)",
+    "meaning": "as was expected; sure enough;",
+    "page": 67,
+    "sample_ja": "Meaning",
+    "sample_en": "as was expected; sure enough; really;"
+  },
+  {
+    "level": "N2",
+    "pattern": "⼀応 【いちおう】(ichiou)",
+    "meaning": "more or less; pretty much; roughly;",
+    "page": 69,
+    "sample_ja": "Meaning",
+    "sample_en": "more or less; pretty much; roughly;"
+  },
+  {
+    "level": "N2",
+    "pattern": "以外 【いがい】(igai)",
+    "meaning": "with the exception of; excepting~",
+    "page": 71,
+    "sample_ja": "Meaning",
+    "sample_en": "with the exception of; excepting~"
+  },
+  {
+    "level": "N2",
+    "pattern": "以上に 【いじょうに】(ijou ni)",
+    "meaning": "more than; not less than; beyond~",
+    "page": 73,
+    "sample_ja": "Meaning",
+    "sample_en": "more than; not less than; beyond~"
+  },
+  {
+    "level": "N2",
+    "pattern": "以上は 【いじょうは】(ijou wa)",
+    "meaning": "because; since; seeing that~",
+    "page": 75,
+    "sample_ja": "Meaning",
+    "sample_en": "because; since; seeing that~"
+  },
+  {
+    "level": "N2",
+    "pattern": "⾏き成り 【いきなり】 (ikinari)",
+    "meaning": "abruptly; suddenly; all of a",
+    "page": 77,
+    "sample_ja": "Meaning",
+    "sample_en": "abruptly; suddenly; all of a sudden; without"
+  },
+  {
+    "level": "N2",
+    "pattern": "⼀気に 【いっきに】(ikki ni)",
+    "meaning": "in one go; without stopping; all at",
+    "page": 79,
+    "sample_ja": "Meaning",
+    "sample_en": "in one go; without stopping; all at once;"
+  },
+  {
+    "level": "N2",
+    "pattern": "⼀⽅で 【いっぽうで】(ippou de)",
+    "meaning": "on one hand, on the other hand;",
+    "page": 81,
+    "sample_ja": "Meaning",
+    "sample_en": "on one hand, on the other hand; although~"
+  },
+  {
+    "level": "N2",
+    "pattern": "いわゆる (iwayuru)",
+    "meaning": "what is called; as it is called; the so-called; so to",
+    "page": 83,
+    "sample_ja": "Meaning",
+    "sample_en": "what is called; as it is called; the so-called; so"
+  },
+  {
+    "level": "N2",
+    "pattern": "いよいよ (iyoiyo)",
+    "meaning": "at last; finally; beyond doubt",
+    "page": 85,
+    "sample_ja": "Meaning",
+    "sample_en": "at last; finally; beyond doubt"
+  },
+  {
+    "level": "N2",
+    "pattern": "上 【じょう】(jou)",
+    "meaning": "for the sake of; from the standpoint of; as a",
+    "page": 87,
+    "sample_ja": "Meaning",
+    "sample_en": "for the sake of; from the standpoint of; as a"
+  },
+  {
+    "level": "N2",
+    "pattern": "かと思ったら 【かとおもったら】(ka to omottara)",
+    "meaning": "just when; no",
+    "page": 92,
+    "sample_ja": "Meaning",
+    "sample_en": "just when; no sooner than~"
+  },
+  {
+    "level": "N2",
+    "pattern": "か〜ないかのうちに (ka~nai ka no uchi ni)",
+    "meaning": "just as; right after; as",
+    "page": 95,
+    "sample_ja": "Meaning",
+    "sample_en": "just as; right after; as soon as~"
+  },
+  {
+    "level": "N2",
+    "pattern": "かえって (kaette)",
+    "meaning": "on the contrary; rather; all the more;",
+    "page": 97,
+    "sample_ja": "Meaning",
+    "sample_en": "on the contrary; rather; all the more;"
+  },
+  {
+    "level": "N2",
+    "pattern": "限り 【かぎり】(kagiri)",
+    "meaning": "as long as; while… is the case; as far as;",
+    "page": 99,
+    "sample_ja": "Meaning",
+    "sample_en": "as long as; while… is the case; as far as;"
+  },
+  {
+    "level": "N2",
+    "pattern": "甲斐がある 【かいがある】(kai ga aru)",
+    "meaning": "it’s worth one’s efforts to do",
+    "page": 101,
+    "sample_ja": "Meaning",
+    "sample_en": "it’s worth one’s efforts to do something"
+  },
+  {
+    "level": "N2",
+    "pattern": "かねない (kanenai)",
+    "meaning": "(someone) might do something; something",
+    "page": 103,
+    "sample_ja": "Meaning",
+    "sample_en": "(someone) might do something; something"
+  },
+  {
+    "level": "N2",
+    "pattern": "かねる / かねます (kaneru / kanemasu)",
+    "meaning": "unable to do something;",
+    "page": 105,
+    "sample_ja": "Meaning",
+    "sample_en": "unable to do something; can’t do something"
+  },
+  {
+    "level": "N2",
+    "pattern": "から⾔うと 【からいうと】(kara iu to)",
+    "meaning": "in terms of; from the point",
+    "page": 107,
+    "sample_ja": "Meaning",
+    "sample_en": "in terms of; from the point of view of~"
+  },
+  {
+    "level": "N2",
+    "pattern": "からこそ (kara koso)",
+    "meaning": "precisely because~",
+    "page": 109,
+    "sample_ja": "Meaning",
+    "sample_en": "precisely because~"
+  },
+  {
+    "level": "N2",
+    "pattern": "から⾒ると 【からみると】(kara miru to)",
+    "meaning": "from the point of view",
+    "page": 111,
+    "sample_ja": "Meaning",
+    "sample_en": "from the point of view of; by the look of;"
+  },
+  {
+    "level": "N2",
+    "pattern": "からには (kara niwa)",
+    "meaning": "now that; since; so long as; because~",
+    "page": 113,
+    "sample_ja": "Meaning",
+    "sample_en": "now that; since; so long as; because~"
+  },
+  {
+    "level": "N2",
+    "pattern": "からして (kara shite)",
+    "meaning": "judging from; based on; since; from; even~",
+    "page": 115,
+    "sample_ja": "Meaning",
+    "sample_en": "judging from; based on; since; from; even~"
+  },
+  {
+    "level": "N2",
+    "pattern": "からすると / からすれば (kara suru to / kara sureba)",
+    "meaning": "judging from;",
+    "page": 117,
+    "sample_ja": "Meaning",
+    "sample_en": "judging from; considering; by the look of~"
+  },
+  {
+    "level": "N2",
+    "pattern": "からと⾔って 【からといって】 (kara to itte)",
+    "meaning": "just because; even if;",
+    "page": 119,
+    "sample_ja": "Meaning",
+    "sample_en": "just because; even if; even though~"
+  },
+  {
+    "level": "N2",
+    "pattern": "っこない (kkonai)",
+    "meaning": "no chance of; …is definitely not possible",
+    "page": 121,
+    "sample_ja": "Meaning",
+    "sample_en": "no chance of; …is definitely not possible"
+  },
+  {
+    "level": "N2",
+    "pattern": "ことだ (koto da)",
+    "meaning": "should do~ (used for suggestions or giving",
+    "page": 123,
+    "sample_ja": "Meaning",
+    "sample_en": "should do~ (used for suggestions or giving"
+  },
+  {
+    "level": "N2",
+    "pattern": "ことだから (koto dakara)",
+    "meaning": "because; since~",
+    "page": 125,
+    "sample_ja": "",
+    "sample_en": ""
+  },
+  {
+    "level": "N2",
+    "pattern": "ことか (koto ka)",
+    "meaning": "how…!; what…!",
+    "page": 128,
+    "sample_ja": "Meaning",
+    "sample_en": "how…!; what…!"
+  },
+  {
+    "level": "N2",
+    "pattern": "ことなく (koto naku)",
+    "meaning": "without doing something even once",
+    "page": 130,
+    "sample_ja": "Meaning",
+    "sample_en": "without doing something even once"
+  },
+  {
+    "level": "N2",
+    "pattern": "ことに (koto ni)",
+    "meaning": "emphasize speaker’s feelings; to my (surprise/etc)",
+    "page": 132,
+    "sample_ja": "Meaning",
+    "sample_en": "emphasize speaker's feelings; to my"
+  },
+  {
+    "level": "N2",
+    "pattern": "ことにはならない (koto niwa naranai)",
+    "meaning": "just because… doesn’t",
+    "page": 134,
+    "sample_ja": "Meaning",
+    "sample_en": "just because… doesn’t mean~"
+  },
+  {
+    "level": "N2",
+    "pattern": "くせして (kuse shite)",
+    "meaning": "although~; despite the fact that~; even",
+    "page": 136,
+    "sample_ja": "Meaning",
+    "sample_en": "although~; despite the fact that~; even"
+  },
+  {
+    "level": "N2",
+    "pattern": "未だしも 【ならまだしも】 (nara madashimo)",
+    "meaning": "rather; better ~",
+    "page": 138,
+    "sample_ja": "Meaning",
+    "sample_en": "rather; better ~"
+  },
+  {
+    "level": "N2",
+    "pattern": "まい (mai)",
+    "meaning": "will not; will probably not; intend not to; must not~",
+    "page": 140,
+    "sample_ja": "Meaning",
+    "sample_en": "will not; will probably not; intend not to;"
+  },
+  {
+    "level": "N2",
+    "pattern": "ままに (mama ni)",
+    "meaning": "as, to do as~",
+    "page": 142,
+    "sample_ja": "Meaning",
+    "sample_en": "as, to do as~"
+  },
+  {
+    "level": "N2",
+    "pattern": "全く〜ない 【まったく〜ない】(mattaku~nai)",
+    "meaning": "not at all~",
+    "page": 144,
+    "sample_ja": "Meaning",
+    "sample_en": "not at all~"
+  },
+  {
+    "level": "N2",
+    "pattern": "も構わず【もかまわず】 (mo kamawazu)",
+    "meaning": "without caring; without",
+    "page": 146,
+    "sample_ja": "Meaning",
+    "sample_en": "without caring; without worrying about~"
+  },
+  {
+    "level": "N2",
+    "pattern": "も当然だ 【もとうぜんだ】(mo touzen da)",
+    "meaning": "it’s only natural; no",
+    "page": 148,
+    "sample_ja": "Meaning",
+    "sample_en": "it’s only natural; no wonder; might as well~"
+  },
+  {
+    "level": "N2",
+    "pattern": "もの (mono) / もん (mon)",
+    "meaning": "because; indicates reason/ excuse/",
+    "page": 150,
+    "sample_ja": "Meaning",
+    "sample_en": "because; indicates reason/ excuse/"
+  },
+  {
+    "level": "N2",
+    "pattern": "ものだ (mono da)",
+    "meaning": "normally; in general; should~; must~",
+    "page": 153,
+    "sample_ja": "Meaning",
+    "sample_en": "describe feeling; express memories; state fact"
+  },
+  {
+    "level": "N2",
+    "pattern": "ものだから (mono dakara)",
+    "meaning": "so; therefore; the reason for something",
+    "page": 156,
+    "sample_ja": "Meaning",
+    "sample_en": "so; therefore; the reason for something"
+  },
+  {
+    "level": "N2",
+    "pattern": "ものではない (mono dewa nai)",
+    "meaning": "can either mean one shouldn’t do",
+    "page": 158,
+    "sample_ja": "Meaning",
+    "sample_en": "shouldn’t do something; it’s impossible to~"
+  },
+  {
+    "level": "N2",
+    "pattern": "ものがある (mono ga aru)",
+    "meaning": "there is such a thing; to be the case that ;",
+    "page": 160,
+    "sample_ja": "Meaning",
+    "sample_en": "there is such a thing; to be the case that ; feels"
+  },
+  {
+    "level": "N2",
+    "pattern": "ものか / もんか (mono ka / mon ka)",
+    "meaning": "as if (something untrue were",
+    "page": 162,
+    "sample_ja": "Meaning",
+    "sample_en": "as if (something untrue were actually true);"
+  },
+  {
+    "level": "N2",
+    "pattern": "ものなら (mono nara)",
+    "meaning": "if I/we could; if [A] is possible, then [B]; if",
+    "page": 164,
+    "sample_ja": "⾏けるものなら 【いけるものなら】= If I can go, then..",
+    "sample_en": "戻れるものなら 【もどれるものなら】= If I can return, then.."
+  },
+  {
+    "level": "N2",
+    "pattern": "ものの (monono)",
+    "meaning": "but; although; even though~",
+    "page": 166,
+    "sample_ja": "Meaning",
+    "sample_en": "but; although; even though~"
+  },
+  {
+    "level": "N2",
+    "pattern": "尤も 【もっとも】(motto mo)",
+    "meaning": "but then; although; though~",
+    "page": 168,
+    "sample_ja": "Meaning",
+    "sample_en": "but then; although; though~"
+  },
+  {
+    "level": "N2",
+    "pattern": "もう少しで 【もうすこしで】(mou sukoshi de)",
+    "meaning": "almost; nearly,",
+    "page": 170,
+    "sample_ja": "Meaning",
+    "sample_en": "almost; nearly, close to~"
+  },
+  {
+    "level": "N2",
+    "pattern": "ないではいられない (nai dewa irarenai)",
+    "meaning": "can’t help but feel; can’t",
+    "page": 172,
+    "sample_ja": "Meaning",
+    "sample_en": "can’t help but feel; can’t help but do~"
+  },
+  {
+    "level": "N2",
+    "pattern": "ないことには〜ない (nai koto niwa~nai)",
+    "meaning": "unless you~",
+    "page": 174,
+    "sample_ja": "Meaning",
+    "sample_en": "unless you~"
+  },
+  {
+    "level": "N2",
+    "pattern": "中を/中では 【なかを/なかでは】(naka o/naka dewa)",
+    "meaning": "in; on; in",
+    "page": 176,
+    "sample_ja": "Meaning",
+    "sample_en": "in; on; in the midst of; when; while~"
+  },
+  {
+    "level": "N2",
+    "pattern": "なくはない (naku wa nai)",
+    "meaning": "it’s not that; I may (double negative)",
+    "page": 178,
+    "sample_ja": "Meaning",
+    "sample_en": "it’s not that; I may (double negative)"
+  },
+  {
+    "level": "N2",
+    "pattern": "何も〜ない 【なにも〜ない】(nani mo~nai)",
+    "meaning": "nothing; (not) ~ at all;",
+    "page": 182,
+    "sample_ja": "Meaning",
+    "sample_en": "nothing; (not) ~ at all; there’s no need to~"
+  },
+  {
+    "level": "N2",
+    "pattern": "なお (nao)",
+    "meaning": "still; yet ; furthermore; in addition~",
+    "page": 184,
+    "sample_ja": "Meaning",
+    "sample_en": "still; yet ; furthermore; in addition~"
+  },
+  {
+    "level": "N2",
+    "pattern": "ねばならない (neba naranai)",
+    "meaning": "have to do; must; should~",
+    "page": 186,
+    "sample_ja": "Meaning",
+    "sample_en": "have to do; must; should~"
+  },
+  {
+    "level": "N2",
+    "pattern": "にあたって (ni atatte) / にあたり (ni atari)",
+    "meaning": "at the time; on the",
+    "page": 188,
+    "sample_ja": "Meaning",
+    "sample_en": "at the time; on the occasion of~"
+  },
+  {
+    "level": "N2",
+    "pattern": "にほかならない (ni hoka naranai)",
+    "meaning": "nothing but; none other than~",
+    "page": 190,
+    "sample_ja": "Meaning",
+    "sample_en": "nothing but; none other than~"
+  },
+  {
+    "level": "N2",
+    "pattern": "に限らず 【にかぎらず】(ni kagirazu)",
+    "meaning": "not just; not only",
+    "page": 192,
+    "sample_ja": "Meaning",
+    "sample_en": "not just; not only.. but also~"
+  },
+  {
+    "level": "N2",
+    "pattern": "に限る (ni kagiru)",
+    "meaning": "is best; nothing is better than~",
+    "page": 194,
+    "sample_ja": "Meaning",
+    "sample_en": "is best; nothing is better than~"
+  },
+  {
+    "level": "N2",
+    "pattern": "に限って 【にかぎって】(ni kagitte)",
+    "meaning": "only; in particular~",
+    "page": 196,
+    "sample_ja": "Meaning",
+    "sample_en": "only; in particular~"
+  },
+  {
+    "level": "N2",
+    "pattern": "に関わらず 【にかかわらず】 (ni kakawarazu)",
+    "meaning": "in spite of;",
+    "page": 198,
+    "sample_ja": "Meaning",
+    "sample_en": "in spite of; regardless of~"
+  },
+  {
+    "level": "N2",
+    "pattern": "に関わる 【にかかわる】(ni kakawaru)",
+    "meaning": "to relate to; to have to do",
+    "page": 200,
+    "sample_ja": "Meaning",
+    "sample_en": "to relate to; to have to do with; relating to~"
+  },
+  {
+    "level": "N2",
+    "pattern": "に決まっている 【にきまっている】(ni kimatte iru)",
+    "meaning": "certainly; I’m",
+    "page": 202,
+    "sample_ja": "Meaning",
+    "sample_en": "certainly; I’m sure/certain that; it must be"
+  },
+  {
+    "level": "N2",
+    "pattern": "に越したことはない 【にこしたことはない】(ni koshita koto wa nai)",
+    "meaning": "",
+    "page": 204,
+    "sample_ja": "Meaning",
+    "sample_en": "it’s best that, there’s nothing better than~"
+  },
+  {
+    "level": "N2",
+    "pattern": "に応えて 【にこたえて】(ni kotaete)",
+    "meaning": "in response to~",
+    "page": 206,
+    "sample_ja": "Meaning",
+    "sample_en": "in response to~"
+  },
+  {
+    "level": "N2",
+    "pattern": "に加えて 【にくわえて】(ni kuwaete)",
+    "meaning": "in addition~",
+    "page": 208,
+    "sample_ja": "Meaning",
+    "sample_en": "in addition~"
+  },
+  {
+    "level": "N2",
+    "pattern": "に基づいて 【にもとづいて】(ni motozuite)",
+    "meaning": "based on; on the basis",
+    "page": 210,
+    "sample_ja": "Meaning",
+    "sample_en": "based on; on the basis of~"
+  },
+  {
+    "level": "N2",
+    "pattern": "に向かって 【にむかって】(ni mukatte) / に向けて 【にむけて】(ni mukete)",
+    "meaning": "",
+    "page": 212,
+    "sample_ja": "Meaning",
+    "sample_en": "to face; to go towards; to head to~"
+  },
+  {
+    "level": "N2",
+    "pattern": "に応じて 【におうじて】(ni oujite)",
+    "meaning": "depending on; in accordance",
+    "page": 214,
+    "sample_ja": "Meaning",
+    "sample_en": "depending on; in accordance with~"
+  },
+  {
+    "level": "N2",
+    "pattern": "に際して 【にさいして】(ni saishite)",
+    "meaning": "on the occasion of; at the",
+    "page": 216,
+    "sample_ja": "Meaning",
+    "sample_en": "on the occasion of; at the time of~"
+  },
+  {
+    "level": "N2",
+    "pattern": "に先⽴ち 【にさきだち】(ni sakidachi)",
+    "meaning": "before; prior to~",
+    "page": 218,
+    "sample_ja": "Meaning",
+    "sample_en": "before; prior to~"
+  },
+  {
+    "level": "N2",
+    "pattern": "にせよ (ni seyo) / にしろ (ni shiro)",
+    "meaning": "even if; regardless; whether…",
+    "page": 220,
+    "sample_ja": "何にせよ / 何にしろ",
+    "sample_en": "nani ni seyo / nani ni shiro"
+  },
+  {
+    "level": "N2",
+    "pattern": "にしろ〜にしろ (ni shiro~ni shiro)",
+    "meaning": "whether… or~",
+    "page": 223,
+    "sample_ja": "Meaning",
+    "sample_en": "whether… or~"
+  },
+  {
+    "level": "N2",
+    "pattern": "にしたら (ni shitara) / にすれば (ni sureba)",
+    "meaning": "from one’s perspective;",
+    "page": 226,
+    "sample_ja": "Meaning",
+    "sample_en": "from one’s perspective; from the point of"
+  },
+  {
+    "level": "N2",
+    "pattern": "にしても〜にしても (ni shitemo~ni shitemo)",
+    "meaning": "regardless of",
+    "page": 228,
+    "sample_ja": "Meaning",
+    "sample_en": "regardless of whether~"
+  },
+  {
+    "level": "N2",
+    "pattern": "に沿って 【にそって】(ni sotte)",
+    "meaning": "along with; in accordance with~",
+    "page": 231,
+    "sample_ja": "Meaning",
+    "sample_en": "along with; in accordance with"
+  },
+  {
+    "level": "N2",
+    "pattern": "に相違ない 【にそういない】(ni soui nai)",
+    "meaning": "without a doubt; certain;",
+    "page": 233,
+    "sample_ja": "Meaning",
+    "sample_en": "without a doubt; certain; sure"
+  },
+  {
+    "level": "N2",
+    "pattern": "に過ぎない 【にすぎない】(ni suginai)",
+    "meaning": "no more than; just; merely;",
+    "page": 235,
+    "sample_ja": "Meaning",
+    "sample_en": "no more than; just; merely; only~"
+  },
+  {
+    "level": "N2",
+    "pattern": "に伴って 【にともなって】(ni tomonatte)",
+    "meaning": "as; due to; with; along",
+    "page": 237,
+    "sample_ja": "Meaning",
+    "sample_en": "as; due to; with; along with; following;"
+  },
+  {
+    "level": "N2",
+    "pattern": "につけ (ni tsuke)",
+    "meaning": "every time; whenever; as; whether; in (either",
+    "page": 239,
+    "sample_ja": "Meaning",
+    "sample_en": "every time; whenever; as; whether; in (either"
+  },
+  {
+    "level": "N2",
+    "pattern": "につき (ni tsuki)",
+    "meaning": "due to; because of; per; each",
+    "page": 241,
+    "sample_ja": "Meaning",
+    "sample_en": "due to; because of; per; each"
+  },
+  {
+    "level": "N2",
+    "pattern": "に渡って 【にわたって】 (ni watatte)",
+    "meaning": "throughout; over a period",
+    "page": 243,
+    "sample_ja": "Meaning",
+    "sample_en": "throughout; over a period of~"
+  },
+  {
+    "level": "N2",
+    "pattern": "にも関わらず 【にもかかわらず】(nimo kakawarazu)",
+    "meaning": "despite; in",
+    "page": 245,
+    "sample_ja": "Meaning",
+    "sample_en": "despite; in spite of; nevertheless; although~"
+  },
+  {
+    "level": "N2",
+    "pattern": "にて (nite)",
+    "meaning": "in, at, with, by (formal particle)",
+    "page": 248,
+    "sample_ja": "Meaning",
+    "sample_en": "in, at, with, by (formal particle)"
+  },
+  {
+    "level": "N2",
+    "pattern": "のももっともだ (no mo motto mo da)",
+    "meaning": "no wonder; …is only natural",
+    "page": 250,
+    "sample_ja": "Meaning",
+    "sample_en": "no wonder; …is only natural"
+  },
+  {
+    "level": "N2",
+    "pattern": "の下で 【のもとで】(no moto de)",
+    "meaning": "under; with~",
+    "page": 252,
+    "sample_ja": "Meaning",
+    "sample_en": "under; with~"
+  },
+  {
+    "level": "N2",
+    "pattern": "の上では 【のうえでは】(no ue de wa)",
+    "meaning": "according to; from the",
+    "page": 254,
+    "sample_ja": "Meaning",
+    "sample_en": "according to; from the viewpoint of~"
+  },
+  {
+    "level": "N2",
+    "pattern": "のみならず (nominarazu)",
+    "meaning": "not only; besides; as well as~",
+    "page": 256,
+    "sample_ja": "Meaning",
+    "sample_en": "not only; besides; as well as~"
+  },
+  {
+    "level": "N2",
+    "pattern": "ぬ (nu)",
+    "meaning": "negative verb conjugation; traditional version of ない",
+    "page": 258,
+    "sample_ja": "Meaning",
+    "sample_en": "negative verb conjugation; traditional"
+  },
+  {
+    "level": "N2",
+    "pattern": "抜きにして 【ぬきにして】nuki ni shite & 抜きで 【ぬきで】 (nuki de)",
+    "meaning": "",
+    "page": 260,
+    "sample_ja": "Meaning",
+    "sample_en": "without; leaving out; cutting out~"
+  },
+  {
+    "level": "N2",
+    "pattern": "抜く 【ぬく】(nuku)",
+    "meaning": "to do something from beginning to end;",
+    "page": 262,
+    "sample_ja": "Meaning",
+    "sample_en": "to do something from beginning to end;"
+  },
+  {
+    "level": "N2",
+    "pattern": "をめぐって (o megutte)",
+    "meaning": "concerning; in regard to~",
+    "page": 266,
+    "sample_ja": "Meaning",
+    "sample_en": "concerning; in regard to~"
+  },
+  {
+    "level": "N2",
+    "pattern": "元にして 【をもとに】(o moto ni)",
+    "meaning": "based on; derived from;",
+    "page": 268,
+    "sample_ja": "Meaning",
+    "sample_en": "based on; derived from; building on;"
+  },
+  {
+    "level": "N2",
+    "pattern": "を除いて 【をのぞいて】(o nozoite)",
+    "meaning": "except; with the exception of;",
+    "page": 270,
+    "sample_ja": "Meaning",
+    "sample_en": "except; with the exception of; excluding~"
+  },
+  {
+    "level": "N2",
+    "pattern": "を問わず 【をとわず】(o towazu)",
+    "meaning": "regardless of; irrespective of; no",
+    "page": 272,
+    "sample_ja": "Meaning",
+    "sample_en": "regardless of; irrespective of; no matter"
+  },
+  {
+    "level": "N2",
+    "pattern": "お〜願う 【お〜ねがう】(o~negau)",
+    "meaning": "please do; could you please…; I",
+    "page": 274,
+    "sample_ja": "Meaning",
+    "sample_en": "please do; could you please…; I ask of you"
+  },
+  {
+    "level": "N2",
+    "pattern": "お負けに 【おまけに】(omake ni)",
+    "meaning": "to make matters worse; besides;",
+    "page": 276,
+    "sample_ja": "Meaning",
+    "sample_en": "to make matters worse; besides; what's"
+  },
+  {
+    "level": "N2",
+    "pattern": "恐らく 【おそらく】(osoraku)",
+    "meaning": "perhaps; likely; probably; I dare",
+    "page": 278,
+    "sample_ja": "Meaning",
+    "sample_en": "perhaps; likely; probably; I dare say~"
+  },
+  {
+    "level": "N2",
+    "pattern": "恐れがある 【おそれがある】(osore ga aru)",
+    "meaning": "it is feared that; to be",
+    "page": 280,
+    "sample_ja": "Meaning",
+    "sample_en": "it is feared that; to be in danger of; to be"
+  },
+  {
+    "level": "N2",
+    "pattern": "及び 【および】(oyobi)",
+    "meaning": "and; as well as~",
+    "page": 282,
+    "sample_ja": "Meaning",
+    "sample_en": "and; as well as~"
+  },
+  {
+    "level": "N2",
+    "pattern": "碌に〜無い 【ろくに〜ない】(roku ni~nai)",
+    "meaning": "not well; not enough;",
+    "page": 284,
+    "sample_ja": "Meaning",
+    "sample_en": "not well; not enough; improperly;"
+  },
+  {
+    "level": "N2",
+    "pattern": "せいか (sei ka)",
+    "meaning": "perhaps because~",
+    "page": 288,
+    "sample_ja": "Meaning",
+    "sample_en": "perhaps because~"
+  },
+  {
+    "level": "N2",
+    "pattern": "折⾓ 【せっかく】(sekkaku)",
+    "meaning": "especially; (thank you for) troubling",
+    "page": 290,
+    "sample_ja": "Meaning",
+    "sample_en": "especially; (thank you for) troubling to, going"
+  },
+  {
+    "level": "N2",
+    "pattern": "せめて (semete)",
+    "meaning": "at least; at most~",
+    "page": 293,
+    "sample_ja": "Meaning",
+    "sample_en": "at least; at most~"
+  },
+  {
+    "level": "N2",
+    "pattern": "次第 【しだい】(shidai)",
+    "meaning": "depending on; as soon as~",
+    "page": 295,
+    "sample_ja": "Meaning",
+    "sample_en": "as soon as, dependent upon"
+  },
+  {
+    "level": "N2",
+    "pattern": "次第で 【しだいで】(shidai de)",
+    "meaning": "depending on; so~",
+    "page": 297,
+    "sample_ja": "Meaning",
+    "sample_en": "depending on; so~"
+  },
+  {
+    "level": "N2",
+    "pattern": "次第に 【しだいに】(shidai ni)",
+    "meaning": "gradually (progress into a state); in",
+    "page": 299,
+    "sample_ja": "Meaning",
+    "sample_en": "gradually (progress into a state); in"
+  },
+  {
+    "level": "N2",
+    "pattern": "しかも (shikamo)",
+    "meaning": "moreover; furthermore; and yet; what’s more~",
+    "page": 301,
+    "sample_ja": "Meaning",
+    "sample_en": "moreover; furthermore; and yet; what’s"
+  },
+  {
+    "level": "N2",
+    "pattern": "その上 【そのうえ】(sono ue)",
+    "meaning": "besides; in addition; furthermore~",
+    "page": 303,
+    "sample_ja": "Meaning",
+    "sample_en": "besides; in addition; furthermore~"
+  },
+  {
+    "level": "N2",
+    "pattern": "それなのに (sore na noni)",
+    "meaning": "and yet; despite this; but even so~",
+    "page": 305,
+    "sample_ja": "Meaning",
+    "sample_en": "and yet; despite this; but even so~"
+  },
+  {
+    "level": "N2",
+    "pattern": "それなら (sore nara)",
+    "meaning": "if that’s the case; if so~",
+    "page": 307,
+    "sample_ja": "Meaning",
+    "sample_en": "if that’s the case; if so~"
+  },
+  {
+    "level": "N2",
+    "pattern": "それにしても (sore ni shitemo)",
+    "meaning": "nevertheless; at any rate; even so;",
+    "page": 310,
+    "sample_ja": "Meaning",
+    "sample_en": "nevertheless; at any rate; even so; be that as"
+  },
+  {
+    "level": "N2",
+    "pattern": "そう⾔えば 【そういえば】(sou ieba)",
+    "meaning": "come to think of it…; now",
+    "page": 312,
+    "sample_ja": "Meaning",
+    "sample_en": "come to think of it…; now that you mention"
+  },
+  {
+    "level": "N2",
+    "pattern": "そうすると (sou suru to)",
+    "meaning": "having done that; if that is done; if it is",
+    "page": 314,
+    "sample_ja": "Meaning",
+    "sample_en": "having done that; if that is done; if it is done"
+  },
+  {
+    "level": "N2",
+    "pattern": "末に 【すえに】(sue ni)",
+    "meaning": "finally; after; following; at the end/",
+    "page": 316,
+    "sample_ja": "Meaning",
+    "sample_en": "finally; after; following; at the end/"
+  },
+  {
+    "level": "N2",
+    "pattern": "少しも〜ない 【すこしも〜ない】(sukoshi mo~nai)",
+    "meaning": "not one bit;",
+    "page": 318,
+    "sample_ja": "Meaning",
+    "sample_en": "not one bit; not even a little~"
+  },
+  {
+    "level": "N2",
+    "pattern": "少なくとも 【すくなくとも】(sukunaku tomo)",
+    "meaning": "at least~",
+    "page": 320,
+    "sample_ja": "Meaning",
+    "sample_en": "at least~"
+  },
+  {
+    "level": "N2",
+    "pattern": "直ちに 【ただちに】(tadachi ni)",
+    "meaning": "at once; immediately; directly; in",
+    "page": 322,
+    "sample_ja": "Meaning",
+    "sample_en": "at once; immediately; directly; in person;"
+  },
+  {
+    "level": "N2",
+    "pattern": "たまえ (tamae)",
+    "meaning": "do~; order somebody to do something",
+    "page": 324,
+    "sample_ja": "Meaning",
+    "sample_en": "do~; order somebody to do something"
+  },
+  {
+    "level": "N2",
+    "pattern": "てばかりはいられない (te bakari wa irarenai)",
+    "meaning": "can’t keep doing~",
+    "page": 326,
+    "sample_ja": "Meaning",
+    "sample_en": "can’t keep doing~"
+  },
+  {
+    "level": "N2",
+    "pattern": "てでも (te demo)",
+    "meaning": "even if I have to; by all means~",
+    "page": 328,
+    "sample_ja": "Meaning",
+    "sample_en": "even if I have to; by all means~"
+  },
+  {
+    "level": "N2",
+    "pattern": "て以来 【ていらい】(te irai)",
+    "meaning": "since; henceforth~",
+    "page": 330,
+    "sample_ja": "Meaning",
+    "sample_en": "since; henceforth~"
+  },
+  {
+    "level": "N2",
+    "pattern": "ていては (te ite wa)",
+    "meaning": "if one keeps doing~",
+    "page": 332,
+    "sample_ja": "Meaning",
+    "sample_en": "if one keeps doing~"
+  },
+  {
+    "level": "N2",
+    "pattern": "てこそ (te koso)",
+    "meaning": "now that; since (something happened)",
+    "page": 334,
+    "sample_ja": "Meaning",
+    "sample_en": "now that; since (something happened)"
+  },
+  {
+    "level": "N2",
+    "pattern": "てまで (te made) / までして (made shite)",
+    "meaning": "even; will go far so as",
+    "page": 336,
+    "sample_ja": "Meaning",
+    "sample_en": "even; will go far so as to~"
+  },
+  {
+    "level": "N2",
+    "pattern": "てならない (te naranai)",
+    "meaning": "can’t help but; dying to; extremely~",
+    "page": 338,
+    "sample_ja": "Meaning",
+    "sample_en": "can't help but; dying to; extremely~"
+  },
+  {
+    "level": "N2",
+    "pattern": "てたまらない (te tamaranai)",
+    "meaning": "can’t help but; dying to; extremely~",
+    "page": 340,
+    "sample_ja": "Meaning",
+    "sample_en": "can't help but; dying to; extremely~"
+  },
+  {
+    "level": "N2",
+    "pattern": "て当然だ 【てとうぜんだ】(te touzen da)",
+    "meaning": "natural; as a matter of",
+    "page": 342,
+    "sample_ja": "Meaning",
+    "sample_en": "natural; as a matter of course"
+  },
+  {
+    "level": "N2",
+    "pattern": "ては / では (tewa / dewa)",
+    "meaning": "whenever; if; when~; repetitive action",
+    "page": 344,
+    "sample_ja": "Meaning",
+    "sample_en": "whenever; if; when~; repetitive action"
+  },
+  {
+    "level": "N2",
+    "pattern": "てはいられない (tewa irarenai)",
+    "meaning": "can’t afford to; unable to~",
+    "page": 347,
+    "sample_ja": "Meaning",
+    "sample_en": "can’t afford to; unable to~"
+  },
+  {
+    "level": "N2",
+    "pattern": "てはならない (tewa naranai)",
+    "meaning": "must not; cannot; should not~",
+    "page": 350,
+    "sample_ja": "Meaning",
+    "sample_en": "must not; cannot; should not~"
+  },
+  {
+    "level": "N2",
+    "pattern": "ては〜ては (tewa~tewa)",
+    "meaning": "repetitive situations/actions",
+    "page": 352,
+    "sample_ja": "Meaning",
+    "sample_en": "repetitive situations/actions"
+  },
+  {
+    "level": "N2",
+    "pattern": "と同時に 【とどうじに】(to douji ni)",
+    "meaning": "at the same time as; while;",
+    "page": 354,
+    "sample_ja": "Meaning",
+    "sample_en": "at the same time as; while; simultaneously~"
+  },
+  {
+    "level": "N2",
+    "pattern": "と⾔った 【といった】(to itta)",
+    "meaning": "like; such as~",
+    "page": 356,
+    "sample_ja": "Meaning",
+    "sample_en": "like; such as~"
+  },
+  {
+    "level": "N2",
+    "pattern": "という⾵に 【というふうに】(to iu fuu ni)",
+    "meaning": "in such a way that~",
+    "page": 358,
+    "sample_ja": "Meaning",
+    "sample_en": "in such a way that~"
+  },
+  {
+    "level": "N2",
+    "pattern": "と⾔うことは 【ということは】 (to iu koto wa)",
+    "meaning": "that is to say; so",
+    "page": 360,
+    "sample_ja": "Meaning",
+    "sample_en": "that is to say; so that means; in other words~"
+  },
+  {
+    "level": "N2",
+    "pattern": "と⾔うものではない 【というものではない】(to iu mono dewa nai)",
+    "meaning": "",
+    "page": 364,
+    "sample_ja": "Meaning",
+    "sample_en": "there is no guarantee that…; not necessarily~"
+  },
+  {
+    "level": "N2",
+    "pattern": "と考えられる 【とかんがえられる】(to kangaerareru)",
+    "meaning": "one can",
+    "page": 366,
+    "sample_ja": "Meaning",
+    "sample_en": "one can think that; it is conceivable that;"
+  },
+  {
+    "level": "N2",
+    "pattern": "とか（で) (toka de)",
+    "meaning": "I heard that~",
+    "page": 368,
+    "sample_ja": "Meaning",
+    "sample_en": "I heard that~"
+  },
+  {
+    "level": "N2",
+    "pattern": "とっくに (tokku ni)",
+    "meaning": "long ago; already; a long time ago",
+    "page": 370,
+    "sample_ja": "Meaning",
+    "sample_en": "long ago; already; a long time ago"
+  },
+  {
+    "level": "N2",
+    "pattern": "ところだった (tokoro datta)",
+    "meaning": "was just about to do something;",
+    "page": 372,
+    "sample_ja": "Meaning",
+    "sample_en": "was just about to do something; something"
+  },
+  {
+    "level": "N2",
+    "pattern": "ところに (tokoro ni)",
+    "meaning": "at the time; just as I was~",
+    "page": 374,
+    "sample_ja": "Meaning",
+    "sample_en": "at the time; just as I was~"
+  },
+  {
+    "level": "N2",
+    "pattern": "ところを⾒ると 【ところをみると】(tokoro o miru to)",
+    "meaning": "judging",
+    "page": 376,
+    "sample_ja": "Meaning",
+    "sample_en": "judging from; seeing that~"
+  },
+  {
+    "level": "N2",
+    "pattern": "とも (tomo)",
+    "meaning": "certainly; even if; no matter; although; without even;",
+    "page": 378,
+    "sample_ja": "see example 1.",
+    "sample_en": "2. even if; no matter (who, what, when, where, why, how); though; although."
+  },
+  {
+    "level": "N2",
+    "pattern": "としても (toshitemo)",
+    "meaning": "assuming; even if~",
+    "page": 380,
+    "sample_ja": "Meaning",
+    "sample_en": "assuming; even if~"
+  },
+  {
+    "level": "N2",
+    "pattern": "つつ (tsutsu)",
+    "meaning": "while; even though; despite~",
+    "page": 382,
+    "sample_ja": "Meaning",
+    "sample_en": "while; even though; despite~"
+  },
+  {
+    "level": "N2",
+    "pattern": "つつある (tsutsu aru)",
+    "meaning": "to be doing; to be in the process of doing~",
+    "page": 384,
+    "sample_ja": "Meaning",
+    "sample_en": "to be doing; to be in the process of doing~"
+  },
+  {
+    "level": "N2",
+    "pattern": "上は 【うえは】(ue wa)",
+    "meaning": "now that; since; as long as~",
+    "page": 386,
+    "sample_ja": "Meaning",
+    "sample_en": "now that; since; as long as~"
+  },
+  {
+    "level": "N2",
+    "pattern": "は元より 【はもとより】(wa moto yori)",
+    "meaning": "also; let alone; from the",
+    "page": 388,
+    "sample_ja": "Meaning",
+    "sample_en": "also; let alone; from the beginning"
+  },
+  {
+    "level": "N2",
+    "pattern": "はともかく (wa tomokaku)",
+    "meaning": "anyhow; anyway; regardless; in any",
+    "page": 390,
+    "sample_ja": "Meaning",
+    "sample_en": "anyhow; anyway; regardless; in any case;"
+  },
+  {
+    "level": "N2",
+    "pattern": "わずかに (wazuka ni)",
+    "meaning": "slightly; only; barely; narrowly~",
+    "page": 392,
+    "sample_ja": "Meaning",
+    "sample_en": "slightly; only; barely; narrowly~"
+  },
+  {
+    "level": "N2",
+    "pattern": "やがて (yagate)",
+    "meaning": "before long; soon; almost; eventually~",
+    "page": 394,
+    "sample_ja": "Meaning",
+    "sample_en": "before long; soon; almost; eventually~"
+  },
+  {
+    "level": "N2",
+    "pattern": "やら〜やら (yara~yara)",
+    "meaning": "such things as A and B; A and B and so",
+    "page": 396,
+    "sample_ja": "Meaning",
+    "sample_en": "such things as A and B; A and B and so on~"
+  },
+  {
+    "level": "N2",
+    "pattern": "よほど / よっぽど (yohodo / yoppodo)",
+    "meaning": "very; greatly; much; to a",
+    "page": 398,
+    "sample_ja": "Meaning",
+    "sample_en": "very; greatly; much; to a large extent"
+  },
+  {
+    "level": "N2",
+    "pattern": "より (yori)",
+    "meaning": "from~ (a time, place, or person)",
+    "page": 400,
+    "sample_ja": "Meaning",
+    "sample_en": "from~ (a time, place, or person)"
+  },
+  {
+    "level": "N2",
+    "pattern": "よりほかない (yori hoka nai)",
+    "meaning": "to have no choice but~",
+    "page": 402,
+    "sample_ja": "Meaning",
+    "sample_en": "to have no choice but~"
+  },
+  {
+    "level": "N2",
+    "pattern": "ようでは (you dewa )",
+    "meaning": "if~ (bad result)",
+    "page": 404,
+    "sample_ja": "Meaning",
+    "sample_en": "if~ (bad result)"
+  },
+  {
+    "level": "N2",
+    "pattern": "ようではないか (you dewa nai ka) & じゃないか (janai ka)",
+    "meaning": "let’s do",
+    "page": 406,
+    "sample_ja": "Meaning",
+    "sample_en": "let’s do (something); why don’t we~"
+  },
+  {
+    "level": "N2",
+    "pattern": "ようか〜まいか (you ka~mai ka)",
+    "meaning": "whether or not; considering",
+    "page": 408,
+    "sample_ja": "Meaning",
+    "sample_en": "whether or not; considering options"
+  },
+  {
+    "level": "N2",
+    "pattern": "要するに 【ようするに】(you suru ni)",
+    "meaning": "in short; in a word; to sum",
+    "page": 410,
+    "sample_ja": "Meaning",
+    "sample_en": "in short; in a word; to sum up; to put it"
+  },
+  {
+    "level": "N2",
+    "pattern": "ざるを得ない 【ざるをえない】(zaru o enai)",
+    "meaning": "cannot help (doing);",
+    "page": 412,
+    "sample_ja": "Meaning",
+    "sample_en": "cannot help (doing); have no choice but to~"
+  },
+  {
+    "level": "N2",
+    "pattern": "ずに済む 【ずにすむ】(zu ni sumu)",
+    "meaning": "get by without doing~",
+    "page": 415,
+    "sample_ja": "Meaning",
+    "sample_en": "get by without doing~"
+  }
+]

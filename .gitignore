@@ -1,0 +1,4 @@
+.DS_Store
+*.tmp
+database/raw/
+database/master_japanese_dictionary.sqlite

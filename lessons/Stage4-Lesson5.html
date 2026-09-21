@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stage4-Lesson5：友達がプレゼントをくれました</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-main: #1E5989; --navy-dark: #143D5E;
+    --teal-main: #4FB3BE; --teal-border: #82CBD3; --teal-bg: #F0FAFA; --teal-text: #196168;
+    --yellow-bg: #FFFDEB; --yellow-border: #F0D462; --yellow-text: #8C6500; --yellow-title: #6E4F00;
+    --mid-cyan-bg: #EDF8FA; --mid-cyan-border: #79C2D0; --mid-cyan-text: #165E6D;
+    --pink-bg: #FDF0F3; --pink-border: #D88B9D; --pink-text: #8E3A4F;
+    --blue-bg: #EDF5FB; --blue-border: #89BFE0; --blue-text: #1E5989;
+    --card-bg: #FFFFFF; --text-dark: #232C3A; --text-sub: #576579; --border-light: #E2E8F0;
+    --ruby-color: #C4688A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', '游ゴシック', 'YuGothic', sans-serif; background: #F8FAF9; color: var(--text-dark); line-height: 1.6; padding-bottom: 60px; }
+  header { background: var(--navy-main); color: white; padding: 20px 24px; box-shadow: 0 4px 16px rgba(30, 89, 137, 0.12); position: sticky; top: 0; z-index: 100; }
+  .header-inner { max-width: 920px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .header-title-box { display: flex; align-items: center; gap: 12px; }
+  .badge-stage { background: var(--pink-border); color: white; font-size: 0.75rem; padding: 3px 10px; border-radius: 12px; font-weight: 700; letter-spacing: 0.5px; }
+  .header-title-box h1 { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.3px; }
+  .lang-switcher { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); border-radius: 20px; padding: 4px 10px; }
+  .lang-switcher span { font-size: 0.85rem; }
+  .lang-switcher select { background: white; border: none; border-radius: 14px; padding: 4px 10px; font-size: 0.78rem; font-weight: 600; color: var(--navy-main); cursor: pointer; }
+  .nav-bar { max-width: 920px; margin: 18px auto 0; padding: 0 16px; display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; }
+  .nav-tab-btn { background: white; border: 1.5px solid var(--blue-border); padding: 7px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: var(--navy-main); cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+  .nav-tab-btn:hover, .nav-tab-btn.active { background: var(--navy-main); color: white; border-color: var(--navy-main); }
+  .container { max-width: 920px; margin: 22px auto; padding: 0 16px; display: flex; flex-direction: column; gap: 28px; }
+  .content-card { background: var(--card-bg); border-radius: 18px; padding: 26px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03); border: 1.5px solid var(--border-light); }
+  .card-header-row { border-bottom: 2px solid var(--border-light); padding-bottom: 12px; margin-bottom: 18px; }
+  .step-label { font-size: 0.75rem; font-weight: 700; color: var(--navy-main); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 2px; }
+  .card-main-title { font-size: 1.25rem; font-weight: 700; color: var(--navy-main); }
+  .card-subtitle-en { font-size: 0.88rem; color: var(--text-dark); margin-top: 4px; line-height: 1.45; }
+  .card-subtitle-native { font-size: 0.82rem; color: var(--text-sub); margin-top: 2px; }
+  ruby { font-family: '游ゴシック', 'YuGothic', sans-serif; }
+  ruby rt { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 0.65em; color: var(--ruby-color); font-weight: 600; }
+  .conj-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-bottom: 14px; }
+  .conj-table th { background: var(--blue-bg); color: var(--navy-main); padding: 8px 12px; font-weight: 700; border: 1px solid #CBD5E0; text-align: center; font-size: 0.8rem; }
+  .conj-table td { padding: 7px 12px; border: 1px solid var(--border-light); text-align: center; font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.02rem; }
+  .conj-table tr:nth-child(even) { background: #FAFBFD; }
+  .conj-group-label { font-size: 0.78rem; font-weight: 700; color: var(--navy-main); margin: 14px 0 6px; }
+  .dialogue-card-item { background: white; border: 1.5px solid var(--border-light); border-left: 5px solid var(--blue-border); border-radius: 12px; padding: 14px 18px; margin-bottom: 12px; }
+  .dialogue-speaker-name { font-size: 0.82rem; font-weight: 700; color: var(--navy-main); margin-bottom: 4px; padding: 2px 8px; border-radius: 8px; display: inline-block; }
+  .dialogue-jp-line { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.22rem; font-weight: 600; color: var(--text-dark); margin-bottom: 6px; line-height: 1.5; }
+  .dialogue-en-line { font-size: 0.88rem; font-weight: 500; color: #334155; }
+  .dialogue-native-line { font-size: 0.82rem; color: #64748B; }
+  .tts-btn { background: none; border: 1px solid var(--border-light); border-radius: 50%; width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; color: var(--navy-main); transition: all 0.2s; padding: 0; vertical-align: middle; margin-left: 6px; flex-shrink: 0; }
+  .tts-btn:hover { background: var(--blue-bg); border-color: var(--blue-border); transform: scale(1.1); }
+  .grammar-block { margin-bottom: 26px; }
+  .grammar-visual-card { background: white; border: 1.5px solid var(--border-light); border-radius: 14px; padding: 16px 20px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02); }
+  .grammar-card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+  .grammar-tag { font-size: 0.72rem; font-weight: 700; background: var(--pink-bg); color: var(--pink-text); border: 1px solid var(--pink-border); padding: 2px 8px; border-radius: 8px; letter-spacing: 0.3px; }
+  .grammar-formula { font-family: '游ゴシック', 'YuGothic', monospace; font-size: 0.95rem; font-weight: 600; color: var(--text-sub); background: #F6FAFD; padding: 8px 14px; border-radius: 10px; border: 1px solid #E2ECF8; margin-top: 10px; }
+  .grammar-desc-en { font-size: 0.86rem; color: var(--text-dark); margin-bottom: 3px; line-height: 1.5; }
+  .grammar-desc-native { font-size: 0.8rem; color: var(--text-sub); }
+  .grammar-diagram { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; background: #F6FAFD; border: 1.5px solid #C4E0F1; border-radius: 12px; padding: 16px 18px; margin: 12px 0; }
+  .diagram-step { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+  .diagram-chip { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.02rem; font-weight: 600; padding: 8px 14px; border-radius: 10px; background: white; border: 2px solid var(--blue-border); color: var(--navy-main); white-space: nowrap; }
+  .diagram-chip.highlight { background: var(--pink-bg); border-color: var(--pink-border); color: var(--pink-text); }
+  .diagram-caption { font-size: 0.68rem; color: var(--text-sub); font-weight: 600; text-align: center; }
+  .diagram-arrow { font-size: 1.3rem; color: var(--teal-main); font-weight: 700; }
+  .examples-block { margin: 14px 0 16px; }
+  .examples-label { font-size: 0.72rem; font-weight: 700; color: var(--teal-text); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px; }
+  .example-row { display: flex; align-items: flex-start; gap: 10px; background: var(--teal-bg); border: 1px solid var(--teal-border); border-radius: 10px; padding: 10px 14px; margin-bottom: 8px; }
+  .example-num { flex: 0 0 auto; width: 20px; height: 20px; border-radius: 50%; background: var(--teal-main); color: white; font-size: 0.72rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .example-content { flex: 1; }
+  .example-jp { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.05rem; font-weight: 600; color: var(--text-dark); display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+  .example-en { font-size: 0.82rem; color: var(--text-sub); margin-top: 3px; }
+  .example-native { font-size: 0.78rem; color: #94A3B8; margin-top: 1px; }
+  .practice-part-header { display: flex; align-items: center; gap: 10px; margin: 28px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--blue-border); }
+  .practice-part-badge { background: var(--navy-main); color: white; font-size: 0.78rem; font-weight: 700; padding: 3px 10px; border-radius: 12px; }
+  .practice-part-title { font-size: 1.05rem; font-weight: 700; color: var(--navy-main); }
+  .roleplay-card { background: #FAFBFD; border: 1.5px solid var(--border-light); border-radius: 14px; padding: 16px 20px; margin-bottom: 14px; }
+  .roleplay-title { font-size: 0.92rem; font-weight: 700; color: var(--navy-main); margin-bottom: 12px; }
+  .roleplay-bubble { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
+  .roleplay-bubble:last-child { margin-bottom: 0; }
+  .roleplay-speaker { font-size: 0.76rem; font-weight: 700; padding: 3px 8px; border-radius: 8px; min-width: 60px; text-align: center; flex-shrink: 0; }
+  .speaker-a { background: var(--blue-bg); color: var(--navy-main); border: 1px solid var(--blue-border); }
+  .speaker-b { background: var(--mid-cyan-bg); color: var(--mid-cyan-text); border: 1px solid var(--mid-cyan-border); }
+  .roleplay-lines { flex-grow: 1; }
+  .roleplay-jp { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.12rem; font-weight: 600; color: var(--text-dark); margin-bottom: 2px; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+  .roleplay-trans { font-size: 0.82rem; color: var(--text-sub); }
+  .roleplay-native { font-size: 0.78rem; color: #94A3B8; }
+  .toggle-item { background: white; border: 1.5px solid var(--blue-border); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; cursor: pointer; }
+  .toggle-prompt-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .toggle-prompt-text { font-size: 0.95rem; font-weight: 600; color: var(--navy-main); }
+  .btn-check-reveal { background: var(--blue-bg); color: var(--navy-main); border: 1px solid var(--blue-border); padding: 5px 12px; border-radius: 16px; font-size: 0.78rem; font-weight: 600; flex-shrink: 0; }
+  .toggle-answer-box { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border-light); font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.2rem; font-weight: 600; color: var(--navy-main); }
+  .toggle-answer-box.show { display: block; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: translateY(0); } }
+  .kanji-display-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
+  .kanji-box-item { background: white; border: 1.5px solid var(--pink-border); border-radius: 14px; padding: 14px 10px; text-align: center; }
+  .kanji-large-char { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 2.5rem; font-weight: 600; color: var(--navy-main); line-height: 1.1; }
+  .kanji-meaning-en { font-size: 0.82rem; font-weight: 600; color: var(--pink-text); margin: 4px 0 2px; }
+  .kanji-readings-text { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 0.85rem; color: var(--text-sub); }
+  .vocab-filter-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; }
+  .filter-btn-group { display: flex; gap: 6px; }
+  .filter-pill { background: white; border: 1px solid var(--border-light); font-size: 0.78rem; font-weight: 600; padding: 4px 12px; border-radius: 14px; cursor: pointer; color: var(--text-sub); transition: all 0.2s; }
+  .filter-pill.active { background: var(--navy-main); color: white; border-color: var(--navy-main); }
+  .word-pool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
+  .word-pool-card { background: white; border: 1px solid var(--border-light); border-radius: 10px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; }
+  .pool-word-jp { font-family: '游ゴシック', 'YuGothic', sans-serif; font-weight: 600; font-size: 1.1rem; color: var(--navy-main); }
+  .pool-word-trans { font-size: 0.78rem; color: var(--text-sub); }
+  .star-btn { background: none; border: none; font-size: 1.25rem; cursor: pointer; color: #CBD5E0; transition: all 0.2s; }
+  .star-btn.active { color: #E2A03F; transform: scale(1.15); }
+  .note-box { background: var(--yellow-bg); border: 1.5px solid var(--yellow-border); border-radius: 12px; padding: 12px 16px; margin: 12px 0; font-size: 0.85rem; color: var(--yellow-title); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title-box">
+      <span class="badge-stage">STAGE 4 - LESSON 5</span>
+      <h1>友達がプレゼントをくれました — A Friend Gave Me a Present</h1>
+    </div>
+    <div class="lang-switcher">
+      <span>🌐</span>
+      <select id="lang-select" onchange="applyLanguage(this.value)">
+        <option value="all" selected>All / 全部</option>
+        <option value="ko">한국어</option>
+        <option value="zhcn">简体中文</option>
+        <option value="zhtw">繁體中文</option>
+        <option value="cant">粵語（香港）</option>
+      </select>
+    </div>
+  </div>
+</header>
+
+<div class="nav-bar">
+  <button class="nav-tab-btn active" onclick="scrollToSection('sec-system')">1. あげます・もらいます・くれます</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-dialogue')">2. Main Dialogue</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-grammar')">3. Grammar & Practice</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-kanji')">4. Kanji</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-pool')">5. Word Pool</button>
+</div>
+
+<div class="container">
+
+  <section class="content-card" id="sec-system">
+    <div class="card-header-row">
+      <div class="step-label">Step 1</div>
+      <div class="card-main-title">Giving and Receiving: あげます・もらいます・くれます</div>
+      <div class="card-subtitle-en">Japanese has three separate verbs for "give/receive," and which one you use depends on the direction of the giving — not just who gives and who gets. This lesson also extends the same three verbs to actions (て-form + あげます/もらいます/くれます) to talk about doing favors.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="일본어에는 '주다/받다'에 해당하는 동사가 세 개 있으며, 어느 것을 쓸지는 누가 주고 누가 받는지뿐 아니라 주고받는 방향에 따라 달라집니다. 이번 과에서는 같은 세 동사를 て형과 결합해(て형+あげます/もらいます/くれます) 호의를 베푸는 표현으로도 확장합니다." data-zhcn="日语中「给/收」有三个不同的动词，用哪一个不仅取决于谁给谁收，还取决于给予的方向。本课还会把这三个动词扩展到动作上（て形+あげます/もらいます/くれます），用来表达帮别人做事的恩惠授受。" data-zhtw="日語中「給/收」有三個不同的動詞，用哪一個不僅取決於誰給誰收，還取決於給予的方向。本課還會把這三個動詞擴展到動作上（て形+あげます/もらいます/くれます），用來表達幫別人做事的恩惠授受。" data-cant="日文入面「畀/收」有三個唔同嘅動詞，用邊個唔單止睇邊個畀邊個收，仲要睇畀嘅方向。呢一課仲會將呢三個動詞擴展到動作上面（て形+あげます/もらいます/くれます），用嚟表達幫人做嘢嘅恩惠授受。"></div>
+    </div>
+    <table class="conj-table">
+      <tr><th>動詞</th><th>方向</th><th>例</th></tr>
+      <tr><td>あげます</td><td>私→他の人</td><td>私は友達にプレゼントをあげます</td></tr>
+      <tr><td>もらいます</td><td>私←他の人</td><td>私は友達にプレゼントをもらいます</td></tr>
+      <tr><td>くれます</td><td>他の人→私</td><td>友達が私にプレゼントをくれます</td></tr>
+    </table>
+    <div class="note-box i18n-note" data-en="くれます is the tricky one: use it only when the giver is someone else and the receiver is you (or your in-group), instead of あげます. You cannot say 友達が私にプレゼントをあげます — when the direction is 'toward me,' Japanese requires くれます." data-ko="くれます가 까다로운 부분입니다: 주는 사람이 남이고 받는 사람이 나(또는 나의 그룹)일 때는 あげます 대신 반드시 이것을 씁니다. 友達が私にプレゼントをあげます라고는 말할 수 없습니다 — 방향이 '나를 향할' 때는 반드시 くれます를 씁니다." data-zhcn="くれます是比较棘手的一个：当给予者是别人、接受者是我（或我这一方）时，要用它而不是あげます。不能说「友達が私にプレゼントをあげます」——方向是「朝向我」时，日语必须用くれます。" data-zhtw="くれます是比較棘手的一個：當給予者是別人、接受者是我（或我這一方）時，要用它而不是あげます。不能說「友達が私にプレゼントをあげます」——方向是「朝向我」時，日語必須用くれます。" data-cant="くれます係比較難搞嘅一個：當畀嘅人係第啲人、收嘅人係我（或者我呢邊）嘅時候，要用呢個字而唔係あげます。唔可以講「友達が私にプレゼントをあげます」——方向係「向住我」嘅時候，日文一定要用くれます。">くれます is the tricky one: use it only when the giver is someone else and the receiver is you (or your in-group), instead of あげます. You cannot say 友達が私にプレゼントをあげます — when the direction is "toward me," Japanese requires くれます.</div>
+  </section>
+
+  <section class="content-card" id="sec-dialogue">
+    <div class="card-header-row">
+      <div class="step-label">Step 2</div>
+      <div class="card-main-title">Main Dialogue: 誕生日パーティーのあとで — After the Birthday Party</div>
+      <div class="card-subtitle-en">Emma asks Suzuki Tomoko how her son Taro's birthday party went.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="에마가 스즈키 도모코에게 아들 타로의 생일 파티가 어땠는지 묻습니다." data-zhcn="艾玛问铃木友子，儿子太郎的生日派对办得怎么样。" data-zhtw="艾瑪問鈴木友子，兒子太郎的生日派對辦得怎麼樣。" data-cant="艾瑪問鈴木友子，個仔太郎嘅生日派對搞得點呀。"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--blue-bg); color:var(--navy-main); border:1px solid var(--blue-border);">エマ</div><button class="tts-btn" onclick="speakText('太郎くんの誕生日、どうでしたか。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line"><ruby>太郎<rt>たろう</rt></ruby>くんの<ruby>誕生日<rt>たんじょうび</rt></ruby>、どうでしたか。</div>
+      <div class="dialogue-en-line">How was Taro's birthday?</div>
+      <div class="dialogue-native-line i18n-native" data-ko="타로 군 생일 어땠어요?" data-zhcn="太郎的生日怎么样？" data-zhtw="太郎的生日怎麼樣？" data-cant="太郎個生日點呀？"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--mid-cyan-bg); color:var(--mid-cyan-text); border:1px solid var(--mid-cyan-border);">鈴木</div><button class="tts-btn" onclick="speakText('楽しかったです。友達がたくさんプレゼントをくれました。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line"><ruby>楽<rt>たの</rt></ruby>しかったです。<ruby>友達<rt>ともだち</rt></ruby>がたくさんプレゼントをくれました。</div>
+      <div class="dialogue-en-line">It was fun. Friends gave him lots of presents.</div>
+      <div class="dialogue-native-line i18n-native" data-ko="즐거웠어요. 친구들이 선물을 많이 줬어요." data-zhcn="很开心。朋友们送了很多礼物。" data-zhtw="很開心。朋友們送了很多禮物。" data-cant="幾開心㗎。啲朋友送咗好多禮物。"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--blue-bg); color:var(--navy-main); border:1px solid var(--blue-border);">エマ</div><button class="tts-btn" onclick="speakText('そうですか。太郎くんは何をもらいましたか。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">そうですか。<ruby>太郎<rt>たろう</rt></ruby>くんは<ruby>何<rt>なに</rt></ruby>をもらいましたか。</div>
+      <div class="dialogue-en-line">I see. What did Taro receive?</div>
+      <div class="dialogue-native-line i18n-native" data-ko="그렇군요. 타로 군은 뭘 받았어요?" data-zhcn="是吗。太郎收到了什么？" data-zhtw="是嗎。太郎收到了什麼？" data-cant="係咩。太郎收到咗啲乜嘢呀？"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--mid-cyan-bg); color:var(--mid-cyan-text); border:1px solid var(--mid-cyan-border);">鈴木</div><button class="tts-btn" onclick="speakText('本をもらいました。エマさんにもカードをもらいました。ありがとうございました。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line"><ruby>本<rt>ほん</rt></ruby>をもらいました。エマさんにもカードをもらいました。ありがとうございました。</div>
+      <div class="dialogue-en-line">He got books. He also got a card from you, Emma. Thank you.</div>
+      <div class="dialogue-native-line i18n-native" data-ko="책을 받았어요. 에마 씨한테도 카드를 받았어요. 감사했어요." data-zhcn="收到了书。也收到了艾玛你的卡片。谢谢你。" data-zhtw="收到了書。也收到了艾瑪你的卡片。謝謝你。" data-cant="收到咗書。都收到咗艾瑪你張卡。多謝晒。"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--blue-bg); color:var(--navy-main); border:1px solid var(--blue-border);">エマ</div><button class="tts-btn" onclick="speakText('いいえ。パーティーは大変でしたか。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">いいえ。パーティーは<ruby>大変<rt>たいへん</rt></ruby>でしたか。</div>
+      <div class="dialogue-en-line">Not at all. Was the party a lot of work?</div>
+      <div class="dialogue-native-line i18n-native" data-ko="아니에요. 파티는 힘들었어요?" data-zhcn="不客气。派对很辛苦吗？" data-zhtw="不客氣。派對很辛苦嗎？" data-cant="唔使客氣。個派對辛唔辛苦呀？"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--mid-cyan-bg); color:var(--mid-cyan-text); border:1px solid var(--mid-cyan-border);">鈴木</div><button class="tts-btn" onclick="speakText('ちょっと大変でした。でも、友達が掃除を手伝ってくれました。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">ちょっと<ruby>大変<rt>たいへん</rt></ruby>でした。でも、<ruby>友達<rt>ともだち</rt></ruby>が<ruby>掃除<rt>そうじ</rt></ruby>を<ruby>手伝<rt>てつだ</rt></ruby>ってくれました。</div>
+      <div class="dialogue-en-line">It was a bit tough. But a friend helped me clean up.</div>
+      <div class="dialogue-native-line i18n-native" data-ko="좀 힘들었어요. 그래도 친구가 청소를 도와줬어요." data-zhcn="有点辛苦。不过朋友帮我打扫了。" data-zhtw="有點辛苦。不過朋友幫我打掃了。" data-cant="有啲辛苦。不過朋友幫咗我打掃。"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--blue-bg); color:var(--navy-main); border:1px solid var(--blue-border);">エマ</div><button class="tts-btn" onclick="speakText('よかったですね。私も何か手伝いましょうか。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">よかったですね。<ruby>私<rt>わたし</rt></ruby>も<ruby>何<rt>なに</rt></ruby>か<ruby>手伝<rt>てつだ</rt></ruby>いましょうか。</div>
+      <div class="dialogue-en-line">That's good. Should I help with something too?</div>
+      <div class="dialogue-native-line i18n-native" data-ko="다행이네요. 저도 뭔가 도와드릴까요?" data-zhcn="太好了。我也帮点什么忙吧？" data-zhtw="太好了。我也幫點什麼忙吧？" data-cant="幾好喎。我都幫手做啲嘢好嗎？"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--mid-cyan-bg); color:var(--mid-cyan-text); border:1px solid var(--mid-cyan-border);">鈴木</div><button class="tts-btn" onclick="speakText('ありがとうございます。今度、写真を見せてあげます。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">ありがとうございます。<ruby>今度<rt>こんど</rt></ruby>、<ruby>写真<rt>しゃしん</rt></ruby>を<ruby>見<rt>み</rt></ruby>せてあげます。</div>
+      <div class="dialogue-en-line">Thank you. I'll show you the photos next time.</div>
+      <div class="dialogue-native-line i18n-native" data-ko="감사합니다. 다음에 사진을 보여 드릴게요." data-zhcn="谢谢。下次给你看照片吧。" data-zhtw="謝謝。下次給你看照片吧。" data-cant="唔該。下次影相畀你睇。"></div>
+    </div>
+  </section>
+
+  <section class="content-card" id="sec-grammar">
+    <div class="card-header-row">
+      <div class="step-label">Step 3</div>
+      <div class="card-main-title">Grammar & Comprehensive Speaking Practice</div>
+      <div class="card-subtitle-en">Work through each pattern's diagram and examples, then try the practice questions, roleplay, and rapid-response challenge.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="각 패턴의 다이어그램과 예문을 익힌 후 연습 문제, 롤플레이, 즉석 챌린지에 도전하세요." data-zhcn="先看懂每个句型的图解和例句，再挑战练习题、角色扮演与即时口说挑战。" data-zhtw="先看懂每個句型的圖解和例句，再挑戰練習題、角色扮演與即時口說挑戰。" data-cant="先睇明每個句型嘅圖解同例句，再挑戰練習題、角色扮演同即時口說挑戰。"></div>
+    </div>
+
+    <div class="practice-part-header"><span class="practice-part-badge">Part 1</span><div class="practice-part-title">Basic Pattern Drills</div></div>
+
+    <div class="grammar-block">
+      <div class="grammar-visual-card">
+        <div class="grammar-card-head"><span class="grammar-tag">Grammar A</span><strong>Nを あげます／もらいます（物のやり取り）</strong></div>
+        <div class="grammar-desc-en">あげます is "I/someone give(s) to another person"; もらいます is "I/someone receive(s) from another person." Both describe the giving of things (not actions).</div>
+        <div class="grammar-desc-native i18n-native" data-ko="あげます는 '내가/누군가가 다른 사람에게 주다', もらいます는 '내가/누군가가 다른 사람에게서 받다'입니다. 둘 다 물건을 주고받는 것을 나타냅니다(행동이 아님)." data-zhcn="あげます是「我/某人给另一个人」，もらいます是「我/某人从另一个人那里收到」。两者都描述物品的授受（不是动作）。" data-zhtw="あげます是「我/某人給另一個人」，もらいます是「我/某人從另一個人那裡收到」。兩者都描述物品的授受（不是動作）。" data-cant="あげます係「我/某人畀第啲人」，もらいます係「我/某人喺第啲人度收到」。兩個都係形容物品嘅授受（唔係動作）。"></div>
+        <div class="grammar-diagram">
+          <div class="diagram-step"><div class="diagram-chip">私→友達</div></div>
+          <div class="diagram-arrow">=</div>
+          <div class="diagram-step"><div class="diagram-chip highlight">あげます</div></div>
+        </div>
+        <div class="grammar-formula">（人）は（人）に Nを あげます／もらいます</div>
+        <div class="examples-block">
+          <div class="examples-label">Examples</div>
+          <div class="example-row"><div class="example-num">1</div><div class="example-content"><div class="example-jp"><ruby>私<rt>わたし</rt></ruby>は<ruby>友達<rt>ともだち</rt></ruby>にプレゼントをあげます。<button class="tts-btn" onclick="speakText('私は友達にプレゼントをあげます。')" title="Listen">🔊</button></div><div class="example-en">I give a present to my friend.</div></div></div>
+          <div class="example-row"><div class="example-num">2</div><div class="example-content"><div class="example-jp"><ruby>私<rt>わたし</rt></ruby>は<ruby>先生<rt>せんせい</rt></ruby>にカードをもらいました。<button class="tts-btn" onclick="speakText('私は先生にカードをもらいました。')" title="Listen">🔊</button></div><div class="example-en">I received a card from my teacher.</div></div></div>
+          <div class="example-row"><div class="example-num">3</div><div class="example-content"><div class="example-jp"><ruby>太郎<rt>たろう</rt></ruby>くんは<ruby>本<rt>ほん</rt></ruby>をもらいました。<button class="tts-btn" onclick="speakText('太郎くんは本をもらいました。')" title="Listen">🔊</button></div><div class="example-en">Taro received books.</div></div></div>
+        </div>
+      </div>
+      <div class="toggle-item" onclick="toggleAnswer('a1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">A-1. I gave a card to Tanaka.</div><button class="btn-check-reveal" id="btn-a1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-a1"><span><ruby>私<rt>わたし</rt></ruby>は<ruby>田中<rt>たなか</rt></ruby>さんにカードをあげました。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('私は田中さんにカードをあげました。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('a2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">A-2. I received a present from a friend.</div><button class="btn-check-reveal" id="btn-a2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-a2"><span><ruby>私<rt>わたし</rt></ruby>は<ruby>友達<rt>ともだち</rt></ruby>にプレゼントをもらいました。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('私は友達にプレゼントをもらいました。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('a3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">A-3. What did you give Taro?</div><button class="btn-check-reveal" id="btn-a3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-a3"><span><ruby>太郎<rt>たろう</rt></ruby>くんに<ruby>何<rt>なに</rt></ruby>をあげましたか。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('太郎くんに何をあげましたか。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('a4')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">A-4. I gave Suzuki a cake.</div><button class="btn-check-reveal" id="btn-a4">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-a4"><span><ruby>鈴木<rt>すずき</rt></ruby>さんにケーキをあげました。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('鈴木さんにケーキをあげました。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('a5')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">A-5. I received a dictionary from my teacher.</div><button class="btn-check-reveal" id="btn-a5">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-a5"><span><ruby>先生<rt>せんせい</rt></ruby>に<ruby>辞書<rt>じしょ</rt></ruby>をもらいました。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('先生に辞書をもらいました。')" title="Listen">🔊</button></div></div>
+    </div>
+
+    <div class="grammar-block">
+      <div class="grammar-visual-card">
+        <div class="grammar-card-head"><span class="grammar-tag">Grammar B</span><strong>（人）が私に Nを くれます（自分に向かう「くれる」）</strong></div>
+        <div class="grammar-desc-en">Use くれます instead of あげます whenever the giving flows toward you (or your family/in-group). The giver is the subject; you are marked with に.</div>
+        <div class="grammar-desc-native i18n-native" data-ko="주는 흐름이 나(또는 나의 가족/그룹) 쪽으로 향할 때는 항상 あげます 대신 くれます를 씁니다. 주는 사람이 주어이고, 나는 に로 표시됩니다." data-zhcn="只要给予的方向是朝向你（或你的家人/团体），就要用くれます而不是あげます。给予者是主语，你用に标记。" data-zhtw="只要給予的方向是朝向你（或你的家人/團體），就要用くれます而不是あげます。給予者是主語，你用に標記。" data-cant="只要畀嘅方向係向住你（或者你嘅家人/團體），就要用くれます而唔係あげます。畀嘅人係主語，你用に標記。"></div>
+        <div class="grammar-diagram">
+          <div class="diagram-step"><div class="diagram-chip">友達→私</div></div>
+          <div class="diagram-arrow">=</div>
+          <div class="diagram-step"><div class="diagram-chip highlight">くれます</div></div>
+        </div>
+        <div class="grammar-formula">（人）が 私に Nを くれます</div>
+        <div class="examples-block">
+          <div class="examples-label">Examples</div>
+          <div class="example-row"><div class="example-num">1</div><div class="example-content"><div class="example-jp"><ruby>友達<rt>ともだち</rt></ruby>が<ruby>私<rt>わたし</rt></ruby>にプレゼントをくれました。<button class="tts-btn" onclick="speakText('友達が私にプレゼントをくれました。')" title="Listen">🔊</button></div><div class="example-en">A friend gave me a present.</div></div></div>
+          <div class="example-row"><div class="example-num">2</div><div class="example-content"><div class="example-jp"><ruby>田中<rt>たなか</rt></ruby>さんが（<ruby>私<rt>わたし</rt></ruby>に）カードをくれました。<button class="tts-btn" onclick="speakText('田中さんが私にカードをくれました。')" title="Listen">🔊</button></div><div class="example-en">Tanaka gave me a card.</div></div></div>
+          <div class="example-row"><div class="example-num">3</div><div class="example-content"><div class="example-jp"><ruby>誰<rt>だれ</rt></ruby>がこのケーキをくれましたか。<button class="tts-btn" onclick="speakText('誰がこのケーキをくれましたか。')" title="Listen">🔊</button></div><div class="example-en">Who gave me this cake?</div></div></div>
+        </div>
+      </div>
+      <div class="toggle-item" onclick="toggleAnswer('b1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">B-1. Tanaka gave me a book.</div><button class="btn-check-reveal" id="btn-b1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-b1"><span><ruby>田中<rt>たなか</rt></ruby>さんが<ruby>私<rt>わたし</rt></ruby>に<ruby>本<rt>ほん</rt></ruby>をくれました。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('田中さんが私に本をくれました。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('b2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">B-2. My friends gave me lots of presents.</div><button class="btn-check-reveal" id="btn-b2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-b2"><span><ruby>友達<rt>ともだち</rt></ruby>がたくさんプレゼントをくれました。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('友達がたくさんプレゼントをくれました。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('b3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">B-3. Who gave you (lit. me) that dictionary?</div><button class="btn-check-reveal" id="btn-b3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-b3"><span><ruby>誰<rt>だれ</rt></ruby>がその<ruby>辞書<rt>じしょ</rt></ruby>をくれましたか。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('誰がその辞書をくれましたか。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('b4')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">B-4. Suzuki gave me a cake.</div><button class="btn-check-reveal" id="btn-b4">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-b4"><span><ruby>鈴木<rt>すずき</rt></ruby>さんがケーキをくれました。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('鈴木さんがケーキをくれました。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('b5')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">B-5. Emma gave (me) a card.（正しい動詞を選ぶ）</div><button class="btn-check-reveal" id="btn-b5">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-b5"><span>エマさんがカードをくれました。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('エマさんがカードをくれました。')" title="Listen">🔊</button></div></div>
+    </div>
+
+    <div class="grammar-block">
+      <div class="grammar-visual-card">
+        <div class="grammar-card-head"><span class="grammar-tag">Grammar C</span><strong>動詞て形＋あげます／もらいます／くれます（恩恵の授受）</strong></div>
+        <div class="grammar-desc-en">The same three verbs also attach to the て-form to talk about doing favors: してあげます (do ~ for someone), してもらいます (have someone do ~ for me), してくれます (someone does ~ for me).</div>
+        <div class="grammar-desc-native i18n-native" data-ko="같은 세 동사는 て형에 붙어 호의를 베푸는 것도 나타냅니다: してあげます(누군가를 위해 ~해 주다), してもらいます(누군가에게 ~해 받다), してくれます(누군가가 나에게 ~해 주다)." data-zhcn="同样这三个动词也能接在て形后表达帮别人做事：してあげます（为某人做~）、してもらいます（请某人为我做~）、してくれます（某人为我做~）。" data-zhtw="同樣這三個動詞也能接在て形後表達幫別人做事：してあげます（為某人做~）、してもらいます（請某人為我做~）、してくれます（某人為我做~）。" data-cant="同樣呢三個動詞都可以接喺て形後面表達幫人做嘢：してあげます（為某人做~）、してもらいます（請某人為我做~）、してくれます（某人為我做~）。"></div>
+        <div class="grammar-diagram">
+          <div class="diagram-step"><div class="diagram-chip">手伝って</div></div>
+          <div class="diagram-arrow">+</div>
+          <div class="diagram-step"><div class="diagram-chip highlight">くれました</div><div class="diagram-caption">"helped me"</div></div>
+        </div>
+        <div class="grammar-formula">動詞て形＋あげます／もらいます／くれます</div>
+        <div class="examples-block">
+          <div class="examples-label">Examples</div>
+          <div class="example-row"><div class="example-num">1</div><div class="example-content"><div class="example-jp"><ruby>友達<rt>ともだち</rt></ruby>が<ruby>掃除<rt>そうじ</rt></ruby>を<ruby>手伝<rt>てつだ</rt></ruby>ってくれました。<button class="tts-btn" onclick="speakText('友達が掃除を手伝ってくれました。')" title="Listen">🔊</button></div><div class="example-en">A friend helped me clean.</div></div></div>
+          <div class="example-row"><div class="example-num">2</div><div class="example-content"><div class="example-jp"><ruby>写真<rt>しゃしん</rt></ruby>を<ruby>見<rt>み</rt></ruby>せてあげます。<button class="tts-btn" onclick="speakText('写真を見せてあげます。')" title="Listen">🔊</button></div><div class="example-en">I'll show you the photos (as a favor).</div></div></div>
+          <div class="example-row"><div class="example-num">3</div><div class="example-content"><div class="example-jp"><ruby>田中<rt>たなか</rt></ruby>さんに<ruby>直<rt>なお</rt></ruby>してもらいました。<button class="tts-btn" onclick="speakText('田中さんに直してもらいました。')" title="Listen">🔊</button></div><div class="example-en">I had Tanaka fix it (for me).</div></div></div>
+        </div>
+      </div>
+      <div class="toggle-item" onclick="toggleAnswer('c1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">C-1. I'll help you carry the luggage.（あげます）</div><button class="btn-check-reveal" id="btn-c1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-c1"><span><ruby>荷物<rt>にもつ</rt></ruby>を<ruby>持<rt>も</rt></ruby>ってあげます。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('荷物を持ってあげます。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('c2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">C-2. Luca taught me piano.（教えます）</div><button class="btn-check-reveal" id="btn-c2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-c2"><span>ルカさんがピアノを<ruby>教<rt>おし</rt></ruby>えてくれました。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('ルカさんがピアノを教えてくれました。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('c3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">C-3. I had Takahashi show me the report.</div><button class="btn-check-reveal" id="btn-c3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-c3"><span><ruby>高橋<rt>たかはし</rt></ruby>さんに<ruby>報告書<rt>ほうこくしょ</rt></ruby>を<ruby>見<rt>み</rt></ruby>せてもらいました。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('高橋さんに報告書を見せてもらいました。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('c4')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">C-4. I'll clean for you.（あげます）</div><button class="btn-check-reveal" id="btn-c4">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-c4"><span><ruby>掃除<rt>そうじ</rt></ruby>してあげます。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('掃除してあげます。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('c5')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">C-5. Emma showed me the photos.</div><button class="btn-check-reveal" id="btn-c5">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-c5"><span>エマさんが<ruby>写真<rt>しゃしん</rt></ruby>を<ruby>見<rt>み</rt></ruby>せてくれました。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('エマさんが写真を見せてくれました。')" title="Listen">🔊</button></div></div>
+    </div>
+
+    <div class="practice-part-header"><span class="practice-part-badge">Part 2</span><div class="practice-part-title">Roleplay — Favors and Gifts</div></div>
+    <div class="roleplay-card">
+      <div class="roleplay-title">Scene 1: 会社で — At the Office (田中さくら & 高橋部長)</div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-a">田中</div><div class="roleplay-lines"><div class="roleplay-jp"><ruby>部長<rt>ぶちょう</rt></ruby>、この<ruby>パソコン</ruby>を<ruby>直<rt>なお</rt></ruby>してもらいたいです。<button class="tts-btn" onclick="speakText('部長、このパソコンを直してもらいたいです。')" title="Listen">🔊</button></div><div class="roleplay-trans">Sir, I'd like you to fix this computer for me.</div><div class="roleplay-native i18n-native" data-ko="부장님, 이 컴퓨터를 고쳐 주셨으면 해요." data-zhcn="部长，希望您能帮我修一下这台电脑。" data-zhtw="部長，希望您能幫我修一下這台電腦。" data-cant="部長，想請你幫我整返好呢部電腦。"></div></div></div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-b">高橋</div><div class="roleplay-lines"><div class="roleplay-jp">いいですよ。<ruby>今<rt>いま</rt></ruby>、<ruby>直<rt>なお</rt></ruby>してあげます。<button class="tts-btn" onclick="speakText('いいですよ。今、直してあげます。')" title="Listen">🔊</button></div><div class="roleplay-trans">Sure. I'll fix it for you now.</div><div class="roleplay-native i18n-native" data-ko="네. 지금 고쳐 드릴게요." data-zhcn="好的。我现在帮你修。" data-zhtw="好的。我現在幫你修。" data-cant="好呀。而家幫你整返好。"></div></div></div>
+    </div>
+    <div class="roleplay-card">
+      <div class="roleplay-title">Scene 2: 引っ越しの日 — Moving Day (パク & リー)</div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-a">パク</div><div class="roleplay-lines"><div class="roleplay-jp"><ruby>今日<rt>きょう</rt></ruby>は<ruby>友達<rt>ともだち</rt></ruby>が<ruby>荷物<rt>にもつ</rt></ruby>を<ruby>持<rt>も</rt></ruby>ってくれました。<button class="tts-btn" onclick="speakText('今日は友達が荷物を持ってくれました。')" title="Listen">🔊</button></div><div class="roleplay-trans">Friends carried the luggage for me today.</div><div class="roleplay-native i18n-native" data-ko="오늘은 친구들이 짐을 들어 줬어요." data-zhcn="今天朋友帮我拿了行李。" data-zhtw="今天朋友幫我拿了行李。" data-cant="今日啲朋友幫我攞咗行李。"></div></div></div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-b">リー</div><div class="roleplay-lines"><div class="roleplay-jp">よかったですね。<ruby>私<rt>わたし</rt></ruby>も<ruby>今度<rt>こんど</rt></ruby>、<ruby>手伝<rt>てつだ</rt></ruby>ってあげます。<button class="tts-btn" onclick="speakText('よかったですね。私も今度、手伝ってあげます。')" title="Listen">🔊</button></div><div class="roleplay-trans">That's good. I'll help you next time too.</div><div class="roleplay-native i18n-native" data-ko="다행이네요. 저도 다음에 도와드릴게요." data-zhcn="太好了。下次我也帮你吧。" data-zhtw="太好了。下次我也幫你吧。" data-cant="幾好喎。下次我都幫你手。"></div></div></div>
+    </div>
+
+    <div class="practice-part-header"><span class="practice-part-badge">Part 3</span><div class="practice-part-title">Rapid Self-Check — Mix It Up</div></div>
+    <div class="toggle-item" onclick="toggleAnswer('r1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">R-1. I gave Suzuki a present.</div><button class="btn-check-reveal" id="btn-r1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-r1"><span><ruby>鈴木<rt>すずき</rt></ruby>さんにプレゼントをあげました。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('鈴木さんにプレゼントをあげました。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('r2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">R-2. My friend gave me a book.</div><button class="btn-check-reveal" id="btn-r2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-r2"><span><ruby>友達<rt>ともだち</rt></ruby>が<ruby>本<rt>ほん</rt></ruby>をくれました。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('友達が本をくれました。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('r3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">R-3. I had my teacher show me the book.</div><button class="btn-check-reveal" id="btn-r3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-r3"><span><ruby>先生<rt>せんせい</rt></ruby>に<ruby>本<rt>ほん</rt></ruby>を<ruby>見<rt>み</rt></ruby>せてもらいました。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('先生に本を見せてもらいました。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('r4')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">R-4. I'll carry your luggage.</div><button class="btn-check-reveal" id="btn-r4">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-r4"><span><ruby>荷物<rt>にもつ</rt></ruby>を<ruby>持<rt>も</rt></ruby>ってあげます。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('荷物を持ってあげます。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('r5')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">R-5. The party was a lot of work, but a friend helped me clean.</div><button class="btn-check-reveal" id="btn-r5">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-r5"><span>パーティーは<ruby>大変<rt>たいへん</rt></ruby>でしたが、<ruby>友達<rt>ともだち</rt></ruby>が<ruby>掃除<rt>そうじ</rt></ruby>を<ruby>手伝<rt>てつだ</rt></ruby>ってくれました。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('パーティーは大変でしたが、友達が掃除を手伝ってくれました。')" title="Listen">🔊</button></div></div>
+  </section>
+
+  <section class="content-card" id="sec-kanji">
+    <div class="card-header-row">
+      <div class="step-label">Step 4</div>
+      <div class="card-main-title">New Kanji</div>
+      <div class="card-subtitle-en">The kanji introduced in this lesson.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="이번 과에서 배운 한자입니다." data-zhcn="本课新学的汉字。" data-zhtw="本課新學的漢字。" data-cant="呢一課新教嘅漢字。"></div>
+    </div>
+    <div class="kanji-display-grid">
+      <div class="kanji-box-item"><div class="kanji-large-char">大変</div><div class="kanji-meaning-en">tough / a lot of work</div><div class="kanji-readings-text">たいへん</div></div>
+      <div class="kanji-box-item"><div class="kanji-large-char">教えます</div><div class="kanji-meaning-en">to teach</div><div class="kanji-readings-text">おしえます</div></div>
+    </div>
+  </section>
+
+  <section class="content-card" id="sec-pool">
+    <div class="card-header-row">
+      <div class="step-label">Step 5</div>
+      <div class="card-main-title">Lesson Word Pool</div>
+      <div class="card-subtitle-en">Star the words you want to keep practicing. Filter by type below.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="계속 연습하고 싶은 단어에 별표를 하세요. 아래에서 종류별로 필터링할 수 있습니다." data-zhcn="给想继续练习的单词加星标。可在下方按类型筛选。" data-zhtw="給想繼續練習的單字加星標。可在下方按類型篩選。" data-cant="幫想繼續練習嘅生字加星標。可以喺下面按種類篩選。"></div>
+    </div>
+    <div class="vocab-filter-row">
+      <div class="filter-btn-group">
+        <button class="filter-pill active" onclick="filterVocab('all')">All</button>
+        <button class="filter-pill" onclick="filterVocab('verb')">Verbs</button>
+        <button class="filter-pill" onclick="filterVocab('noun')">Nouns</button>
+        <button class="filter-pill" onclick="filterVocab('other')">Other</button>
+      </div>
+    </div>
+    <div class="word-pool-grid" id="word-pool-grid">
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">あげます</div><div class="pool-word-trans">to give (to someone else)</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">もらいます</div><div class="pool-word-trans">to receive</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">くれます</div><div class="pool-word-trans">to give (to me)</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">教えます</div><div class="pool-word-trans">to teach</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="other"><div><div class="pool-word-jp">大変</div><div class="pool-word-trans">tough / a lot of work</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+function toggleAnswer(id) {
+  const box = document.getElementById('ans-' + id);
+  const btn = document.getElementById('btn-' + id);
+  const isShowing = box.classList.contains('show');
+  document.querySelectorAll('.toggle-answer-box.show').forEach(b => b.classList.remove('show'));
+  document.querySelectorAll('.btn-check-reveal').forEach(b => b.textContent = 'Reveal ▼');
+  if (!isShowing) {
+    box.classList.add('show');
+    btn.textContent = 'Hide ▲';
+  }
+}
+function closeAllAnswers() {
+  document.querySelectorAll('.toggle-answer-box.show').forEach(b => b.classList.remove('show'));
+  document.querySelectorAll('.btn-check-reveal').forEach(b => b.textContent = 'Reveal ▼');
+}
+function speakText(text) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'ja-JP';
+  utter.rate = 0.92;
+  window.speechSynthesis.speak(utter);
+}
+function toggleStar(btn) {
+  btn.classList.toggle('active');
+}
+function filterVocab(type) {
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('#word-pool-grid .word-pool-card').forEach(card => {
+    if (type === 'all' || card.dataset.type === type) {
+      card.style.display = 'flex';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+function scrollToSection(id) {
+  document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function applyLanguage(lang) {
+  document.querySelectorAll('.i18n-native').forEach(el => {
+    if (lang === 'all') {
+      const parts = [];
+      ['ko','zhcn','zhtw','cant'].forEach(l => { if (el.dataset[l]) parts.push(el.dataset[l]); });
+      el.textContent = parts.join(' / ');
+      el.style.display = parts.length ? 'block' : 'none';
+    } else if (el.dataset[lang]) {
+      el.textContent = el.dataset[lang];
+      el.style.display = 'block';
+    } else {
+      el.style.display = 'none';
+    }
+  });
+  document.querySelectorAll('.i18n-note').forEach(el => {
+    if (lang === 'all') {
+      el.textContent = el.dataset.en;
+    } else if (el.dataset[lang]) {
+      el.textContent = el.dataset[lang];
+    } else {
+      el.textContent = el.dataset.en;
+    }
+  });
+}
+window.addEventListener('DOMContentLoaded', () => { applyLanguage('all'); });
+</script>
+
+</body>
+</html>

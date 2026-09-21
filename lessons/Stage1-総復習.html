@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stage1 総復習＆実戦演習</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-main: #1E5989; --navy-dark: #143D5E;
+    --teal-main: #4FB3BE; --teal-border: #82CBD3; --teal-bg: #F0FAFA; --teal-text: #196168;
+    --yellow-bg: #FFFDEB; --yellow-border: #F0D462; --yellow-text: #8C6500; --yellow-title: #6E4F00;
+    --mid-cyan-bg: #EDF8FA; --mid-cyan-border: #79C2D0; --mid-cyan-text: #165E6D;
+    --pink-bg: #FDF0F3; --pink-border: #D88B9D; --pink-text: #8E3A4F;
+    --blue-bg: #EDF5FB; --blue-border: #89BFE0; --blue-text: #1E5989;
+    --card-bg: #FFFFFF; --text-dark: #232C3A; --text-sub: #576579; --border-light: #E2E8F0;
+    --ruby-color: #C4688A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', '游ゴシック', 'YuGothic', sans-serif; background: #F8FAF9; color: var(--text-dark); line-height: 1.6; padding-bottom: 60px; }
+  header { background: var(--navy-main); color: white; padding: 20px 24px; box-shadow: 0 4px 16px rgba(30, 89, 137, 0.12); position: sticky; top: 0; z-index: 100; }
+  .header-inner { max-width: 920px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .header-title-box { display: flex; align-items: center; gap: 12px; }
+  .badge-stage { background: var(--pink-border); color: white; font-size: 0.75rem; padding: 3px 10px; border-radius: 12px; font-weight: 700; letter-spacing: 0.5px; }
+  .header-title-box h1 { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.3px; }
+  .lang-switcher { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); border-radius: 20px; padding: 4px 10px; }
+  .lang-switcher span { font-size: 0.85rem; }
+  .lang-switcher select { background: white; border: none; border-radius: 14px; padding: 4px 10px; font-size: 0.78rem; font-weight: 600; color: var(--navy-main); cursor: pointer; }
+  .nav-bar { max-width: 920px; margin: 18px auto 0; padding: 0 16px; display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; }
+  .nav-tab-btn { background: white; border: 1.5px solid var(--blue-border); padding: 7px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: var(--navy-main); cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+  .nav-tab-btn:hover, .nav-tab-btn.active { background: var(--navy-main); color: white; border-color: var(--navy-main); }
+  .container { max-width: 920px; margin: 22px auto; padding: 0 16px; display: flex; flex-direction: column; gap: 28px; }
+  .content-card { background: var(--card-bg); border-radius: 18px; padding: 26px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03); border: 1.5px solid var(--border-light); }
+  .card-header-row { border-bottom: 2px solid var(--border-light); padding-bottom: 12px; margin-bottom: 18px; }
+  .step-label { font-size: 0.75rem; font-weight: 700; color: var(--navy-main); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 2px; }
+  .card-main-title { font-size: 1.25rem; font-weight: 700; color: var(--navy-main); }
+  .card-subtitle-en { font-size: 0.88rem; color: var(--text-dark); margin-top: 4px; line-height: 1.45; }
+  .card-subtitle-native { font-size: 0.82rem; color: var(--text-sub); margin-top: 2px; }
+  ruby { font-family: '游ゴシック', 'YuGothic', sans-serif; }
+  ruby rt { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 0.65em; color: var(--ruby-color); font-weight: 600; }
+  .tts-btn { background: none; border: 1px solid var(--border-light); border-radius: 50%; width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; color: var(--navy-main); transition: all 0.2s; padding: 0; vertical-align: middle; margin-left: 6px; flex-shrink: 0; }
+  .tts-btn:hover { background: var(--blue-bg); border-color: var(--blue-border); transform: scale(1.1); }
+  .practice-part-header { display: flex; align-items: center; gap: 10px; margin: 8px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--blue-border); }
+  .practice-part-badge { background: var(--navy-main); color: white; font-size: 0.78rem; font-weight: 700; padding: 3px 10px; border-radius: 12px; }
+  .practice-part-title { font-size: 1.05rem; font-weight: 700; color: var(--navy-main); }
+  .toggle-item { background: white; border: 1.5px solid var(--blue-border); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; cursor: pointer; }
+  .toggle-prompt-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .toggle-prompt-text { font-size: 0.95rem; font-weight: 600; color: var(--navy-main); }
+  .toggle-prompt-jp { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.1rem; font-weight: 600; color: var(--text-dark); }
+  .blank-mark { color: var(--pink-text); font-weight: 700; background: var(--pink-bg); padding: 0 6px; border-radius: 6px; }
+  .btn-check-reveal { background: var(--blue-bg); color: var(--navy-main); border: 1px solid var(--blue-border); padding: 5px 12px; border-radius: 16px; font-size: 0.78rem; font-weight: 600; flex-shrink: 0; }
+  .toggle-answer-box { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border-light); font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.2rem; font-weight: 600; color: var(--navy-main); }
+  .toggle-answer-box.show { display: block; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: translateY(0); } }
+  .roleplay-card { background: #FAFBFD; border: 1.5px solid var(--border-light); border-radius: 14px; padding: 16px 20px; margin-bottom: 14px; }
+  .roleplay-title { font-size: 0.92rem; font-weight: 700; color: var(--navy-main); margin-bottom: 12px; }
+  .roleplay-bubble { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
+  .roleplay-bubble:last-child { margin-bottom: 0; }
+  .roleplay-speaker { font-size: 0.76rem; font-weight: 700; padding: 3px 8px; border-radius: 8px; min-width: 60px; text-align: center; flex-shrink: 0; }
+  .speaker-a { background: var(--blue-bg); color: var(--navy-main); border: 1px solid var(--blue-border); }
+  .speaker-b { background: var(--mid-cyan-bg); color: var(--mid-cyan-text); border: 1px solid var(--mid-cyan-border); }
+  .roleplay-lines { flex-grow: 1; }
+  .roleplay-jp { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.12rem; font-weight: 600; color: var(--text-dark); margin-bottom: 2px; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+  .roleplay-trans { font-size: 0.82rem; color: var(--text-sub); }
+  .roleplay-native { font-size: 0.78rem; color: #94A3B8; }
+  .roleplay-blank-item { background: white; border: 1.5px dashed var(--blue-border); border-radius: 10px; padding: 10px 14px; margin-bottom: 10px; cursor: pointer; }
+  .vocab-filter-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; }
+  .filter-btn-group { display: flex; gap: 6px; }
+  .filter-pill { background: white; border: 1px solid var(--border-light); font-size: 0.78rem; font-weight: 600; padding: 4px 12px; border-radius: 14px; cursor: pointer; color: var(--text-sub); transition: all 0.2s; }
+  .filter-pill.active { background: var(--navy-main); color: white; border-color: var(--navy-main); }
+  .word-pool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
+  .word-pool-card { background: white; border: 1px solid var(--border-light); border-radius: 10px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; }
+  .pool-word-jp { font-family: '游ゴシック', 'YuGothic', sans-serif; font-weight: 600; font-size: 1.1rem; color: var(--navy-main); }
+  .pool-word-trans { font-size: 0.78rem; color: var(--text-sub); }
+  .star-btn { background: none; border: none; font-size: 1.25rem; cursor: pointer; color: #CBD5E0; transition: all 0.2s; }
+  .star-btn.active { color: #E2A03F; transform: scale(1.15); }
+  .note-box { background: var(--yellow-bg); border: 1.5px solid var(--yellow-border); border-radius: 12px; padding: 12px 16px; margin: 12px 0; font-size: 0.85rem; color: var(--yellow-title); }
+  .section-source-tag { font-size: 0.68rem; font-weight: 700; color: var(--teal-text); background: var(--teal-bg); border: 1px solid var(--teal-border); padding: 2px 8px; border-radius: 8px; margin-left: 8px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title-box">
+      <span class="badge-stage">STAGE 1 - 総復習</span>
+      <h1>総復習＆実戦演習 — Stage 1 Comprehensive Review</h1>
+    </div>
+    <div class="lang-switcher">
+      <span>🌐</span>
+      <select id="lang-select" onchange="applyLanguage(this.value)">
+        <option value="all" selected>All / 全部</option>
+        <option value="ko">한국어</option>
+        <option value="zhcn">简体中文</option>
+        <option value="zhtw">繁體中文</option>
+        <option value="cant">粵語（香港）</option>
+      </select>
+    </div>
+  </div>
+</header>
+
+<div class="nav-bar">
+  <button class="nav-tab-btn active" onclick="scrollToSection('sec-fill')">1. 穴埋め問題</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-convo')">2. 会話ドリル</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-translate')">3. 訳問題</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-vocab')">4. 語彙復習</button>
+</div>
+
+<div class="container">
+
+  <section class="content-card" id="sec-fill">
+    <div class="card-header-row">
+      <div class="step-label">Part 1</div>
+      <div class="card-main-title">穴埋め問題 — Fill in the Blank</div>
+      <div class="card-subtitle-en">Covers every pattern from Stage 1, Lessons 1–4: は／です／じゃありません／ですか／も, これ・それ・あれ／この・その・あの／の, ここ・そこ・あそこ／こちら・そちら・あちら, あります・います, and は vs が.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="Stage 1 1〜4과의 모든 패턴을 다룹니다: は／です／じゃありません／ですか／も, これ・それ・あれ／この・その・あの／の, ここ・そこ・あそこ／こちら・そちら・あちら, あります・います, は와 が." data-zhcn="涵盖Stage 1第1〜4课的所有句型：は／です／じゃありません／ですか／も、これ・それ・あれ／この・その・あの／の、ここ・そこ・あそこ／こちら・そちら・あちら、あります・います、以及は与が。" data-zhtw="涵蓋Stage 1第1〜4課的所有句型：は／です／じゃありません／ですか／も、これ・それ・あれ／この・その・あの／の、ここ・そこ・あそこ／こちら・そちら・あちら、あります・います、以及は與が。" data-cant="涵蓋Stage 1第1至4課嘅所有句型：は／です／じゃありません／ですか／も、これ・それ・あれ／この・その・あの／の、ここ・そこ・あそこ／こちら・そちら・あちら、あります・います，同埋は同が。"></div>
+    </div>
+    <div class="toggle-item" onclick="toggleAnswer('f1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text"><span class="toggle-prompt-jp">エマさん＿＿会社員です。</span> ("Emma IS ALSO an employee" — Lesson1)</div><button class="btn-check-reveal" id="btn-f1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-f1"><span>エマさん<span class="blank-mark">も</span>会社員です。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('エマさんも会社員です。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('f2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text"><span class="toggle-prompt-jp">パクさんは学生＿＿ありません。会社員です。</span> ("is NOT a student" — Lesson1)</div><button class="btn-check-reveal" id="btn-f2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-f2"><span>パクさんは学生<span class="blank-mark">じゃ</span>ありません。会社員です。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('パクさんは学生じゃありません。会社員です。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('f3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text"><span class="toggle-prompt-jp">＿＿は辞書です。＿＿はわたしのです。</span> ("This (near me) is a dictionary. This one (same one) is mine." — Lesson2)</div><button class="btn-check-reveal" id="btn-f3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-f3"><span><span class="blank-mark">これ</span>は<ruby>辞書<rt>じしょ</rt></ruby>です。<span class="blank-mark">この本</span>はわたしのです。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('これは辞書です。この本はわたしのです。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('f4')"><div class="toggle-prompt-row"><div class="toggle-prompt-text"><span class="toggle-prompt-jp">これはだれ＿＿傘ですか。</span> ("Whose umbrella is this?" — Lesson2)</div><button class="btn-check-reveal" id="btn-f4">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-f4"><span>これはだれ<span class="blank-mark">の</span><ruby>傘<rt>かさ</rt></ruby>ですか。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('これはだれの傘ですか。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('f5')"><div class="toggle-prompt-row"><div class="toggle-prompt-text"><span class="toggle-prompt-jp">食堂は＿＿です。エレベーターの隣です。</span> ("The cafeteria is over there" — Lesson3)</div><button class="btn-check-reveal" id="btn-f5">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-f5"><span><ruby>食堂<rt>しょくどう</rt></ruby>は<span class="blank-mark">あそこ</span>です。エレベーターの<ruby>隣<rt>となり</rt></ruby>です。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('食堂はあそこです。エレベーターの隣です。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('f6')"><div class="toggle-prompt-row"><div class="toggle-prompt-text"><span class="toggle-prompt-jp">すみません、受付は＿＿ですか。</span> (polite "which way" — Lesson3)</div><button class="btn-check-reveal" id="btn-f6">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-f6"><span>すみません、<ruby>受付<rt>うけつけ</rt></ruby>は<span class="blank-mark">どちら</span>ですか。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('すみません、受付はどちらですか。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('f7')"><div class="toggle-prompt-row"><div class="toggle-prompt-text"><span class="toggle-prompt-jp">こちら＿＿部長の高橋です。</span> (polite introduction — Lesson3)</div><button class="btn-check-reveal" id="btn-f7">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-f7"><span>こちら<span class="blank-mark">は</span><ruby>部長<rt>ぶちょう</rt></ruby>の<ruby>高橋<rt>たかはし</rt></ruby>です。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('こちらは部長の高橋です。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('f8')"><div class="toggle-prompt-row"><div class="toggle-prompt-text"><span class="toggle-prompt-jp">あそこにコンビニ＿＿あります。</span> (brand-new info — Lesson4)</div><button class="btn-check-reveal" id="btn-f8">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-f8"><span>あそこにコンビニ<span class="blank-mark">が</span>あります。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('あそこにコンビニがあります。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('f9')"><div class="toggle-prompt-row"><div class="toggle-prompt-text"><span class="toggle-prompt-jp">コンビニ＿＿あそこにあります。</span> (already-known topic — Lesson4, contrast with previous)</div><button class="btn-check-reveal" id="btn-f9">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-f9"><span>コンビニ<span class="blank-mark">は</span>あそこにあります。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('コンビニはあそこにあります。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('f10')"><div class="toggle-prompt-row"><div class="toggle-prompt-text"><span class="toggle-prompt-jp">ロビーに高橋部長＿＿＿＿。</span> (person exists — Lesson4, choose が+います)</div><button class="btn-check-reveal" id="btn-f10">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-f10"><span>ロビーに<ruby>高橋<rt>たかはし</rt></ruby><ruby>部長<rt>ぶちょう</rt></ruby><span class="blank-mark">がいます</span>。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('ロビーに高橋部長がいます。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('f11')"><div class="toggle-prompt-row"><div class="toggle-prompt-text"><span class="toggle-prompt-jp">今、教室に誰＿＿いません。</span> ("no one is in the classroom" — Lesson4)</div><button class="btn-check-reveal" id="btn-f11">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-f11"><span><ruby>今<rt>いま</rt></ruby>、<ruby>教室<rt>きょうしつ</rt></ruby>に<ruby>誰<rt>だれ</rt></ruby><span class="blank-mark">も</span>いません。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('今、教室に誰もいません。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('f12')"><div class="toggle-prompt-row"><div class="toggle-prompt-text"><span class="toggle-prompt-jp">はなみ大学＿＿京都にあります。</span> ("Hanami University is in Kyoto" — known topic, Lesson4)</div><button class="btn-check-reveal" id="btn-f12">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-f12"><span>はなみ<ruby>大学<rt>だいがく</rt></ruby><span class="blank-mark">は</span><ruby>京都<rt>きょうと</rt></ruby>にあります。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('はなみ大学は京都にあります。')" title="Listen">🔊</button></div></div>
+  </section>
+
+  <section class="content-card" id="sec-convo">
+    <div class="card-header-row">
+      <div class="step-label">Part 2</div>
+      <div class="card-main-title">会話ドリル — Conversation Drills</div>
+      <div class="card-subtitle-en">Read the exchange, then supply the missing line yourself before revealing the answer. These mix vocabulary and characters from all four Stage 1 lessons.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="대화를 읽고 정답을 보기 전에 스스로 빈칸의 말을 채워 보세요. Stage 1의 4개 과의 어휘와 등장인물이 섞여 있습니다." data-zhcn="先读对话，在看答案之前自己想出缺的那句话。这里混合了Stage 1全部四课的词汇和角色。" data-zhtw="先讀對話，在看答案之前自己想出缺的那句話。這裡混合了Stage 1全部四課的詞彙和角色。" data-cant="先讀對話，喺睇答案之前自己諗吓缺咗嗰句話。呢度混埋咗Stage 1全部四課嘅詞彙同角色。"></div>
+    </div>
+
+    <div class="roleplay-card">
+      <div class="roleplay-title">Drill 1: 新入社員に聞く — Asking the New Employee</div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-a">高橋</div><div class="roleplay-lines"><div class="roleplay-jp">エマさんは<ruby>学生<rt>がくせい</rt></ruby>ですか。</div><div class="roleplay-trans">Are you a student, Emma?</div></div></div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-b">エマ</div><div class="roleplay-lines"><div class="roleplay-jp">___________</div><div class="roleplay-trans">(Say: No, not a student. I'm an employee of Mirai Trading.)</div></div></div>
+    </div>
+    <div class="toggle-item" onclick="toggleAnswer('cv1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">Reveal Emma's line</div><button class="btn-check-reveal" id="btn-cv1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-cv1"><span>いいえ、<ruby>学生<rt>がくせい</rt></ruby>じゃありません。みらい<ruby>商事<rt>しょうじ</rt></ruby>の<ruby>社員<rt>しゃいん</rt></ruby>です。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('いいえ、学生じゃありません。みらい商事の社員です。')" title="Listen">🔊</button></div></div>
+
+    <div class="roleplay-card">
+      <div class="roleplay-title">Drill 2: 忘れ物 — A Lost Item</div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-a">田中</div><div class="roleplay-lines"><div class="roleplay-jp">これは<ruby>誰<rt>だれ</rt></ruby>のペンですか。</div><div class="roleplay-trans">Whose pen is this?</div></div></div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-b">ソフィア</div><div class="roleplay-lines"><div class="roleplay-jp">___________</div><div class="roleplay-trans">(Say: Oh, that's mine. Thank you.)</div></div></div>
+    </div>
+    <div class="toggle-item" onclick="toggleAnswer('cv2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">Reveal Sofia's line</div><button class="btn-check-reveal" id="btn-cv2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-cv2"><span>あ、それはわたしのです。ありがとうございます。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('あ、それはわたしのです。ありがとうございます。')" title="Listen">🔊</button></div></div>
+
+    <div class="roleplay-card">
+      <div class="roleplay-title">Drill 3: 道を聞く — Asking for Directions</div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-a">パク</div><div class="roleplay-lines"><div class="roleplay-jp">すみません、お<ruby>手洗<rt>てあら</rt></ruby>いはどちらですか。</div><div class="roleplay-trans">Excuse me, which way is the restroom?</div></div></div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-b">ソムチャイ</div><div class="roleplay-lines"><div class="roleplay-jp">___________</div><div class="roleplay-trans">(Say: It's this way. Next to the elevator.)</div></div></div>
+    </div>
+    <div class="toggle-item" onclick="toggleAnswer('cv3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">Reveal Somchai's line</div><button class="btn-check-reveal" id="btn-cv3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-cv3"><span>こちらです。エレベーターの<ruby>隣<rt>となり</rt></ruby>です。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('こちらです。エレベーターの隣です。')" title="Listen">🔊</button></div></div>
+
+    <div class="roleplay-card">
+      <div class="roleplay-title">Drill 4: 近くに何がありますか — What's Nearby?</div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-a">リー</div><div class="roleplay-lines"><div class="roleplay-jp">この<ruby>辺<rt>へん</rt></ruby>に<ruby>銀行<rt>ぎんこう</rt></ruby>がありますか。</div><div class="roleplay-trans">Is there a bank around here?</div></div></div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-b">渡辺</div><div class="roleplay-lines"><div class="roleplay-jp">___________</div><div class="roleplay-trans">(Say: Yes, there is. The bank is in front of the station.)</div></div></div>
+    </div>
+    <div class="toggle-item" onclick="toggleAnswer('cv4')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">Reveal Watanabe's line</div><button class="btn-check-reveal" id="btn-cv4">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-cv4"><span>はい、あります。<ruby>銀行<rt>ぎんこう</rt></ruby>は<ruby>駅<rt>えき</rt></ruby>の<ruby>前<rt>まえ</rt></ruby>にあります。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('はい、あります。銀行は駅の前にあります。')" title="Listen">🔊</button></div></div>
+  </section>
+
+  <section class="content-card" id="sec-translate">
+    <div class="card-header-row">
+      <div class="step-label">Part 3</div>
+      <div class="card-main-title">訳問題 — English → Japanese Full-Sentence Translation</div>
+      <div class="card-subtitle-en">Translate each full sentence into Japanese, combining everything from Stage 1. These are intentionally a little harder than the single-point drills in each lesson.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="Stage 1의 모든 내용을 결합해 각 문장을 일본어로 번역하세요. 각 과의 단일 포인트 연습보다 일부러 조금 더 어렵게 만들었습니다." data-zhcn="综合Stage 1的全部内容，把每个句子翻成日语。这些题目故意比每课的单点练习稍难一些。" data-zhtw="綜合Stage 1的全部內容，把每個句子翻成日語。這些題目故意比每課的單點練習稍難一些。" data-cant="綜合埋Stage 1嘅全部內容，將每個句子譯做日文。呢啲題目故意比每課嘅單點練習難少少。"></div>
+    </div>
+    <div class="toggle-item" onclick="toggleAnswer('t1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">T-1. I'm Emma Wilson. I'm an employee of Mirai Trading. Nice to meet you.</div><button class="btn-check-reveal" id="btn-t1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-t1"><span>エマ・ウィルソンです。みらい<ruby>商事<rt>しょうじ</rt></ruby>の<ruby>社員<rt>しゃいん</rt></ruby>です。よろしくお<ruby>願<rt>ねが</rt></ruby>いします。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('エマ・ウィルソンです。みらい商事の社員です。よろしくお願いします。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('t2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">T-2. Is Mx. Park also a student at Hanami University? — No, that's not right. She's a researcher.</div><button class="btn-check-reveal" id="btn-t2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-t2"><span>パクさんもはなみ<ruby>大学<rt>だいがく</rt></ruby>の<ruby>学生<rt>がくせい</rt></ruby>ですか。いいえ、そうじゃありません。<ruby>研究者<rt>けんきゅうしゃ</rt></ruby>です。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('パクさんもはなみ大学の学生ですか。いいえ、そうじゃありません。研究者です。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('t3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">T-3. This umbrella is not mine. It's probably Luca's.</div><button class="btn-check-reveal" id="btn-t3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-t3"><span>この<ruby>傘<rt>かさ</rt></ruby>はわたしのじゃありません。<ruby>多分<rt>たぶん</rt></ruby>、ルカさんのです。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('この傘はわたしのじゃありません。多分、ルカさんのです。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('t4')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">T-4. Whose dictionary is that (near you)? — It's the company's dictionary.</div><button class="btn-check-reveal" id="btn-t4">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-t4"><span>それはだれの<ruby>辞書<rt>じしょ</rt></ruby>ですか。<ruby>会社<rt>かいしゃ</rt></ruby>の<ruby>辞書<rt>じしょ</rt></ruby>です。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('それはだれの辞書ですか。会社の辞書です。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('t5')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">T-5. Excuse me, where is the cafeteria? — It's over there, next to the meeting room.</div><button class="btn-check-reveal" id="btn-t5">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-t5"><span>すみません、<ruby>食堂<rt>しょくどう</rt></ruby>はどこですか。あそこです。<ruby>会議室<rt>かいぎしつ</rt></ruby>の<ruby>隣<rt>となり</rt></ruby>です。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('すみません、食堂はどこですか。あそこです。会議室の隣です。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('t6')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">T-6. This is Mx. Li, a doctor at Aoba Hospital. (polite introduction)</div><button class="btn-check-reveal" id="btn-t6">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-t6"><span>こちらはあおば<ruby>病院<rt>びょういん</rt></ruby>の<ruby>医者<rt>いしゃ</rt></ruby>、リーさんです。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('こちらはあおば病院の医者、リーさんです。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('t7')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">T-7. Is there a convenience store nearby? — Yes, there is. It's over there.</div><button class="btn-check-reveal" id="btn-t7">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-t7"><span><ruby>近<rt>ちか</rt></ruby>くにコンビニがありますか。はい、あります。あそこです。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('近くにコンビニがありますか。はい、あります。あそこです。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('t8')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">T-8. Manager Takahashi's family: his wife and daughter are in Osaka, and his son is in America.</div><button class="btn-check-reveal" id="btn-t8">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-t8"><span><ruby>妻<rt>つま</rt></ruby>と<ruby>娘<rt>むすめ</rt></ruby>は<ruby>大阪<rt>おおさか</rt></ruby>にいます。<ruby>息子<rt>むすこ</rt></ruby>はアメリカにいます。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('妻と娘は大阪にいます。息子はアメリカにいます。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('t9')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">T-9. Where is Hanami University? — It's in Kyoto.</div><button class="btn-check-reveal" id="btn-t9">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-t9"><span>はなみ<ruby>大学<rt>だいがく</rt></ruby>はどこにありますか。<ruby>京都<rt>きょうと</rt></ruby>にあります。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('はなみ大学はどこにありますか。京都にあります。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('t10')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">T-10. This is not the meeting room. This is the classroom, and the reception desk is that way.</div><button class="btn-check-reveal" id="btn-t10">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-t10"><span>ここは<ruby>会議室<rt>かいぎしつ</rt></ruby>じゃありません。ここは<ruby>教室<rt>きょうしつ</rt></ruby>です。<ruby>受付<rt>うけつけ</rt></ruby>はあちらです。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('ここは会議室じゃありません。ここは教室です。受付はあちらです。')" title="Listen">🔊</button></div></div>
+  </section>
+
+  <section class="content-card" id="sec-vocab">
+    <div class="card-header-row">
+      <div class="step-label">Part 4</div>
+      <div class="card-main-title">語彙復習 — Vocabulary Review Pool</div>
+      <div class="card-subtitle-en">A combined pool of key words from all four Stage 1 lessons. Star the ones you still need to drill.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="Stage 1의 4개 과에서 나온 핵심 단어를 모은 것입니다. 아직 더 연습해야 할 단어에 별표를 하세요." data-zhcn="汇总了Stage 1全部四课的重点单字。把还需要多练的字打上星号。" data-zhtw="彙總了Stage 1全部四課的重點單字。把還需要多練的字打上星號。" data-cant="總合咗Stage 1全部四課嘅重點生字。將仲要練嘅字㩒星。"></div>
+    </div>
+    <div class="vocab-filter-row">
+      <div class="filter-btn-group">
+        <button class="filter-pill active" id="filter-all" onclick="filterVocab('all')">All</button>
+        <button class="filter-pill" id="filter-starred" onclick="filterVocab('starred')">Starred ☆</button>
+      </div>
+    </div>
+    <div class="word-pool-grid" id="word-pool-list">
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">会社員</div><div class="pool-word-trans">company employee</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">学生</div><div class="pool-word-trans">student</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">医者</div><div class="pool-word-trans">doctor</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">部長</div><div class="pool-word-trans">department head</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">そうです／違います</div><div class="pool-word-trans">that's right / that's wrong</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">これ／それ／あれ</div><div class="pool-word-trans">this/that/that over there</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">この／その／あの</div><div class="pool-word-trans">this/that/that (+ noun)</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">〜の</div><div class="pool-word-trans">~'s / of ~</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">辞書／本／傘</div><div class="pool-word-trans">dictionary / book / umbrella</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">ここ／そこ／あそこ</div><div class="pool-word-trans">here/there/over there</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">こちら／そちら／あちら</div><div class="pool-word-trans">this/that/that way (polite)</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">食堂／事務所／教室</div><div class="pool-word-trans">cafeteria / office / classroom</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">お手洗い／受付</div><div class="pool-word-trans">restroom / reception desk</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">あります／います</div><div class="pool-word-trans">there is (things / people-animals)</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">コンビニ／銀行／公園</div><div class="pool-word-trans">convenience store / bank / park</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">家族／両親／妻／息子／娘</div><div class="pool-word-trans">family / parents / wife / son / daughter</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">誰も〜ません</div><div class="pool-word-trans">no one (+ negative)</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">近く／この辺</div><div class="pool-word-trans">nearby / around here</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  let currentOpenId = null;
+  function toggleAnswer(id) {
+    const ans = document.getElementById('ans-' + id);
+    const btn = document.getElementById('btn-' + id);
+    const isOpen = ans.classList.contains('show');
+    if (currentOpenId && currentOpenId !== id) {
+      const prevAns = document.getElementById('ans-' + currentOpenId);
+      const prevBtn = document.getElementById('btn-' + currentOpenId);
+      if (prevAns) { prevAns.classList.remove('show'); prevBtn.innerText = 'Reveal ▼'; }
+    }
+    if (isOpen) { ans.classList.remove('show'); btn.innerText = 'Reveal ▼'; currentOpenId = null; }
+    else { ans.classList.add('show'); btn.innerText = 'Hide ▲'; currentOpenId = id; }
+  }
+  function speakText(text) {
+    if (!('speechSynthesis' in window)) { alert('Your browser does not support audio speech synthesis.'); return; }
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'ja-JP';
+    utterance.rate = 0.92;
+    window.speechSynthesis.speak(utterance);
+  }
+  function toggleStar(btn) {
+    btn.classList.toggle('active');
+    btn.innerText = btn.classList.contains('active') ? '★' : '☆';
+    const card = btn.closest('.word-pool-card');
+    const isStarred = btn.classList.contains('active');
+    card.setAttribute('data-starred', isStarred ? 'true' : 'false');
+    const btnStarred = document.getElementById('filter-starred');
+    if (btnStarred && btnStarred.classList.contains('active') && !isStarred) { card.style.display = 'none'; }
+  }
+  function filterVocab(type) {
+    const cards = document.querySelectorAll('.word-pool-card');
+    const btnAll = document.getElementById('filter-all');
+    const btnStarred = document.getElementById('filter-starred');
+    if (type === 'all') { btnAll.classList.add('active'); btnStarred.classList.remove('active'); cards.forEach(c => c.style.display = 'flex'); }
+    else { btnAll.classList.remove('active'); btnStarred.classList.add('active'); cards.forEach(c => { c.style.display = (c.getAttribute('data-starred') === 'true') ? 'flex' : 'none'; }); }
+  }
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    const tabs = document.querySelectorAll('.nav-tab-btn');
+    tabs.forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+  function applyLanguage(lang) {
+    document.querySelectorAll('.i18n-native').forEach(el => {
+      if (lang === 'all') {
+        const parts = [el.dataset.ko, el.dataset.zhcn, el.dataset.zhtw, el.dataset.cant].filter(Boolean);
+        el.textContent = parts.join(' / ');
+      } else {
+        el.textContent = el.dataset[lang] || '';
+      }
+    });
+  }
+  document.addEventListener('DOMContentLoaded', function () { applyLanguage('all'); });
+</script>
+
+</body>
+</html>

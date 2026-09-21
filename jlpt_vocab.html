@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JLPT 単語リスト — 五十音順 Vocabulary by Level</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-main: #1E5989;
+    --navy-dark: #143D5E;
+    --teal-bg: #F0FAFA;
+    --teal-border: #82CBD3;
+    --teal-text: #196168;
+    --teal-main: #4FB3BE;
+    --pink-bg: #FDF0F3;
+    --pink-border: #D88B9D;
+    --pink-text: #8E3A4F;
+    --blue-bg: #EDF5FB;
+    --blue-border: #89BFE0;
+    --blue-text: #1E5989;
+    --yellow-bg: #FFFDEB;
+    --yellow-border: #F0D462;
+    --yellow-text: #8C6500;
+    --lavender-bg: #F3F1FA;
+    --lavender-border: #9A8EC8;
+    --card-bg: #FFFFFF;
+    --text-dark: #232C3A;
+    --text-sub: #576579;
+    --border-light: #E2E8F0;
+    --ruby-color: #C4688A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    background: #F4F8FC;
+    color: var(--text-dark);
+    min-height: 100vh;
+    padding-bottom: 60px;
+  }
+  .jp-font { font-family: "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; }
+
+  /* ---- Save & Action Buttons ---- */
+  .save-vocab-btn {
+    background: #F8FAFC;
+    border: 1px solid #CBD5E1;
+    color: #64748B;
+    border-radius: 8px;
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.18s ease;
+  }
+  .save-vocab-btn:hover {
+    background: #F1F5F9;
+    border-color: #94A3B8;
+    color: #1E293B;
+  }
+  .save-vocab-btn.saved {
+    background: #EFF6FF;
+    border-color: #93C5FD;
+    color: #1D4ED8;
+    font-weight: 700;
+  }
+  .header-mypage-btn {
+    background: rgba(255,255,255,0.22);
+    border: 1px solid rgba(255,255,255,0.35);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 14px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.18s;
+  }
+  .header-mypage-btn:hover { background: rgba(255,255,255,0.36); }
+
+  /* ---- Loading ---- */
+  #loading-overlay {
+    position: fixed; inset: 0;
+    background: rgba(248,250,252,0.97);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    z-index: 999; gap: 16px;
+  }
+  #loading-overlay.hidden { display: none; }
+  .loading-spinner {
+    width: 40px; height: 40px;
+    border: 4px solid var(--border-light);
+    border-top-color: var(--teal-main);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { color: var(--text-sub); font-size: 0.9rem; text-align: center; }
+
+  /* ---- Header ---- */
+  header {
+    background: var(--navy-main);
+    color: white;
+    padding: 14px 24px;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 4px 16px rgba(30,89,137,0.15);
+  }
+  .header-inner {
+    max-width: 960px; margin: 0 auto;
+    display: flex; align-items: center;
+    justify-content: space-between; gap: 14px; flex-wrap: wrap;
+  }
+  .back-btn {
+    background: rgba(255,255,255,0.2); border: none; color: white;
+    padding: 6px 14px; border-radius: 16px;
+    font-size: 0.82rem; font-weight: 600; cursor: pointer;
+    text-decoration: none; display: inline-flex;
+    align-items: center; gap: 6px; transition: background 0.2s;
+  }
+  .back-btn:hover { background: rgba(255,255,255,0.3); }
+  .header-center {}
+  .header-title { font-size: 1.15rem; font-weight: 700; }
+  .header-sub { font-size: 0.78rem; opacity: 0.75; margin-top: 2px; }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .header-stat-badge {
+    font-size: 0.78rem; background: rgba(255,255,255,0.15); padding: 5px 12px; border-radius: 12px;
+  }
+
+  /* ---- Level tabs ---- */
+  .level-tabs {
+    background: white;
+    border-bottom: 2px solid var(--border-light);
+    position: sticky; top: 58px; z-index: 90;
+  }
+  .level-tabs-inner {
+    max-width: 960px; margin: 0 auto;
+    display: flex; overflow-x: auto;
+  }
+  .level-tab {
+    padding: 13px 22px;
+    font-size: 0.88rem; font-weight: 700;
+    cursor: pointer; border: none;
+    background: none; white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    color: var(--text-sub);
+    transition: all 0.18s;
+  }
+  .level-tab:hover { color: var(--navy-main); }
+  .level-tab.n5.active { color: #2E7D32; border-bottom-color: #4CAF50; }
+  .level-tab.n4.active { color: #1565C0; border-bottom-color: #2196F3; }
+  .level-tab.n3.active { color: #E65100; border-bottom-color: #FF9800; }
+  .level-tab.n2.active { color: #880E4F; border-bottom-color: #E91E63; }
+  .level-tab.n1.active { color: #6A1B9A; border-bottom-color: #9C27B0; }
+  .level-tab-count {
+    font-size: 0.68rem; font-weight: 500;
+    opacity: 0.7; display: block;
+  }
+
+  /* ---- Gojuon (あいうえお) row navigation bar ---- */
+  .gojuon-nav-strip {
+    background: #F8FAFC;
+    border-bottom: 1px solid var(--border-light);
+    padding: 8px 16px;
+  }
+  .gojuon-nav-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+  .gojuon-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-sub);
+    white-space: nowrap;
+    margin-right: 4px;
+    text-transform: uppercase;
+  }
+  .gojuon-btn {
+    border: 1px solid var(--border-light);
+    background: white;
+    color: var(--text-dark);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+    font-family: 'Inter', "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  }
+  .gojuon-btn:hover { border-color: var(--navy-main); color: var(--navy-main); }
+  .gojuon-btn.active { background: var(--navy-main); color: white; border-color: var(--navy-main); }
+
+  /* ---- Level info banner ---- */
+  .level-banner {
+    max-width: 960px; margin: 16px auto 0; padding: 0 16px;
+  }
+  .level-banner-box {
+    border-radius: 14px; padding: 14px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .level-banner-left {
+    display: flex; align-items: center; gap: 14px;
+  }
+  .level-badge-big {
+    font-size: 1.8rem; font-weight: 700; min-width: 48px; text-align: center;
+  }
+  .level-banner-text {}
+  .level-banner-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 2px; }
+  .level-banner-sub { font-size: 0.78rem; opacity: 0.8; }
+  .order-indicator {
+    background: rgba(255,255,255,0.85);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border: 1px solid rgba(0,0,0,0.08);
+    white-space: nowrap;
+  }
+  .banner-n5 { background: #E8F5E9; color: #2E7D32; border: 1.5px solid #A5D6A7; }
+  .banner-n4 { background: #E3F2FD; color: #1565C0; border: 1.5px solid #90CAF9; }
+  .banner-n3 { background: #FFF3E0; color: #E65100; border: 1.5px solid #FFCC80; }
+  .banner-n2 { background: #FCE4EC; color: #880E4F; border: 1.5px solid #F48FB1; }
+  .banner-n1 { background: #F3E5F5; color: #6A1B9A; border: 1.5px solid #CE93D8; }
+
+  /* ---- Search + controls ---- */
+  .controls-bar {
+    max-width: 960px; margin: 16px auto 0; padding: 0 16px;
+    display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+  }
+  #word-search {
+    flex: 1; min-width: 200px;
+    border: 2px solid var(--teal-border); border-radius: 12px;
+    padding: 9px 16px; font-size: 0.95rem;
+    font-family: 'Inter', "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    color: var(--text-dark); outline: none;
+    transition: border-color 0.2s; background: white;
+  }
+  #word-search:focus { border-color: var(--teal-text); }
+  #word-search::placeholder { color: #A0B0BF; font-family: 'Inter', sans-serif; font-size: 0.85rem; }
+  .count-label {
+    font-size: 0.8rem; color: var(--text-sub); font-weight: 500; white-space: nowrap;
+  }
+  .count-label span { color: var(--navy-main); font-weight: 700; }
+  .view-toggle {
+    display: flex; border: 1.5px solid var(--border-light); border-radius: 10px; overflow: hidden;
+  }
+  .view-btn {
+    padding: 7px 12px; border: none; cursor: pointer; background: white;
+    color: var(--text-sub); transition: all 0.15s; display: flex; align-items: center;
+  }
+  .view-btn.active { background: var(--navy-main); color: white; }
+
+  /* ---- Word grid (card view) ---- */
+  .words-container {
+    max-width: 960px; margin: 16px auto 0; padding: 0 16px;
+  }
+  .word-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 10px;
+  }
+  .word-card {
+    background: white; border: 1.5px solid var(--border-light);
+    border-radius: 14px; padding: 14px 16px;
+    cursor: pointer; transition: all 0.18s;
+    position: relative;
+  }
+  .word-card:hover {
+    border-color: var(--teal-border);
+    box-shadow: 0 4px 16px rgba(79,179,190,0.12);
+    transform: translateY(-1px);
+  }
+  .word-card-top {
+    display: flex; align-items: flex-start;
+    justify-content: space-between; gap: 8px; margin-bottom: 4px;
+  }
+  .word-jp {
+    font-family: "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    font-size: 1.45rem; font-weight: 600;
+    color: var(--navy-main); line-height: 1.2;
+  }
+  .word-tts {
+    background: var(--teal-bg); border: 1px solid var(--teal-border);
+    border-radius: 8px; padding: 5px 8px; cursor: pointer;
+    color: var(--teal-text); flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  .word-tts:hover { background: var(--teal-text); color: white; }
+  .word-reading {
+    font-family: "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    font-size: 0.82rem; color: var(--ruby-color);
+    font-weight: 600; margin-bottom: 6px;
+  }
+  .word-row-badge {
+    position: absolute;
+    top: 10px;
+    right: 48px;
+    font-size: 0.65rem;
+    color: var(--text-sub);
+    background: #F1F5F9;
+    padding: 1px 6px;
+    border-radius: 6px;
+    font-family: "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  }
+  .word-meanings {
+    font-size: 0.82rem; color: var(--text-dark); line-height: 1.4;
+  }
+  .word-no { font-size: 0.68rem; color: var(--text-sub); margin-bottom: 4px; }
+
+  /* ---- List view ---- */
+  .word-list { display: flex; flex-direction: column; gap: 0; }
+  .word-list-item {
+    background: white; border-bottom: 1px solid var(--border-light);
+    padding: 12px 16px; display: flex; align-items: center;
+    gap: 14px; cursor: pointer; transition: background 0.15s;
+  }
+  .word-list-item:first-child { border-radius: 14px 14px 0 0; border-top: 1.5px solid var(--border-light); border-left: 1.5px solid var(--border-light); border-right: 1.5px solid var(--border-light); }
+  .word-list-item:last-child { border-radius: 0 0 14px 14px; border-bottom: 1.5px solid var(--border-light); border-left: 1.5px solid var(--border-light); border-right: 1.5px solid var(--border-light); }
+  .word-list-item:not(:first-child):not(:last-child) { border-left: 1.5px solid var(--border-light); border-right: 1.5px solid var(--border-light); }
+  .word-list-item:hover { background: var(--teal-bg); }
+  .wli-num { width: 36px; font-size: 0.72rem; color: var(--text-sub); text-align: right; flex-shrink: 0; }
+  .wli-jp { font-family: "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; font-size: 1.2rem; font-weight: 600; color: var(--navy-main); min-width: 80px; }
+  .wli-reading { font-family: "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; font-size: 0.78rem; color: var(--ruby-color); min-width: 80px; font-weight: 600; }
+  .wli-row { font-size: 0.7rem; color: var(--text-sub); background: #F1F5F9; padding: 2px 7px; border-radius: 6px; font-family: "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; }
+  .wli-meanings { font-size: 0.82rem; color: var(--text-dark); flex: 1; }
+  .wli-tts { background: none; border: 1px solid var(--teal-border); border-radius: 8px; padding: 4px 8px; cursor: pointer; color: var(--teal-text); flex-shrink: 0; transition: background 0.15s; }
+  .wli-tts:hover { background: var(--teal-text); color: white; }
+
+  /* ---- Detail modal ---- */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(20,40,70,0.4); z-index: 500;
+    align-items: center; justify-content: center; padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: white; border-radius: 20px; padding: 28px;
+    max-width: 500px; width: 100%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+    position: relative; max-height: 80vh; overflow-y: auto;
+  }
+  .modal-close {
+    position: absolute; top: 14px; right: 14px;
+    background: var(--border-light); border: none;
+    width: 28px; height: 28px; border-radius: 50%;
+    cursor: pointer; font-size: 0.9rem;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-sub); transition: background 0.15s;
+  }
+  .modal-close:hover { background: #CBD5E1; }
+  .modal-word { font-family: "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; font-size: 2.6rem; font-weight: 600; color: var(--navy-main); line-height: 1.1; margin-bottom: 4px; }
+  .modal-reading { font-family: "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; font-size: 1rem; color: var(--ruby-color); font-weight: 600; margin-bottom: 14px; }
+  .modal-sec { font-size: 0.7rem; font-weight: 700; color: var(--text-sub); text-transform: uppercase; letter-spacing: 0.7px; margin-top: 16px; margin-bottom: 8px; }
+  .modal-meanings-list { list-style: none; }
+  .modal-meanings-list li { padding: 6px 0; border-bottom: 1px solid var(--border-light); font-size: 0.9rem; display: flex; gap: 8px; }
+  .modal-meanings-list li:last-child { border-bottom: none; }
+  .modal-num { background: var(--blue-bg); color: var(--navy-main); font-size: 0.68rem; font-weight: 700; padding: 1px 7px; border-radius: 8px; flex-shrink: 0; margin-top: 2px; }
+  .modal-examples { display: flex; flex-direction: column; gap: 10px; }
+  .modal-ex-item { background: var(--teal-bg); border: 1px solid var(--teal-border); border-radius: 10px; padding: 10px 14px; }
+  .modal-ex-ja { font-family: "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; font-size: 1rem; color: var(--navy-main); font-weight: 600; margin-bottom: 3px; }
+  .modal-ex-en { font-size: 0.82rem; color: var(--text-sub); }
+  .modal-ex-tts { background: none; border: 1px solid var(--teal-border); border-radius: 7px; padding: 3px 8px; cursor: pointer; color: var(--teal-text); font-size: 0.72rem; margin-left: 6px; transition: background 0.15s; }
+  .modal-ex-tts:hover { background: var(--teal-text); color: white; }
+  .modal-tts-main { margin-top: 18px; background: var(--navy-main); color: white; border: none; border-radius: 12px; padding: 10px 22px; font-size: 0.88rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: background 0.2s; }
+  .modal-tts-main:hover { background: var(--navy-dark); }
+
+  /* ---- Pagination ---- */
+  .pagination-row {
+    display: flex; justify-content: center; align-items: center;
+    gap: 8px; margin-top: 20px; flex-wrap: wrap;
+  }
+  .page-btn {
+    padding: 7px 14px; border: 1.5px solid var(--border-light);
+    border-radius: 10px; background: white; cursor: pointer;
+    font-size: 0.82rem; font-weight: 600; color: var(--text-dark);
+    transition: all 0.15s;
+  }
+  .page-btn:hover, .page-btn.active {
+    background: var(--navy-main); color: white; border-color: var(--navy-main);
+  }
+  .page-info { font-size: 0.78rem; color: var(--text-sub); padding: 0 8px; }
+
+  /* Empty */
+  .empty-state { text-align: center; padding: 50px 20px; color: var(--text-sub); }
+  .empty-icon { font-size: 2.5rem; opacity: 0.3; margin-bottom: 12px; }
+</style>
+</head>
+<body>
+
+<!-- Loading -->
+<div id="loading-overlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">JLPT単語リストを読み込んでいます…<br><span style="font-size:0.76rem;opacity:0.7">Loading 8,334 words (五十音順)</span></div>
+</div>
+
+<!-- Header -->
+<header>
+  <div class="header-inner">
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+      <a href="japanese_learning_app.html" class="back-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        ホームに戻る
+      </a>
+      <a href="mypage.html" class="header-mypage-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        マイページ
+      </a>
+      <a href="jlpt_practice.html" class="back-btn" style="background:rgba(196,104,138,0.25);border-color:#D88B9D;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        JLPT実戦練習
+      </a>
+    </div>
+    <div class="header-center">
+      <div class="header-title">JLPT <span class="jp-font">単語リスト（五十音順）</span></div>
+      <div class="header-sub">Japanese Vocabulary by Level in Gojuon (AIUEO) Order</div>
+    </div>
+    <div class="header-right">
+      <div class="header-stat-badge" id="header-saved-count">🔖 マイリスト: 0語</div>
+      <div class="header-stat-badge" id="header-count">8,910 words</div>
+    </div>
+  </div>
+</header>
+
+<!-- Level tabs -->
+<div class="level-tabs">
+  <div class="level-tabs-inner">
+    <button class="level-tab n5" id="tab-N5" onclick="switchLevel('N5')">
+      N5 <span class="level-tab-count">702 words</span>
+    </button>
+    <button class="level-tab n4" id="tab-N4" onclick="switchLevel('N4')">
+      N4 <span class="level-tab-count">668 words</span>
+    </button>
+    <button class="level-tab n3" id="tab-N3" onclick="switchLevel('N3')">
+      N3 <span class="level-tab-count">1,843 words</span>
+    </button>
+    <button class="level-tab n2" id="tab-N2" onclick="switchLevel('N2')">
+      N2 <span class="level-tab-count">1,949 words</span>
+    </button>
+    <button class="level-tab n1" id="tab-N1" onclick="switchLevel('N1')">
+      N1 <span class="level-tab-count">3,748 words</span>
+    </button>
+  </div>
+</div>
+
+<!-- Gojuon (AIUEO) row strip -->
+<div class="gojuon-nav-strip">
+  <div class="gojuon-nav-inner">
+    <span class="gojuon-label">五十音行:</span>
+    <button class="gojuon-btn active" id="row-all" onclick="filterRow('all')">全行 (All)</button>
+    <button class="gojuon-btn" id="row-あ行" onclick="filterRow('あ行')">あ行</button>
+    <button class="gojuon-btn" id="row-か行" onclick="filterRow('か行')">か行</button>
+    <button class="gojuon-btn" id="row-さ行" onclick="filterRow('さ行')">さ行</button>
+    <button class="gojuon-btn" id="row-た行" onclick="filterRow('た行')">た行</button>
+    <button class="gojuon-btn" id="row-な行" onclick="filterRow('な行')">な行</button>
+    <button class="gojuon-btn" id="row-は行" onclick="filterRow('は行')">は行</button>
+    <button class="gojuon-btn" id="row-ま行" onclick="filterRow('ま行')">ま行</button>
+    <button class="gojuon-btn" id="row-や行" onclick="filterRow('や行')">や行</button>
+    <button class="gojuon-btn" id="row-ら行" onclick="filterRow('ら行')">ら行</button>
+    <button class="gojuon-btn" id="row-わ行" onclick="filterRow('わ行')">わ行</button>
+  </div>
+</div>
+
+<!-- Level banner -->
+<div class="level-banner">
+  <div class="level-banner-box" id="level-banner-box">
+    <div class="level-banner-left">
+      <div class="level-badge-big" id="level-badge-big"></div>
+      <div class="level-banner-text">
+        <div class="level-banner-title" id="level-banner-title"></div>
+        <div class="level-banner-sub" id="level-banner-sub"></div>
+      </div>
+    </div>
+    <div class="order-indicator">あいうえお順 (五十音順)</div>
+  </div>
+</div>
+
+<!-- Controls -->
+<div class="controls-bar">
+  <input type="text" id="word-search"
+    placeholder="このレベル内で検索… (例: 食べる / eat / たべる)"
+    oninput="onSearchChange()"
+    autocomplete="off" autocorrect="off" spellcheck="false">
+  <div class="count-label">表示中: <span id="shown-count">0</span> / <span id="total-count">0</span> 語</div>
+  <div class="view-toggle">
+    <button class="view-btn active" id="view-card" onclick="setView('card')" title="Card view">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+    </button>
+    <button class="view-btn" id="view-list" onclick="setView('list')" title="List view">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- Words -->
+<div class="words-container">
+  <div id="words-render"></div>
+  <div class="empty-state" id="empty-state" style="display:none">
+    <div class="empty-icon">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </div>
+    <div>条件に一致する単語が見つかりませんでした。</div>
+  </div>
+  <div class="pagination-row" id="pagination-row"></div>
+</div>
+
+<!-- Detail Modal -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-word jp-font" id="modal-word"></div>
+    <div class="modal-reading" id="modal-reading"></div>
+    <div id="modal-level-wrap"></div>
+    <div class="modal-sec">Meanings</div>
+    <ul class="modal-meanings-list" id="modal-meanings"></ul>
+    <div class="modal-sec" id="modal-ex-sec" style="display:none">Example Sentences</div>
+    <div class="modal-examples" id="modal-examples"></div>
+    <div class="modal-actions-row" style="display:flex;gap:10px;margin-top:14px;">
+      <button class="modal-tts-main" style="flex:1;" onclick="speakText(document.getElementById('modal-word').textContent)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+        発音を聴く · Listen
+      </button>
+      <button id="modal-save-btn" class="save-vocab-btn" style="padding:10px 18px;font-size:0.85rem;" onclick="toggleModalSave()">
+        🔖 マイリストに保存
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="auth.js"></script>
+<script src="user_progress.js"></script>
+<script src="database/jlpt_vocab_all.js"></script>
+<script>
+  const LEVEL_INFO = {
+    N5: { title: 'JLPT N5 — 初級 (Beginner)', sub: '基本の日常生活単語。日本語学習のスタートライン。', cls: 'banner-n5' },
+    N4: { title: 'JLPT N4 — 初中級 (Elementary)', sub: '身近な日常会話・よく使われる表現。', cls: 'banner-n4' },
+    N3: { title: 'JLPT N3 — 中級 (Intermediate)', sub: '日常の幅広い場面で使われる重要単語。', cls: 'banner-n3' },
+    N2: { title: 'JLPT N2 — 上級 (Upper Intermediate)', sub: '新聞・ビジネス・幅広いトピックの語彙。', cls: 'banner-n2' },
+    N1: { title: 'JLPT N1 — 最上級 (Advanced)', sub: '論理的・専門的で高度な表現を含む総合語彙。', cls: 'banner-n1' },
+  };
+  const PAGE_SIZE = 60;
+  let currentLevel = 'N5';
+  let currentRow = 'all';
+  let currentView = 'card';
+  let filteredWords = [];
+  let currentPage = 1;
+
+  window.addEventListener('load', () => {
+    document.getElementById('loading-overlay').classList.add('hidden');
+    updateHeaderSavedCount();
+    const params = new URLSearchParams(window.location.search);
+    const lvl = params.get('level');
+    if (lvl && JLPT_VOCAB[lvl]) {
+      switchLevel(lvl);
+    } else {
+      switchLevel('N5');
+    }
+  });
+
+  function switchLevel(level) {
+    currentLevel = level;
+    currentRow = 'all';
+    currentPage = 1;
+    document.getElementById('word-search').value = '';
+
+    ['N5','N4','N3','N2','N1'].forEach(l => {
+      const tab = document.getElementById('tab-' + l);
+      tab.classList.toggle('active', l === level);
+      tab.classList.remove('n5','n4','n3','n2','n1');
+      tab.classList.add(l.toLowerCase());
+    });
+
+    // Reset row buttons
+    resetRowButtons();
+
+    // Update banner
+    const info = LEVEL_INFO[level];
+    const banner = document.getElementById('level-banner-box');
+    banner.className = 'level-banner-box ' + info.cls;
+    document.getElementById('level-badge-big').textContent = level;
+    document.getElementById('level-banner-title').textContent = info.title;
+    document.getElementById('level-banner-sub').textContent = info.sub;
+
+    filterWords();
+  }
+
+  function resetRowButtons() {
+    document.querySelectorAll('.gojuon-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById('row-all').classList.add('active');
+  }
+
+  function filterRow(row) {
+    currentRow = row;
+    currentPage = 1;
+    document.querySelectorAll('.gojuon-btn').forEach(btn => btn.classList.remove('active'));
+    const target = document.getElementById('row-' + row);
+    if (target) target.classList.add('active');
+    filterWords();
+  }
+
+  function onSearchChange() {
+    currentPage = 1;
+    filterWords();
+  }
+
+  function filterWords() {
+    const q = document.getElementById('word-search').value.trim().toLowerCase();
+    const words = JLPT_VOCAB[currentLevel] || [];
+
+    filteredWords = words.filter(w => {
+      // Row filter
+      if (currentRow !== 'all' && w.row !== currentRow) {
+        return false;
+      }
+      // Query filter
+      if (q.length > 0) {
+        return w.word.toLowerCase().includes(q) ||
+               (w.reading && w.reading.toLowerCase().includes(q)) ||
+               (w.k && w.k.includes(q)) ||
+               w.meanings.some(m => m.toLowerCase().includes(q));
+      }
+      return true;
+    });
+
+    renderPage();
+  }
+
+  function renderPage() {
+    const totalWords = filteredWords.length;
+    const totalPages = Math.ceil(totalWords / PAGE_SIZE);
+    const start = (currentPage - 1) * PAGE_SIZE;
+    const end = Math.min(start + PAGE_SIZE, totalWords);
+    const pageWords = filteredWords.slice(start, end);
+
+    document.getElementById('total-count').textContent = totalWords.toLocaleString();
+    document.getElementById('shown-count').textContent = totalWords > 0 ? `${(start + 1)}–${end}` : '0';
+
+    const container = document.getElementById('words-render');
+    const empty = document.getElementById('empty-state');
+
+    if (totalWords === 0) {
+      container.innerHTML = '';
+      empty.style.display = 'block';
+      document.getElementById('pagination-row').innerHTML = '';
+      return;
+    }
+    empty.style.display = 'none';
+
+    if (currentView === 'card') {
+      container.innerHTML = `<div class="word-grid">${pageWords.map((w, i) => buildCard(w, start + i)).join('')}</div>`;
+    } else {
+      container.innerHTML = `<div class="word-list">${pageWords.map((w, i) => buildListItem(w, start + i)).join('')}</div>`;
+    }
+
+    renderPagination(totalPages);
+  }
+
+  let currentModalWord = null;
+
+  function updateHeaderSavedCount() {
+    const el = document.getElementById('header-saved-count');
+    if (el && typeof UserProgress !== 'undefined') {
+      const count = UserProgress.getSavedVocabList().length;
+      el.textContent = `🔖 マイリスト: ${count}語`;
+    }
+  }
+
+  function isWordSaved(word) {
+    if (typeof UserProgress === 'undefined') return false;
+    return UserProgress.isVocabSaved(word);
+  }
+
+  function toggleWordSave(event, idx) {
+    if (event) event.stopPropagation();
+    const w = filteredWords[idx];
+    if (!w || typeof UserProgress === 'undefined') return;
+
+    const reading = (w.reading && w.reading !== w.word) ? w.reading : (w.k || '');
+    UserProgress.toggleSaveVocab({
+      word: w.word,
+      reading: reading,
+      meanings: w.meanings || [],
+      level: currentLevel
+    });
+
+    updateHeaderSavedCount();
+    renderPage();
+  }
+
+  function buildCard(w, idx) {
+    const readingLine = (w.reading && w.reading !== w.word)
+      ? `<div class="word-reading">${esc(w.reading)}</div>`
+      : (w.k && w.k !== w.word ? `<div class="word-reading">${esc(w.k)}</div>` : '');
+    const meaningsText = w.meanings.slice(0, 3).join('; ');
+    const rowBadge = w.row ? `<span class="word-row-badge">${w.row}</span>` : '';
+    const saved = isWordSaved(w.word);
+
+    return `
+      <div class="word-card" onclick="openModal(${idx})">
+        <div class="word-no">${idx + 1}</div>
+        ${rowBadge}
+        <div class="word-card-top">
+          <div class="word-jp jp-font">${esc(w.word)}</div>
+          <div style="display:flex;gap:4px;align-items:center;">
+            <button class="save-vocab-btn ${saved ? 'saved' : ''}" onclick="toggleWordSave(event, ${idx})" title="${saved ? 'マイリストから削除' : 'マイリストに保存'}">
+              ${saved ? '★ 保存中' : '☆ 保存'}
+            </button>
+            <button class="word-tts" onclick="event.stopPropagation();speakText('${escAttr(w.word)}')" title="Listen">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            </button>
+          </div>
+        </div>
+        ${readingLine}
+        <div class="word-meanings">${esc(meaningsText)}</div>
+      </div>`;
+  }
+
+  function buildListItem(w, idx) {
+    const reading = (w.reading && w.reading !== w.word) ? w.reading : (w.k || '');
+    const meaningsText = w.meanings.slice(0, 2).join('; ');
+    const saved = isWordSaved(w.word);
+
+    return `
+      <div class="word-list-item" onclick="openModal(${idx})">
+        <div class="wli-num">${idx + 1}</div>
+        <div class="wli-jp jp-font">${esc(w.word)}</div>
+        <div class="wli-reading">${esc(reading)}</div>
+        <div class="wli-row">${w.row || ''}</div>
+        <div class="wli-meanings">${esc(meaningsText)}</div>
+        <div style="display:flex;gap:6px;align-items:center;" onclick="event.stopPropagation()">
+          <button class="save-vocab-btn ${saved ? 'saved' : ''}" onclick="toggleWordSave(event, ${idx})">
+            ${saved ? '★ 保存中' : '☆ 保存'}
+          </button>
+          <button class="wli-tts" onclick="speakText('${escAttr(w.word)}')" title="Listen">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          </button>
+        </div>
+      </div>`;
+  }
+
+  function renderPagination(totalPages) {
+    if (totalPages <= 1) {
+      document.getElementById('pagination-row').innerHTML = '';
+      return;
+    }
+    let html = '';
+    if (currentPage > 1) html += `<button class="page-btn" onclick="goPage(${currentPage - 1})">← Prev</button>`;
+
+    const start = Math.max(1, currentPage - 2);
+    const end = Math.min(totalPages, currentPage + 2);
+    if (start > 1) html += `<button class="page-btn" onclick="goPage(1)">1</button>${start > 2 ? '<span class="page-info">…</span>' : ''}`;
+    for (let p = start; p <= end; p++) {
+      html += `<button class="page-btn${p === currentPage ? ' active' : ''}" onclick="goPage(${p})">${p}</button>`;
+    }
+    if (end < totalPages) html += `${end < totalPages - 1 ? '<span class="page-info">…</span>' : ''}<button class="page-btn" onclick="goPage(${totalPages})">${totalPages}</button>`;
+
+    if (currentPage < totalPages) html += `<button class="page-btn" onclick="goPage(${currentPage + 1})">Next →</button>`;
+    html += `<span class="page-info">Page ${currentPage} / ${totalPages}</span>`;
+
+    document.getElementById('pagination-row').innerHTML = html;
+  }
+
+  function goPage(p) {
+    currentPage = p;
+    renderPage();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function openModal(idx) {
+    const w = filteredWords[idx];
+    if (!w) return;
+    currentModalWord = w;
+
+    document.getElementById('modal-word').textContent = w.word;
+    document.getElementById('modal-reading').textContent =
+      (w.reading && w.reading !== w.word) ? w.reading : (w.k || '');
+
+    const ul = document.getElementById('modal-meanings');
+    ul.innerHTML = w.meanings.map((m, i) =>
+      `<li><span class="modal-num">${i+1}</span><span>${esc(m)}</span></li>`
+    ).join('');
+
+    const exContainer = document.getElementById('modal-examples');
+    const exSec = document.getElementById('modal-ex-sec');
+    if (w.examples && w.examples.length > 0) {
+      exSec.style.display = 'block';
+      exContainer.innerHTML = w.examples.map(ex => `
+        <div class="modal-ex-item">
+          <div class="modal-ex-ja">
+            ${esc(ex.ja)}
+            <button class="modal-ex-tts" onclick="speakText('${escAttr(ex.ja)}')" title="Listen">▶</button>
+          </div>
+          <div class="modal-ex-en">${esc(ex.en)}</div>
+        </div>`).join('');
+    } else {
+      exSec.style.display = 'none';
+      exContainer.innerHTML = '';
+    }
+
+    updateModalSaveButton();
+    document.getElementById('modal-overlay').classList.add('open');
+  }
+
+  function updateModalSaveButton() {
+    const btn = document.getElementById('modal-save-btn');
+    if (!btn || !currentModalWord) return;
+    const saved = isWordSaved(currentModalWord.word);
+    btn.className = 'save-vocab-btn ' + (saved ? 'saved' : '');
+    btn.textContent = saved ? '★ マイリストから削除' : '🔖 マイリストに保存';
+  }
+
+  function toggleModalSave() {
+    if (!currentModalWord || typeof UserProgress === 'undefined') return;
+    const reading = (currentModalWord.reading && currentModalWord.reading !== currentModalWord.word) ? currentModalWord.reading : (currentModalWord.k || '');
+    UserProgress.toggleSaveVocab({
+      word: currentModalWord.word,
+      reading: reading,
+      meanings: currentModalWord.meanings || [],
+      level: currentLevel
+    });
+    updateModalSaveButton();
+    updateHeaderSavedCount();
+    renderPage();
+  }
+
+  function closeModal(event) {
+    if (!event || event.target === document.getElementById('modal-overlay')) {
+      document.getElementById('modal-overlay').classList.remove('open');
+    }
+  }
+
+  function setView(view) {
+    currentView = view;
+    document.getElementById('view-card').classList.toggle('active', view === 'card');
+    document.getElementById('view-list').classList.toggle('active', view === 'list');
+    renderPage();
+  }
+
+  function speakText(text) {
+    if (!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'ja-JP';
+    u.rate = 0.92;
+    window.speechSynthesis.speak(u);
+  }
+
+  function esc(str) {
+    if (!str) return '';
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function escAttr(str) { return (str || '').replace(/'/g, "\\'"); }
+</script>
+</body>
+</html>

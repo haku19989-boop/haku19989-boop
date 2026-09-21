@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stage5-Lesson3：いい天気だと思います</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-main: #1E5989; --navy-dark: #143D5E;
+    --teal-main: #4FB3BE; --teal-border: #82CBD3; --teal-bg: #F0FAFA; --teal-text: #196168;
+    --yellow-bg: #FFFDEB; --yellow-border: #F0D462; --yellow-text: #8C6500; --yellow-title: #6E4F00;
+    --mid-cyan-bg: #EDF8FA; --mid-cyan-border: #79C2D0; --mid-cyan-text: #165E6D;
+    --pink-bg: #FDF0F3; --pink-border: #D88B9D; --pink-text: #8E3A4F;
+    --blue-bg: #EDF5FB; --blue-border: #89BFE0; --blue-text: #1E5989;
+    --card-bg: #FFFFFF; --text-dark: #232C3A; --text-sub: #576579; --border-light: #E2E8F0;
+    --ruby-color: #C4688A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', '游ゴシック', 'YuGothic', sans-serif; background: #F8FAF9; color: var(--text-dark); line-height: 1.6; padding-bottom: 60px; }
+  header { background: var(--navy-main); color: white; padding: 20px 24px; box-shadow: 0 4px 16px rgba(30, 89, 137, 0.12); position: sticky; top: 0; z-index: 100; }
+  .header-inner { max-width: 920px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .header-title-box { display: flex; align-items: center; gap: 12px; }
+  .badge-stage { background: var(--pink-border); color: white; font-size: 0.75rem; padding: 3px 10px; border-radius: 12px; font-weight: 700; letter-spacing: 0.5px; }
+  .header-title-box h1 { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.3px; }
+  .lang-switcher { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); border-radius: 20px; padding: 4px 10px; }
+  .lang-switcher span { font-size: 0.85rem; }
+  .lang-switcher select { background: white; border: none; border-radius: 14px; padding: 4px 10px; font-size: 0.78rem; font-weight: 600; color: var(--navy-main); cursor: pointer; }
+  .nav-bar { max-width: 920px; margin: 18px auto 0; padding: 0 16px; display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; }
+  .nav-tab-btn { background: white; border: 1.5px solid var(--blue-border); padding: 7px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: var(--navy-main); cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+  .nav-tab-btn:hover, .nav-tab-btn.active { background: var(--navy-main); color: white; border-color: var(--navy-main); }
+  .container { max-width: 920px; margin: 22px auto; padding: 0 16px; display: flex; flex-direction: column; gap: 28px; }
+  .content-card { background: var(--card-bg); border-radius: 18px; padding: 26px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03); border: 1.5px solid var(--border-light); }
+  .card-header-row { border-bottom: 2px solid var(--border-light); padding-bottom: 12px; margin-bottom: 18px; }
+  .step-label { font-size: 0.75rem; font-weight: 700; color: var(--navy-main); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 2px; }
+  .card-main-title { font-size: 1.25rem; font-weight: 700; color: var(--navy-main); }
+  .card-subtitle-en { font-size: 0.88rem; color: var(--text-dark); margin-top: 4px; line-height: 1.45; }
+  .card-subtitle-native { font-size: 0.82rem; color: var(--text-sub); margin-top: 2px; }
+  ruby { font-family: '游ゴシック', 'YuGothic', sans-serif; }
+  ruby rt { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 0.65em; color: var(--ruby-color); font-weight: 600; }
+  .conj-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-bottom: 14px; }
+  .conj-table th { background: var(--blue-bg); color: var(--navy-main); padding: 8px 12px; font-weight: 700; border: 1px solid #CBD5E0; text-align: center; font-size: 0.8rem; }
+  .conj-table td { padding: 7px 12px; border: 1px solid var(--border-light); text-align: center; font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.02rem; }
+  .conj-table tr:nth-child(even) { background: #FAFBFD; }
+  .conj-group-label { font-size: 0.78rem; font-weight: 700; color: var(--navy-main); margin: 14px 0 6px; }
+  .dialogue-card-item { background: white; border: 1.5px solid var(--border-light); border-left: 5px solid var(--blue-border); border-radius: 12px; padding: 14px 18px; margin-bottom: 12px; }
+  .dialogue-speaker-name { font-size: 0.82rem; font-weight: 700; color: var(--navy-main); margin-bottom: 4px; padding: 2px 8px; border-radius: 8px; display: inline-block; }
+  .dialogue-jp-line { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.22rem; font-weight: 600; color: var(--text-dark); margin-bottom: 6px; line-height: 1.5; }
+  .dialogue-en-line { font-size: 0.88rem; font-weight: 500; color: #334155; }
+  .dialogue-native-line { font-size: 0.82rem; color: #64748B; }
+  .tts-btn { background: none; border: 1px solid var(--border-light); border-radius: 50%; width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; color: var(--navy-main); transition: all 0.2s; padding: 0; vertical-align: middle; margin-left: 6px; flex-shrink: 0; }
+  .tts-btn:hover { background: var(--blue-bg); border-color: var(--blue-border); transform: scale(1.1); }
+  .grammar-block { margin-bottom: 26px; }
+  .grammar-visual-card { background: white; border: 1.5px solid var(--border-light); border-radius: 14px; padding: 16px 20px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02); }
+  .grammar-card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+  .grammar-tag { font-size: 0.72rem; font-weight: 700; background: var(--pink-bg); color: var(--pink-text); border: 1px solid var(--pink-border); padding: 2px 8px; border-radius: 8px; letter-spacing: 0.3px; }
+  .grammar-formula { font-family: '游ゴシック', 'YuGothic', monospace; font-size: 0.95rem; font-weight: 600; color: var(--text-sub); background: #F6FAFD; padding: 8px 14px; border-radius: 10px; border: 1px solid #E2ECF8; margin-top: 10px; }
+  .grammar-desc-en { font-size: 0.86rem; color: var(--text-dark); margin-bottom: 3px; line-height: 1.5; }
+  .grammar-desc-native { font-size: 0.8rem; color: var(--text-sub); }
+  .grammar-diagram { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; background: #F6FAFD; border: 1.5px solid #C4E0F1; border-radius: 12px; padding: 16px 18px; margin: 12px 0; }
+  .diagram-step { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+  .diagram-chip { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.02rem; font-weight: 600; padding: 8px 14px; border-radius: 10px; background: white; border: 2px solid var(--blue-border); color: var(--navy-main); white-space: nowrap; }
+  .diagram-chip.highlight { background: var(--pink-bg); border-color: var(--pink-border); color: var(--pink-text); }
+  .diagram-caption { font-size: 0.68rem; color: var(--text-sub); font-weight: 600; text-align: center; }
+  .diagram-arrow { font-size: 1.3rem; color: var(--teal-main); font-weight: 700; }
+  .examples-block { margin: 14px 0 16px; }
+  .examples-label { font-size: 0.72rem; font-weight: 700; color: var(--teal-text); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px; }
+  .example-row { display: flex; align-items: flex-start; gap: 10px; background: var(--teal-bg); border: 1px solid var(--teal-border); border-radius: 10px; padding: 10px 14px; margin-bottom: 8px; }
+  .example-num { flex: 0 0 auto; width: 20px; height: 20px; border-radius: 50%; background: var(--teal-main); color: white; font-size: 0.72rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .example-content { flex: 1; }
+  .example-jp { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.05rem; font-weight: 600; color: var(--text-dark); display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+  .example-en { font-size: 0.82rem; color: var(--text-sub); margin-top: 3px; }
+  .example-native { font-size: 0.78rem; color: #94A3B8; margin-top: 1px; }
+  .practice-part-header { display: flex; align-items: center; gap: 10px; margin: 28px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--blue-border); }
+  .practice-part-badge { background: var(--navy-main); color: white; font-size: 0.78rem; font-weight: 700; padding: 3px 10px; border-radius: 12px; }
+  .practice-part-title { font-size: 1.05rem; font-weight: 700; color: var(--navy-main); }
+  .roleplay-card { background: #FAFBFD; border: 1.5px solid var(--border-light); border-radius: 14px; padding: 16px 20px; margin-bottom: 14px; }
+  .roleplay-title { font-size: 0.92rem; font-weight: 700; color: var(--navy-main); margin-bottom: 12px; }
+  .roleplay-bubble { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
+  .roleplay-bubble:last-child { margin-bottom: 0; }
+  .roleplay-speaker { font-size: 0.76rem; font-weight: 700; padding: 3px 8px; border-radius: 8px; min-width: 60px; text-align: center; flex-shrink: 0; }
+  .speaker-a { background: var(--blue-bg); color: var(--navy-main); border: 1px solid var(--blue-border); }
+  .speaker-b { background: var(--mid-cyan-bg); color: var(--mid-cyan-text); border: 1px solid var(--mid-cyan-border); }
+  .roleplay-lines { flex-grow: 1; }
+  .roleplay-jp { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.12rem; font-weight: 600; color: var(--text-dark); margin-bottom: 2px; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+  .roleplay-trans { font-size: 0.82rem; color: var(--text-sub); }
+  .roleplay-native { font-size: 0.78rem; color: #94A3B8; }
+  .toggle-item { background: white; border: 1.5px solid var(--blue-border); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; cursor: pointer; }
+  .toggle-prompt-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .toggle-prompt-text { font-size: 0.95rem; font-weight: 600; color: var(--navy-main); }
+  .btn-check-reveal { background: var(--blue-bg); color: var(--navy-main); border: 1px solid var(--blue-border); padding: 5px 12px; border-radius: 16px; font-size: 0.78rem; font-weight: 600; flex-shrink: 0; }
+  .toggle-answer-box { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border-light); font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.2rem; font-weight: 600; color: var(--navy-main); }
+  .toggle-answer-box.show { display: block; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: translateY(0); } }
+  .kanji-display-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
+  .kanji-box-item { background: white; border: 1.5px solid var(--pink-border); border-radius: 14px; padding: 14px 10px; text-align: center; }
+  .kanji-large-char { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 2.5rem; font-weight: 600; color: var(--navy-main); line-height: 1.1; }
+  .kanji-meaning-en { font-size: 0.82rem; font-weight: 600; color: var(--pink-text); margin: 4px 0 2px; }
+  .kanji-readings-text { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 0.85rem; color: var(--text-sub); }
+  .vocab-filter-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; }
+  .filter-btn-group { display: flex; gap: 6px; }
+  .filter-pill { background: white; border: 1px solid var(--border-light); font-size: 0.78rem; font-weight: 600; padding: 4px 12px; border-radius: 14px; cursor: pointer; color: var(--text-sub); transition: all 0.2s; }
+  .filter-pill.active { background: var(--navy-main); color: white; border-color: var(--navy-main); }
+  .word-pool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
+  .word-pool-card { background: white; border: 1px solid var(--border-light); border-radius: 10px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; }
+  .pool-word-jp { font-family: '游ゴシック', 'YuGothic', sans-serif; font-weight: 600; font-size: 1.1rem; color: var(--navy-main); }
+  .pool-word-trans { font-size: 0.78rem; color: var(--text-sub); }
+  .star-btn { background: none; border: none; font-size: 1.25rem; cursor: pointer; color: #CBD5E0; transition: all 0.2s; }
+  .star-btn.active { color: #E2A03F; transform: scale(1.15); }
+  .note-box { background: var(--yellow-bg); border: 1.5px solid var(--yellow-border); border-radius: 12px; padding: 12px 16px; margin: 12px 0; font-size: 0.85rem; color: var(--yellow-title); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title-box">
+      <span class="badge-stage">STAGE 5 - LESSON 3</span>
+      <h1>いい天気だと思います — I Think the Weather Will Be Nice</h1>
+    </div>
+    <div class="lang-switcher">
+      <span>🌐</span>
+      <select id="lang-select" onchange="applyLanguage(this.value)">
+        <option value="all" selected>All / 全部</option>
+        <option value="ko">한국어</option>
+        <option value="zhcn">简体中文</option>
+        <option value="zhtw">繁體中文</option>
+        <option value="cant">粵語（香港）</option>
+      </select>
+    </div>
+  </div>
+</header>
+
+<div class="nav-bar">
+  <button class="nav-tab-btn active" onclick="scrollToSection('sec-system')">1. 普通形</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-dialogue')">2. Main Dialogue</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-grammar')">3. Grammar & Practice</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-kanji')">4. Kanji</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-pool')">5. Word Pool</button>
+</div>
+
+<div class="container">
+
+  <section class="content-card" id="sec-system">
+    <div class="card-header-row">
+      <div class="step-label">Step 1</div>
+      <div class="card-main-title">The Plain Form (普通形) — Completing the Picture</div>
+      <div class="card-subtitle-en">You already know the plain present forms (dictionary form, ない form). This lesson fills in the plain past forms, so you have all four tenses for verbs, い-adjectives, and な-adjectives/nouns. The plain form is used before と思います and でしょう, and in casual speech.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="이미 보통형의 현재형(사전형, ない형)은 알고 있습니다. 이번 과에서는 보통형의 과거형을 배워, 동사・い형용사・な형용사/명사의 4가지 시제를 모두 갖추게 됩니다. 보통형은 と思います, でしょう 앞에 쓰이고, 반말체에서도 사용됩니다." data-zhcn="你已经学过普通形的现在形（辞书形、ない形）。本课补上普通形的过去形，让动词、い形容词、な形容词/名词都凑齐四种时态。普通形用在と思います、でしょう之前，也用于口语体。" data-zhtw="你已經學過普通形的現在形（辭書形、ない形）。本課補上普通形的過去形，讓動詞、い形容詞、な形容詞/名詞都湊齊四種時態。普通形用在と思います、でしょう之前，也用於口語體。" data-cant="你已經學過普通形嘅現在形（辭書形、ない形）。呢一課補埋普通形嘅過去形，等動詞、い形容詞、な形容詞/名詞都齊晒四種時態。普通形用喺と思います、でしょう之前，都用喺口語體。"></div>
+    </div>
+    <div class="conj-group-label">動詞（て形と同じルールで、てを たに変える）</div>
+    <table class="conj-table">
+      <tr><th></th><th>現在肯定</th><th>現在否定</th><th>過去肯定</th><th>過去否定</th></tr>
+      <tr><td>話す</td><td>話す</td><td>話さない</td><td>話した</td><td>話さなかった</td></tr>
+      <tr><td>読む</td><td>読む</td><td>読まない</td><td>読んだ</td><td>読まなかった</td></tr>
+      <tr><td>行く</td><td>行く</td><td>行かない</td><td>行った</td><td>行かなかった</td></tr>
+      <tr><td>食べる</td><td>食べる</td><td>食べない</td><td>食べた</td><td>食べなかった</td></tr>
+      <tr><td>する</td><td>する</td><td>しない</td><td>した</td><td>しなかった</td></tr>
+    </table>
+    <div class="conj-group-label">い形容詞</div>
+    <table class="conj-table">
+      <tr><th></th><th>現在肯定</th><th>現在否定</th><th>過去肯定</th><th>過去否定</th></tr>
+      <tr><td>おいしい</td><td>おいしい</td><td>おいしくない</td><td>おいしかった</td><td>おいしくなかった</td></tr>
+    </table>
+    <div class="conj-group-label">な形容詞・名詞</div>
+    <table class="conj-table">
+      <tr><th></th><th>現在肯定</th><th>現在否定</th><th>過去肯定</th><th>過去否定</th></tr>
+      <tr><td>静か</td><td>静かだ</td><td>静かじゃない</td><td>静かだった</td><td>静かじゃなかった</td></tr>
+      <tr><td>天気</td><td>天気だ</td><td>天気じゃない</td><td>天気だった</td><td>天気じゃなかった</td></tr>
+    </table>
+    <div class="note-box i18n-note" data-en="Verb た form uses the exact same grouping rules as て form (Stage4-Lesson1) — just swap て for た and で for だ. なかった form is the ない form with い replaced by かった. な-adjectives and nouns use だ in the plain present, which you haven't written out before (polite です hides it) — this だ is essential before と思います and でしょう." data-ko="동사의 た형은 Stage4-Lesson1에서 배운 て형과 완전히 같은 그룹 규칙을 사용합니다 — て를 た로, で를 だ로 바꾸면 됩니다. なかった형은 ない형의 い를 かった로 바꾼 것입니다. な형용사와 명사는 보통형 현재에서 だ를 쓰는데(정중체 です 뒤에 숨어 있었습니다), 이 だ는 と思います, でしょう 앞에서 꼭 필요합니다." data-zhcn="动词的た形和Stage4-Lesson1学过的て形分组规则完全相同——只要把て换成た、で换成だ即可。なかった形是把ない形的い换成かった。な形容词和名词在普通形现在时用だ（礼貌体です掩盖了它），这个だ在と思います、でしょう前是必须的。" data-zhtw="動詞的た形和Stage4-Lesson1學過的て形分組規則完全相同——只要把て換成た、で換成だ即可。なかった形是把ない形的い換成かった。な形容詞和名詞在普通形現在時用だ（禮貌體です掩蓋了它），這個だ在と思います、でしょう前是必須的。" data-cant="動詞嘅た形同Stage4-Lesson1學過嘅て形分組規則一模一樣——淨係將て換做た、で換做だ就得㗎喇。なかった形就係將ない形嘅い換做かった。な形容詞同名詞喺普通形現在時用だ（禮貌體です遮住咗佢），呢個だ喺と思います、でしょう之前係必要嘅。">Verb た form uses the exact same grouping rules as て form (Stage4-Lesson1) — just swap て for た and で for だ. なかった form is the ない form with い replaced by かった. な-adjectives and nouns use だ in the plain present, which you haven't written out before (polite です hides it) — this だ is essential before と思います and でしょう.</div>
+  </section>
+
+  <section class="content-card" id="sec-dialogue">
+    <div class="card-header-row">
+      <div class="step-label">Step 2</div>
+      <div class="card-main-title">Main Dialogue: あしたの天気 — Tomorrow's Weather</div>
+      <div class="card-subtitle-en">Park and Luca talk about tomorrow's weather and weekend plans, using their own guesses and opinions.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="박과 루카가 내일 날씨와 주말 계획에 대해 자기 생각과 추측을 이야기합니다." data-zhcn="朴和卢卡聊明天的天气和周末计划，说出各自的猜测和想法。" data-zhtw="樸和盧卡聊明天的天氣和週末計劃，說出各自的猜測和想法。" data-cant="樸同盧卡傾聽日天氣同週末計劃，講吓大家嘅估計同睇法。"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--blue-bg); color:var(--navy-main); border:1px solid var(--blue-border);">パク</div><button class="tts-btn" onclick="speakText('あしたは天気がいいでしょうか。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">あしたは<ruby>天気<rt>てんき</rt></ruby>がいいでしょうか。</div>
+      <div class="dialogue-en-line">I wonder if the weather will be nice tomorrow.</div>
+      <div class="dialogue-native-line i18n-native" data-ko="내일은 날씨가 좋을까요?" data-zhcn="明天天气会好吗？" data-zhtw="明天天氣會好嗎？" data-cant="聽日天氣會好嗎？"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--mid-cyan-bg); color:var(--mid-cyan-text); border:1px solid var(--mid-cyan-border);">ルカ</div><button class="tts-btn" onclick="speakText('そうですね。たぶん、いい天気だと思います。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">そうですね。たぶん、いい<ruby>天気<rt>てんき</rt></ruby>だと<ruby>思<rt>おも</rt></ruby>います。</div>
+      <div class="dialogue-en-line">Let's see. I think the weather will probably be nice.</div>
+      <div class="dialogue-native-line i18n-native" data-ko="글쎄요. 아마 날씨가 좋을 거라고 생각해요." data-zhcn="嗯，我想大概会是好天气吧。" data-zhtw="嗯，我想大概會是好天氣吧。" data-cant="係喎，我諗大概會係好天氣。"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--blue-bg); color:var(--navy-main); border:1px solid var(--blue-border);">パク</div><button class="tts-btn" onclick="speakText('よかったです。週末、一緒に公園へ行きませんか。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">よかったです。<ruby>週末<rt>しゅうまつ</rt></ruby>、<ruby>一緒<rt>いっしょ</rt></ruby>に<ruby>公園<rt>こうえん</rt></ruby>へ<ruby>行<rt>い</rt></ruby>きませんか。</div>
+      <div class="dialogue-en-line">Great. Would you like to go to the park together this weekend?</div>
+      <div class="dialogue-native-line i18n-native" data-ko="다행이네요. 주말에 같이 공원에 가지 않을래요?" data-zhcn="太好了。周末要不要一起去公园？" data-zhtw="太好了。週末要不要一起去公園？" data-cant="幾好呀。週末一齊去公園好唔好？"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--mid-cyan-bg); color:var(--mid-cyan-text); border:1px solid var(--mid-cyan-border);">ルカ</div><button class="tts-btn" onclick="speakText('いいですね。行きましょう。でも、来月は仕事で忙しいと思います。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">いいですね。<ruby>行<rt>い</rt></ruby>きましょう。でも、<ruby>来月<rt>らいげつ</rt></ruby>は<ruby>仕事<rt>しごと</rt></ruby>で<ruby>忙<rt>いそが</rt></ruby>しいと<ruby>思<rt>おも</rt></ruby>います。</div>
+      <div class="dialogue-en-line">Sounds good. Let's go. But I think I'll be busy with work next month.</div>
+      <div class="dialogue-native-line i18n-native" data-ko="좋아요. 가요. 그런데 다음 달은 일 때문에 바쁠 것 같아요." data-zhcn="好啊，走吧。不过我想下个月会因为工作很忙。" data-zhtw="好啊，走吧。不過我想下個月會因為工作很忙。" data-cant="好呀，去啦。不過我諗下個月因為返工會好忙。"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--blue-bg); color:var(--navy-main); border:1px solid var(--blue-border);">パク</div><button class="tts-btn" onclick="speakText('そうですか。忙しくなるまえに、少し休みましょう。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">そうですか。<ruby>忙<rt>いそが</rt></ruby>しくなるまえに、<ruby>少<rt>すこ</rt></ruby>し<ruby>休<rt>やす</rt></ruby>みましょう。</div>
+      <div class="dialogue-en-line">I see. Let's rest a little before you get busy, then.</div>
+      <div class="dialogue-native-line i18n-native" data-ko="그렇군요. 바빠지기 전에 조금 쉽시다." data-zhcn="是吗。那在忙起来之前，先休息一下吧。" data-zhtw="是嗎。那在忙起來之前，先休息一下吧。" data-cant="係咩。咁不如忙之前先休息下啦。"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--mid-cyan-bg); color:var(--mid-cyan-text); border:1px solid var(--mid-cyan-border);">ルカ</div><button class="tts-btn" onclick="speakText('そうですね。週末は暇でしょう。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">そうですね。<ruby>週末<rt>しゅうまつ</rt></ruby>は<ruby>暇<rt>ひま</rt></ruby>でしょう。</div>
+      <div class="dialogue-en-line">Yeah. This weekend I'll probably be free.</div>
+      <div class="dialogue-native-line i18n-native" data-ko="그렇네요. 주말은 한가할 거예요." data-zhcn="对啊。周末应该会有空吧。" data-zhtw="對啊。週末應該會有空吧。" data-cant="係喎。週末應該得閒。"></div>
+    </div>
+  </section>
+
+  <section class="content-card" id="sec-grammar">
+    <div class="card-header-row">
+      <div class="step-label">Step 3</div>
+      <div class="card-main-title">Grammar & Comprehensive Speaking Practice</div>
+      <div class="card-subtitle-en">Work through each pattern's diagram and examples, then try the practice questions, roleplay, and rapid-response challenge.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="각 패턴의 다이어그램과 예문을 익힌 후 연습 문제, 롤플레이, 즉석 챌린지에 도전하세요." data-zhcn="先看懂每个句型的图解和例句，再挑战练习题、角色扮演与即时口说挑战。" data-zhtw="先看懂每個句型的圖解和例句，再挑戰練習題、角色扮演與即時口說挑戰。" data-cant="先睇明每個句型嘅圖解同例句，再挑戰練習題、角色扮演同即時口說挑戰。"></div>
+    </div>
+
+    <div class="practice-part-header"><span class="practice-part-badge">Part 1</span><div class="practice-part-title">Basic Pattern Drills</div></div>
+
+    <div class="grammar-block">
+      <div class="grammar-visual-card">
+        <div class="grammar-card-head"><span class="grammar-tag">Grammar A</span><strong>動詞の普通形・過去（た形／なかった形）</strong></div>
+        <div class="grammar-desc-en">Practice building the plain past forms — た form follows the same grouping rules as て form; なかった form swaps the ない form's final い for かった.</div>
+        <div class="grammar-desc-native i18n-native" data-ko="보통형 과거를 만드는 연습입니다 — た형은 て형과 같은 그룹 규칙을 따르고, なかった형은 ない형의 마지막 い를 かった로 바꾼 것입니다." data-zhcn="练习构造普通形的过去时——た形和て形的分组规则相同，なかった形是把ない形最后的い换成かった。" data-zhtw="練習構造普通形的過去時——た形和て形的分組規則相同，なかった形是把ない形最後的い換成かった。" data-cant="練習砌普通形嘅過去時——た形同て形嘅分組規則一樣，なかった形係將ない形最後嘅い換做かった。"></div>
+        <div class="grammar-diagram">
+          <div class="diagram-step"><div class="diagram-chip">食べて</div></div>
+          <div class="diagram-arrow">→</div>
+          <div class="diagram-step"><div class="diagram-chip highlight">食べた</div><div class="diagram-caption">て→た</div></div>
+        </div>
+        <div class="grammar-formula">動詞て形（て→た、で→だ）</div>
+        <div class="examples-block">
+          <div class="examples-label">Examples</div>
+          <div class="example-row"><div class="example-num">1</div><div class="example-content"><div class="example-jp"><ruby>昨日<rt>きのう</rt></ruby>、<ruby>映画<rt>えいが</rt></ruby>を<ruby>見<rt>み</rt></ruby>た。<button class="tts-btn" onclick="speakText('昨日、映画を見た。')" title="Listen">🔊</button></div><div class="example-en">I watched a movie yesterday. (plain)</div></div></div>
+          <div class="example-row"><div class="example-num">2</div><div class="example-content"><div class="example-jp"><ruby>公園<rt>こうえん</rt></ruby>へ<ruby>行<rt>い</rt></ruby>かなかった。<button class="tts-btn" onclick="speakText('公園へ行かなかった。')" title="Listen">🔊</button></div><div class="example-en">I didn't go to the park. (plain)</div></div></div>
+          <div class="example-row"><div class="example-num">3</div><div class="example-content"><div class="example-jp">レポートを<ruby>書<rt>か</rt></ruby>いた。<button class="tts-btn" onclick="speakText('レポートを書いた。')" title="Listen">🔊</button></div><div class="example-en">I wrote the report. (plain)</div></div></div>
+        </div>
+      </div>
+      <div class="toggle-item" onclick="toggleAnswer('a1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">A-1. 読みます（普通形・過去肯定）</div><button class="btn-check-reveal" id="btn-a1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-a1"><span><ruby>読<rt>よ</rt></ruby>んだ</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('読んだ')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('a2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">A-2. 話しません（普通形・過去否定）</div><button class="btn-check-reveal" id="btn-a2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-a2"><span><ruby>話<rt>はな</rt></ruby>さなかった</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('話さなかった')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('a3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">A-3. 来ました（普通形・過去肯定）</div><button class="btn-check-reveal" id="btn-a3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-a3"><span><ruby>来<rt>き</rt></ruby>た</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('来た')" title="Listen">🔊</button></div></div>
+    </div>
+
+    <div class="grammar-block">
+      <div class="grammar-visual-card">
+        <div class="grammar-card-head"><span class="grammar-tag">Grammar B</span><strong>い形容詞・な形容詞／Nの普通形（かった／じゃない／だった）</strong></div>
+        <div class="grammar-desc-en">い-adjectives: drop the final い and add かった (past) or くなかった (past negative). な-adjectives and nouns: add だ (present), じゃない (present negative), だった (past), or じゃなかった (past negative) in place of です.</div>
+        <div class="grammar-desc-native i18n-native" data-ko="い형용사: 마지막 い를 떼고 かった(과거) 또는 くなかった(과거부정)를 붙입니다. な형용사와 명사: です 대신 だ(현재), じゃない(현재부정), だった(과거), じゃなかった(과거부정)를 붙입니다." data-zhcn="い形容词：去掉最后的い，加上かった（过去）或くなかった（过去否定）。な形容词和名词：用だ（现在）、じゃない（现在否定）、だった（过去）、じゃなかった（过去否定）代替です。" data-zhtw="い形容詞：去掉最後的い，加上かった（過去）或くなかった（過去否定）。な形容詞和名詞：用だ（現在）、じゃない（現在否定）、だった（過去）、じゃなかった（過去否定）代替です。" data-cant="い形容詞：除咗最後嘅い，加返かった（過去）或者くなかった（過去否定）。な形容詞同名詞：用だ（現在）、じゃない（現在否定）、だった（過去）、じゃなかった（過去否定）代替です。"></div>
+        <div class="grammar-diagram">
+          <div class="diagram-step"><div class="diagram-chip">静かです</div></div>
+          <div class="diagram-arrow">→</div>
+          <div class="diagram-step"><div class="diagram-chip highlight">静かだ</div><div class="diagram-caption">です→だ</div></div>
+        </div>
+        <div class="grammar-formula">い形容詞：〜かった／〜くなかった ／ な形容詞・N：〜だ／〜じゃない／〜だった／〜じゃなかった</div>
+        <div class="examples-block">
+          <div class="examples-label">Examples</div>
+          <div class="example-row"><div class="example-num">1</div><div class="example-content"><div class="example-jp">あの<ruby>建物<rt>たてもの</rt></ruby>は<ruby>大<rt>おお</rt></ruby>きくなかった。<button class="tts-btn" onclick="speakText('あの建物は大きくなかった。')" title="Listen">🔊</button></div><div class="example-en">That building wasn't big. (plain)</div></div></div>
+          <div class="example-row"><div class="example-num">2</div><div class="example-content"><div class="example-jp">あの<ruby>店<rt>みせ</rt></ruby>は<ruby>便利<rt>べんり</rt></ruby>だった。<button class="tts-btn" onclick="speakText('あの店は便利だった。')" title="Listen">🔊</button></div><div class="example-en">That store was convenient. (plain)</div></div></div>
+          <div class="example-row"><div class="example-num">3</div><div class="example-content"><div class="example-jp"><ruby>今日<rt>きょう</rt></ruby>は<ruby>暇<rt>ひま</rt></ruby>じゃない。<button class="tts-btn" onclick="speakText('今日は暇じゃない。')" title="Listen">🔊</button></div><div class="example-en">I'm not free today. (plain)</div></div></div>
+        </div>
+      </div>
+      <div class="toggle-item" onclick="toggleAnswer('b1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">B-1. 忙しいです（普通形・現在）</div><button class="btn-check-reveal" id="btn-b1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-b1"><span><ruby>忙<rt>いそが</rt></ruby>しい</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('忙しい')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('b2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">B-2. 静かでした（普通形・過去肯定）</div><button class="btn-check-reveal" id="btn-b2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-b2"><span><ruby>静<rt>しず</rt></ruby>かだった</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('静かだった')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('b3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">B-3. 学生です（普通形・現在）</div><button class="btn-check-reveal" id="btn-b3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-b3"><span><ruby>学生<rt>がくせい</rt></ruby>だ</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('学生だ')" title="Listen">🔊</button></div></div>
+    </div>
+
+    <div class="grammar-block">
+      <div class="grammar-visual-card">
+        <div class="grammar-card-head"><span class="grammar-tag">Grammar C</span><strong>普通形＋と思います（意見・考え）</strong></div>
+        <div class="grammar-desc-en">"I think that ~." Attaches to the plain form of any word. For な-adjectives and nouns in the present affirmative, だ is kept before と思います.</div>
+        <div class="grammar-desc-native i18n-native" data-ko="'~라고 생각합니다'라는 뜻입니다. 어떤 품사든 보통형에 붙습니다. な형용사와 명사의 현재 긍정형은 と思います 앞에서 だ를 그대로 씁니다." data-zhcn="表示「我觉得~」。接在任何词的普通形后面。な形容词和名词的现在肯定形在と思います前要保留だ。" data-zhtw="表示「我覺得~」。接在任何詞的普通形後面。な形容詞和名詞的現在肯定形在と思います前要保留だ。" data-cant="表示「我覺得~」。接喺任何詞嘅普通形後面。な形容詞同名詞嘅現在肯定形喺と思います之前要保留住個だ。"></div>
+        <div class="grammar-diagram">
+          <div class="diagram-step"><div class="diagram-chip">忙しい</div></div>
+          <div class="diagram-arrow">+</div>
+          <div class="diagram-step"><div class="diagram-chip highlight">と思います</div></div>
+        </div>
+        <div class="grammar-formula">普通形＋と思います</div>
+        <div class="examples-block">
+          <div class="examples-label">Examples</div>
+          <div class="example-row"><div class="example-num">1</div><div class="example-content"><div class="example-jp">あのレストランはおいしいと<ruby>思<rt>おも</rt></ruby>います。<button class="tts-btn" onclick="speakText('あのレストランはおいしいと思います。')" title="Listen">🔊</button></div><div class="example-en">I think that restaurant is delicious.</div></div></div>
+          <div class="example-row"><div class="example-num">2</div><div class="example-content"><div class="example-jp"><ruby>日本語<rt>にほんご</rt></ruby>の<ruby>勉強<rt>べんきょう</rt></ruby>は<ruby>大変<rt>たいへん</rt></ruby>だと<ruby>思<rt>おも</rt></ruby>います。<button class="tts-btn" onclick="speakText('日本語の勉強は大変だと思います。')" title="Listen">🔊</button></div><div class="example-en">I think studying Japanese is tough.</div></div></div>
+          <div class="example-row"><div class="example-num">3</div><div class="example-content"><div class="example-jp">パクさんは<ruby>今度<rt>こんど</rt></ruby>、<ruby>来<rt>こ</rt></ruby>ないと<ruby>思<rt>おも</rt></ruby>います。<button class="tts-btn" onclick="speakText('パクさんは今度、来ないと思います。')" title="Listen">🔊</button></div><div class="example-en">I think Park won't come this time.</div></div></div>
+        </div>
+      </div>
+      <div class="toggle-item" onclick="toggleAnswer('c1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">C-1. I think this book is famous. (有名)</div><button class="btn-check-reveal" id="btn-c1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-c1"><span>この<ruby>本<rt>ほん</rt></ruby>は<ruby>有名<rt>ゆうめい</rt></ruby>だと<ruby>思<rt>おも</rt></ruby>います。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('この本は有名だと思います。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('c2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">C-2. I think Suzuki is kind.</div><button class="btn-check-reveal" id="btn-c2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-c2"><span><ruby>鈴木<rt>すずき</rt></ruby>さんは<ruby>親切<rt>しんせつ</rt></ruby>だと<ruby>思<rt>おも</rt></ruby>います。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('鈴木さんは親切だと思います。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('c3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">C-3. I don't think it's expensive.</div><button class="btn-check-reveal" id="btn-c3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-c3"><span><ruby>高<rt>たか</rt></ruby>くないと<ruby>思<rt>おも</rt></ruby>います。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('高くないと思います。')" title="Listen">🔊</button></div></div>
+    </div>
+
+    <div class="grammar-block">
+      <div class="grammar-visual-card">
+        <div class="grammar-card-head"><span class="grammar-tag">Grammar D</span><strong>普通形＋でしょう（推量・確認）</strong></div>
+        <div class="grammar-desc-en">"~ will probably be ~" (guessing), or with rising intonation, "~, right?" / "I wonder if ~" (でしょうか, softer than ですか). Attaches to the plain form, but な-adjectives and nouns drop だ before でしょう.</div>
+        <div class="grammar-desc-native i18n-native" data-ko="'아마 ~일 것이다'(추측), 또는 끝을 올려서 '~죠?' / '~일까요?'(でしょうか, ですか보다 부드러운 표현)로 씁니다. 보통형에 붙지만, な형용사와 명사는 でしょう 앞에서 だ를 뺍니다." data-zhcn="表示「大概会~」（推测），或用升调表示「~吧？」「不知道是不是~」（でしょうか，比ですか更委婉）。接在普通形后面，但な形容词和名词在でしょう前要去掉だ。" data-zhtw="表示「大概會~」（推測），或用升調表示「~吧？」「不知道是不是~」（でしょうか，比ですか更委婉）。接在普通形後面，但な形容詞和名詞在でしょう前要去掉だ。" data-cant="表示「大概會~」（推測），或者用升調表示「~係咪？」「唔知係咪~」（でしょうか，比ですか更委婉）。接喺普通形後面，但係な形容詞同名詞喺でしょう之前要除咗個だ。"></div>
+        <div class="grammar-diagram">
+          <div class="diagram-step"><div class="diagram-chip">暇</div></div>
+          <div class="diagram-arrow">+</div>
+          <div class="diagram-step"><div class="diagram-chip highlight">でしょう</div><div class="diagram-caption">だ is dropped</div></div>
+        </div>
+        <div class="grammar-formula">普通形（な形容詞・Nはだを消す）＋でしょう／でしょうか</div>
+        <div class="examples-block">
+          <div class="examples-label">Examples</div>
+          <div class="example-row"><div class="example-num">1</div><div class="example-content"><div class="example-jp">あしたは<ruby>天気<rt>てんき</rt></ruby>がいいでしょう。<button class="tts-btn" onclick="speakText('あしたは天気がいいでしょう。')" title="Listen">🔊</button></div><div class="example-en">The weather will probably be nice tomorrow.</div></div></div>
+          <div class="example-row"><div class="example-num">2</div><div class="example-content"><div class="example-jp">パクさんも<ruby>行<rt>い</rt></ruby>くでしょう。<button class="tts-btn" onclick="speakText('パクさんも行くでしょう。')" title="Listen">🔊</button></div><div class="example-en">Park will probably go too.</div></div></div>
+          <div class="example-row"><div class="example-num">3</div><div class="example-content"><div class="example-jp"><ruby>週末<rt>しゅうまつ</rt></ruby>、<ruby>暇<rt>ひま</rt></ruby>でしょうか。<button class="tts-btn" onclick="speakText('週末、暇でしょうか。')" title="Listen">🔊</button></div><div class="example-en">I wonder if you're free this weekend.</div></div></div>
+        </div>
+      </div>
+      <div class="toggle-item" onclick="toggleAnswer('d1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">D-1. Suzuki is probably busy.</div><button class="btn-check-reveal" id="btn-d1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-d1"><span><ruby>鈴木<rt>すずき</rt></ruby>さんは<ruby>忙<rt>いそが</rt></ruby>しいでしょう。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('鈴木さんは忙しいでしょう。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('d2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">D-2. It's probably convenient. (便利)</div><button class="btn-check-reveal" id="btn-d2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-d2"><span><ruby>便利<rt>べんり</rt></ruby>でしょう。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('便利でしょう。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('d3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">D-3. I wonder if Suzuki is busy tomorrow.</div><button class="btn-check-reveal" id="btn-d3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-d3"><span><ruby>鈴木<rt>すずき</rt></ruby>さんはあした、<ruby>忙<rt>いそが</rt></ruby>しいでしょうか。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('鈴木さんはあした、忙しいでしょうか。')" title="Listen">🔊</button></div></div>
+    </div>
+
+    <div class="practice-part-header"><span class="practice-part-badge">Part 2</span><div class="practice-part-title">Roleplay — Sharing Opinions & Guesses</div></div>
+    <div class="roleplay-card">
+      <div class="roleplay-title">Scene 1: 会社で — At the Office (エマ & 高橋部長)</div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-a">エマ</div><div class="roleplay-lines"><div class="roleplay-jp"><ruby>部長<rt>ぶちょう</rt></ruby>、この<ruby>報告書<rt>ほうこくしょ</rt></ruby>はどうですか。<button class="tts-btn" onclick="speakText('部長、この報告書はどうですか。')" title="Listen">🔊</button></div><div class="roleplay-trans">Sir, how is this report?</div><div class="roleplay-native i18n-native" data-ko="부장님, 이 보고서는 어떤가요?" data-zhcn="部长，这份报告怎么样？" data-zhtw="部長，這份報告怎麼樣？" data-cant="部長，呢份報告點呀？"></div></div></div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-b">高橋</div><div class="roleplay-lines"><div class="roleplay-jp">いいと<ruby>思<rt>おも</rt></ruby>います。よくわかるでしょう。<button class="tts-btn" onclick="speakText('いいと思います。よくわかるでしょう。')" title="Listen">🔊</button></div><div class="roleplay-trans">I think it's good. People will probably understand it well.</div><div class="roleplay-native i18n-native" data-ko="좋은 것 같아요. 아마 잘 이해될 거예요." data-zhcn="我觉得不错。大家应该会看得懂。" data-zhtw="我覺得不錯。大家應該會看得懂。" data-cant="我覺得幾好。大家應該會明嘅。"></div></div></div>
+    </div>
+    <div class="roleplay-card">
+      <div class="roleplay-title">Scene 2: 病院で — At the Hospital (渡辺 & リー)</div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-a">渡辺</div><div class="roleplay-lines"><div class="roleplay-jp">リー<ruby>先生<rt>せんせい</rt></ruby>、あしたは<ruby>病院<rt>びょういん</rt></ruby>が<ruby>忙<rt>いそが</rt></ruby>しいでしょうか。<button class="tts-btn" onclick="speakText('リー先生、あしたは病院が忙しいでしょうか。')" title="Listen">🔊</button></div><div class="roleplay-trans">Dr. Lee, will the hospital probably be busy tomorrow?</div><div class="roleplay-native i18n-native" data-ko="리 선생님, 내일 병원이 바쁠까요?" data-zhcn="李医生，明天医院会忙吗？" data-zhtw="李醫生，明天醫院會忙嗎？" data-cant="李醫生，聽日醫院會唔會忙呀？"></div></div></div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-b">リー</div><div class="roleplay-lines"><div class="roleplay-jp">たぶん、あまり<ruby>忙<rt>いそが</rt></ruby>しくないと<ruby>思<rt>おも</rt></ruby>います。<button class="tts-btn" onclick="speakText('たぶん、あまり忙しくないと思います。')" title="Listen">🔊</button></div><div class="roleplay-trans">I don't think it'll be very busy.</div><div class="roleplay-native i18n-native" data-ko="아마 별로 안 바쁠 것 같아요." data-zhcn="我觉得应该不太忙。" data-zhtw="我覺得應該不太忙。" data-cant="我諗應該唔會好忙。"></div></div></div>
+    </div>
+
+    <div class="practice-part-header"><span class="practice-part-badge">Part 3</span><div class="practice-part-title">Rapid Self-Check — Mix It Up</div></div>
+    <div class="toggle-item" onclick="toggleAnswer('r1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">R-1. I think that movie was famous.</div><button class="btn-check-reveal" id="btn-r1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-r1"><span>あの<ruby>映画<rt>えいが</rt></ruby>は<ruby>有名<rt>ゆうめい</rt></ruby>だったと<ruby>思<rt>おも</rt></ruby>います。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('あの映画は有名だったと思います。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('r2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">R-2. Tomorrow's weather will probably be nice.</div><button class="btn-check-reveal" id="btn-r2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-r2"><span>あしたの<ruby>天気<rt>てんき</rt></ruby>はいいでしょう。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('あしたの天気はいいでしょう。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('r3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">R-3. I think Luca is a student.</div><button class="btn-check-reveal" id="btn-r3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-r3"><span>ルカさんは<ruby>学生<rt>がくせい</rt></ruby>だと<ruby>思<rt>おも</rt></ruby>います。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('ルカさんは学生だと思います。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('r4')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">R-4. I didn't listen to music yesterday.</div><button class="btn-check-reveal" id="btn-r4">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-r4"><span><ruby>昨日<rt>きのう</rt></ruby>、<ruby>音楽<rt>おんがく</rt></ruby>を<ruby>聞<rt>き</rt></ruby>かなかった。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('昨日、音楽を聞かなかった。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('r5')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">R-5. I think this restaurant wasn't expensive.</div><button class="btn-check-reveal" id="btn-r5">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-r5"><span>このレストランは<ruby>高<rt>たか</rt></ruby>くなかったと<ruby>思<rt>おも</rt></ruby>います。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('このレストランは高くなかったと思います。')" title="Listen">🔊</button></div></div>
+  </section>
+
+  <section class="content-card" id="sec-kanji">
+    <div class="card-header-row">
+      <div class="step-label">Step 4</div>
+      <div class="card-main-title">New Kanji</div>
+      <div class="card-subtitle-en">The kanji introduced in this lesson.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="이번 과에서 배운 한자입니다." data-zhcn="本课新学的汉字。" data-zhtw="本課新學的漢字。" data-cant="呢一課新教嘅漢字。"></div>
+    </div>
+    <div class="kanji-display-grid">
+      <div class="kanji-box-item"><div class="kanji-large-char">天気</div><div class="kanji-meaning-en">weather</div><div class="kanji-readings-text">てんき</div></div>
+    </div>
+  </section>
+
+  <section class="content-card" id="sec-pool">
+    <div class="card-header-row">
+      <div class="step-label">Step 5</div>
+      <div class="card-main-title">Lesson Word Pool</div>
+      <div class="card-subtitle-en">Star the words you want to keep practicing. Filter by type below.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="계속 연습하고 싶은 단어에 별표를 하세요. 아래에서 종류별로 필터링할 수 있습니다." data-zhcn="给想继续练习的单词加星标。可在下方按类型筛选。" data-zhtw="給想繼續練習的單字加星標。可在下方按類型篩選。" data-cant="幫想繼續練習嘅生字加星標。可以喺下面按種類篩選。"></div>
+    </div>
+    <div class="vocab-filter-row">
+      <div class="filter-btn-group">
+        <button class="filter-pill active" onclick="filterVocab('all')">All</button>
+        <button class="filter-pill" onclick="filterVocab('noun')">Nouns</button>
+      </div>
+    </div>
+    <div class="word-pool-grid" id="word-pool-grid">
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">天気</div><div class="pool-word-trans">weather</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+function toggleAnswer(id) {
+  const box = document.getElementById('ans-' + id);
+  const btn = document.getElementById('btn-' + id);
+  const isShowing = box.classList.contains('show');
+  document.querySelectorAll('.toggle-answer-box.show').forEach(b => b.classList.remove('show'));
+  document.querySelectorAll('.btn-check-reveal').forEach(b => b.textContent = 'Reveal ▼');
+  if (!isShowing) {
+    box.classList.add('show');
+    btn.textContent = 'Hide ▲';
+  }
+}
+function closeAllAnswers() {
+  document.querySelectorAll('.toggle-answer-box.show').forEach(b => b.classList.remove('show'));
+  document.querySelectorAll('.btn-check-reveal').forEach(b => b.textContent = 'Reveal ▼');
+}
+function speakText(text) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'ja-JP';
+  utter.rate = 0.92;
+  window.speechSynthesis.speak(utter);
+}
+function toggleStar(btn) {
+  btn.classList.toggle('active');
+}
+function filterVocab(type) {
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('#word-pool-grid .word-pool-card').forEach(card => {
+    if (type === 'all' || card.dataset.type === type) {
+      card.style.display = 'flex';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+function scrollToSection(id) {
+  document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function applyLanguage(lang) {
+  document.querySelectorAll('.i18n-native').forEach(el => {
+    if (lang === 'all') {
+      const parts = [];
+      ['ko','zhcn','zhtw','cant'].forEach(l => { if (el.dataset[l]) parts.push(el.dataset[l]); });
+      el.textContent = parts.join(' / ');
+      el.style.display = parts.length ? 'block' : 'none';
+    } else if (el.dataset[lang]) {
+      el.textContent = el.dataset[lang];
+      el.style.display = 'block';
+    } else {
+      el.style.display = 'none';
+    }
+  });
+  document.querySelectorAll('.i18n-note').forEach(el => {
+    if (lang === 'all') {
+      el.textContent = el.dataset.en;
+    } else if (el.dataset[lang]) {
+      el.textContent = el.dataset[lang];
+    } else {
+      el.textContent = el.dataset.en;
+    }
+  });
+}
+window.addEventListener('DOMContentLoaded', () => { applyLanguage('all'); });
+</script>
+
+</body>
+</html>

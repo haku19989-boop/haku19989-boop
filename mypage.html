@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>マイページ — 学習進捗 ＆ マイ単語帳 ＆ アンロック管理</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-page: #F4F8FC;
+    --card-bg: #FFFFFF;
+    --border-soft: #E2ECF2;
+    --border-light: #EBF1F5;
+    
+    --text-main: #2A3644;
+    --text-muted: #607284;
+    --text-dim: #8FA2B5;
+    
+    /* 神戸女子大ブルー＆ネイビー */
+    --navy-main: #1E5989;
+    --navy-dark: #143D5E;
+    --kobe-blue: #1486AD;
+    --kobe-blue-sub: #4AA7D7;
+    --kobe-blue-light: #EEF7FB;
+    --kobe-blue-border: #80BFE0;
+    
+    /* ニュアンスパステル */
+    --accent-pink: #C4688A;
+    --accent-pink-bg: #FDF2F5;
+    --accent-pink-border: #E8B4C4;
+    --accent-pink-text: #8E3A4F;
+    
+    --accent-gold: #C87D18;
+    --accent-gold-bg: #FFF8E8;
+    --accent-gold-border: #F0D488;
+    
+    --accent-teal: #128068;
+    --accent-teal-bg: #EBF6F3;
+    --accent-teal-border: #92D4C6;
+    
+    --accent-purple: #6B5B95;
+    --accent-purple-bg: #F4F1FA;
+    --accent-purple-border: #BDB4DC;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.6;
+  }
+
+  /* ---- Header ---- */
+  header {
+    background: var(--navy-main);
+    color: white;
+    padding: 14px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 16px rgba(30, 89, 137, 0.15);
+  }
+  .header-inner {
+    max-width: 1140px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .brand-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: inherit;
+  }
+  .brand-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--kobe-blue), #0E5E7A);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  .brand-text h1 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    color: #FFFFFF;
+  }
+  .brand-text p {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.82);
+  }
+  .header-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: rgba(255, 255, 255, 0.92);
+    background: rgba(255, 255, 255, 0.12);
+    cursor: pointer;
+  }
+  .nav-btn:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.22);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+  .nav-btn.primary {
+    background: white;
+    color: var(--navy-main);
+    border-color: white;
+  }
+  .nav-btn.primary:hover {
+    background: #EEF7FB;
+    color: var(--navy-dark);
+  }
+
+  /* ---- Main Container ---- */
+  main {
+    flex: 1;
+    max-width: 1140px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 28px 20px 60px;
+  }
+
+  /* ---- Profile Hero Banner ---- */
+  .profile-banner {
+    background: linear-gradient(135deg, #FFFFFF 0%, #F5F9FC 100%);
+    border: 1.5px solid var(--border-soft);
+    border-radius: 20px;
+    padding: 24px 28px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    box-shadow: 0 4px 20px rgba(20, 134, 173, 0.05);
+  }
+  .profile-user-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .profile-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, var(--kobe-blue), #1B5E7B);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: white;
+    box-shadow: 0 4px 14px rgba(20, 134, 173, 0.25);
+  }
+  .profile-details h2 {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 4px;
+  }
+  .profile-details p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+  .profile-stats-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .stat-badge-box {
+    background: white;
+    border: 1.5px solid var(--border-soft);
+    border-radius: 14px;
+    padding: 10px 16px;
+    text-align: center;
+    min-width: 105px;
+    box-shadow: 0 2px 8px rgba(20, 134, 173, 0.04);
+  }
+  .stat-badge-num {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--kobe-blue);
+  }
+  .stat-badge-num.gold { color: var(--accent-gold); }
+  .stat-badge-num.pink { color: var(--accent-pink); }
+  .stat-badge-lbl {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  /* ---- Tab Navigation ---- */
+  .mypage-tabs {
+    display: flex;
+    gap: 8px;
+    border-bottom: 2px solid var(--border-soft);
+    margin-bottom: 26px;
+  }
+  .mypage-tab-btn {
+    padding: 12px 20px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .mypage-tab-btn:hover {
+    color: var(--kobe-blue);
+  }
+  .mypage-tab-btn.active {
+    color: var(--kobe-blue);
+    border-bottom-color: var(--kobe-blue);
+  }
+
+  /* ---- Section 1: Progress & Stages Map ---- */
+  .progress-section {
+    display: block;
+  }
+  .stage-control-bar {
+    background: white;
+    border: 1.5px solid var(--border-soft);
+    border-radius: 14px;
+    padding: 14px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .stage-control-left {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+  .stage-toggle-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+  .toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+  }
+  .toggle-switch input { opacity: 0; width: 0; height: 0; }
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: #CBD5E1;
+    transition: .3s;
+    border-radius: 24px;
+  }
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .3s;
+    border-radius: 50%;
+  }
+  input:checked + .slider {
+    background-color: var(--kobe-blue);
+  }
+  input:checked + .slider:before {
+    transform: translateX(20px);
+  }
+
+  .stages-roadmap-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 18px;
+  }
+  .stage-roadmap-card {
+    background: white;
+    border: 1.5px solid var(--border-soft);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(20, 134, 173, 0.03);
+    transition: all 0.2s;
+  }
+  .stage-roadmap-card:hover {
+    border-color: var(--kobe-blue-border);
+    transform: translateY(-2px);
+  }
+  .stage-roadmap-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+  .stage-roadmap-title {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--navy-dark);
+  }
+  .stage-roadmap-sub {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+  .stage-unlock-tag {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .stage-unlock-tag.unlocked {
+    background: var(--accent-teal-bg);
+    color: var(--accent-teal);
+    border: 1px solid var(--accent-teal-border);
+  }
+  .stage-unlock-tag.locked {
+    background: #F1F5F9;
+    color: var(--text-dim);
+    border: 1px solid #CBD5E1;
+  }
+
+  .stage-progress-bar-wrap {
+    margin-bottom: 14px;
+  }
+  .stage-progress-text {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .stage-progress-track {
+    width: 100%;
+    height: 6px;
+    background: #E2ECF2;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .stage-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--kobe-blue), var(--kobe-blue-sub));
+    width: 0%;
+    transition: width 0.3s;
+  }
+
+  .lesson-checklist {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .lesson-check-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: #F8FAFC;
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: var(--text-main);
+  }
+  .lesson-check-item a {
+    color: inherit;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .lesson-check-item a:hover {
+    color: var(--kobe-blue);
+  }
+  .btn-toggle-check {
+    background: white;
+    border: 1.5px solid var(--border-soft);
+    border-radius: 6px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: transparent;
+  }
+  .btn-toggle-check.checked {
+    background: var(--accent-teal);
+    border-color: var(--accent-teal);
+    color: white;
+  }
+
+  /* ---- Section 2: My Vocabulary List ---- */
+  .vocab-section {
+    display: none;
+  }
+  .vocab-control-bar {
+    background: white;
+    border: 1.5px solid var(--border-soft);
+    border-radius: 14px;
+    padding: 12px 18px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .vocab-search-input {
+    padding: 8px 14px;
+    border: 1.5px solid var(--border-soft);
+    border-radius: 10px;
+    font-size: 0.88rem;
+    outline: none;
+    min-width: 260px;
+    font-family: inherit;
+  }
+  .vocab-search-input:focus { border-color: var(--kobe-blue); }
+
+  .vocab-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .vocab-saved-card {
+    background: white;
+    border: 1.5px solid var(--border-soft);
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 2px 6px rgba(20, 134, 173, 0.04);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+  }
+  .vocab-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+  }
+  .vocab-word-main {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--navy-dark);
+  }
+  .vocab-reading-sub {
+    font-size: 0.85rem;
+    color: var(--kobe-blue);
+    font-weight: 600;
+  }
+  .vocab-lvl-badge {
+    background: var(--kobe-blue-light);
+    color: var(--kobe-blue);
+    border: 1px solid var(--kobe-blue-border);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+  .vocab-meaning-text {
+    font-size: 0.9rem;
+    color: var(--text-main);
+    margin: 8px 0 14px;
+    line-height: 1.5;
+  }
+  .vocab-card-bottom {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-top: 1px solid var(--border-light);
+    padding-top: 10px;
+  }
+  .btn-remove-vocab {
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .btn-remove-vocab:hover { color: var(--accent-pink-text); }
+
+  /* ---- Section 3: JLPT Saved Questions ---- */
+  .quiz-section {
+    display: none;
+  }
+
+  /* ---- Footer ---- */
+  footer {
+    border-top: 1px solid var(--border-soft);
+    background: #FFFFFF;
+    padding: 22px 20px;
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: auto;
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="brand-box">
+      <div class="brand-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+      </div>
+      <div class="brand-text">
+        <h1>マイページ ＆ 学習ダッシュボード</h1>
+        <p>進捗管理 · マイ単語帳 · アンロック解放状況</p>
+      </div>
+    </a>
+    <div class="header-nav">
+      <a href="index.html" class="nav-btn primary">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        ホームへ戻る
+      </a>
+      <a href="jlpt_vocab.html" class="nav-btn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+        単語リスト
+      </a>
+      <a href="jlpt_practice.html" class="nav-btn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        実戦練習
+      </a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- Profile Hero Banner -->
+  <div class="profile-banner">
+    <div class="profile-user-info">
+      <div class="profile-avatar" id="prof-avatar">ユ</div>
+      <div class="profile-details">
+        <h2 id="prof-name">ゲスト学習者</h2>
+        <p id="prof-status">学習進捗と保存データはブラウザに安全に記録されています</p>
+      </div>
+    </div>
+    <div class="profile-stats-row">
+      <div class="stat-badge-box">
+        <div class="stat-badge-num" id="stat-completed-lessons">0 / 60</div>
+        <div class="stat-badge-lbl">完了レッスン</div>
+      </div>
+      <div class="stat-badge-box">
+        <div class="stat-badge-num gold" id="stat-saved-vocab">0 語</div>
+        <div class="stat-badge-lbl">マイ単語帳</div>
+      </div>
+      <div class="stat-badge-box">
+        <div class="stat-badge-num pink" id="stat-saved-questions">0 問</div>
+        <div class="stat-badge-lbl">JLPTマイリスト</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab Navigation -->
+  <div class="mypage-tabs">
+    <button class="mypage-tab-btn active" id="tab-btn-progress" onclick="switchMypageTab('progress')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      学習進捗 ＆ アンロック状況
+    </button>
+    <button class="mypage-tab-btn" id="tab-btn-vocab" onclick="switchMypageTab('vocab')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      総合単語マイリスト (<span id="tab-vocab-count">0</span>)
+    </button>
+    <button class="mypage-tab-btn" id="tab-btn-quiz" onclick="switchMypageTab('quiz')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      JLPT弱点問題 (<span id="tab-quiz-count">0</span>)
+    </button>
+  </div>
+
+  <!-- Tab 1: Progress & Stages Map -->
+  <div class="progress-section" id="sec-progress">
+    <div class="stage-control-bar">
+      <div class="stage-control-left">
+        <span>全12ステージ ＆ 初級総合ロードマップ</span>
+      </div>
+      <div class="stage-toggle-wrap">
+        <span>全ステージを自由に解放する</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="toggle-all-unlocked" onchange="handleAllUnlockedToggle(this.checked)">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Stages Roadmap Grid -->
+    <div class="stages-roadmap-grid" id="stages-roadmap-container">
+      <!-- Generated by JS -->
+    </div>
+  </div>
+
+  <!-- Tab 2: Saved Vocab -->
+  <div class="vocab-section" id="sec-vocab">
+    <div class="vocab-control-bar">
+      <input type="text" id="vocab-filter-input" class="vocab-search-input" placeholder="保存した単語から検索..." oninput="renderSavedVocab(this.value)">
+      <button class="nav-btn" onclick="clearAllVocab()" style="color:var(--accent-pink-text); border-color:var(--accent-pink-border); background:var(--accent-pink-bg);">単語帳を全消去</button>
+    </div>
+    <div class="vocab-cards-grid" id="vocab-cards-container">
+      <!-- Generated by JS -->
+    </div>
+  </div>
+
+  <!-- Tab 3: Saved JLPT Questions -->
+  <div class="quiz-section" id="sec-quiz">
+    <div class="vocab-control-bar">
+      <div>JLPT実戦練習でブックマークした問題一覧です。</div>
+      <a href="jlpt_practice.html" class="nav-btn primary">実戦練習道場を開く →</a>
+    </div>
+    <div id="quiz-saved-list" style="display:flex; flex-direction:column; gap:12px;">
+      <!-- Generated by JS -->
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>© Japanese Learning App · Continuous Mastery & Progress Tracking</p>
+  <p style="margin-top:4px;">Strictly pedagogical standard · All rights reserved.</p>
+</footer>
+
+<!-- Scripts -->
+<script src="auth.js"></script>
+<script src="user_progress.js"></script>
+<script src="database/jlpt_questions_data.js"></script>
+
+<script>
+  // STAGES METADATA
+  const STAGES_CONFIG = [
+    { num: 1, title: "Stage 1: 出会い・自己紹介", sub: "Lesson 1〜4 + 総復習", lessons: ["Stage1-Lesson1", "Stage1-Lesson2", "Stage1-Lesson3", "Stage1-Lesson4", "Stage1-総復習"] },
+    { num: 2, title: "Stage 2: 買い物・日常の行動", sub: "Lesson 1〜4 + 総復習", lessons: ["Stage2-Lesson1", "Stage2-Lesson2", "Stage2-Lesson3", "Stage2-Lesson4", "Stage2-総復習"] },
+    { num: 3, title: "Stage 3: 移動・スケジュール", sub: "Lesson 1〜5 + 総復習", lessons: ["Stage3-Lesson1", "Stage3-Lesson2", "Stage3-Lesson3", "Stage3-Lesson4", "Stage3-Lesson5", "Stage3-総復習"] },
+    { num: 4, title: "Stage 4: 授受・形容詞の基礎", sub: "Lesson 1〜5 + 総復習", lessons: ["Stage4-Lesson1", "Stage4-Lesson2", "Stage4-Lesson3", "Stage4-Lesson4", "Stage4-Lesson5", "Stage4-総復習"] },
+    { num: 5, title: "Stage 5: 嗜好・希望・存在表現", sub: "Lesson 1〜3 + 総復習", lessons: ["Stage5-Lesson1", "Stage5-Lesson2", "Stage5-Lesson3", "Stage5-総復習"] },
+    { num: 6, title: "Stage 6: 数量詞・て形の基本活用", sub: "Lesson 1〜4 + 総復習", lessons: ["Stage6-Lesson1", "Stage6-Lesson2", "Stage6-Lesson3", "Stage6-Lesson4", "Stage6-総復習"] },
+    { num: 7, title: "Stage 7: て形応用・ない形・動詞分類", sub: "Lesson 1〜5 + 総復習", lessons: ["Stage7-Lesson1", "Stage7-Lesson2", "Stage7-Lesson3", "Stage7-Lesson4", "Stage7-Lesson5", "Stage7-総復習"] },
+    { num: 8, title: "Stage 8: 辞書形・た形・普通体体系", sub: "Lesson 1〜5 + 総復習", lessons: ["Stage8-Lesson1", "Stage8-Lesson2", "Stage8-Lesson3", "Stage8-Lesson4", "Stage8-Lesson5", "Stage8-総復習"] },
+    { num: 9, title: "Stage 9: 引用・連体修飾・条件表現", sub: "Lesson 1〜3 + 総復習", lessons: ["Stage9-Lesson1", "Stage9-Lesson2", "Stage9-Lesson3", "Stage9-総復習"] },
+    { num: 10, title: "Stage 10: 可能・受身・使役・敬語", sub: "Lesson 1〜4 + 総復習", lessons: ["Stage10-Lesson1", "Stage10-Lesson2", "Stage10-Lesson3", "Stage10-Lesson4", "Stage10-総復習"] },
+    { num: 11, title: "Stage 11: 目的・授受表現・複合動詞", sub: "Lesson 1〜4 + 総復習", lessons: ["Stage11-Lesson1", "Stage11-Lesson2", "Stage11-Lesson3", "Stage11-Lesson4", "Stage11-総復習"] },
+    { num: 12, title: "Stage 12: 推量・伝聞・使役受身・最高敬語", sub: "Lesson 1〜4 + 総復習", lessons: ["Stage12-Lesson1", "Stage12-Lesson2", "Stage12-Lesson3", "Stage12-Lesson4", "Stage12-総復習"] }
+  ];
+
+  function switchMypageTab(tabKey) {
+    document.getElementById('sec-progress').style.display = (tabKey === 'progress') ? 'block' : 'none';
+    document.getElementById('sec-vocab').style.display = (tabKey === 'vocab') ? 'block' : 'none';
+    document.getElementById('sec-quiz').style.display = (tabKey === 'quiz') ? 'block' : 'none';
+
+    document.getElementById('tab-btn-progress').classList.toggle('active', tabKey === 'progress');
+    document.getElementById('tab-btn-vocab').classList.toggle('active', tabKey === 'vocab');
+    document.getElementById('tab-btn-quiz').classList.toggle('active', tabKey === 'quiz');
+
+    if (tabKey === 'vocab') renderSavedVocab();
+    if (tabKey === 'quiz') renderSavedQuizQuestions();
+  }
+
+  function updateProfileUI() {
+    const user = window.AppAuth ? window.AppAuth.getCurrentUser() : null;
+    if (user) {
+      document.getElementById('prof-name').textContent = user.name + ' さん';
+      document.getElementById('prof-status').textContent = 'クラウド同期準備完了 · ' + user.email;
+      document.getElementById('prof-avatar').textContent = (user.name || 'ユ').charAt(0).toUpperCase();
+    } else {
+      document.getElementById('prof-name').textContent = 'ゲスト学習者';
+      document.getElementById('prof-status').textContent = '学習進捗と保存データはブラウザに安全に記録されています';
+      document.getElementById('prof-avatar').textContent = 'ユ';
+    }
+
+    // Stats
+    const completedCount = window.UserProgress ? window.UserProgress.getCompletedLessonsCount() : 0;
+    const vocabList = window.UserProgress ? window.UserProgress.getSavedVocabList() : [];
+    
+    // JLPT questions count from local storage
+    const authKey = user ? `jlpt_mylist_${user.id}` : 'jlpt_mylist_guest';
+    const qList = JSON.parse(localStorage.getItem(authKey) || '[]');
+
+    document.getElementById('stat-completed-lessons').textContent = completedCount + ' / 60';
+    document.getElementById('stat-saved-vocab').textContent = vocabList.length + ' 語';
+    document.getElementById('stat-saved-questions').textContent = qList.length + ' 問';
+
+    document.getElementById('tab-vocab-count').textContent = vocabList.length;
+    document.getElementById('tab-quiz-count').textContent = qList.length;
+
+    // Toggle all unlocked
+    const toggleAll = document.getElementById('toggle-all-unlocked');
+    if (toggleAll && window.UserProgress) {
+      toggleAll.checked = window.UserProgress.isAllUnlocked();
+    }
+
+    renderRoadmap();
+  }
+
+  function handleAllUnlockedToggle(checked) {
+    if (window.UserProgress) {
+      window.UserProgress.setAllUnlocked(checked);
+      renderRoadmap();
+    }
+  }
+
+  function renderRoadmap() {
+    const container = document.getElementById('stages-roadmap-container');
+    if (!container || !window.UserProgress) return;
+    container.innerHTML = '';
+
+    STAGES_CONFIG.forEach(stage => {
+      const isUnlocked = window.UserProgress.isStageUnlocked(stage.num);
+      let completedInStage = 0;
+
+      const card = document.createElement('div');
+      card.className = 'stage-roadmap-card';
+
+      // Check completions
+      const itemsHtml = stage.lessons.map(lId => {
+        const isDone = window.UserProgress.isLessonCompleted(lId);
+        if (isDone) completedInStage++;
+        return `
+          <li class="lesson-check-item">
+            <a href="lessons/${encodeURIComponent(lId)}.html">
+              <span>${lId}</span>
+            </a>
+            <button class="btn-toggle-check ${isDone ? 'checked' : ''}" onclick="toggleLesson('${lId}')" title="${isDone ? '完了を取り消す' : '完了にする'}">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+          </li>
+        `;
+      }).join('');
+
+      const pct = Math.round((completedInStage / stage.lessons.length) * 100);
+
+      card.innerHTML = `
+        <div class="stage-roadmap-top">
+          <div>
+            <div class="stage-roadmap-title">${stage.title}</div>
+            <div class="stage-roadmap-sub">${stage.sub}</div>
+          </div>
+          <span class="stage-unlock-tag ${isUnlocked ? 'unlocked' : 'locked'}">
+            ${isUnlocked ? '解放中' : 'ロック中'}
+          </span>
+        </div>
+        <div class="stage-progress-bar-wrap">
+          <div class="stage-progress-text">
+            <span>進捗率</span>
+            <span>${completedInStage} / ${stage.lessons.length} 課 (${pct}%)</span>
+          </div>
+          <div class="stage-progress-track">
+            <div class="stage-progress-fill" style="width:${pct}%;"></div>
+          </div>
+        </div>
+        <ul class="lesson-checklist">
+          ${itemsHtml}
+        </ul>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function toggleLesson(lessonId) {
+    if (window.UserProgress) {
+      window.UserProgress.toggleLessonCompleted(lessonId);
+      updateProfileUI();
+    }
+  }
+
+  // ---- Saved Vocab Handlers ----
+  function renderSavedVocab(query = '') {
+    const container = document.getElementById('vocab-cards-container');
+    if (!container || !window.UserProgress) return;
+    container.innerHTML = '';
+
+    const list = window.UserProgress.getSavedVocabList();
+    const filtered = query.trim() 
+      ? list.filter(v => (v.word + v.reading + v.meaning).toLowerCase().includes(query.trim().toLowerCase()))
+      : list;
+
+    if (filtered.length === 0) {
+      container.innerHTML = '<div style="grid-column:1/-1; padding:40px; text-align:center; color:var(--text-muted);"><p>マイ単語帳に保存された単語はありません。</p><p style="font-size:0.85rem; margin-top:6px;">「単語リスト（jlpt_vocab.html）」で保存した単語がここに表示されます。</p></div>';
+      return;
+    }
+
+    filtered.forEach(v => {
+      const card = document.createElement('div');
+      card.className = 'vocab-saved-card';
+      card.innerHTML = `
+        <div>
+          <div class="vocab-card-head">
+            <div>
+              <div class="vocab-word-main">${v.word}</div>
+              <div class="vocab-reading-sub">${v.reading}</div>
+            </div>
+            <span class="vocab-lvl-badge">${v.level || 'JLPT'}</span>
+          </div>
+          <div class="vocab-meaning-text">${v.meaning}</div>
+        </div>
+        <div class="vocab-card-bottom">
+          <button class="btn-remove-vocab" onclick="removeVocab('${v.word}')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            単語帳から削除
+          </button>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function removeVocab(word) {
+    if (window.UserProgress) {
+      window.UserProgress.removeSavedVocab(word);
+      updateProfileUI();
+      renderSavedVocab(document.getElementById('vocab-filter-input').value);
+    }
+  }
+
+  function clearAllVocab() {
+    if (confirm('マイ単語帳のすべての単語を消去しますか？')) {
+      if (window.UserProgress) {
+        window.UserProgress.clearSavedVocab();
+        updateProfileUI();
+        renderSavedVocab();
+      }
+    }
+  }
+
+  // ---- Saved JLPT Questions ----
+  function renderSavedQuizQuestions() {
+    const container = document.getElementById('quiz-saved-list');
+    if (!container) return;
+    container.innerHTML = '';
+
+    const user = window.AppAuth ? window.AppAuth.getCurrentUser() : null;
+    const authKey = user ? `jlpt_mylist_${user.id}` : 'jlpt_mylist_guest';
+    const qIds = JSON.parse(localStorage.getItem(authKey) || '[]');
+
+    if (qIds.length === 0) {
+      container.innerHTML = '<div style="padding:40px; text-align:center; color:var(--text-muted);"><p>保存されたJLPT練習問題はありません。</p><p style="font-size:0.85rem; margin-top:6px;">実戦練習センター（jlpt_practice.html）で「マイリスト」を押した問題がここに表示されます。</p></div>';
+      return;
+    }
+
+    qIds.forEach(qid => {
+      let found = null;
+      if (window.JLPT_QUESTIONS_DATA) {
+        for (let lvl in window.JLPT_QUESTIONS_DATA) {
+          const d = window.JLPT_QUESTIONS_DATA[lvl];
+          for (let q of (d.vocabulary || []).concat(d.grammar_reading || [])) {
+            if (q.id === qid) { found = q; break; }
+          }
+          if (found) break;
+        }
+      }
+
+      if (found) {
+        const item = document.createElement('div');
+        item.style.cssText = 'background:white; border:1.5px solid var(--border-soft); border-radius:14px; padding:16px 20px; display:flex; justify-content:space-between; align-items:center; gap:14px;';
+        item.innerHTML = `
+          <div>
+            <div style="font-size:0.75rem; font-weight:800; color:var(--kobe-blue); margin-bottom:4px;">${found.level || 'JLPT'} · ${found.categoryJa || '問題'}</div>
+            <div style="font-size:0.95rem; font-weight:700; color:var(--text-main);">${found.question.replace(/<[^>]+>/g, '')}</div>
+          </div>
+          <div style="display:flex; gap:8px; flex-shrink:0;">
+            <a href="jlpt_practice.html" style="background:var(--kobe-blue); color:white; padding:6px 14px; border-radius:8px; font-size:0.8rem; font-weight:700; text-decoration:none;">解く</a>
+          </div>
+        `;
+        container.appendChild(item);
+      }
+    });
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    if (window.UserProgress) {
+      window.UserProgress.onProgressChanged(() => {
+        updateProfileUI();
+      });
+    }
+    updateProfileUI();
+  });
+</script>
+
+</body>
+</html>

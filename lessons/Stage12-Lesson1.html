@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stage12-Lesson1：先週直してもらったばかりなのに、また……</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-main: #1E5989; --navy-dark: #143D5E;
+    --teal-main: #4FB3BE; --teal-border: #82CBD3; --teal-bg: #F0FAFA; --teal-text: #196168;
+    --yellow-bg: #FFFDEB; --yellow-border: #F0D462; --yellow-text: #8C6500; --yellow-title: #6E4F00;
+    --mid-cyan-bg: #EDF8FA; --mid-cyan-border: #79C2D0; --mid-cyan-text: #165E6D;
+    --pink-bg: #FDF0F3; --pink-border: #D88B9D; --pink-text: #8E3A4F;
+    --blue-bg: #EDF5FB; --blue-border: #89BFE0; --blue-text: #1E5989;
+    --card-bg: #FFFFFF; --text-dark: #232C3A; --text-sub: #576579; --border-light: #E2E8F0;
+    --ruby-color: #C4688A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', '游ゴシック', 'YuGothic', sans-serif; background: #F8FAF9; color: var(--text-dark); line-height: 1.6; padding-bottom: 60px; }
+  header { background: var(--navy-main); color: white; padding: 20px 24px; box-shadow: 0 4px 16px rgba(30, 89, 137, 0.12); position: sticky; top: 0; z-index: 100; }
+  .header-inner { max-width: 920px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .header-title-box { display: flex; align-items: center; gap: 12px; }
+  .badge-stage { background: var(--pink-border); color: white; font-size: 0.75rem; padding: 3px 10px; border-radius: 12px; font-weight: 700; letter-spacing: 0.5px; }
+  .header-title-box h1 { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.3px; }
+  .lang-switcher { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); border-radius: 20px; padding: 4px 10px; }
+  .lang-switcher span { font-size: 0.85rem; }
+  .lang-switcher select { background: white; border: none; border-radius: 14px; padding: 4px 10px; font-size: 0.78rem; font-weight: 600; color: var(--navy-main); cursor: pointer; }
+  .nav-bar { max-width: 920px; margin: 18px auto 0; padding: 0 16px; display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; }
+  .nav-tab-btn { background: white; border: 1.5px solid var(--blue-border); padding: 7px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: var(--navy-main); cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+  .nav-tab-btn:hover, .nav-tab-btn.active { background: var(--navy-main); color: white; border-color: var(--navy-main); }
+  .container { max-width: 920px; margin: 22px auto; padding: 0 16px; display: flex; flex-direction: column; gap: 28px; }
+  .content-card { background: var(--card-bg); border-radius: 18px; padding: 26px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03); border: 1.5px solid var(--border-light); }
+  .card-header-row { border-bottom: 2px solid var(--border-light); padding-bottom: 12px; margin-bottom: 18px; }
+  .step-label { font-size: 0.75rem; font-weight: 700; color: var(--navy-main); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 2px; }
+  .card-main-title { font-size: 1.25rem; font-weight: 700; color: var(--navy-main); }
+  .card-subtitle-en { font-size: 0.88rem; color: var(--text-dark); margin-top: 4px; line-height: 1.45; }
+  .card-subtitle-native { font-size: 0.82rem; color: var(--text-sub); margin-top: 2px; }
+  ruby { font-family: '游ゴシック', 'YuGothic', sans-serif; }
+  ruby rt { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 0.65em; color: var(--ruby-color); font-weight: 600; }
+  .conj-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-bottom: 14px; }
+  .conj-table th { background: var(--blue-bg); color: var(--navy-main); padding: 8px 12px; font-weight: 700; border: 1px solid #CBD5E0; text-align: center; font-size: 0.8rem; }
+  .conj-table td { padding: 7px 12px; border: 1px solid var(--border-light); text-align: center; font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.02rem; }
+  .conj-table tr:nth-child(even) { background: #FAFBFD; }
+  .conj-group-label { font-size: 0.78rem; font-weight: 700; color: var(--navy-main); margin: 14px 0 6px; }
+  .dialogue-card-item { background: white; border: 1.5px solid var(--border-light); border-left: 5px solid var(--blue-border); border-radius: 12px; padding: 14px 18px; margin-bottom: 12px; }
+  .dialogue-speaker-name { font-size: 0.82rem; font-weight: 700; color: var(--navy-main); margin-bottom: 4px; padding: 2px 8px; border-radius: 8px; display: inline-block; }
+  .dialogue-jp-line { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.22rem; font-weight: 600; color: var(--text-dark); margin-bottom: 6px; line-height: 1.5; }
+  .dialogue-en-line { font-size: 0.88rem; font-weight: 500; color: #334155; }
+  .dialogue-native-line { font-size: 0.82rem; color: #64748B; }
+  .tts-btn { background: none; border: 1px solid var(--border-light); border-radius: 50%; width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; color: var(--navy-main); transition: all 0.2s; padding: 0; vertical-align: middle; margin-left: 6px; flex-shrink: 0; }
+  .tts-btn:hover { background: var(--blue-bg); border-color: var(--blue-border); transform: scale(1.1); }
+  .grammar-block { margin-bottom: 26px; }
+  .grammar-visual-card { background: white; border: 1.5px solid var(--border-light); border-radius: 14px; padding: 16px 20px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02); }
+  .grammar-card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+  .grammar-tag { font-size: 0.72rem; font-weight: 700; background: var(--pink-bg); color: var(--pink-text); border: 1px solid var(--pink-border); padding: 2px 8px; border-radius: 8px; letter-spacing: 0.3px; }
+  .grammar-formula { font-family: '游ゴシック', 'YuGothic', monospace; font-size: 0.95rem; font-weight: 600; color: var(--text-sub); background: #F6FAFD; padding: 8px 14px; border-radius: 10px; border: 1px solid #E2ECF8; margin-top: 10px; }
+  .grammar-desc-en { font-size: 0.86rem; color: var(--text-dark); margin-bottom: 3px; line-height: 1.5; }
+  .grammar-desc-native { font-size: 0.8rem; color: var(--text-sub); }
+  .grammar-diagram { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; background: #F6FAFD; border: 1.5px solid #C4E0F1; border-radius: 12px; padding: 16px 18px; margin: 12px 0; }
+  .diagram-step { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+  .diagram-chip { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.02rem; font-weight: 600; padding: 8px 14px; border-radius: 10px; background: white; border: 2px solid var(--blue-border); color: var(--navy-main); white-space: nowrap; }
+  .diagram-chip.highlight { background: var(--pink-bg); border-color: var(--pink-border); color: var(--pink-text); }
+  .diagram-caption { font-size: 0.68rem; color: var(--text-sub); font-weight: 600; text-align: center; }
+  .diagram-arrow { font-size: 1.3rem; color: var(--teal-main); font-weight: 700; }
+  .examples-block { margin: 14px 0 16px; }
+  .examples-label { font-size: 0.72rem; font-weight: 700; color: var(--teal-text); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px; }
+  .example-row { display: flex; align-items: flex-start; gap: 10px; background: var(--teal-bg); border: 1px solid var(--teal-border); border-radius: 10px; padding: 10px 14px; margin-bottom: 8px; }
+  .example-num { flex: 0 0 auto; width: 20px; height: 20px; border-radius: 50%; background: var(--teal-main); color: white; font-size: 0.72rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .example-content { flex: 1; }
+  .example-jp { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.05rem; font-weight: 600; color: var(--text-dark); display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+  .example-en { font-size: 0.82rem; color: var(--text-sub); margin-top: 3px; }
+  .example-native { font-size: 0.78rem; color: #94A3B8; margin-top: 1px; }
+  .practice-part-header { display: flex; align-items: center; gap: 10px; margin: 28px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--blue-border); }
+  .practice-part-badge { background: var(--navy-main); color: white; font-size: 0.78rem; font-weight: 700; padding: 3px 10px; border-radius: 12px; }
+  .practice-part-title { font-size: 1.05rem; font-weight: 700; color: var(--navy-main); }
+  .roleplay-card { background: #FAFBFD; border: 1.5px solid var(--border-light); border-radius: 14px; padding: 16px 20px; margin-bottom: 14px; }
+  .roleplay-title { font-size: 0.92rem; font-weight: 700; color: var(--navy-main); margin-bottom: 12px; }
+  .roleplay-bubble { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
+  .roleplay-bubble:last-child { margin-bottom: 0; }
+  .roleplay-speaker { font-size: 0.76rem; font-weight: 700; padding: 3px 8px; border-radius: 8px; min-width: 60px; text-align: center; flex-shrink: 0; }
+  .speaker-a { background: var(--blue-bg); color: var(--navy-main); border: 1px solid var(--blue-border); }
+  .speaker-b { background: var(--mid-cyan-bg); color: var(--mid-cyan-text); border: 1px solid var(--mid-cyan-border); }
+  .roleplay-lines { flex-grow: 1; }
+  .roleplay-jp { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.12rem; font-weight: 600; color: var(--text-dark); margin-bottom: 2px; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+  .roleplay-trans { font-size: 0.82rem; color: var(--text-sub); }
+  .roleplay-native { font-size: 0.78rem; color: #94A3B8; }
+  .toggle-item { background: white; border: 1.5px solid var(--blue-border); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; cursor: pointer; }
+  .toggle-prompt-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .toggle-prompt-text { font-size: 0.95rem; font-weight: 600; color: var(--navy-main); }
+  .btn-check-reveal { background: var(--blue-bg); color: var(--navy-main); border: 1px solid var(--blue-border); padding: 5px 12px; border-radius: 16px; font-size: 0.78rem; font-weight: 600; flex-shrink: 0; }
+  .toggle-answer-box { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border-light); font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.2rem; font-weight: 600; color: var(--navy-main); }
+  .toggle-answer-box.show { display: block; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: translateY(0); } }
+  .kanji-display-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
+  .kanji-box-item { background: white; border: 1.5px solid var(--pink-border); border-radius: 14px; padding: 14px 10px; text-align: center; }
+  .kanji-large-char { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 2.5rem; font-weight: 600; color: var(--navy-main); line-height: 1.1; }
+  .kanji-meaning-en { font-size: 0.82rem; font-weight: 600; color: var(--pink-text); margin: 4px 0 2px; }
+  .kanji-readings-text { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 0.85rem; color: var(--text-sub); }
+  .vocab-filter-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; }
+  .filter-btn-group { display: flex; gap: 6px; }
+  .filter-pill { background: white; border: 1px solid var(--border-light); font-size: 0.78rem; font-weight: 600; padding: 4px 12px; border-radius: 14px; cursor: pointer; color: var(--text-sub); transition: all 0.2s; }
+  .filter-pill.active { background: var(--navy-main); color: white; border-color: var(--navy-main); }
+  .word-pool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
+  .word-pool-card { background: white; border: 1px solid var(--border-light); border-radius: 10px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; }
+  .pool-word-jp { font-family: '游ゴシック', 'YuGothic', sans-serif; font-weight: 600; font-size: 1.1rem; color: var(--navy-main); }
+  .pool-word-trans { font-size: 0.78rem; color: var(--text-sub); }
+  .star-btn { background: none; border: none; font-size: 1.25rem; cursor: pointer; color: #CBD5E0; transition: all 0.2s; }
+  .star-btn.active { color: #E2A03F; transform: scale(1.15); }
+  .note-box { background: var(--yellow-bg); border: 1.5px solid var(--yellow-border); border-radius: 12px; padding: 12px 16px; margin: 12px 0; font-size: 0.85rem; color: var(--yellow-title); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title-box">
+      <span class="badge-stage">STAGE 12 - LESSON 1</span>
+      <h1>先週直してもらったばかりなのに、また…… — I Had It Fixed Only Last Week, But It's Gone Wrong Again</h1>
+    </div>
+    <div class="lang-switcher">
+      <span>🌐</span>
+      <select id="lang-select" onchange="applyLanguage(this.value)">
+        <option value="all" selected>All / 全部</option>
+        <option value="ko">한국어</option>
+        <option value="zhcn">简体中文</option>
+        <option value="zhtw">繁體中文</option>
+        <option value="cant">粵語（香港）</option>
+      </select>
+    </div>
+  </div>
+</header>
+
+<div class="nav-bar">
+  <button class="nav-tab-btn active" onclick="scrollToSection('sec-system')">1. 「ところです／ばかりです／はずです」文型</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-dialogue')">2. Main Dialogue</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-grammar')">3. Grammar & Practice</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-kanji')">4. Kanji</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-pool')">5. Word Pool</button>
+</div>
+
+<div class="container">
+
+  <section class="content-card" id="sec-system">
+    <div class="card-header-row">
+      <div class="step-label">Step 1 — 文型</div>
+      <div class="card-main-title">動作の一場面を表す「ところです」「ばかりです」と、確信を表す「はずです」</div>
+      <div class="card-subtitle-en">1. 会議は今から始まるところです。（The meeting is about to start.） 2. 彼は3月に大学を卒業したばかりです。（He just graduated from university in March.） 3. ミラーさんは会議室にいるはずです。（Mr. Miller must be in the meeting room.） ところです describes one aspect of an action — about to begin, in progress, or just completed; ばかりです emphasizes the speaker's subjective sense that little time has passed since an action finished; はずです expresses a confident conclusion the speaker has reached based on specific grounds.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="ところです는 동작의 한 국면(시작 직전・진행 중・막 완료됨)을 나타내고, ばかりです는 동작이 끝난 뒤 시간이 얼마 지나지 않았다고 느끼는 말하는 사람의 주관을 강조하며, はずです는 근거에 기반한 말하는 사람의 확신에 찬 결론을 나타냅니다." data-zhcn="ところです表示动作的一个阶段（即将开始・正在进行・刚刚完成），ばかりです强调说话人主观上觉得动作结束后没过多久，はずです则表示说话人根据依据得出的有把握的结论。" data-zhtw="ところです表示動作的一個階段（即將開始・正在進行・剛剛完成），ばかりです強調說話人主觀上覺得動作結束後沒過多久，はずです則表示說話人根據依據得出的有把握的結論。" data-cant="ところです表示動作嘅一個階段（就嚟開始・進行緊・啱啱完成），ばかりです強調講嘢嘅人主觀上覺得個動作完咗冇幾耐，はずです就表示講嘢嘅人根據依據得出嘅有把握嘅結論。"></div>
+    </div>
+    <div class="conj-group-label">「ところです」「ばかりです」「はずです」の使い分け — Choosing ところです, ばかりです, or はずです</div>
+    <table class="conj-table">
+      <tr><th>形</th><th>例</th><th>意味</th></tr>
+      <tr><td>V辞書形＋ところです</td><td>これから食べるところです</td><td>動作が始まる直前</td></tr>
+      <tr><td>Vて形いる＋ところです</td><td>今調べているところです</td><td>動作が進行中</td></tr>
+      <tr><td>Vた形＋ところです</td><td>たった今帰ったところです</td><td>動作が完了した直後</td></tr>
+      <tr><td>Vた形＋ばかりです</td><td>先月入ったばかりです</td><td>完了してからあまり時間がたっていないという主観</td></tr>
+      <tr><td>V普通形／い-adj／な-adjな／Nの＋はずです</td><td>来るはずです</td><td>根拠に基づく確信・推量</td></tr>
+    </table>
+    <div class="note-box i18n-note" data-en="[Note] Vた形＋ところです can only be used when little time has actually passed. Vた形＋ばかりです can be used regardless of how much time has actually elapsed, as long as the speaker feels it is short: このビデオは先週買ったばかりなのに、調子がおかしいです。(This video isn't working properly, even though I only bought it last week.)" data-ko="[주] Vた形＋ところです는 실제로 시간이 얼마 지나지 않았을 때만 쓸 수 있습니다. Vた形＋ばかりです는 실제로 지난 시간과 관계없이, 말하는 사람이 짧다고 느끼기만 하면 쓸 수 있습니다: このビデオは先週買ったばかりなのに、調子がおかしいです。(이 비디오는 지난주에 산 지 얼마 안 됐는데, 상태가 이상해요.)" data-zhcn="【注】Vた形＋ところです只能在实际间隔时间很短时使用。Vた形＋ばかりです则不论实际经过多长时间，只要说话人主观觉得短即可使用：このビデオは先週買ったばかりなのに、調子がおかしいです。（这台摄像机上星期才买，却已经不能正常工作了。）" data-zhtw="【註】Vた形＋ところです只能在實際間隔時間很短時使用。Vた形＋ばかりです則不論實際經過多長時間，只要說話人主觀覺得短即可使用：このビデオは先週買ったばかりなのに、調子がおかしいです。（這台攝影機上星期才買，卻已經不能正常工作了。）" data-cant="【注】Vた形＋ところです淨係可以喺實際相隔時間好短嘅時候用。Vた形＋ばかりです就唔理實際經過幾耐，只要講嘢嘅人主觀上覺得短就可以用：このビデオは先週買ったばかりなのに、調子がおかしいです。（呢部攝錄機上星期先買，但係已經壞緊。）"></div>
+  </section>
+
+  <section class="content-card" id="sec-dialogue">
+    <div class="card-header-row">
+      <div class="step-label">Step 2 — 会話</div>
+      <div class="card-main-title">Main Dialogue: 先週直してもらったばかりなのに、また…… — I Had It Fixed Only Last Week, But It's Gone Wrong Again</div>
+      <div class="card-subtitle-en">Thawaphon calls the gas service centre because his gas cooker's flame keeps going out, even though he had it repaired only the week before — then calls back later when the repairman still hasn't arrived.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="타와폰이 가스 서비스 센터에 전화를 겁니다. 지난주에 수리를 받았는데도 가스레인지의 불이 자꾸 꺼지기 때문입니다 — 그리고 수리 기사가 아직 오지 않아서 나중에 다시 전화를 겁니다." data-zhcn="塔瓦蓬打电话给燃气服务中心，因为他的燃气灶虽然上星期才修过，火却还是老是熄灭——之后维修师傅迟迟未到，他又打了一次电话。" data-zhtw="塔瓦蓬打電話給燃氣服務中心，因為他的燃氣灶雖然上星期才修過，火卻還是老是熄滅——之後維修師傅遲遲未到，他又打了一次電話。" data-cant="他華蓬打電話畀煤氣服務中心，因為佢部煤氣爐雖然上星期先至整過，個火都係成日熄——跟住師傅遲遲未到，佢又再打多次電話。"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--mid-cyan-bg); color:var(--mid-cyan-text); border:1px solid var(--mid-cyan-border);">係員</div><button class="tts-btn" onclick="speakText('はい、ガスサービスセンターでございます。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">はい、ガスサービスセンターでございます。</div>
+      <div class="dialogue-en-line">Yes, Gas Service Centre.</div>
+      <div class="dialogue-native-line i18n-native" data-ko="네, 가스 서비스 센터입니다." data-zhcn="您好，这里是燃气服务中心。" data-zhtw="您好，這裡是燃氣服務中心。" data-cant="喂，呢度係煤氣服務中心。"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--blue-bg); color:var(--navy-main); border:1px solid var(--blue-border);">タワポン</div><button class="tts-btn" onclick="speakText('あのう、ガスレンジの調子がおかしいんですが……。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">あのう、ガスレンジの<ruby>調子<rt>ちょうし</rt></ruby>がおかしいんですが……。</div>
+      <div class="dialogue-en-line">Umm, there's something wrong with my gas cooker.......</div>
+      <div class="dialogue-native-line i18n-native" data-ko="저기, 가스레인지 상태가 이상한데요……." data-zhcn="那个，我的燃气灶好像有点不对劲……" data-zhtw="那個，我的燃氣爐好像有點不對勁……" data-cant="嗰個，我部煤氣爐好似有啲唔妥……"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--mid-cyan-bg); color:var(--mid-cyan-text); border:1px solid var(--mid-cyan-border);">係員</div><button class="tts-btn" onclick="speakText('どんな具合ですか。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">どんな<ruby>具合<rt>ぐあい</rt></ruby>ですか。</div>
+      <div class="dialogue-en-line">What's the matter with it?</div>
+      <div class="dialogue-native-line i18n-native" data-ko="어떤 상태인가요?" data-zhcn="是什么情况呢？" data-zhtw="是什麼情況呢？" data-cant="係咩情況呀？"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--blue-bg); color:var(--navy-main); border:1px solid var(--blue-border);">タワポン</div><button class="tts-btn" onclick="speakText('先週直してもらったばかりなのに、また火が消えてしまうんです。危ないので、すぐ見に来てくれませんか。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line"><ruby>先週<rt>せんしゅう</rt></ruby><ruby>直<rt>なお</rt></ruby>してもらったばかりなのに、また<ruby>火<rt>ひ</rt></ruby>が<ruby>消<rt>き</rt></ruby>えてしまうんです。<ruby>危<rt>あぶ</rt></ruby>ないので、すぐ<ruby>見<rt>み</rt></ruby>に<ruby>来<rt>き</rt></ruby>てくれませんか。</div>
+      <div class="dialogue-en-line">The flame still goes out, even though I had it fixed only last week. It's dangerous, so could you please come and take a look at it soon?</div>
+      <div class="dialogue-native-line i18n-native" data-ko="지난주에 고쳤는데도 또 불이 꺼져 버려요. 위험하니까 빨리 와서 봐 주시면 안 될까요?" data-zhcn="上星期才修过，可是火又熄了。有点危险，能不能马上过来看看？" data-zhtw="上星期才修過，可是火又熄了。有點危險，能不能馬上過來看看？" data-cant="上星期先至整過，但係個火又熄咗。有啲danger，可唔可以即刻嚟睇下？"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--mid-cyan-bg); color:var(--mid-cyan-text); border:1px solid var(--mid-cyan-border);">係員</div><button class="tts-btn" onclick="speakText('わかりました。5時ごろには行けると思います。ご住所とお名前をお願いします。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">わかりました。5<ruby>時<rt>じ</rt></ruby>ごろには<ruby>行<rt>い</rt></ruby>けると<ruby>思<rt>おも</rt></ruby>います。ご<ruby>住所<rt>じゅうしょ</rt></ruby>とお<ruby>名前<rt>なまえ</rt></ruby>をお<ruby>願<rt>ねが</rt></ruby>いします。</div>
+      <div class="dialogue-en-line">I understand. I think someone can be with you at around 5:00pm. Please give me your name and address.</div>
+      <div class="dialogue-native-line i18n-native" data-ko="알겠습니다. 5시쯤에는 갈 수 있을 것 같습니다. 주소와 성함을 부탁드립니다." data-zhcn="明白了。我想5点左右可以到。请告诉我您的住址和姓名。" data-zhtw="明白了。我想5點左右可以到。請告訴我您的住址和姓名。" data-cant="明白喇。我諗5點左右可以到。麻煩你講埋地址同名。"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--blue-bg); color:var(--navy-main); border:1px solid var(--blue-border);">タワポン</div><button class="tts-btn" onclick="speakText('もしもし、5時ごろにガスレンジを見に来てくれるはずなんですが、まだですか。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">もしもし、5<ruby>時<rt>じ</rt></ruby>ごろにガスレンジを<ruby>見<rt>み</rt></ruby>に<ruby>来<rt>き</rt></ruby>てくれるはずなんですが、まだですか。</div>
+      <div class="dialogue-en-line">Hello, someone was supposed to come and look at my gas stove at about 5:00pm, but they still haven't come.</div>
+      <div class="dialogue-native-line i18n-native" data-ko="여보세요, 5시쯤에 가스레인지를 봐 주러 오시기로 했는데, 아직인가요?" data-zhcn="喂，说好5点左右会来看燃气灶的，怎么还没到？" data-zhtw="喂，說好5點左右會來看燃氣爐的，怎麼還沒到？" data-cant="喂，講好5點左右會嚟睇煤氣爐嘅，點解仲未到？"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--mid-cyan-bg); color:var(--mid-cyan-text); border:1px solid var(--mid-cyan-border);">係員</div><button class="tts-btn" onclick="speakText('申し訳ありません。どちら様でしょうか。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line"><ruby>申<rt>もう</rt></ruby>し<ruby>訳<rt>わけ</rt></ruby>ありません。どちら<ruby>様<rt>さま</rt></ruby>でしょうか。</div>
+      <div class="dialogue-en-line">I'm sorry. May I have your name, please?</div>
+      <div class="dialogue-native-line i18n-native" data-ko="죄송합니다. 어느 분이신가요?" data-zhcn="非常抱歉。请问您是哪位？" data-zhtw="非常抱歉。請問您是哪位？" data-cant="真係唔好意思。請問你係邊位？"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--blue-bg); color:var(--navy-main); border:1px solid var(--blue-border);">タワポン</div><button class="tts-btn" onclick="speakText('タワポンです。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">タワポンです。</div>
+      <div class="dialogue-en-line">My name's Thawaphon.</div>
+      <div class="dialogue-native-line i18n-native" data-ko="타와폰입니다." data-zhcn="我叫塔瓦蓬。" data-zhtw="我叫塔瓦蓬。" data-cant="我係他華蓬。"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--mid-cyan-bg); color:var(--mid-cyan-text); border:1px solid var(--mid-cyan-border);">係員</div><button class="tts-btn" onclick="speakText('少々お待ちください。係員に連絡しますから。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line"><ruby>少々<rt>しょうしょう</rt></ruby>お<ruby>待<rt>ま</rt></ruby>ちください。<ruby>係員<rt>かかりいん</rt></ruby>に<ruby>連絡<rt>れんらく</rt></ruby>しますから。</div>
+      <div class="dialogue-en-line">Just a moment, please. I'll contact the repairman.</div>
+      <div class="dialogue-native-line i18n-native" data-ko="잠시만 기다려 주세요. 담당자에게 연락할 테니까요." data-zhcn="请稍等。我联系一下维修人员。" data-zhtw="請稍等。我聯繫一下維修人員。" data-cant="唔該等等。我聯絡一下師傅先。"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--mid-cyan-bg); color:var(--mid-cyan-text); border:1px solid var(--mid-cyan-border);">係員</div><button class="tts-btn" onclick="speakText('お待たせしました。今そちらに向かっているところです。あと10分ほどお待ちください。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">お<ruby>待<rt>ま</rt></ruby>たせしました。<ruby>今<rt>いま</rt></ruby>そちらに<ruby>向<rt>む</rt></ruby>かっているところです。あと10<ruby>分<rt>ぷん</rt></ruby>ほどお<ruby>待<rt>ま</rt></ruby>ちください。</div>
+      <div class="dialogue-en-line">Sorry to have kept you waiting. He's on his way. He should be there in another ten minutes or so.</div>
+      <div class="dialogue-native-line i18n-native" data-ko="기다리게 해서 죄송합니다. 지금 그쪽으로 가고 있는 중입니다. 앞으로 10분 정도만 기다려 주세요." data-zhcn="让您久等了。他现在正在赶去您那里。请再等大约10分钟。" data-zhtw="讓您久等了。他現在正在趕去您那裡。請再等大約10分鐘。" data-cant="等咗你耐喇。而家師傅正趕緊過嚟。麻煩再等多10分鐘左右。"></div>
+    </div>
+  </section>
+
+  <section class="content-card" id="sec-grammar">
+    <div class="card-header-row">
+      <div class="step-label">Step 3 — 例文</div>
+      <div class="card-main-title">Grammar & Comprehensive Speaking Practice</div>
+      <div class="card-subtitle-en">Work through each pattern's diagram and examples (based on this lesson's actual textbook example sentences), then try the practice questions, roleplay, and rapid-response challenge.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="각 패턴의 다이어그램과 예문(본 과의 실제 교재 예문 기반)을 익힌 후 연습 문제, 롤플레이, 즉석 챌린지에 도전하세요." data-zhcn="先看懂每个句型的图解和例句（取自本课教材原文），再挑战练习题、角色扮演与即时口说挑战。" data-zhtw="先看懂每個句型的圖解和例句（取自本課教材原文），再挑戰練習題、角色扮演與即時口說挑戰。" data-cant="先睇明每個句型嘅圖解同例句（取自呢一課教材原文），再挑戰練習題、角色扮演同即時口說挑戰。"></div>
+    </div>
+
+    <div class="practice-part-header"><span class="practice-part-badge">Part 1</span><div class="practice-part-title">Basic Pattern Drills</div></div>
+
+    <div class="grammar-block">
+      <div class="grammar-visual-card">
+        <div class="grammar-card-head"><span class="grammar-tag">Grammar A</span><strong>V辞書形／Vて形いる／Vた形＋ところです</strong></div>
+        <div class="grammar-desc-en">Describes one aspect of an action or event: the dictionary form shows it is just about to begin, the ている form shows it is in progress, and the た form shows it has just been completed.</div>
+        <div class="grammar-desc-native i18n-native" data-ko="동작이나 사건의 한 국면을 나타냅니다: 사전형은 막 시작하려는 참임을, ている형은 진행 중임을, た형은 막 완료되었음을 나타냅니다." data-zhcn="表示动作或事件的一个阶段：辞书形表示即将开始，ている形表示正在进行，た形表示刚刚完成。" data-zhtw="表示動作或事件的一個階段：辭書形表示即將開始，ている形表示正在進行，た形表示剛剛完成。" data-cant="表示動作或者事件嘅一個階段：辭書形表示就嚟開始，ている形表示進行緊，た形表示啱啱完成。"></div>
+        <div class="grammar-diagram">
+          <div class="diagram-step"><div class="diagram-chip">始まります</div></div>
+          <div class="diagram-arrow">→</div>
+          <div class="diagram-step"><div class="diagram-chip">始まる</div><div class="diagram-caption">直前 about to</div></div>
+          <div class="diagram-step"><div class="diagram-chip">始まっている</div><div class="diagram-caption">進行中 in progress</div></div>
+          <div class="diagram-step"><div class="diagram-chip">始まった</div><div class="diagram-caption">完了直後 just done</div></div>
+          <div class="diagram-arrow">＋</div>
+          <div class="diagram-step"><div class="diagram-chip highlight">ところです</div></div>
+        </div>
+        <div class="grammar-formula">V辞書形＝直前／Vている＝進行中／Vた形＝完了直後　＋ところです</div>
+        <div class="examples-block">
+          <div class="examples-label">Examples (教科書の文型・例文より)</div>
+          <div class="example-row"><div class="example-num">1</div><div class="example-content"><div class="example-jp"><ruby>昼<rt>ひる</rt></ruby>ごはんはもう<ruby>食<rt>た</rt></ruby>べましたか。……いいえ、これから<ruby>食<rt>た</rt></ruby>べるところです。<button class="tts-btn" onclick="speakText('昼ごはんはもう食べましたか。いいえ、これから食べるところです。')" title="Listen">🔊</button></div><div class="example-en">Have you had lunch yet? ......No, I was just about to.</div></div></div>
+          <div class="example-row"><div class="example-num">2</div><div class="example-content"><div class="example-jp"><ruby>会議<rt>かいぎ</rt></ruby>はもう<ruby>始<rt>はじ</rt></ruby>まりましたか。……いいえ、<ruby>今<rt>いま</rt></ruby>から<ruby>始<rt>はじ</rt></ruby>まるところです。<button class="tts-btn" onclick="speakText('会議はもう始まりましたか。いいえ、今から始まるところです。')" title="Listen">🔊</button></div><div class="example-en">Has the meeting already started? ......No, it's just about to.</div></div></div>
+          <div class="example-row"><div class="example-num">3</div><div class="example-content"><div class="example-jp"><ruby>故障<rt>こしょう</rt></ruby>の<ruby>原因<rt>げんいん</rt></ruby>がわかりましたか。……いいえ、<ruby>今<rt>いま</rt></ruby><ruby>調<rt>しら</rt></ruby>べているところです。<button class="tts-btn" onclick="speakText('故障の原因がわかりましたか。いいえ、今調べているところです。')" title="Listen">🔊</button></div><div class="example-en">Do you know what caused the breakdown? ......No, we're investigating it now.</div></div></div>
+          <div class="example-row"><div class="example-num">4</div><div class="example-content"><div class="example-jp"><ruby>渡辺<rt>わたなべ</rt></ruby>さんはいますか。……あ、たった<ruby>今<rt>いま</rt></ruby><ruby>帰<rt>かえ</rt></ruby>ったところです。<button class="tts-btn" onclick="speakText('渡辺さんはいますか。あ、たった今帰ったところです。')" title="Listen">🔊</button></div><div class="example-en">Is Ms. Watanabe here? ......Oh, she's just gone home.</div></div></div>
+          <div class="example-row"><div class="example-num">5</div><div class="example-content"><div class="example-jp">たった<ruby>今<rt>いま</rt></ruby>バスが<ruby>出<rt>で</rt></ruby>たところです。<button class="tts-btn" onclick="speakText('たった今バスが出たところです。')" title="Listen">🔊</button></div><div class="example-en">The bus has just left.</div></div></div>
+        </div>
+        <div class="note-box i18n-note" data-en="[Note] 〜ところです can be connected to various sentence patterns as a nominal clause: もしもし、田中ですが、今いいでしょうか。……すみません。今から出かけるところなんです。(Hello, Tanaka here. Have you got a moment?......Sorry, I'm just going out.)" data-ko="[주] 〜ところです는 여러 문형에 명사절로 연결될 수 있습니다: もしもし、田中ですが、今いいでしょうか。……すみません。今から出かけるところなんです。(여보세요, 다나카입니다만, 지금 괜찮으세요?……죄송해요. 지금 막 나가려던 참이에요.)" data-zhcn="【注】〜ところです可以作为名词从句连接各种句型：もしもし、田中ですが、今いいでしょうか。……すみません。今から出かけるところなんです。（喂，我是田中，现在方便吗？……对不起，我正要出门。）" data-zhtw="【註】〜ところです可以作為名詞從句連接各種句型：もしもし、田中ですが、今いいでしょうか。……すみません。今から出かけるところなんです。（喂，我是田中，現在方便嗎？……對不起，我正要出門。）" data-cant="【注】〜ところです可以做名詞子句連接唔同句型：もしもし、田中ですが、今いいでしょうか。……すみません。今から出かけるところなんです。（喂，我係田中，而家得唔得閒呀？……唔好意思，我啱啱要出門口。）"></div>
+      </div>
+      <div class="toggle-item" onclick="toggleAnswer('a1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">A-1. I'm just about to have dinner.</div><button class="btn-check-reveal" id="btn-a1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-a1"><span>ちょうど<ruby>晩<rt>ばん</rt></ruby>ごはんを<ruby>食<rt>た</rt></ruby>べるところです。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('ちょうど晩ごはんを食べるところです。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('a2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">A-2. I'm looking into the cause right now.</div><button class="btn-check-reveal" id="btn-a2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-a2"><span><ruby>今<rt>いま</rt></ruby>、<ruby>原因<rt>げんいん</rt></ruby>を<ruby>調<rt>しら</rt></ruby>べているところです。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('今、原因を調べているところです。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('a3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">A-3. The bus just left.</div><button class="btn-check-reveal" id="btn-a3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-a3"><span>たった<ruby>今<rt>いま</rt></ruby>、バスが<ruby>出<rt>で</rt></ruby>たところです。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('たった今、バスが出たところです。')" title="Listen">🔊</button></div></div>
+    </div>
+
+    <div class="grammar-block">
+      <div class="grammar-visual-card">
+        <div class="grammar-card-head"><span class="grammar-tag">Grammar B</span><strong>Vた形＋ばかりです</strong></div>
+        <div class="grammar-desc-en">Expresses the speaker's sense that not much time has passed since an action was performed or an event occurred. Unlike Vた形ところです, this can be used regardless of how much time has actually elapsed, as long as the speaker feels it is short.</div>
+        <div class="grammar-desc-native i18n-native" data-ko="어떤 동작이 이루어지거나 사건이 일어난 뒤 시간이 얼마 지나지 않았다는 말하는 사람의 느낌을 나타냅니다. Vた形ところです와 달리, 실제로 지난 시간과 관계없이 말하는 사람이 짧다고 느끼기만 하면 쓸 수 있습니다." data-zhcn="表示说话人觉得某个动作完成或事件发生后没过多久。与Vた形ところです不同，无论实际经过多长时间，只要说话人主观觉得短即可使用。" data-zhtw="表示說話人覺得某個動作完成或事件發生後沒過多久。與Vた形ところです不同，無論實際經過多長時間，只要說話人主觀覺得短即可使用。" data-cant="表示講嘢嘅人覺得某個動作完成或者事件發生咗冇幾耐。同Vた形ところです唔同，唔理實際經過幾耐，只要講嘢嘅人主觀上覺得短就可以用。"></div>
+        <div class="grammar-diagram">
+          <div class="diagram-step"><div class="diagram-chip">入りました</div></div>
+          <div class="diagram-arrow">→</div>
+          <div class="diagram-step"><div class="diagram-chip">入った</div></div>
+          <div class="diagram-arrow">＋</div>
+          <div class="diagram-step"><div class="diagram-chip highlight">ばかりです</div></div>
+        </div>
+        <div class="grammar-formula">Vた形＋ばかりです（完了直後という主観的な短さ）</div>
+        <div class="examples-block">
+          <div class="examples-label">Examples (教科書の文型・例文より)</div>
+          <div class="example-row"><div class="example-num">1</div><div class="example-content"><div class="example-jp">さっき<ruby>昼<rt>ひる</rt></ruby>ごはんを<ruby>食<rt>た</rt></ruby>べたばかりです。<button class="tts-btn" onclick="speakText('さっき昼ごはんを食べたばかりです。')" title="Listen">🔊</button></div><div class="example-en">I've only just had lunch.</div></div></div>
+          <div class="example-row"><div class="example-num">2</div><div class="example-content"><div class="example-jp"><ruby>木村<rt>きむら</rt></ruby>さんは<ruby>先月<rt>せんげつ</rt></ruby>この<ruby>会社<rt>かいしゃ</rt></ruby>に<ruby>入<rt>はい</rt></ruby>ったばかりです。<button class="tts-btn" onclick="speakText('木村さんは先月この会社に入ったばかりです。')" title="Listen">🔊</button></div><div class="example-en">Ms. Kimura only joined the company last month.</div></div></div>
+        </div>
+        <div class="note-box i18n-note" data-en="[Note] 〜ばかりです can also be attached to various sentence patterns as a nominal clause: このビデオは先週買ったばかりなのに、調子がおかしいです。(This video isn't working properly, even though I only bought it last week.)" data-ko="[주] 〜ばかりです도 여러 문형에 명사절로 붙을 수 있습니다: このビデオは先週買ったばかりなのに、調子がおかしいです。(이 비디오는 지난주에 산 지 얼마 안 됐는데, 상태가 이상해요.)" data-zhcn="【注】〜ばかりです也可以作为名词从句接续各种句型：このビデオは先週買ったばかりなのに、調子がおかしいです。（这台摄像机上星期才买，却已经不能正常工作了。）" data-zhtw="【註】〜ばかりです也可以作為名詞從句接續各種句型：このビデオは先週買ったばかりなのに、調子がおかしいです。（這台攝影機上星期才買，卻已經不能正常工作了。）" data-cant="【注】〜ばかりです都可以做名詞子句接落唔同句型：このビデオは先週買ったばかりなのに、調子がおかしいです。（呢部攝錄機上星期先買，但係已經壞緊。）"></div>
+      </div>
+      <div class="toggle-item" onclick="toggleAnswer('b1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">B-1. I just graduated from university this March.</div><button class="btn-check-reveal" id="btn-b1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-b1"><span>3<ruby>月<rt>がつ</rt></ruby>に<ruby>大学<rt>だいがく</rt></ruby>を<ruby>卒業<rt>そつぎょう</rt></ruby>したばかりです。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('3月に大学を卒業したばかりです。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('b2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">B-2. This apartment was just built last year.</div><button class="btn-check-reveal" id="btn-b2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-b2"><span>このアパートは<ruby>去年<rt>きょねん</rt></ruby><ruby>建<rt>た</rt></ruby>てたばかりです。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('このアパートは去年建てたばかりです。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('b3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">B-3. This parcel just arrived.</div><button class="btn-check-reveal" id="btn-b3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-b3"><span>この<ruby>荷物<rt>にもつ</rt></ruby>はたった<ruby>今<rt>いま</rt></ruby><ruby>届<rt>とど</rt></ruby>いたばかりです。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('この荷物はたった今届いたばかりです。')" title="Listen">🔊</button></div></div>
+    </div>
+
+    <div class="grammar-block">
+      <div class="grammar-visual-card">
+        <div class="grammar-card-head"><span class="grammar-tag">Grammar C</span><strong>V辞書形／Vない形ない／い-adj（〜い）／な-adjな／Nの＋はずです</strong></div>
+        <div class="grammar-desc-en">Used when a speaker is decisively stating a conclusion he or she has reached based on particular grounds.</div>
+        <div class="grammar-desc-native i18n-native" data-ko="말하는 사람이 특정한 근거에 기반하여 단호하게 결론을 말할 때 씁니다." data-zhcn="用于说话人根据特定依据，断定性地陈述自己得出的结论。" data-zhtw="用於說話人根據特定依據，斷定性地陳述自己得出的結論。" data-cant="用嚟講嘢嘅人根據特定依據，好肯定咁講出自己得出嘅結論。"></div>
+        <div class="grammar-diagram">
+          <div class="diagram-step"><div class="diagram-chip">来ます</div></div>
+          <div class="diagram-arrow">→</div>
+          <div class="diagram-step"><div class="diagram-chip">来る</div></div>
+          <div class="diagram-arrow">＋</div>
+          <div class="diagram-step"><div class="diagram-chip highlight">はずです</div></div>
+        </div>
+        <div class="grammar-formula">V辞書形／Vないない／い-adj〜い／な-adjな／Nの＋はずです（根拠のある確信）</div>
+        <div class="examples-block">
+          <div class="examples-label">Examples (教科書の文型・例文より)</div>
+          <div class="example-row"><div class="example-num">1</div><div class="example-content"><div class="example-jp">ミラーさんはきょう<ruby>来<rt>く</rt></ruby>るでしょうか。……<ruby>来<rt>く</rt></ruby>るはずですよ。きのう<ruby>電話<rt>でんわ</rt></ruby>がありましたから。<button class="tts-btn" onclick="speakText('ミラーさんはきょう来るでしょうか。来るはずですよ。きのう電話がありましたから。')" title="Listen">🔊</button></div><div class="example-en">Will Mr. Miller come today, I wonder? ......He's bound to come. He (said so when he) called yesterday.</div></div></div>
+        </div>
+        <div class="note-box i18n-note" data-en="[Note] In this example, 'He called yesterday' is the basis for the speaker's conclusion that Mr. Miller will come today, and the speaker uses 〜はずです to convey the certainty he or she feels about the correctness of that conclusion. Other connection patterns from this lesson's grammar box: い-adj (この店は日曜日でも忙しいはずです — This shop should be busy even on Sundays) and Nの (会議は3時からのはずです — The meeting should be from 3 o'clock)." data-ko="[주] 이 예문에서 '어제 전화를 걸었다'는 것은 말하는 사람이 오늘 미러 씨가 올 것이라고 결론을 내리는 근거이며, 말하는 사람은 그 결론이 맞다고 느끼는 확신을 전하기 위해 〜はずです를 씁니다. 이 과의 문법 박스에 나온 다른 접속 패턴: い-adj(この店は日曜日でも忙しいはずです — 이 가게는 일요일에도 바쁠 거예요)와 Nの(会議は3時からのはずです — 회의는 3시부터일 거예요)." data-zhcn="【注】在这个例句中，"昨天他打过电话"是说话人得出今天三浦先生会来这个结论的依据，说话人用〜はずです来表达自己对这个结论正确性的把握。本课语法框中的其他接续方式：い形容词(この店は日曜日でも忙しいはずです——这家店星期天应该也很忙)和Nの(会議は3時からのはずです——会议应该是从3点开始)。" data-zhtw="【註】在這個例句中，「昨天他打過電話」是說話人得出今天三浦先生會來這個結論的依據，說話人用〜はずです來表達自己對這個結論正確性的把握。本課語法框中的其他接續方式：い形容詞(この店は日曜日でも忙しいはずです——這家店星期天應該也很忙)和Nの(会議は3時からのはずです——會議應該是從3點開始)。" data-cant="【注】喺呢個例句度，「琴日佢打過電話」就係講嘢嘅人推斷出今日米勒先生會嚟嘅依據，講嘢嘅人用〜はずです嚟表達自己對呢個結論啱唔啱嘅信心。呢一課文法box入面其他接續方式：い形容詞(この店は日曜日でも忙しいはずです——呢間舖頭星期日應該都幾忙)同Nの(会議は3時からのはずです——會議應該係3點開始)。"></div>
+      </div>
+      <div class="toggle-item" onclick="toggleAnswer('c1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">C-1. He should arrive in about 10 minutes. (V辞書形)</div><button class="btn-check-reveal" id="btn-c1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-c1"><span>あと10<ruby>分<rt>ぷん</rt></ruby>ぐらいで<ruby>着<rt>つ</rt></ruby>くはずです。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('あと10分ぐらいで着くはずです。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('c2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">C-2. This shop should be busy even on Sundays. (い-adj)</div><button class="btn-check-reveal" id="btn-c2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-c2"><span>この<ruby>店<rt>みせ</rt></ruby>は<ruby>日曜日<rt>にちようび</rt></ruby>でも<ruby>忙<rt>いそが</rt></ruby>しいはずです。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('この店は日曜日でも忙しいはずです。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('c3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">C-3. The meeting should be from 3 o'clock. (Nの)</div><button class="btn-check-reveal" id="btn-c3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-c3"><span><ruby>会議<rt>かいぎ</rt></ruby>は3<ruby>時<rt>じ</rt></ruby>からのはずです。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('会議は3時からのはずです。')" title="Listen">🔊</button></div></div>
+    </div>
+
+    <div class="practice-part-header"><span class="practice-part-badge">Part 2</span><div class="practice-part-title">Roleplay — Timing and Certainty (教科書の練習Cより)</div></div>
+    <div class="roleplay-card">
+      <div class="roleplay-title">Scene 1: 電話をかけ直します — Calling Back Later (based on 練習C1)</div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-a">A</div><div class="roleplay-lines"><div class="roleplay-jp">もしもし、<ruby>木村<rt>きむら</rt></ruby>です。<ruby>今<rt>いま</rt></ruby>いいですか。<button class="tts-btn" onclick="speakText('もしもし、木村です。今いいですか。')" title="Listen">🔊</button></div><div class="roleplay-trans">Hello, Kimura here. Have you got a moment?</div><div class="roleplay-native i18n-native" data-ko="여보세요, 기무라입니다. 지금 괜찮으세요?" data-zhcn="喂，我是木村。现在方便吗？" data-zhtw="喂，我是木村。現在方便嗎？" data-cant="喂，我係木村。而家得唔得閒呀？"></div></div></div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-b">B</div><div class="roleplay-lines"><div class="roleplay-jp">あ、<ruby>木村<rt>きむら</rt></ruby>さん、<ruby>今<rt>いま</rt></ruby><ruby>会議<rt>かいぎ</rt></ruby>が<ruby>始<rt>はじ</rt></ruby>まるところなんです。<ruby>終<rt>お</rt></ruby>わったら、こちらからかけます。<button class="tts-btn" onclick="speakText('あ、木村さん、今会議が始まるところなんです。終わったら、こちらからかけます。')" title="Listen">🔊</button></div><div class="roleplay-trans">Ah, Ms. Kimura, the meeting's just about to start. I'll call you back when it's over.</div><div class="roleplay-native i18n-native" data-ko="아, 기무라 씨, 지금 막 회의가 시작되려는 참이에요. 끝나면 이쪽에서 걸게요." data-zhcn="啊，木村小姐，现在会议正要开始。开完我这边打给你。" data-zhtw="啊，木村小姐，現在會議正要開始。開完我這邊打給你。" data-cant="啊，木村小姐，而家個會就嚟開始。開完之後我呢邊打畀你。"></div></div></div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-a">A</div><div class="roleplay-lines"><div class="roleplay-jp">わかりました。お<ruby>願<rt>ねが</rt></ruby>いします。<button class="tts-btn" onclick="speakText('わかりました。お願いします。')" title="Listen">🔊</button></div><div class="roleplay-trans">Understood. Thank you.</div><div class="roleplay-native i18n-native" data-ko="알겠습니다. 부탁드려요." data-zhcn="好的，拜托了。" data-zhtw="好的，拜託了。" data-cant="知道喇，唔該晒。"></div></div></div>
+    </div>
+    <div class="roleplay-card">
+      <div class="roleplay-title">Scene 2: 来るはずです — He's Bound to Come (based on 練習C3)</div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-a">A</div><div class="roleplay-lines"><div class="roleplay-jp">ミラーさん、きょう<ruby>来<rt>く</rt></ruby>るでしょうか。<button class="tts-btn" onclick="speakText('ミラーさん、きょう来るでしょうか。')" title="Listen">🔊</button></div><div class="roleplay-trans">Will Mr. Miller come today, I wonder?</div><div class="roleplay-native i18n-native" data-ko="밀러 씨, 오늘 올까요?" data-zhcn="米勒先生今天会来吗？" data-zhtw="米勒先生今天會來嗎？" data-cant="米拿生今日會嚟嘛？"></div></div></div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-b">B</div><div class="roleplay-lines"><div class="roleplay-jp"><ruby>来<rt>く</rt></ruby>るはずですよ。きのう<ruby>地図<rt>ちず</rt></ruby>を<ruby>渡<rt>わた</rt></ruby>しましたから。<button class="tts-btn" onclick="speakText('来るはずですよ。きのう地図を渡しましたから。')" title="Listen">🔊</button></div><div class="roleplay-trans">He's bound to come. I gave him a map yesterday.</div><div class="roleplay-native i18n-native" data-ko="올 거예요. 어제 지도를 건네줬으니까요." data-zhcn="肯定会来的。我昨天把地图交给他了。" data-zhtw="肯定會來的。我昨天把地圖交給他了。" data-cant="梗係嚟啦。琴日我畀咗張地圖佢。"></div></div></div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-a">A</div><div class="roleplay-lines"><div class="roleplay-jp">じゃ、<ruby>大丈夫<rt>だいじょうぶ</rt></ruby>ですね。<button class="tts-btn" onclick="speakText('じゃ、大丈夫ですね。')" title="Listen">🔊</button></div><div class="roleplay-trans">Then it should be fine.</div><div class="roleplay-native i18n-native" data-ko="그럼 괜찮겠네요." data-zhcn="那就没问题了吧。" data-zhtw="那就沒問題了吧。" data-cant="咁就冇問題喇。"></div></div></div>
+    </div>
+
+    <div class="practice-part-header"><span class="practice-part-badge">Part 3</span><div class="practice-part-title">Rapid Self-Check — Mix It Up</div></div>
+    <div class="toggle-item" onclick="toggleAnswer('r1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">R-1. I'm just about to start work.</div><button class="btn-check-reveal" id="btn-r1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-r1"><span>ちょうど<ruby>仕事<rt>しごと</rt></ruby>を<ruby>始<rt>はじ</rt></ruby>めるところです。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('ちょうど仕事を始めるところです。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('r2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">R-2. I just woke up.</div><button class="btn-check-reveal" id="btn-r2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-r2"><span>たった<ruby>今<rt>いま</rt></ruby>、<ruby>起<rt>お</rt></ruby>きたばかりです。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('たった今、起きたばかりです。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('r3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">R-3. He should already be at the office.</div><button class="btn-check-reveal" id="btn-r3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-r3"><span><ruby>彼<rt>かれ</rt></ruby>はもう<ruby>会社<rt>かいしゃ</rt></ruby>にいるはずです。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('彼はもう会社にいるはずです。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('r4')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">R-4. I'm in the middle of writing a thesis right now.</div><button class="btn-check-reveal" id="btn-r4">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-r4"><span><ruby>今<rt>いま</rt></ruby>、<ruby>論文<rt>ろんぶん</rt></ruby>を<ruby>書<rt>か</rt></ruby>いているところです。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('今、論文を書いているところです。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('r5')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">R-5. This bag was just delivered by home delivery service today.</div><button class="btn-check-reveal" id="btn-r5">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-r5"><span>このかばんはきょう<ruby>宅配便<rt>たくはいびん</rt></ruby>で<ruby>届<rt>とど</rt></ruby>いたばかりです。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('このかばんはきょう宅配便で届いたばかりです。')" title="Listen">🔊</button></div></div>
+  </section>
+
+  <section class="content-card" id="sec-kanji">
+    <div class="card-header-row">
+      <div class="step-label">Step 4</div>
+      <div class="card-main-title">New Kanji</div>
+      <div class="card-subtitle-en">Key kanji introduced in this lesson.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="이번 과에서 배운 주요 한자입니다." data-zhcn="本课新学的重点汉字。" data-zhtw="本課新學的重點漢字。" data-cant="呢一課新教嘅重點漢字。"></div>
+    </div>
+    <div class="kanji-display-grid">
+      <div class="kanji-box-item"><div class="kanji-large-char">渡します</div><div class="kanji-meaning-en">hand over</div><div class="kanji-readings-text">わたします</div></div>
+      <div class="kanji-box-item"><div class="kanji-large-char">帰って来ます</div><div class="kanji-meaning-en">come back</div><div class="kanji-readings-text">かえってきます</div></div>
+      <div class="kanji-box-item"><div class="kanji-large-char">出ます</div><div class="kanji-meaning-en">[a bus] leave, depart</div><div class="kanji-readings-text">でます</div></div>
+      <div class="kanji-box-item"><div class="kanji-large-char">届きます</div><div class="kanji-meaning-en">[a parcel] be delivered</div><div class="kanji-readings-text">とどきます</div></div>
+      <div class="kanji-box-item"><div class="kanji-large-char">入学します</div><div class="kanji-meaning-en">enter [a university]</div><div class="kanji-readings-text">にゅうがくします</div></div>
+      <div class="kanji-box-item"><div class="kanji-large-char">卒業します</div><div class="kanji-meaning-en">graduate [from a university]</div><div class="kanji-readings-text">そつぎょうします</div></div>
+      <div class="kanji-box-item"><div class="kanji-large-char">焼きます</div><div class="kanji-meaning-en">bake, grill, roast</div><div class="kanji-readings-text">やきます</div></div>
+      <div class="kanji-box-item"><div class="kanji-large-char">焼けます</div><div class="kanji-meaning-en">[bread] be baked / [meat] be roasted</div><div class="kanji-readings-text">やけます</div></div>
+    </div>
+  </section>
+
+  <section class="content-card" id="sec-pool">
+    <div class="card-header-row">
+      <div class="step-label">Step 5 — 単語 (I. Vocabulary, 教科書準拠)</div>
+      <div class="card-main-title">Lesson Word Pool</div>
+      <div class="card-subtitle-en">The full official vocabulary list for this lesson , including the words used in the main dialogue.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="이 과(Stage 12 - Lesson 1)의 전체 공식 단어 목록입니다. 본문 회화에서 쓰인 단어도 포함됩니다." data-zhcn="本课（第46课）的完整官方词汇表，也包括会话正文中使用的单词。" data-zhtw="本課的完整官方詞彙表，也包括會話正文中使用的單字。" data-cant="呢一課嘅完整官方詞彙表，都包括咗會話正文入面用到嘅生字。"></div>
+    </div>
+    <div class="vocab-filter-row">
+      <div class="filter-btn-group">
+        <button class="filter-pill active" onclick="filterVocab('all')">All</button>
+        <button class="filter-pill" onclick="filterVocab('noun')">Nouns</button>
+        <button class="filter-pill" onclick="filterVocab('verb')">Verbs</button>
+        <button class="filter-pill" onclick="filterVocab('other')">Other</button>
+      </div>
+    </div>
+    <div class="word-pool-grid" id="word-pool-grid">
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">渡します</div><div class="pool-word-trans">hand over</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">帰って来ます</div><div class="pool-word-trans">come back</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">出ます［バスが〜］</div><div class="pool-word-trans">[a bus] leave, depart</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">届きます［荷物が〜］</div><div class="pool-word-trans">[a parcel] be delivered</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">入学します［大学に〜］</div><div class="pool-word-trans">enter [a university]</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">卒業します［大学を〜］</div><div class="pool-word-trans">graduate [from a university]</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">焼きます</div><div class="pool-word-trans">bake, grill, roast</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">焼けます［パン・肉が〜］</div><div class="pool-word-trans">[bread] be baked / [meat] be roasted</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">向かいます</div><div class="pool-word-trans">head for</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">留守</div><div class="pool-word-trans">absence</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">宅配便</div><div class="pool-word-trans">home delivery service</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">原因</div><div class="pool-word-trans">cause</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">こちら</div><div class="pool-word-trans">my side</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">〜の所</div><div class="pool-word-trans">where ~ is/are, by the ~</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">半年</div><div class="pool-word-trans">half a year</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">ガスサービスセンター</div><div class="pool-word-trans">gas service centre</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">ガスコンロ</div><div class="pool-word-trans">gas cooker</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">具合</div><div class="pool-word-trans">condition</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="other"><div><div class="pool-word-jp">ちょうど</div><div class="pool-word-trans">just, exactly</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="other"><div><div class="pool-word-jp">たった今</div><div class="pool-word-trans">just now (used with the past tense; indicates completion)</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="other"><div><div class="pool-word-jp">今いいですか。</div><div class="pool-word-trans">Have you got a moment?</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="other"><div><div class="pool-word-jp">お待たせしました。</div><div class="pool-word-trans">Sorry to have kept you waiting.</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+function toggleAnswer(id) {
+  const box = document.getElementById('ans-' + id);
+  const btn = document.getElementById('btn-' + id);
+  const isShowing = box.classList.contains('show');
+  document.querySelectorAll('.toggle-answer-box.show').forEach(b => b.classList.remove('show'));
+  document.querySelectorAll('.btn-check-reveal').forEach(b => b.textContent = 'Reveal ▼');
+  if (!isShowing) {
+    box.classList.add('show');
+    btn.textContent = 'Hide ▲';
+  }
+}
+function closeAllAnswers() {
+  document.querySelectorAll('.toggle-answer-box.show').forEach(b => b.classList.remove('show'));
+  document.querySelectorAll('.btn-check-reveal').forEach(b => b.textContent = 'Reveal ▼');
+}
+function speakText(text) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'ja-JP';
+  utter.rate = 0.92;
+  window.speechSynthesis.speak(utter);
+}
+function toggleStar(btn) {
+  btn.classList.toggle('active');
+}
+function filterVocab(type) {
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('#word-pool-grid .word-pool-card').forEach(card => {
+    if (type === 'all' || card.dataset.type === type) {
+      card.style.display = 'flex';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+function scrollToSection(id) {
+  document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function applyLanguage(lang) {
+  document.querySelectorAll('.i18n-native').forEach(el => {
+    if (lang === 'all') {
+      const parts = [];
+      ['ko','zhcn','zhtw','cant'].forEach(l => { if (el.dataset[l]) parts.push(el.dataset[l]); });
+      el.textContent = parts.join(' / ');
+      el.style.display = parts.length ? 'block' : 'none';
+    } else if (el.dataset[lang]) {
+      el.textContent = el.dataset[lang];
+      el.style.display = 'block';
+    } else {
+      el.style.display = 'none';
+    }
+  });
+  document.querySelectorAll('.i18n-note').forEach(el => {
+    if (lang === 'all') {
+      el.textContent = el.dataset.en;
+    } else if (el.dataset[lang]) {
+      el.textContent = el.dataset[lang];
+    } else {
+      el.textContent = el.dataset.en;
+    }
+  });
+}
+window.addEventListener('DOMContentLoaded', () => { applyLanguage('all'); });
+</script>
+
+</body>
+</html>

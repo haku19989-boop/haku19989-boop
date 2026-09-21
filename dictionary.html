@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Japanese Dictionary | 日本語多言語辞書</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-main: #1E5989;
+    --navy-dark: #143D5E;
+    --teal-bg: #F0FAFA;
+    --teal-border: #82CBD3;
+    --teal-text: #196168;
+    --teal-main: #4FB3BE;
+    --pink-bg: #FDF0F3;
+    --pink-border: #D88B9D;
+    --pink-text: #8E3A4F;
+    --blue-bg: #EDF5FB;
+    --blue-border: #89BFE0;
+    --blue-text: #1E5989;
+    --yellow-bg: #FFFDEB;
+    --yellow-border: #F0D462;
+    --yellow-text: #8C6500;
+    --card-bg: #FFFFFF;
+    --text-dark: #232C3A;
+    --text-sub: #576579;
+    --border-light: #E2E8F0;
+    --ruby-color: #C4688A;
+    --lavender-bg: #F3F1FA;
+    --lavender-border: #9A8EC8;
+    --lavender-text: #4B3D8A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    background: #F4F8FC;
+    color: var(--text-dark);
+    min-height: 100vh;
+  }
+  .jp-font { font-family: "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; }
+
+  /* ---- Header ---- */
+  header {
+    background: var(--navy-main);
+    color: white;
+    padding: 18px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 16px rgba(30,89,137,0.15);
+  }
+  .header-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .back-btn {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 16px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s;
+  }
+  .back-btn:hover { background: rgba(255,255,255,0.3); }
+  .header-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+  .header-sub {
+    font-size: 0.8rem;
+    opacity: 0.75;
+    margin-top: 2px;
+  }
+  .header-count {
+    font-size: 0.78rem;
+    background: rgba(255,255,255,0.15);
+    padding: 4px 12px;
+    border-radius: 12px;
+    opacity: 0.9;
+  }
+
+  /* ---- Loading overlay ---- */
+  #loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(248,250,252,0.97);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    gap: 16px;
+  }
+  #loading-overlay.hidden { display: none; }
+  .loading-spinner {
+    width: 44px;
+    height: 44px;
+    border: 4px solid var(--border-light);
+    border-top-color: var(--navy-main);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text {
+    color: var(--text-sub);
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  /* ---- Search area ---- */
+  .search-area {
+    max-width: 960px;
+    margin: 24px auto 0;
+    padding: 0 16px;
+  }
+  .search-box-wrap {
+    background: white;
+    border-radius: 16px;
+    padding: 20px 22px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+    border: 1.5px solid var(--border-light);
+  }
+  .search-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  #search-input {
+    flex: 1;
+    border: 2px solid var(--blue-border);
+    border-radius: 12px;
+    padding: 12px 18px;
+    font-size: 1.05rem;
+    font-family: 'Inter', "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    color: var(--text-dark);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  #search-input:focus { border-color: var(--navy-main); }
+  #search-input::placeholder { color: #A0B0BF; font-family: 'Inter', sans-serif; font-size: 0.9rem; }
+  .search-btn {
+    background: var(--navy-main);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 24px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .search-btn:hover { background: var(--navy-dark); }
+
+  /* Filter pills */
+  .filter-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filter-label {
+    font-size: 0.78rem;
+    color: var(--text-sub);
+    font-weight: 600;
+    margin-right: 4px;
+  }
+  .pill-btn {
+    border: 1.5px solid var(--border-light);
+    background: white;
+    color: var(--text-dark);
+    padding: 4px 13px;
+    border-radius: 14px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .pill-btn:hover { border-color: var(--navy-main); color: var(--navy-main); }
+  .pill-btn.active { background: var(--navy-main); color: white; border-color: var(--navy-main); }
+  .pill-btn.n5 { border-color: #4CAF50; }
+  .pill-btn.n5.active { background: #4CAF50; border-color: #4CAF50; }
+  .pill-btn.n4 { border-color: #2196F3; }
+  .pill-btn.n4.active { background: #2196F3; border-color: #2196F3; }
+  .pill-btn.n3 { border-color: #FF9800; }
+  .pill-btn.n3.active { background: #FF9800; border-color: #FF9800; }
+  .pill-btn.n2 { border-color: #E91E63; }
+  .pill-btn.n2.active { background: #E91E63; border-color: #E91E63; }
+  .pill-btn.n1 { border-color: #9C27B0; }
+  .pill-btn.n1.active { background: #9C27B0; border-color: #9C27B0; }
+
+  /* Search hint */
+  .search-hint {
+    margin-top: 10px;
+    font-size: 0.76rem;
+    color: var(--text-sub);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* ---- Results ---- */
+  .results-area {
+    max-width: 960px;
+    margin: 18px auto 40px;
+    padding: 0 16px;
+  }
+  .results-header {
+    font-size: 0.82rem;
+    color: var(--text-sub);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .results-count { color: var(--navy-main); font-weight: 700; }
+
+  .dict-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+
+  /* ---- Dictionary card ---- */
+  .dict-card {
+    background: white;
+    border: 1.5px solid var(--border-light);
+    border-radius: 14px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.18s;
+    position: relative;
+  }
+  .dict-card:hover {
+    border-color: var(--blue-border);
+    box-shadow: 0 4px 18px rgba(30,89,137,0.08);
+    transform: translateY(-1px);
+  }
+  .dict-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .dict-word {
+    font-family: "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--navy-main);
+    line-height: 1.2;
+  }
+  .dict-tts-btn {
+    background: var(--blue-bg);
+    border: 1px solid var(--blue-border);
+    border-radius: 8px;
+    padding: 5px 9px;
+    cursor: pointer;
+    color: var(--navy-main);
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  .dict-tts-btn:hover { background: var(--navy-main); color: white; }
+  .dict-reading {
+    font-family: "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    font-size: 0.88rem;
+    color: var(--ruby-color);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .dict-tags-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+  }
+  .dict-pos {
+    font-size: 0.7rem;
+    background: var(--lavender-bg);
+    color: var(--lavender-text);
+    border: 1px solid var(--lavender-border);
+    border-radius: 8px;
+    padding: 1px 7px;
+    font-weight: 600;
+  }
+  .dict-lang-badge {
+    font-size: 0.68rem;
+    padding: 1px 6px;
+    border-radius: 6px;
+    font-weight: 600;
+  }
+  .badge-zh { background: var(--yellow-bg); color: var(--yellow-text); border: 1px solid var(--yellow-border); }
+  .badge-fr { background: var(--teal-bg); color: var(--teal-text); border: 1px solid var(--teal-border); }
+
+  .dict-meanings {
+    font-size: 0.86rem;
+    color: var(--text-dark);
+    line-height: 1.45;
+  }
+  .dict-meaning-item {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 3px;
+  }
+  .dict-meaning-num {
+    color: var(--text-sub);
+    font-size: 0.75rem;
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+  .dict-trans-box {
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px dashed var(--border-light);
+    font-size: 0.8rem;
+  }
+  .trans-zh { color: #8C6500; }
+  .trans-fr { color: var(--teal-text); font-style: italic; }
+
+  .dict-level-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 8px;
+    letter-spacing: 0.3px;
+  }
+  .level-N5 { background: #E8F5E9; color: #2E7D32; }
+  .level-N4 { background: #E3F2FD; color: #1565C0; }
+  .level-N3 { background: #FFF3E0; color: #E65100; }
+  .level-N2 { background: #FCE4EC; color: #880E4F; }
+  .level-N1 { background: #F3E5F5; color: #6A1B9A; }
+
+  /* ---- Empty state ---- */
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-sub);
+  }
+  .empty-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 14px;
+    color: #A0B0BF;
+  }
+  .empty-title { font-size: 1.05rem; font-weight: 600; margin-bottom: 6px; color: var(--text-dark); }
+  .empty-sub { font-size: 0.85rem; }
+
+  /* ---- Welcome state ---- */
+  .welcome-state {
+    text-align: center;
+    padding: 40px 20px;
+  }
+  .welcome-box {
+    background: white;
+    border-radius: 18px;
+    padding: 36px 32px;
+    border: 1.5px solid var(--border-light);
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+  }
+  .welcome-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--navy-main);
+    margin-bottom: 10px;
+    font-family: "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  }
+  .welcome-sub {
+    font-size: 0.9rem;
+    color: var(--text-sub);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  .source-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .source-pill {
+    background: var(--blue-bg);
+    color: var(--navy-main);
+    border: 1.5px solid var(--blue-border);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+  .source-pill.zh { background: var(--yellow-bg); color: var(--yellow-text); border-color: var(--yellow-border); }
+  .source-pill.fr { background: var(--teal-bg); color: var(--teal-text); border-color: var(--teal-border); }
+
+  .try-title {
+    font-size: 0.78rem;
+    color: var(--text-sub);
+    margin-bottom: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .try-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+  .try-pill {
+    background: var(--teal-bg);
+    color: var(--teal-text);
+    border: 1.5px solid var(--teal-border);
+    padding: 5px 14px;
+    border-radius: 14px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.18s;
+  }
+  .try-pill:hover { background: var(--navy-main); color: white; border-color: var(--navy-main); }
+  .try-pill.jp { font-family: "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; }
+
+  /* ---- Load more ---- */
+  #load-more-btn {
+    display: block;
+    margin: 20px auto 0;
+    padding: 11px 36px;
+    background: white;
+    border: 2px solid var(--navy-main);
+    color: var(--navy-main);
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  #load-more-btn:hover { background: var(--navy-main); color: white; }
+
+  /* ---- Detail modal ---- */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(20,40,70,0.45);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: white;
+    border-radius: 20px;
+    padding: 28px;
+    max-width: 520px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+    position: relative;
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: var(--border-light);
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-sub);
+    transition: background 0.15s;
+  }
+  .modal-close:hover { background: #CBD5E1; }
+  .modal-word {
+    font-family: "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    font-size: 2.6rem;
+    font-weight: 600;
+    color: var(--navy-main);
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  .modal-reading {
+    font-family: "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    font-size: 1rem;
+    color: var(--ruby-color);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .modal-section-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-sub);
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    margin-bottom: 7px;
+    margin-top: 16px;
+  }
+  .modal-meanings-list { list-style: none; }
+  .modal-meanings-list li {
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 0.92rem;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .modal-meanings-list li:last-child { border-bottom: none; }
+  .modal-num {
+    background: var(--blue-bg);
+    color: var(--navy-main);
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 1px 7px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .modal-tts-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    align-items: center;
+  }
+  .modal-tts-btn {
+    background: var(--navy-main);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    transition: background 0.2s;
+  }
+  .modal-tts-btn:hover { background: var(--navy-dark); }
+  .modal-trans-block {
+    background: #F8FAFC;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-top: 10px;
+  }
+  .trans-block-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-sub);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+  .trans-block-val { font-size: 0.92rem; color: var(--text-dark); }
+</style>
+</head>
+<body>
+
+<!-- Loading overlay -->
+<div id="loading-overlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">
+    <strong>多言語辞書データを読み込んでいます…</strong><br>
+    <span style="font-size:0.78rem;opacity:0.75">Loading 68,000 unique Japanese words (JA · EN · ZH · FR)</span>
+  </div>
+</div>
+
+<!-- Header -->
+<header>
+  <div class="header-inner">
+    <div>
+      <a href="japanese_learning_app.html" class="back-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        ホームに戻る
+      </a>
+    </div>
+    <div>
+      <div class="header-title">日本語多言語辞書 Multilingual Dictionary</div>
+      <div class="header-sub">68,000 Japanese Headwords · English · Chinese · French</div>
+    </div>
+    <div class="header-count" id="total-count">68,000 語収録</div>
+  </div>
+</header>
+
+<!-- Search -->
+<div class="search-area">
+  <div class="search-box-wrap">
+    <div class="search-row">
+      <input type="text" id="search-input"
+        placeholder="日本語・英語・中文・Français・かな・ローマ字で検索… (例: 食べる / eat / 吃饭 / manger)"
+        autocomplete="off" autocorrect="off" spellcheck="false"
+        oninput="onSearchInput()"
+        onkeydown="if(event.key==='Enter') doSearch()">
+      <button class="search-btn" onclick="doSearch()">検索 Search</button>
+    </div>
+    <div class="filter-row">
+      <span class="filter-label">Language:</span>
+      <button class="pill-btn active" id="pill-lang-all" onclick="setLangFilter('all')">All Languages</button>
+      <button class="pill-btn" id="pill-lang-ja" onclick="setLangFilter('ja')">日本語 (Kanji/Kana/Romaji)</button>
+      <button class="pill-btn" id="pill-lang-en" onclick="setLangFilter('en')">English</button>
+      <button class="pill-btn" id="pill-lang-zh" onclick="setLangFilter('zh')">中文 (Chinese)</button>
+      <button class="pill-btn" id="pill-lang-fr" onclick="setLangFilter('fr')">Français</button>
+
+      <span class="filter-label" style="margin-left:10px">JLPT:</span>
+      <button class="pill-btn active" id="pill-all" onclick="setLevel('all')">All</button>
+      <button class="pill-btn n5" id="pill-N5" onclick="setLevel('N5')">N5</button>
+      <button class="pill-btn n4" id="pill-N4" onclick="setLevel('N4')">N4</button>
+      <button class="pill-btn n3" id="pill-N3" onclick="setLevel('N3')">N3</button>
+      <button class="pill-btn n2" id="pill-N2" onclick="setLevel('N2')">N2</button>
+      <button class="pill-btn n1" id="pill-N1" onclick="setLevel('N1')">N1</button>
+    </div>
+    <div class="search-hint">
+      <span>Tip: ひらがな、カタカナ、漢字、英語、中国語、フランス語、ローマ字に完全対応。</span>
+      <span>日本語見出し語数: 68,000語</span>
+    </div>
+  </div>
+</div>
+
+<!-- Results -->
+<div class="results-area" id="results-area">
+  <!-- Welcome state shown initially -->
+  <div class="welcome-state" id="welcome-state">
+    <div class="welcome-box">
+      <div class="welcome-title">日本語多言語辞書</div>
+      <div class="welcome-sub">
+        日本語の見出し語だけで68,000語を網羅した高機能多言語辞書です。<br>
+        日本語はもちろん、英語・中国語（簡体字/繁体字）・フランス語・ローマ字のどの言語からでも瞬時に検索できます。
+      </div>
+      <div class="source-pills">
+        <span class="source-pill">日本語見出し語 68,000語</span>
+        <span class="source-pill zh">中国語訳 46,400+語</span>
+        <span class="source-pill fr">フランス語訳 25,200+語</span>
+        <span class="source-pill">JLPT N5–N1 8,900+語</span>
+      </div>
+      <div class="try-title">おすすめの検索例：</div>
+      <div class="try-pills">
+        <span class="try-pill jp" onclick="quickSearch('食べる')">食べる</span>
+        <span class="try-pill jp" onclick="quickSearch('ともだち')">ともだち</span>
+        <span class="try-pill jp" onclick="quickSearch('gakkou')">gakkou</span>
+        <span class="try-pill" onclick="quickSearch('school')">school</span>
+        <span class="try-pill" onclick="quickSearch('学校')">学校</span>
+        <span class="try-pill" onclick="quickSearch('高兴')">高兴</span>
+        <span class="try-pill" onclick="quickSearch('manger')">manger</span>
+        <span class="try-pill jp" onclick="quickSearch('ありがとう')">ありがとう</span>
+        <span class="try-pill" onclick="quickSearch('delicious')">delicious</span>
+        <span class="try-pill jp" onclick="quickSearch('日本語')">日本語</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="results-header-row" style="display:none" class="results-header">
+    Showing <span class="results-count" id="shown-count">0</span> of <span class="results-count" id="matched-count">0</span> results
+    <span id="query-label"></span>
+  </div>
+
+  <div class="dict-grid" id="dict-grid"></div>
+
+  <div class="empty-state" id="empty-state" style="display:none">
+    <div class="empty-icon">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </div>
+    <div class="empty-title">見つかりませんでした (No results found)</div>
+    <div class="empty-sub">スペルを確認するか、別の言語（日本語・英語・中国語・かな）で検索してください。</div>
+  </div>
+
+  <button id="load-more-btn" style="display:none" onclick="loadMore()">さらに読み込む Load more ↓</button>
+</div>
+
+<!-- Detail Modal -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal-box" id="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-word jp-font" id="modal-word"></div>
+    <div class="modal-reading" id="modal-reading"></div>
+    <div id="modal-level-wrap"></div>
+    <div id="modal-pos-wrap"></div>
+
+    <div class="modal-section-title">English Meanings</div>
+    <ul class="modal-meanings-list" id="modal-meanings"></ul>
+
+    <div id="modal-zh-wrap" style="display:none" class="modal-trans-block">
+      <div class="trans-block-label">中文 (Chinese)</div>
+      <div class="trans-block-val" id="modal-zh-val"></div>
+    </div>
+
+    <div id="modal-fr-wrap" style="display:none" class="modal-trans-block">
+      <div class="trans-block-label">Français (French)</div>
+      <div class="trans-block-val" id="modal-fr-val"></div>
+    </div>
+
+    <div class="modal-tts-row">
+      <button class="modal-tts-btn" id="modal-tts-btn" onclick="speakModalWord()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+        発音を聴く Listen
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Load dictionary data -->
+<script src="database/dictionary_data.js"></script>
+<script>
+  // Romaji to Hiragana converter map
+  const ROMAJI_MAP = {
+    'a':'あ','i':'い','u':'う','e':'え','o':'お',
+    'ka':'か','ki':'き','ku':'く','ke':'け','ko':'こ',
+    'sa':'さ','shi':'し','si':'し','su':'す','se':'せ','so':'そ',
+    'ta':'た','chi':'ち','ti':'ち','tsu':'つ','tu':'つ','te':'て','to':'と',
+    'na':'な','ni':'に','nu':'ぬ','ne':'ね','no':'の',
+    'ha':'は','hi':'ひ','fu':'ふ','hu':'ふ','he':'へ','ho':'ほ',
+    'ma':'ま','mi':'み','mu':'む','me':'め','mo':'も',
+    'ya':'や','yu':'ゆ','yo':'よ',
+    'ra':'ら','ri':'り','ru':'る','re':'れ','ro':'ろ',
+    'wa':'わ','wo':'を','n':'ん','nn':'ん',
+    'ga':'が','gi':'ぎ','gu':'ぐ','ge':'げ','go':'ご',
+    'za':'ざ','ji':'じ','zi':'じ','zu':'ず','ze':'ぜ','zo':'ぞ',
+    'da':'だ','di':'ぢ','du':'づ','de':'で','do':'ど',
+    'ba':'ば','bi':'び','bu':'ぶ','be':'べ','bo':'ぼ',
+    'pa':'ぱ','pi':'ぴ','pu':'ぷ','pe':'ぺ','po':'ぽ',
+    'kya':'きゃ','kyu':'きゅ','kyo':'きょ',
+    'sha':'しゃ','shu':'しゅ','sho':'しょ','sya':'しゃ','syu':'しゅ','syo':'しょ',
+    'cha':'ちゃ','chu':'ちゅ','cho':'ちょ','tya':'ちゃ','tyu':'ちゅ','tyo':'ちょ',
+    'nya':'にゃ','nyu':'にゅ','nyo':'にょ',
+    'hya':'ひゃ','hyu':'ひゅ','hyo':'ひょ',
+    'mya':'みゃ','myu':'みゅ','myo':'みょ',
+    'rya':'りゃ','ryu':'りゅ','ryo':'りょ',
+    'gya':'ぎゃ','gyu':'ぎゅ','gyo':'ぎょ',
+    'ja':'じゃ','ju':'じゅ','jo':'じょ','zya':'じゃ','zyu':'じゅ','zyo':'じょ'
+  };
+
+  function romajiToHiragana(text) {
+    let str = text.toLowerCase();
+    let result = '';
+    let i = 0;
+    while (i < str.length) {
+      let matched = false;
+      for (let len = 4; len >= 1; len--) {
+        if (i + len <= str.length) {
+          let chunk = str.substr(i, len);
+          if (ROMAJI_MAP[chunk]) {
+            result += ROMAJI_MAP[chunk];
+            i += len;
+            matched = true;
+            break;
+          }
+        }
+      }
+      if (!matched) {
+        // Double consonant => っ
+        if (i + 1 < str.length && str[i] === str[i+1] && /[bcdfghjklmnpqrstvwxyz]/.test(str[i]) && str[i] !== 'n') {
+          result += 'っ';
+          i++;
+        } else {
+          result += str[i];
+          i++;
+        }
+      }
+    }
+    return result;
+  }
+
+  function katakanaToHiragana(str) {
+    return str.replace(/[\u30a1-\u30f6]/g, function(match) {
+      return String.fromCharCode(match.charCodeAt(0) - 0x60);
+    });
+  }
+
+  // ---- State ----
+  let currentLevel = 'all';
+  let currentLang = 'all';
+  let currentQuery = '';
+  let matchedEntries = [];
+  let displayedCount = 0;
+  const PAGE_SIZE = 40;
+  let currentModalEntry = null;
+
+  window.addEventListener('load', () => {
+    document.getElementById('loading-overlay').classList.add('hidden');
+    if (window.DICT_DATA) {
+      document.getElementById('total-count').textContent =
+        `${DICT_DATA.length.toLocaleString()} 語収録`;
+    }
+
+    // Check URL param or sessionStorage
+    const params = new URLSearchParams(window.location.search);
+    const qParam = params.get('q') || sessionStorage.getItem('dict_q');
+    if (qParam) {
+      sessionStorage.removeItem('dict_q');
+      quickSearch(qParam);
+    }
+  });
+
+  function onSearchInput() {
+    const q = document.getElementById('search-input').value.trim();
+    if (q.length >= 2) {
+      clearTimeout(window._searchTimer);
+      window._searchTimer = setTimeout(() => doSearch(), 250);
+    } else if (q.length === 0) {
+      showWelcome();
+    }
+  }
+
+  function doSearch() {
+    const q = document.getElementById('search-input').value.trim();
+    if (q.length < 1) { showWelcome(); return; }
+    currentQuery = q;
+    runSearch();
+  }
+
+  function quickSearch(word) {
+    document.getElementById('search-input').value = word;
+    currentQuery = word;
+    runSearch();
+  }
+
+  function runSearch() {
+    const rawQ = currentQuery.trim();
+    if (!rawQ) { showWelcome(); return; }
+    const qLower = rawQ.toLowerCase();
+    const hiraQ = katakanaToHiragana(romajiToHiragana(qLower));
+
+    matchedEntries = DICT_DATA.filter(entry => {
+      // Level filter
+      if (currentLevel !== 'all' && entry.l !== currentLevel) return false;
+
+      const w = entry.w;
+      const r = entry.r || '';
+      const mList = entry.m || [];
+      const zhList = entry.zh || [];
+      const frList = entry.fr || [];
+
+      // Language filter
+      if (currentLang === 'ja') {
+        return w.includes(rawQ) || r.includes(rawQ) || (hiraQ && (w.includes(hiraQ) || r.includes(hiraQ)));
+      }
+      if (currentLang === 'en') {
+        return mList.some(m => m.toLowerCase().includes(qLower));
+      }
+      if (currentLang === 'zh') {
+        return w.includes(rawQ) || zhList.some(z => z.includes(rawQ));
+      }
+      if (currentLang === 'fr') {
+        return frList.some(f => f.toLowerCase().includes(qLower));
+      }
+
+      // 'all' language matching
+      if (w.includes(rawQ)) return true;
+      if (r && r.includes(rawQ)) return true;
+      if (hiraQ && (w.includes(hiraQ) || (r && r.includes(hiraQ)))) return true;
+      if (mList.some(m => m.toLowerCase().includes(qLower))) return true;
+      if (zhList.some(z => z.includes(rawQ))) return true;
+      if (frList.some(f => f.toLowerCase().includes(qLower))) return true;
+
+      return false;
+    });
+
+    // Sort: Exact matches first, then starts-with, then JLPT level
+    matchedEntries.sort((a, b) => {
+      const aExact = (a.w === rawQ || a.r === rawQ);
+      const bExact = (b.w === rawQ || b.r === rawQ);
+      if (aExact && !bExact) return -1;
+      if (!aExact && bExact) return 1;
+
+      const aStart = a.w.startsWith(rawQ) || (a.r && a.r.startsWith(rawQ));
+      const bStart = b.w.startsWith(rawQ) || (b.r && b.r.startsWith(rawQ));
+      if (aStart && !bStart) return -1;
+      if (!aStart && bStart) return 1;
+
+      return 0;
+    });
+
+    displayedCount = 0;
+    document.getElementById('dict-grid').innerHTML = '';
+    document.getElementById('welcome-state').style.display = 'none';
+    document.getElementById('empty-state').style.display = 'none';
+    document.getElementById('load-more-btn').style.display = 'none';
+
+    if (matchedEntries.length === 0) {
+      document.getElementById('results-header-row').style.display = 'none';
+      document.getElementById('empty-state').style.display = 'block';
+      return;
+    }
+
+    document.getElementById('results-header-row').style.display = 'block';
+    document.getElementById('matched-count').textContent = matchedEntries.length.toLocaleString();
+    document.getElementById('query-label').textContent = ` for "${currentQuery}"`;
+
+    loadMore();
+  }
+
+  function loadMore() {
+    const nextBatch = matchedEntries.slice(displayedCount, displayedCount + PAGE_SIZE);
+    nextBatch.forEach(entry => {
+      document.getElementById('dict-grid').appendChild(buildCard(entry));
+    });
+    displayedCount += nextBatch.length;
+    document.getElementById('shown-count').textContent = displayedCount.toLocaleString();
+
+    if (displayedCount < matchedEntries.length) {
+      document.getElementById('load-more-btn').style.display = 'block';
+    } else {
+      document.getElementById('load-more-btn').style.display = 'none';
+    }
+  }
+
+  function showWelcome() {
+    document.getElementById('welcome-state').style.display = 'block';
+    document.getElementById('results-header-row').style.display = 'none';
+    document.getElementById('dict-grid').innerHTML = '';
+    document.getElementById('empty-state').style.display = 'none';
+    document.getElementById('load-more-btn').style.display = 'none';
+    matchedEntries = [];
+    displayedCount = 0;
+  }
+
+  function buildCard(entry) {
+    const card = document.createElement('div');
+    card.className = 'dict-card';
+    card.onclick = () => openModal(entry);
+
+    const readingLine = (entry.r && entry.r !== entry.w)
+      ? `<div class="dict-reading">${escHtml(entry.r)}</div>` : '';
+
+    const levelBadge = entry.l
+      ? `<span class="dict-level-badge level-${entry.l}">${entry.l}</span>` : '';
+
+    let tagsHtml = '';
+    if (entry.p) tagsHtml += `<span class="dict-pos">${escHtml(entry.p)}</span>`;
+    if (entry.zh && entry.zh.length > 0) tagsHtml += `<span class="dict-lang-badge badge-zh">中</span>`;
+    if (entry.fr && entry.fr.length > 0) tagsHtml += `<span class="dict-lang-badge badge-fr">FR</span>`;
+
+    const meaningsHtml = (entry.m || []).slice(0, 3).map((m, i) =>
+      `<div class="dict-meaning-item"><span class="dict-meaning-num">${i+1}.</span><span>${escHtml(m)}</span></div>`
+    ).join('');
+
+    let transBoxHtml = '';
+    if ((entry.zh && entry.zh.length > 0) || (entry.fr && entry.fr.length > 0)) {
+      transBoxHtml = '<div class="dict-trans-box">';
+      if (entry.zh && entry.zh.length > 0) {
+        transBoxHtml += `<div class="trans-zh">中: ${escHtml(entry.zh.slice(0, 2).join(' / '))}</div>`;
+      }
+      if (entry.fr && entry.fr.length > 0) {
+        transBoxHtml += `<div class="trans-fr">FR: ${escHtml(entry.fr.slice(0, 2).join(' / '))}</div>`;
+      }
+      transBoxHtml += '</div>';
+    }
+
+    card.innerHTML = `
+      ${levelBadge}
+      <div class="dict-card-top">
+        <div class="dict-word jp-font">${escHtml(entry.w)}</div>
+        <button class="dict-tts-btn" onclick="event.stopPropagation(); speakText('${escAttr(entry.w)}')" title="Listen">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+        </button>
+      </div>
+      ${readingLine}
+      <div class="dict-tags-row">${tagsHtml}</div>
+      <div class="dict-meanings">${meaningsHtml}</div>
+      ${transBoxHtml}
+    `;
+    return card;
+  }
+
+  function openModal(entry) {
+    currentModalEntry = entry;
+    document.getElementById('modal-word').textContent = entry.w;
+    document.getElementById('modal-reading').textContent =
+      (entry.r && entry.r !== entry.w) ? entry.r : '';
+
+    document.getElementById('modal-level-wrap').innerHTML = entry.l
+      ? `<span class="dict-level-badge level-${entry.l}" style="position:static;display:inline-block;margin-bottom:8px">${entry.l}</span>` : '';
+
+    document.getElementById('modal-pos-wrap').innerHTML = entry.p
+      ? `<span class="dict-pos">${escHtml(entry.p)}</span>` : '';
+
+    const ul = document.getElementById('modal-meanings');
+    ul.innerHTML = (entry.m || []).map((m, i) =>
+      `<li><span class="modal-num">${i+1}</span><span>${escHtml(m)}</span></li>`
+    ).join('');
+
+    const zhWrap = document.getElementById('modal-zh-wrap');
+    if (entry.zh && entry.zh.length > 0) {
+      zhWrap.style.display = 'block';
+      document.getElementById('modal-zh-val').textContent = entry.zh.join(' / ');
+    } else {
+      zhWrap.style.display = 'none';
+    }
+
+    const frWrap = document.getElementById('modal-fr-wrap');
+    if (entry.fr && entry.fr.length > 0) {
+      frWrap.style.display = 'block';
+      document.getElementById('modal-fr-val').textContent = entry.fr.join(' / ');
+    } else {
+      frWrap.style.display = 'none';
+    }
+
+    document.getElementById('modal-overlay').classList.add('open');
+  }
+
+  function closeModal(event) {
+    if (!event || event.target === document.getElementById('modal-overlay')) {
+      document.getElementById('modal-overlay').classList.remove('open');
+    }
+  }
+
+  function speakModalWord() {
+    if (currentModalEntry) {
+      speakText(currentModalEntry.w);
+    }
+  }
+
+  function setLevel(level) {
+    currentLevel = level;
+    ['all','N5','N4','N3','N2','N1'].forEach(l => {
+      document.getElementById('pill-' + l).classList.toggle('active', l === level);
+    });
+    if (currentQuery) runSearch();
+  }
+
+  function setLangFilter(lang) {
+    currentLang = lang;
+    ['all','ja','en','zh','fr'].forEach(l => {
+      document.getElementById('pill-lang-' + l).classList.toggle('active', l === lang);
+    });
+    if (currentQuery) runSearch();
+  }
+
+  function speakText(text) {
+    if (!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'ja-JP';
+    u.rate = 0.92;
+    window.speechSynthesis.speak(u);
+  }
+
+  function escHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function escAttr(str) {
+    return (str || '').replace(/'/g,"\\'");
+  }
+</script>
+</body>
+</html>

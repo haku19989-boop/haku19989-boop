@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stage8-Lesson3：これはどういう意味ですか</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-main: #1E5989; --navy-dark: #143D5E;
+    --teal-main: #4FB3BE; --teal-border: #82CBD3; --teal-bg: #F0FAFA; --teal-text: #196168;
+    --yellow-bg: #FFFDEB; --yellow-border: #F0D462; --yellow-text: #8C6500; --yellow-title: #6E4F00;
+    --mid-cyan-bg: #EDF8FA; --mid-cyan-border: #79C2D0; --mid-cyan-text: #165E6D;
+    --pink-bg: #FDF0F3; --pink-border: #D88B9D; --pink-text: #8E3A4F;
+    --blue-bg: #EDF5FB; --blue-border: #89BFE0; --blue-text: #1E5989;
+    --card-bg: #FFFFFF; --text-dark: #232C3A; --text-sub: #576579; --border-light: #E2E8F0;
+    --ruby-color: #C4688A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', '游ゴシック', 'YuGothic', sans-serif; background: #F8FAF9; color: var(--text-dark); line-height: 1.6; padding-bottom: 60px; }
+  header { background: var(--navy-main); color: white; padding: 20px 24px; box-shadow: 0 4px 16px rgba(30, 89, 137, 0.12); position: sticky; top: 0; z-index: 100; }
+  .header-inner { max-width: 920px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .header-title-box { display: flex; align-items: center; gap: 12px; }
+  .badge-stage { background: var(--pink-border); color: white; font-size: 0.75rem; padding: 3px 10px; border-radius: 12px; font-weight: 700; letter-spacing: 0.5px; }
+  .header-title-box h1 { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.3px; }
+  .lang-switcher { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); border-radius: 20px; padding: 4px 10px; }
+  .lang-switcher span { font-size: 0.85rem; }
+  .lang-switcher select { background: white; border: none; border-radius: 14px; padding: 4px 10px; font-size: 0.78rem; font-weight: 600; color: var(--navy-main); cursor: pointer; }
+  .nav-bar { max-width: 920px; margin: 18px auto 0; padding: 0 16px; display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; }
+  .nav-tab-btn { background: white; border: 1.5px solid var(--blue-border); padding: 7px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: var(--navy-main); cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+  .nav-tab-btn:hover, .nav-tab-btn.active { background: var(--navy-main); color: white; border-color: var(--navy-main); }
+  .container { max-width: 920px; margin: 22px auto; padding: 0 16px; display: flex; flex-direction: column; gap: 28px; }
+  .content-card { background: var(--card-bg); border-radius: 18px; padding: 26px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03); border: 1.5px solid var(--border-light); }
+  .card-header-row { border-bottom: 2px solid var(--border-light); padding-bottom: 12px; margin-bottom: 18px; }
+  .step-label { font-size: 0.75rem; font-weight: 700; color: var(--navy-main); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 2px; }
+  .card-main-title { font-size: 1.25rem; font-weight: 700; color: var(--navy-main); }
+  .card-subtitle-en { font-size: 0.88rem; color: var(--text-dark); margin-top: 4px; line-height: 1.45; }
+  .card-subtitle-native { font-size: 0.82rem; color: var(--text-sub); margin-top: 2px; }
+  ruby { font-family: '游ゴシック', 'YuGothic', sans-serif; }
+  ruby rt { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 0.65em; color: var(--ruby-color); font-weight: 600; }
+  .conj-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-bottom: 14px; }
+  .conj-table th { background: var(--blue-bg); color: var(--navy-main); padding: 8px 12px; font-weight: 700; border: 1px solid #CBD5E0; text-align: center; font-size: 0.8rem; }
+  .conj-table td { padding: 7px 12px; border: 1px solid var(--border-light); text-align: center; font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.02rem; }
+  .conj-table tr:nth-child(even) { background: #FAFBFD; }
+  .conj-group-label { font-size: 0.78rem; font-weight: 700; color: var(--navy-main); margin: 14px 0 6px; }
+  .dialogue-card-item { background: white; border: 1.5px solid var(--border-light); border-left: 5px solid var(--blue-border); border-radius: 12px; padding: 14px 18px; margin-bottom: 12px; }
+  .dialogue-speaker-name { font-size: 0.82rem; font-weight: 700; color: var(--navy-main); margin-bottom: 4px; padding: 2px 8px; border-radius: 8px; display: inline-block; }
+  .dialogue-jp-line { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.22rem; font-weight: 600; color: var(--text-dark); margin-bottom: 6px; line-height: 1.5; }
+  .dialogue-en-line { font-size: 0.88rem; font-weight: 500; color: #334155; }
+  .dialogue-native-line { font-size: 0.82rem; color: #64748B; }
+  .tts-btn { background: none; border: 1px solid var(--border-light); border-radius: 50%; width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; color: var(--navy-main); transition: all 0.2s; padding: 0; vertical-align: middle; margin-left: 6px; flex-shrink: 0; }
+  .tts-btn:hover { background: var(--blue-bg); border-color: var(--blue-border); transform: scale(1.1); }
+  .grammar-block { margin-bottom: 26px; }
+  .grammar-visual-card { background: white; border: 1.5px solid var(--border-light); border-radius: 14px; padding: 16px 20px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02); }
+  .grammar-card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+  .grammar-tag { font-size: 0.72rem; font-weight: 700; background: var(--pink-bg); color: var(--pink-text); border: 1px solid var(--pink-border); padding: 2px 8px; border-radius: 8px; letter-spacing: 0.3px; }
+  .grammar-formula { font-family: '游ゴシック', 'YuGothic', monospace; font-size: 0.95rem; font-weight: 600; color: var(--text-sub); background: #F6FAFD; padding: 8px 14px; border-radius: 10px; border: 1px solid #E2ECF8; margin-top: 10px; }
+  .grammar-desc-en { font-size: 0.86rem; color: var(--text-dark); margin-bottom: 3px; line-height: 1.5; }
+  .grammar-desc-native { font-size: 0.8rem; color: var(--text-sub); }
+  .grammar-diagram { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; background: #F6FAFD; border: 1.5px solid #C4E0F1; border-radius: 12px; padding: 16px 18px; margin: 12px 0; }
+  .diagram-step { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+  .diagram-chip { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.02rem; font-weight: 600; padding: 8px 14px; border-radius: 10px; background: white; border: 2px solid var(--blue-border); color: var(--navy-main); white-space: nowrap; }
+  .diagram-chip.highlight { background: var(--pink-bg); border-color: var(--pink-border); color: var(--pink-text); }
+  .diagram-caption { font-size: 0.68rem; color: var(--text-sub); font-weight: 600; text-align: center; }
+  .diagram-arrow { font-size: 1.3rem; color: var(--teal-main); font-weight: 700; }
+  .examples-block { margin: 14px 0 16px; }
+  .examples-label { font-size: 0.72rem; font-weight: 700; color: var(--teal-text); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px; }
+  .example-row { display: flex; align-items: flex-start; gap: 10px; background: var(--teal-bg); border: 1px solid var(--teal-border); border-radius: 10px; padding: 10px 14px; margin-bottom: 8px; }
+  .example-num { flex: 0 0 auto; width: 20px; height: 20px; border-radius: 50%; background: var(--teal-main); color: white; font-size: 0.72rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .example-content { flex: 1; }
+  .example-jp { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.05rem; font-weight: 600; color: var(--text-dark); display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+  .example-en { font-size: 0.82rem; color: var(--text-sub); margin-top: 3px; }
+  .example-native { font-size: 0.78rem; color: #94A3B8; margin-top: 1px; }
+  .practice-part-header { display: flex; align-items: center; gap: 10px; margin: 28px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--blue-border); }
+  .practice-part-badge { background: var(--navy-main); color: white; font-size: 0.78rem; font-weight: 700; padding: 3px 10px; border-radius: 12px; }
+  .practice-part-title { font-size: 1.05rem; font-weight: 700; color: var(--navy-main); }
+  .roleplay-card { background: #FAFBFD; border: 1.5px solid var(--border-light); border-radius: 14px; padding: 16px 20px; margin-bottom: 14px; }
+  .roleplay-title { font-size: 0.92rem; font-weight: 700; color: var(--navy-main); margin-bottom: 12px; }
+  .roleplay-bubble { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
+  .roleplay-bubble:last-child { margin-bottom: 0; }
+  .roleplay-speaker { font-size: 0.76rem; font-weight: 700; padding: 3px 8px; border-radius: 8px; min-width: 60px; text-align: center; flex-shrink: 0; }
+  .speaker-a { background: var(--blue-bg); color: var(--navy-main); border: 1px solid var(--blue-border); }
+  .speaker-b { background: var(--mid-cyan-bg); color: var(--mid-cyan-text); border: 1px solid var(--mid-cyan-border); }
+  .roleplay-lines { flex-grow: 1; }
+  .roleplay-jp { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.12rem; font-weight: 600; color: var(--text-dark); margin-bottom: 2px; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+  .roleplay-trans { font-size: 0.82rem; color: var(--text-sub); }
+  .roleplay-native { font-size: 0.78rem; color: #94A3B8; }
+  .toggle-item { background: white; border: 1.5px solid var(--blue-border); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; cursor: pointer; }
+  .toggle-prompt-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .toggle-prompt-text { font-size: 0.95rem; font-weight: 600; color: var(--navy-main); }
+  .btn-check-reveal { background: var(--blue-bg); color: var(--navy-main); border: 1px solid var(--blue-border); padding: 5px 12px; border-radius: 16px; font-size: 0.78rem; font-weight: 600; flex-shrink: 0; }
+  .toggle-answer-box { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border-light); font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.2rem; font-weight: 600; color: var(--navy-main); }
+  .toggle-answer-box.show { display: block; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: translateY(0); } }
+  .kanji-display-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
+  .kanji-box-item { background: white; border: 1.5px solid var(--pink-border); border-radius: 14px; padding: 14px 10px; text-align: center; }
+  .kanji-large-char { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 2.5rem; font-weight: 600; color: var(--navy-main); line-height: 1.1; }
+  .kanji-meaning-en { font-size: 0.82rem; font-weight: 600; color: var(--pink-text); margin: 4px 0 2px; }
+  .kanji-readings-text { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 0.85rem; color: var(--text-sub); }
+  .vocab-filter-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; }
+  .filter-btn-group { display: flex; gap: 6px; }
+  .filter-pill { background: white; border: 1px solid var(--border-light); font-size: 0.78rem; font-weight: 600; padding: 4px 12px; border-radius: 14px; cursor: pointer; color: var(--text-sub); transition: all 0.2s; }
+  .filter-pill.active { background: var(--navy-main); color: white; border-color: var(--navy-main); }
+  .word-pool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
+  .word-pool-card { background: white; border: 1px solid var(--border-light); border-radius: 10px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; }
+  .pool-word-jp { font-family: '游ゴシック', 'YuGothic', sans-serif; font-weight: 600; font-size: 1.1rem; color: var(--navy-main); }
+  .pool-word-trans { font-size: 0.78rem; color: var(--text-sub); }
+  .star-btn { background: none; border: none; font-size: 1.25rem; cursor: pointer; color: #CBD5E0; transition: all 0.2s; }
+  .star-btn.active { color: #E2A03F; transform: scale(1.15); }
+  .note-box { background: var(--yellow-bg); border: 1.5px solid var(--yellow-border); border-radius: 12px; padding: 12px 16px; margin: 12px 0; font-size: 0.85rem; color: var(--yellow-title); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title-box">
+      <span class="badge-stage">STAGE 8 - LESSON 3</span>
+      <h1>これはどういう意味ですか — What Does This Mean?</h1>
+    </div>
+    <div class="lang-switcher">
+      <span>🌐</span>
+      <select id="lang-select" onchange="applyLanguage(this.value)">
+        <option value="all" selected>All / 全部</option>
+        <option value="ko">한국어</option>
+        <option value="zhcn">简体中文</option>
+        <option value="zhtw">繁體中文</option>
+        <option value="cant">粵語（香港）</option>
+      </select>
+    </div>
+  </div>
+</header>
+
+<div class="nav-bar">
+  <button class="nav-tab-btn active" onclick="scrollToSection('sec-system')">1. 命令形・禁止形／伝言</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-dialogue')">2. Main Dialogue</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-grammar')">3. Grammar & Practice</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-kanji')">4. Kanji</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-pool')">5. Word Pool</button>
+</div>
+
+<div class="container">
+
+  <section class="content-card" id="sec-system">
+    <div class="card-header-row">
+      <div class="step-label">Step 1 — 文型</div>
+      <div class="card-main-title">命令形・禁止形／〜という意味です／〜と言っていました／〜と伝えていただけませんか</div>
+      <div class="card-subtitle-en">1. 急げ。（Hurry up.） 2. 触るな。（Don't touch it.） 3. 立入禁止は入るなという意味です。（"立入禁止" means "Don't enter".） 4. ミラーさんは来週大阪へ出張すると言っていました。（Miller said he was going on a business trip to Osaka next week.） The imperative/prohibitive forms are blunt, forceful commands mainly seen on signs or shouted in urgent situations. という意味です explains what a word, sign or mark means. と言っていました reports what someone else said, and と伝えていただけませんか politely asks someone to pass on a message.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="명령형・금지형은 표지판이나 급박한 상황에서 쓰이는 직설적이고 강한 명령입니다. という意味です는 단어, 표지판, 마크의 의미를 설명할 때, と言っていました는 다른 사람이 한 말을 전할 때, と伝えていただけませんか는 정중하게 전언을 부탁할 때 씁니다." data-zhcn="命令形・禁止形是标语或紧急情况下使用的直接而强硬的命令。という意味です用来解释一个词、标志或符号的意思，と言っていました用来转达别人说过的话，と伝えていただけませんか则是礼貌地请人转达口信。" data-zhtw="命令形・禁止形是標語或緊急情況下使用的直接而強硬的命令。という意味です用來解釋一個詞、標誌或符號的意思，と言っていました用來轉達別人說過的話，と伝えていただけませんか則是禮貌地請人轉達口信。" data-cant="命令形・禁止形係標語或者緊急情況下用嘅直接又強硬嘅命令。という意味です用嚟解釋一個詞、標誌或者符號嘅意思，と言っていました用嚟轉達第啲人講過嘅嘢，と伝えていただけませんか就係好有禮貌噉請人轉達口信。"></div>
+    </div>
+    <div class="conj-group-label">Group I（い段→え段／～う→～うな）</div>
+    <table class="conj-table">
+      <tr><th>ます形</th><th>命令形</th><th>禁止形</th></tr>
+      <tr><td>言います</td><td>言え</td><td>言うな</td></tr>
+      <tr><td>書きます</td><td>書け</td><td>書くな</td></tr>
+      <tr><td>急ぎます</td><td>急げ</td><td>急ぐな</td></tr>
+      <tr><td>出します</td><td>出せ</td><td>出すな</td></tr>
+      <tr><td>飲みます</td><td>飲め</td><td>飲むな</td></tr>
+      <tr><td>座ります</td><td>座れ</td><td>座るな</td></tr>
+    </table>
+    <div class="conj-group-label">Group II（る→ろ／る→るな）／Group III</div>
+    <table class="conj-table">
+      <tr><th>ます形</th><th>命令形</th><th>禁止形</th></tr>
+      <tr><td>やめます</td><td>やめろ</td><td>やめるな</td></tr>
+      <tr><td>見ます</td><td>見ろ</td><td>見るな</td></tr>
+      <tr><td>来ます</td><td>来い</td><td>来るな</td></tr>
+      <tr><td>します</td><td>しろ</td><td>するな</td></tr>
+    </table>
+  </section>
+
+  <section class="content-card" id="sec-dialogue">
+    <div class="card-header-row">
+      <div class="step-label">Step 2 — 会話</div>
+      <div class="card-main-title">Main Dialogue: これはどういう意味ですか — What Does This Mean?</div>
+      <div class="card-subtitle-en">Watt finds a notice stuck to his car and asks a university staff member what it means — it turns out to be a parking-violation notice with a large fine.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="와트 씨는 자신의 차에 붙어 있던 종이를 발견하고 대학 직원에게 무슨 뜻인지 묻습니다 — 알고 보니 주차 위반 고지서로, 벌금이 큽니다." data-zhcn="瓦特发现车上贴了一张纸，向大学职员询问是什么意思——结果是违规停车通知，罚金还不小。" data-zhtw="瓦特發現車上貼了一張紙，向大學職員詢問是什麼意思——結果是違規停車通知，罰金還不小。" data-cant="瓦特發現架車度貼咗張紙，問大學職員係咩意思——原來係違例泊車通知，罰款仲唔少。"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--blue-bg); color:var(--navy-main); border:1px solid var(--blue-border);">ワット</div><button class="tts-btn" onclick="speakText('すみません。わたしの車にこんな紙がはってあったんですが、この漢字は何と読むんですか。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">すみません。わたしの<ruby>車<rt>くるま</rt></ruby>にこんな<ruby>紙<rt>かみ</rt></ruby>がはってあったんですが、この<ruby>漢字<rt>かんじ</rt></ruby>は<ruby>何<rt>なん</rt></ruby>と<ruby>読<rt>よ</rt></ruby>むんですか。</div>
+      <div class="dialogue-en-line">Excuse me. This piece of paper was stuck on my car. How do you read this kanji?</div>
+      <div class="dialogue-native-line i18n-native" data-ko="실례합니다. 제 차에 이런 종이가 붙어 있었는데, 이 한자는 어떻게 읽어요?" data-zhcn="不好意思，我车上贴了这样一张纸，这个汉字怎么念？" data-zhtw="不好意思，我車上貼了這樣一張紙，這個漢字怎麼唸？" data-cant="唔好意思，我架車貼咗張咁嘅紙，呢個漢字點讀㗎？"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--mid-cyan-bg); color:var(--mid-cyan-text); border:1px solid var(--mid-cyan-border);">大学職員</div><button class="tts-btn" onclick="speakText('「ちゅうしゃはん」です。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">「ちゅうしゃはん」です。</div>
+      <div class="dialogue-en-line">It's read "chuushahan".</div>
+      <div class="dialogue-native-line i18n-native" data-ko="'주샤한'이라고 읽어요." data-zhcn="读作『chuushahan』。" data-zhtw="讀作『chuushahan』。" data-cant="讀『chuushahan』。"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--blue-bg); color:var(--navy-main); border:1px solid var(--blue-border);">ワット</div><button class="tts-btn" onclick="speakText('ちゅうしゃはん……、どういう意味ですか。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">ちゅうしゃはん……、どういう<ruby>意味<rt>いみ</rt></ruby>ですか。</div>
+      <div class="dialogue-en-line">Chuushahan...... what does that mean?</div>
+      <div class="dialogue-native-line i18n-native" data-ko="주샤한이요……, 무슨 뜻이에요?" data-zhcn="chuushahan……是什么意思？" data-zhtw="chuushahan……是什麼意思？" data-cant="chuushahan……即係咩意思呀？"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--mid-cyan-bg); color:var(--mid-cyan-text); border:1px solid var(--mid-cyan-border);">大学職員</div><button class="tts-btn" onclick="speakText('止めてはいけない場所に車を止めたという意味です。どこに止めたんですか。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line"><ruby>止<rt>と</rt></ruby>めてはいけない<ruby>場所<rt>ばしょ</rt></ruby>に<ruby>車<rt>くるま</rt></ruby>を<ruby>止<rt>と</rt></ruby>めたという<ruby>意味<rt>いみ</rt></ruby>です。どこに<ruby>止<rt>と</rt></ruby>めたんですか。</div>
+      <div class="dialogue-en-line">It means you parked your car in a place where parking isn't allowed. Where did you park it?</div>
+      <div class="dialogue-native-line i18n-native" data-ko="세워서는 안 되는 곳에 차를 세웠다는 뜻이에요. 어디에 세우셨어요?" data-zhcn="意思是你把车停在了不能停车的地方。你停在哪里了？" data-zhtw="意思是你把車停在了不能停車的地方。你停在哪裡了？" data-cant="即係你泊咗架車喺唔准泊車嘅地方。你泊咗喺邊呀？"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--blue-bg); color:var(--navy-main); border:1px solid var(--blue-border);">ワット</div><button class="tts-btn" onclick="speakText('駅の前です。雑誌を買いに行って、10分だけ……。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line"><ruby>駅<rt>えき</rt></ruby>の<ruby>前<rt>まえ</rt></ruby>です。<ruby>雑誌<rt>ざっし</rt></ruby>を<ruby>買<rt>か</rt></ruby>いに<ruby>行<rt>い</rt></ruby>って、10<ruby>分<rt>ぷん</rt></ruby>だけ……。</div>
+      <div class="dialogue-en-line">In front of the station. I only went to buy a magazine, just for ten minutes......</div>
+      <div class="dialogue-native-line i18n-native" data-ko="역 앞이에요. 잡지를 사러 가서 10분만……." data-zhcn="车站前面。我只是去买本杂志，就十分钟……" data-zhtw="車站前面。我只是去買本雜誌，就十分鐘……" data-cant="車站前面。我淨係去買本雜誌，得十分鐘咋……"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--mid-cyan-bg); color:var(--mid-cyan-text); border:1px solid var(--mid-cyan-border);">大学職員</div><button class="tts-btn" onclick="speakText('駅の前だったら、10分でもだめですよ。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line"><ruby>駅<rt>えき</rt></ruby>の<ruby>前<rt>まえ</rt></ruby>だったら、10<ruby>分<rt>ぷん</rt></ruby>でもだめですよ。</div>
+      <div class="dialogue-en-line">If it's in front of the station, even ten minutes is no good.</div>
+      <div class="dialogue-native-line i18n-native" data-ko="역 앞이면 10분이라도 안 돼요." data-zhcn="如果是车站前面，就算十分钟也不行。" data-zhtw="如果是車站前面，就算十分鐘也不行。" data-cant="如果係車站前面，就算十分鐘都唔得㗎。"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--blue-bg); color:var(--navy-main); border:1px solid var(--blue-border);">ワット</div><button class="tts-btn" onclick="speakText('そうですか。罰金を払わなければなりませんか。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">そうですか。<ruby>罰金<rt>ばっきん</rt></ruby>を<ruby>払<rt>はら</rt></ruby>わなければなりませんか。</div>
+      <div class="dialogue-en-line">Really? Do I have to pay a fine?</div>
+      <div class="dialogue-native-line i18n-native" data-ko="그래요? 벌금을 내야 하나요?" data-zhcn="是吗？一定要交罚款吗？" data-zhtw="是嗎？一定要繳罰款嗎？" data-cant="係咩？一定要畀罰款咩？"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--mid-cyan-bg); color:var(--mid-cyan-text); border:1px solid var(--mid-cyan-border);">大学職員</div><button class="tts-btn" onclick="speakText('ええ、15,000円払わないといけません。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">ええ、15,000<ruby>円<rt>えん</rt></ruby><ruby>払<rt>はら</rt></ruby>わないといけません。</div>
+      <div class="dialogue-en-line">Yes, you have to pay 15,000 yen.</div>
+      <div class="dialogue-native-line i18n-native" data-ko="네, 15,000엔을 내야 해요." data-zhcn="是的，得交15,000日元。" data-zhtw="是的，得繳15,000日圓。" data-cant="係呀，要畀15,000日圓。"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--blue-bg); color:var(--navy-main); border:1px solid var(--blue-border);">ワット</div><button class="tts-btn" onclick="speakText('えっ。15,000円ですか。雑誌は300円だったんですけど……。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">えっ。15,000<ruby>円<rt>えん</rt></ruby>ですか。<ruby>雑誌<rt>ざっし</rt></ruby>は300<ruby>円<rt>えん</rt></ruby>だったんですけど……。</div>
+      <div class="dialogue-en-line">What? 15,000 yen? But the magazine was only 300 yen......</div>
+      <div class="dialogue-native-line i18n-native" data-ko="네? 15,000엔이요? 잡지는 300엔이었는데……." data-zhcn="诶，15,000日元？可杂志才300日元啊……" data-zhtw="欸，15,000日圓？可雜誌才300日圓啊……" data-cant="吓，15,000日圓？本雜誌先至300日圓咋……"></div>
+    </div>
+  </section>
+
+  <section class="content-card" id="sec-grammar">
+    <div class="card-header-row">
+      <div class="step-label">Step 3 — 例文</div>
+      <div class="card-main-title">Grammar & Comprehensive Speaking Practice</div>
+      <div class="card-subtitle-en">Work through each pattern's diagram and examples (based on this lesson's actual textbook example sentences), then try the practice questions, roleplay, and rapid-response challenge.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="각 패턴의 다이어그램과 예문(본 과의 실제 교재 예문 기반)을 익힌 후 연습 문제, 롤플레이, 즉석 챌린지에 도전하세요." data-zhcn="先看懂每个句型的图解和例句（取自本课教材原文），再挑战练习题、角色扮演与即时口说挑战。" data-zhtw="先看懂每個句型的圖解和例句（取自本課教材原文），再挑戰練習題、角色扮演與即時口說挑戰。" data-cant="先睇明每個句型嘅圖解同例句（取自呢一課教材原文），再挑戰練習題、角色扮演同即時口說挑戰。"></div>
+    </div>
+
+    <div class="practice-part-header"><span class="practice-part-badge">Part 1</span><div class="practice-part-title">Basic Pattern Drills</div></div>
+
+    <div class="grammar-block">
+      <div class="grammar-visual-card">
+        <div class="grammar-card-head"><span class="grammar-tag">Grammar A</span><strong>命令形・禁止形（急げ／触るな）</strong></div>
+        <div class="grammar-desc-en">Blunt, forceful command forms — used on signs, in emergencies, or shouted encouragement. Not used in ordinary polite conversation.</div>
+        <div class="grammar-desc-native i18n-native" data-ko="직설적이고 강한 명령형입니다 — 표지판, 긴급 상황, 응원할 때 외칩니다. 일반적인 정중한 대화에서는 쓰지 않습니다." data-zhcn="直接而强硬的命令形式——用于标语、紧急情况，或喊出来加油打气。日常礼貌对话中不使用。" data-zhtw="直接而強硬的命令形式——用於標語、緊急情況，或喊出來加油打氣。日常禮貌對話中不使用。" data-cant="直接又強硬嘅命令形式——用喺標語、緊急情況，或者大聲吶喊打氣。日常有禮貌嘅對話唔會用。"></div>
+        <div class="grammar-diagram">
+          <div class="diagram-step"><div class="diagram-chip">急ぎます</div></div>
+          <div class="diagram-arrow">→</div>
+          <div class="diagram-step"><div class="diagram-chip highlight">急げ</div><div class="diagram-caption">命令</div></div>
+          <div class="diagram-arrow">/</div>
+          <div class="diagram-step"><div class="diagram-chip highlight">急ぐな</div><div class="diagram-caption">禁止</div></div>
+        </div>
+        <div class="grammar-formula">動詞命令形（〜え／〜ろ／来い／しろ）／動詞辞書形＋な（禁止）</div>
+        <div class="examples-block">
+          <div class="examples-label">Examples (教科書の例文)</div>
+          <div class="example-row"><div class="example-num">1</div><div class="example-content"><div class="example-jp">だめだ。もう<ruby>走<rt>はし</rt></ruby>れない。……<ruby>頑張<rt>がんば</rt></ruby>れ。あと500メートルだ。<button class="tts-btn" onclick="speakText('だめだ。もう走れない。頑張れ。あと500メートルだ。')" title="Listen">🔊</button></div><div class="example-en">No good. I can't run any farther.……Keep going! There's 500 metres left.</div></div></div>
+          <div class="example-row"><div class="example-num">2</div><div class="example-content"><div class="example-jp">もう<ruby>時間<rt>じかん</rt></ruby>がない。……まだ1<ruby>分<rt>ぷん</rt></ruby>ある。あきらめるな。<button class="tts-btn" onclick="speakText('もう時間がない。まだ1分ある。あきらめるな。')" title="Listen">🔊</button></div><div class="example-en">There's no time left.……There's still a minute. Don't give up.</div></div></div>
+          <div class="example-row"><div class="example-num">3</div><div class="example-content"><div class="example-jp">この<ruby>池<rt>いけ</rt></ruby>で<ruby>遊<rt>あそ</rt></ruby>んではいけません。あそこに「<ruby>入<rt>はい</rt></ruby>るな」と<ruby>書<rt>か</rt></ruby>いてありますよ。……あ、ほんとうだ。<button class="tts-btn" onclick="speakText('この池で遊んではいけません。あそこに入るなと書いてありますよ。あ、ほんとうだ。')" title="Listen">🔊</button></div><div class="example-en">You can't play in this pond. Look, it says "Do not enter" there.……Oh, so it does.</div></div></div>
+        </div>
+      </div>
+      <div class="toggle-item" onclick="toggleAnswer('a1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">A-1. Run away!</div><button class="btn-check-reveal" id="btn-a1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-a1"><span><ruby>逃<rt>に</rt></ruby>げろ！</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('逃げろ。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('a2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">A-2. Don't make noise on the train.</div><button class="btn-check-reveal" id="btn-a2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-a2"><span><ruby>電車<rt>でんしゃ</rt></ruby>の<ruby>中<rt>なか</rt></ruby>で<ruby>騒<rt>さわ</rt></ruby>ぐな。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('電車の中で騒ぐな。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('a3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">A-3. Obey the traffic rules!</div><button class="btn-check-reveal" id="btn-a3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-a3"><span><ruby>交通規則<rt>こうつうきそく</rt></ruby>を<ruby>守<rt>まも</rt></ruby>れ。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('交通規則を守れ。')" title="Listen">🔊</button></div></div>
+    </div>
+
+    <div class="grammar-block">
+      <div class="grammar-visual-card">
+        <div class="grammar-card-head"><span class="grammar-tag">Grammar B</span><strong>Nは／このマークは＋普通形＋という意味です</strong></div>
+        <div class="grammar-desc-en">Used to explain what a word, kanji, sign or mark means.</div>
+        <div class="grammar-desc-native i18n-native" data-ko="단어, 한자, 표지판, 마크의 의미를 설명할 때 씁니다." data-zhcn="用于解释一个词、汉字、标志或符号的意思。" data-zhtw="用於解釋一個詞、漢字、標誌或符號的意思。" data-cant="用嚟解釋一個詞、漢字、標誌或者符號嘅意思。"></div>
+        <div class="grammar-diagram">
+          <div class="diagram-step"><div class="diagram-chip">立入禁止</div></div>
+          <div class="diagram-arrow">=</div>
+          <div class="diagram-step"><div class="diagram-chip highlight">入るなという意味</div></div>
+        </div>
+        <div class="grammar-formula">N（普通形）＋という意味です</div>
+        <div class="examples-block">
+          <div class="examples-label">Examples (教科書の例文)</div>
+          <div class="example-row"><div class="example-num">1</div><div class="example-content"><div class="example-jp">あの<ruby>漢字<rt>かんじ</rt></ruby>は<ruby>何<rt>なん</rt></ruby>と<ruby>読<rt>よ</rt></ruby>むんですか。……「きんえん」です。たばこを<ruby>吸<rt>す</rt></ruby>ってはいけないという<ruby>意味<rt>いみ</rt></ruby>です。<button class="tts-btn" onclick="speakText('あの漢字は何と読むんですか。きんえんです。たばこを吸ってはいけないという意味です。')" title="Listen">🔊</button></div><div class="example-en">How do you read that kanji?……It's "kin'en". It means you're not allowed to smoke.</div></div></div>
+          <div class="example-row"><div class="example-num">2</div><div class="example-content"><div class="example-jp">この<ruby>マーク<rt></rt></ruby>はどういう<ruby>意味<rt>いみ</rt></ruby>ですか。……<ruby>洗濯機<rt>せんたくき</rt></ruby>で<ruby>洗<rt>あら</rt></ruby>えるという<ruby>意味<rt>いみ</rt></ruby>です。<button class="tts-btn" onclick="speakText('このマークはどういう意味ですか。洗濯機で洗えるという意味です。')" title="Listen">🔊</button></div><div class="example-en">What does this mark mean?……It means it can be washed in a washing machine.</div></div></div>
+          <div class="example-row"><div class="example-num">3</div><div class="example-content"><div class="example-jp"><ruby>立入禁止<rt>たちいりきんし</rt></ruby>は<ruby>入<rt>はい</rt></ruby>るなという<ruby>意味<rt>いみ</rt></ruby>です。<button class="tts-btn" onclick="speakText('立入禁止は入るなという意味です。')" title="Listen">🔊</button></div><div class="example-en">"Tachiiri-kinshi" means "Don't enter".</div></div></div>
+        </div>
+      </div>
+      <div class="toggle-item" onclick="toggleAnswer('b1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">B-1. What does this kanji mean?……It means "Do Not Use".</div><button class="btn-check-reveal" id="btn-b1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-b1"><span>この<ruby>漢字<rt>かんじ</rt></ruby>はどういう<ruby>意味<rt>いみ</rt></ruby>ですか。……「<ruby>使用禁止<rt>しようきんし</rt></ruby>」という<ruby>意味<rt>いみ</rt></ruby>です。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('この漢字はどういう意味ですか。使用禁止という意味です。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('b2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">B-2. This mark means "Go Slow".</div><button class="btn-check-reveal" id="btn-b2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-b2"><span>このマークは<ruby>徐行<rt>じょこう</rt></ruby>という<ruby>意味<rt>いみ</rt></ruby>です。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('このマークは徐行という意味です。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('b3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">B-3. "Hijōguchi" means the exit to use in an emergency.</div><button class="btn-check-reveal" id="btn-b3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-b3"><span><ruby>非常口<rt>ひじょうぐち</rt></ruby>は<ruby>非常<rt>ひじょう</rt></ruby>のときに<ruby>使<rt>つか</rt></ruby>う<ruby>出口<rt>でぐち</rt></ruby>という<ruby>意味<rt>いみ</rt></ruby>です。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('非常口は非常のときに使う出口という意味です。')" title="Listen">🔊</button></div></div>
+    </div>
+
+    <div class="grammar-block">
+      <div class="grammar-visual-card">
+        <div class="grammar-card-head"><span class="grammar-tag">Grammar C</span><strong>普通形＋と言っていました／〜と伝えていただけませんか</strong></div>
+        <div class="grammar-desc-en">と言っていました reports what someone else said (reported speech). と伝えていただけませんか politely asks someone to convey a message on the speaker's behalf.</div>
+        <div class="grammar-desc-native i18n-native" data-ko="と言っていました는 다른 사람이 한 말을 전할 때(간접화법) 씁니다. と伝えていただけませんか는 화자를 대신해서 메시지를 전해 달라고 정중히 부탁할 때 씁니다." data-zhcn="と言っていました用于转述别人说过的话（间接引语）。と伝えていただけませんか则是礼貌地请人代为转达讯息。" data-zhtw="と言っていました用於轉述別人說過的話（間接引語）。と伝えていただけませんか則是禮貌地請人代為轉達訊息。" data-cant="と言っていました用嚟轉述第啲人講過嘅嘢（間接引述）。と伝えていただけませんか就係好有禮貌噉請人代為轉達口信。"></div>
+        <div class="grammar-diagram">
+          <div class="diagram-step"><div class="diagram-chip">戻ります</div></div>
+          <div class="diagram-arrow">→</div>
+          <div class="diagram-step"><div class="diagram-chip highlight">戻ると言っていました</div></div>
+        </div>
+        <div class="grammar-formula">普通形＋と言っていました（伝聞）／普通形＋と伝えていただけませんか（伝言の依頼）</div>
+        <div class="examples-block">
+          <div class="examples-label">Examples (教科書の例文)</div>
+          <div class="example-row"><div class="example-num">1</div><div class="example-content"><div class="example-jp">グプタさんはいますか。……<ruby>今<rt>いま</rt></ruby><ruby>出<rt>で</rt></ruby>かけています。30<ruby>分<rt>ぷん</rt></ruby>ぐらいで<ruby>戻<rt>もど</rt></ruby>ると<ruby>言<rt>い</rt></ruby>っていました。<button class="tts-btn" onclick="speakText('グプタさんはいますか。今出かけています。30分ぐらいで戻ると言っていました。')" title="Listen">🔊</button></div><div class="example-en">Is Mr. Gupta there?……He's out at the moment. He said he'd be back in about 30 minutes.</div></div></div>
+          <div class="example-row"><div class="example-num">2</div><div class="example-content"><div class="example-jp">すみませんが、<ruby>渡辺<rt>わたなべ</rt></ruby>さんにあしたのパーティーは6<ruby>時<rt>じ</rt></ruby>からだと<ruby>伝<rt>つた</rt></ruby>えていただけませんか。……わかりました。6<ruby>時<rt>じ</rt></ruby>からですね。<button class="tts-btn" onclick="speakText('すみませんが、渡辺さんにあしたのパーティーは6時からだと伝えていただけませんか。わかりました。6時からですね。')" title="Listen">🔊</button></div><div class="example-en">Excuse me, could you tell Ms. Watanabe that tomorrow's party starts at 6 o'clock?……All right. From 6 o'clock, right.</div></div></div>
+          <div class="example-row"><div class="example-num">3</div><div class="example-content"><div class="example-jp">ミラーさんは<ruby>来週<rt>らいしゅう</rt></ruby><ruby>大阪<rt>おおさか</rt></ruby>へ<ruby>出張<rt>しゅっちょう</rt></ruby>すると<ruby>言<rt>い</rt></ruby>っていました。<button class="tts-btn" onclick="speakText('ミラーさんは来週大阪へ出張すると言っていました。')" title="Listen">🔊</button></div><div class="example-en">Miller said he was going on a business trip to Osaka next week.</div></div></div>
+        </div>
+      </div>
+      <div class="toggle-item" onclick="toggleAnswer('c1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">C-1. Ogawa said he would come back around 5:30 in the evening.</div><button class="btn-check-reveal" id="btn-c1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-c1"><span><ruby>小川<rt>おがわ</rt></ruby>さんは<ruby>夕方<rt>ゆうがた</rt></ruby>5<ruby>時半<rt>じはん</rt></ruby>ごろ<ruby>戻<rt>もど</rt></ruby>ると<ruby>言<rt>い</rt></ruby>っていました。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('小川さんは夕方5時半ごろ戻ると言っていました。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('c2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">C-2. Could you tell Tanaka that tomorrow's meeting starts at 2 o'clock?</div><button class="btn-check-reveal" id="btn-c2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-c2"><span><ruby>田中<rt>たなか</rt></ruby>さんに、あしたの<ruby>会議<rt>かいぎ</rt></ruby>は2<ruby>時<rt>じ</rt></ruby>からだと<ruby>伝<rt>つた</rt></ruby>えていただけませんか。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('田中さんに、あしたの会議は2時からだと伝えていただけませんか。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('c3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">C-3. He said he would attend the meeting.</div><button class="btn-check-reveal" id="btn-c3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-c3"><span><ruby>彼<rt>かれ</rt></ruby>は<ruby>会議<rt>かいぎ</rt></ruby>に<ruby>出席<rt>しゅっせき</rt></ruby>すると<ruby>言<rt>い</rt></ruby>っていました。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('彼は会議に出席すると言っていました。')" title="Listen">🔊</button></div></div>
+    </div>
+
+    <div class="practice-part-header"><span class="practice-part-badge">Part 2</span><div class="practice-part-title">Roleplay — Fines and Messages (教科書の会話・練習Cより)</div></div>
+    <div class="roleplay-card">
+      <div class="roleplay-title">Scene 1: 罰金を払わなければなりませんか — Do I Have to Pay a Fine? (based on 会話)</div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-a">A</div><div class="roleplay-lines"><div class="roleplay-jp"><ruby>罰金<rt>ばっきん</rt></ruby>を<ruby>払<rt>はら</rt></ruby>わなければなりませんか。<button class="tts-btn" onclick="speakText('罰金を払わなければなりませんか。')" title="Listen">🔊</button></div><div class="roleplay-trans">Do I have to pay a fine?</div><div class="roleplay-native i18n-native" data-ko="벌금을 내야 하나요?" data-zhcn="一定要交罚款吗？" data-zhtw="一定要繳罰款嗎？" data-cant="一定要畀罰款咩？"></div></div></div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-b">B</div><div class="roleplay-lines"><div class="roleplay-jp">ええ、15,000<ruby>円<rt>えん</rt></ruby><ruby>払<rt>はら</rt></ruby>わないといけません。<button class="tts-btn" onclick="speakText('ええ、15,000円払わないといけません。')" title="Listen">🔊</button></div><div class="roleplay-trans">Yes, you have to pay 15,000 yen.</div><div class="roleplay-native i18n-native" data-ko="네, 15,000엔을 내야 해요." data-zhcn="是的，得交15,000日元。" data-zhtw="是的，得繳15,000日圓。" data-cant="係呀，要畀15,000日圓。"></div></div></div>
+    </div>
+    <div class="roleplay-card">
+      <div class="roleplay-title">Scene 2: 今、席を外しているんですが — He's Away from His Desk Right Now (based on 練習C3)</div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-a">A</div><div class="roleplay-lines"><div class="roleplay-jp"><ruby>鈴木<rt>すずき</rt></ruby>さんはいらっしゃいますか。<button class="tts-btn" onclick="speakText('鈴木さんはいらっしゃいますか。')" title="Listen">🔊</button></div><div class="roleplay-trans">Is Mr. Suzuki there?</div><div class="roleplay-native i18n-native" data-ko="스즈키 씨 계신가요?" data-zhcn="铃木先生在吗？" data-zhtw="鈴木先生在嗎？" data-cant="鈴木先生喺唔喺度呀？"></div></div></div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-b">B</div><div class="roleplay-lines"><div class="roleplay-jp"><ruby>今<rt>いま</rt></ruby><ruby>席<rt>せき</rt></ruby>を<ruby>外<rt>はず</rt></ruby>しているんですが……。<button class="tts-btn" onclick="speakText('今席を外しているんですが。')" title="Listen">🔊</button></div><div class="roleplay-trans">He's away from his desk right now......</div><div class="roleplay-native i18n-native" data-ko="지금 자리를 비웠는데요……." data-zhcn="他现在不在座位上……" data-zhtw="他現在不在座位上……" data-cant="佢而家唔喺個位度……"></div></div></div>
+    </div>
+
+    <div class="practice-part-header"><span class="practice-part-badge">Part 3</span><div class="practice-part-title">Rapid Self-Check — Mix It Up</div></div>
+    <div class="toggle-item" onclick="toggleAnswer('r1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">R-1. Don't touch it!</div><button class="btn-check-reveal" id="btn-r1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-r1"><span><ruby>触<rt>さわ</rt></ruby>るな！</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('触るな。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('r2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">R-2. This mark means "Danger".</div><button class="btn-check-reveal" id="btn-r2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-r2"><span>このマークは<ruby>危険<rt>きけん</rt></ruby>という<ruby>意味<rt>いみ</rt></ruby>です。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('このマークは危険という意味です。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('r3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">R-3. He said he would come back in 10 minutes.</div><button class="btn-check-reveal" id="btn-r3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-r3"><span><ruby>彼<rt>かれ</rt></ruby>は10<ruby>分<rt>ぷん</rt></ruby>で<ruby>戻<rt>もど</rt></ruby>ると<ruby>言<rt>い</rt></ruby>っていました。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('彼は10分で戻ると言っていました。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('r4')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">R-4. Could you tell Yamada that the deadline is the day after tomorrow?</div><button class="btn-check-reveal" id="btn-r4">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-r4"><span><ruby>山田<rt>やまだ</rt></ruby>さんに、<ruby>締<rt>し</rt></ruby>め<ruby>切<rt>き</rt></ruby>りはあさってだと<ruby>伝<rt>つた</rt></ruby>えていただけませんか。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('山田さんに、締め切りはあさってだと伝えていただけませんか。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('r5')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">R-5. Don't give up!</div><button class="btn-check-reveal" id="btn-r5">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-r5"><span>あきらめるな！</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('あきらめるな。')" title="Listen">🔊</button></div></div>
+  </section>
+
+  <section class="content-card" id="sec-kanji">
+    <div class="card-header-row">
+      <div class="step-label">Step 4</div>
+      <div class="card-main-title">New Kanji</div>
+      <div class="card-subtitle-en">Key kanji introduced in this lesson.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="이번 과에서 배운 주요 한자입니다." data-zhcn="本课新学的重点汉字。" data-zhtw="本課新學的重點漢字。" data-cant="呢一課新教嘅重點漢字。"></div>
+    </div>
+    <div class="kanji-display-grid">
+      <div class="kanji-box-item"><div class="kanji-large-char">逃げます</div><div class="kanji-meaning-en">run away</div><div class="kanji-readings-text">にげます</div></div>
+      <div class="kanji-box-item"><div class="kanji-large-char">守ります</div><div class="kanji-meaning-en">keep, follow, obey</div><div class="kanji-readings-text">まもります</div></div>
+      <div class="kanji-box-item"><div class="kanji-large-char">出席します</div><div class="kanji-meaning-en">attend (a meeting)</div><div class="kanji-readings-text">しゅっせきします</div></div>
+      <div class="kanji-box-item"><div class="kanji-large-char">伝えます</div><div class="kanji-meaning-en">convey</div><div class="kanji-readings-text">つたえます</div></div>
+      <div class="kanji-box-item"><div class="kanji-large-char">注意します</div><div class="kanji-meaning-en">be careful</div><div class="kanji-readings-text">ちゅういします</div></div>
+      <div class="kanji-box-item"><div class="kanji-large-char">戻ります</div><div class="kanji-meaning-en">come back, return</div><div class="kanji-readings-text">もどります</div></div>
+      <div class="kanji-box-item"><div class="kanji-large-char">罰金</div><div class="kanji-meaning-en">fine</div><div class="kanji-readings-text">ばっきん</div></div>
+      <div class="kanji-box-item"><div class="kanji-large-char">締め切り</div><div class="kanji-meaning-en">deadline</div><div class="kanji-readings-text">しめきり</div></div>
+    </div>
+  </section>
+
+  <section class="content-card" id="sec-pool">
+    <div class="card-header-row">
+      <div class="step-label">Step 5 — 単語 (I. Vocabulary, 教科書準拠)</div>
+      <div class="card-main-title">Lesson Word Pool</div>
+      <div class="card-subtitle-en">The full official vocabulary list for this lesson .</div>
+      <div class="card-subtitle-native i18n-native" data-ko="이 과(Stage 8 - Lesson 3)의 전체 공식 단어 목록입니다." data-zhcn="本课（第33课）的完整官方词汇表。" data-zhtw="本課的完整官方詞彙表。" data-cant="呢一課嘅完整官方詞彙表。"></div>
+    </div>
+    <div class="vocab-filter-row">
+      <div class="filter-btn-group">
+        <button class="filter-pill active" onclick="filterVocab('all')">All</button>
+        <button class="filter-pill" onclick="filterVocab('noun')">Nouns</button>
+        <button class="filter-pill" onclick="filterVocab('verb')">Verbs</button>
+        <button class="filter-pill" onclick="filterVocab('other')">Other</button>
+      </div>
+    </div>
+    <div class="word-pool-grid" id="word-pool-grid">
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">逃げます</div><div class="pool-word-trans">run away</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">騒ぎます</div><div class="pool-word-trans">make a noise</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">あきらめます</div><div class="pool-word-trans">give up</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">投げます</div><div class="pool-word-trans">throw</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">守ります</div><div class="pool-word-trans">keep, follow, obey</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">始まります［式が〜］</div><div class="pool-word-trans">(a ceremony) begin, start</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">出席します［会議に〜］</div><div class="pool-word-trans">attend (a meeting)</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">伝えます</div><div class="pool-word-trans">convey</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">注意します［車に〜］</div><div class="pool-word-trans">be careful (of the cars)</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">外します［席を〜］</div><div class="pool-word-trans">be away (from one's desk)</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">戻ります</div><div class="pool-word-trans">come back, return</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">あります［電話が〜］</div><div class="pool-word-trans">have (a telephone call)</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="verb"><div><div class="pool-word-jp">リサイクルします</div><div class="pool-word-trans">recycle</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="other"><div><div class="pool-word-jp">だめ［な］</div><div class="pool-word-trans">no good, not permitted, impossible</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="other"><div><div class="pool-word-jp">同じ</div><div class="pool-word-trans">same</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">警察</div><div class="pool-word-trans">police (station)</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">席</div><div class="pool-word-trans">seat</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">マーク</div><div class="pool-word-trans">mark, symbol</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">ボール</div><div class="pool-word-trans">ball</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">締め切り</div><div class="pool-word-trans">deadline</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">規則</div><div class="pool-word-trans">regulation, rule</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">危険</div><div class="pool-word-trans">Danger</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">使用禁止</div><div class="pool-word-trans">Do Not Use</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">立入禁止</div><div class="pool-word-trans">Keep Out</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">徐行</div><div class="pool-word-trans">Go Slow</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">出口</div><div class="pool-word-trans">exit</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">非常口</div><div class="pool-word-trans">emergency exit</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">無料</div><div class="pool-word-trans">Free of Charge</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">割引</div><div class="pool-word-trans">Discount</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">飲み放題</div><div class="pool-word-trans">All You Can Drink</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">使用中</div><div class="pool-word-trans">In Use</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">募集中</div><div class="pool-word-trans">Applications Wanted</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="other"><div><div class="pool-word-jp">〜中</div><div class="pool-word-trans">in the process of ~</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="other"><div><div class="pool-word-jp">どういう〜</div><div class="pool-word-trans">what (kind of) ~</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="other"><div><div class="pool-word-jp">いくら［〜ても］</div><div class="pool-word-trans">however ~, no matter how ~</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="other"><div><div class="pool-word-jp">あと〜</div><div class="pool-word-trans">~ left</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="other"><div><div class="pool-word-jp">〜ほど</div><div class="pool-word-trans">about ~</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">大学職員</div><div class="pool-word-trans">university staff</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">駐車違反</div><div class="pool-word-trans">parking violation</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+      <div class="word-pool-card" data-type="noun"><div><div class="pool-word-jp">罰金</div><div class="pool-word-trans">fine</div></div><button class="star-btn" onclick="toggleStar(this)">★</button></div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+function toggleAnswer(id) {
+  const box = document.getElementById('ans-' + id);
+  const btn = document.getElementById('btn-' + id);
+  const isShowing = box.classList.contains('show');
+  document.querySelectorAll('.toggle-answer-box.show').forEach(b => b.classList.remove('show'));
+  document.querySelectorAll('.btn-check-reveal').forEach(b => b.textContent = 'Reveal ▼');
+  if (!isShowing) {
+    box.classList.add('show');
+    btn.textContent = 'Hide ▲';
+  }
+}
+function closeAllAnswers() {
+  document.querySelectorAll('.toggle-answer-box.show').forEach(b => b.classList.remove('show'));
+  document.querySelectorAll('.btn-check-reveal').forEach(b => b.textContent = 'Reveal ▼');
+}
+function speakText(text) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'ja-JP';
+  utter.rate = 0.92;
+  window.speechSynthesis.speak(utter);
+}
+function toggleStar(btn) {
+  btn.classList.toggle('active');
+}
+function filterVocab(type) {
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('#word-pool-grid .word-pool-card').forEach(card => {
+    if (type === 'all' || card.dataset.type === type) {
+      card.style.display = 'flex';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+function scrollToSection(id) {
+  document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function applyLanguage(lang) {
+  document.querySelectorAll('.i18n-native').forEach(el => {
+    if (lang === 'all') {
+      const parts = [];
+      ['ko','zhcn','zhtw','cant'].forEach(l => { if (el.dataset[l]) parts.push(el.dataset[l]); });
+      el.textContent = parts.join(' / ');
+      el.style.display = parts.length ? 'block' : 'none';
+    } else if (el.dataset[lang]) {
+      el.textContent = el.dataset[lang];
+      el.style.display = 'block';
+    } else {
+      el.style.display = 'none';
+    }
+  });
+  document.querySelectorAll('.i18n-note').forEach(el => {
+    if (lang === 'all') {
+      el.textContent = el.dataset.en;
+    } else if (el.dataset[lang]) {
+      el.textContent = el.dataset[lang];
+    } else {
+      el.textContent = el.dataset.en;
+    }
+  });
+}
+window.addEventListener('DOMContentLoaded', () => { applyLanguage('all'); });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>プレ・ステージ：Basic Rules & Alphabet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-main: #1E5989; --navy-dark: #143D5E;
+    --teal-main: #4FB3BE; --teal-border: #82CBD3; --teal-bg: #F0FAFA; --teal-text: #196168;
+    --yellow-bg: #FFFDEB; --yellow-border: #F0D462; --yellow-text: #8C6500; --yellow-title: #6E4F00;
+    --mid-cyan-bg: #EDF8FA; --mid-cyan-border: #79C2D0; --mid-cyan-text: #165E6D;
+    --pink-bg: #FDF0F3; --pink-border: #D88B9D; --pink-text: #8E3A4F;
+    --blue-bg: #EDF5FB; --blue-border: #89BFE0; --blue-text: #1E5989;
+    --card-bg: #FFFFFF; --text-dark: #232C3A; --text-sub: #576579; --border-light: #E2E8F0;
+    --ruby-color: #C4688A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', '游ゴシック', 'YuGothic', sans-serif; background: #F8FAF9; color: var(--text-dark); line-height: 1.6; padding-bottom: 60px; }
+  .jp-font { font-family: '游ゴシック', 'YuGothic', sans-serif; }
+  header { background: var(--navy-main); color: white; padding: 20px 24px; box-shadow: 0 4px 16px rgba(30, 89, 137, 0.12); position: sticky; top: 0; z-index: 100; }
+  .header-inner { max-width: 920px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .header-title-box { display: flex; align-items: center; gap: 12px; }
+  .badge-stage { background: var(--pink-border); color: white; font-size: 0.75rem; padding: 3px 10px; border-radius: 12px; font-weight: 700; letter-spacing: 0.5px; }
+  .header-title-box h1 { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.3px; }
+  .lang-switcher { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); border-radius: 20px; padding: 4px 10px; }
+  .lang-switcher span { font-size: 0.85rem; }
+  .lang-switcher select { background: white; border: none; border-radius: 14px; padding: 4px 10px; font-size: 0.78rem; font-weight: 600; color: var(--navy-main); cursor: pointer; }
+
+  .nav-bar { max-width: 920px; margin: 18px auto 0; padding: 0 16px; display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; }
+  .nav-tab-btn { background: white; border: 1.5px solid var(--blue-border); padding: 7px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: var(--navy-main); cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+  .nav-tab-btn:hover, .nav-tab-btn.active { background: var(--navy-main); color: white; border-color: var(--navy-main); }
+
+  .container { max-width: 920px; margin: 22px auto; padding: 0 16px; display: flex; flex-direction: column; gap: 28px; }
+
+  .content-card { background: var(--card-bg); border-radius: 18px; padding: 26px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03); border: 1.5px solid var(--border-light); }
+  .card-header-row { border-bottom: 2px solid var(--border-light); padding-bottom: 12px; margin-bottom: 18px; }
+  .step-label { font-size: 0.75rem; font-weight: 700; color: var(--navy-main); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 2px; }
+  .card-main-title { font-size: 1.25rem; font-weight: 700; color: var(--navy-main); }
+  .card-subtitle-en { font-size: 0.88rem; color: var(--text-dark); margin-top: 4px; line-height: 1.45; }
+  .card-subtitle-native { font-size: 0.82rem; color: var(--text-sub); margin-top: 2px; }
+
+  ruby { font-family: '游ゴシック', 'YuGothic', sans-serif; }
+  ruby rt { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 0.65em; color: var(--ruby-color); font-weight: 600; }
+
+  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+  .vocab-item-card { background: #FAFCFE; border: 1.5px solid var(--blue-border); border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: center; }
+  .vocab-jp { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.15rem; font-weight: 600; color: var(--navy-main); margin-bottom: 4px; display:flex; align-items:center; gap:6px; }
+  .vocab-en { font-size: 0.84rem; font-weight: 600; color: var(--text-dark); }
+  .vocab-native { font-size: 0.78rem; color: var(--text-sub); }
+
+  .conj-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-bottom: 14px; }
+  .conj-table th { background: var(--blue-bg); color: var(--navy-main); padding: 8px 12px; font-weight: 700; border: 1px solid #CBD5E0; text-align: center; font-size: 0.8rem; }
+  .conj-table td { padding: 9px 6px; border: 1px solid var(--border-light); text-align: center; }
+  .conj-table tr:nth-child(even) { background: #FAFBFD; }
+  .conj-group-label { font-size: 0.78rem; font-weight: 700; color: var(--navy-main); margin: 14px 0 6px; }
+  .kana-cell-jp { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.35rem; font-weight: 600; color: var(--navy-main); display:block; }
+  .kana-cell-romaji { font-size: 0.72rem; color: var(--text-sub); font-weight: 600; }
+  .kana-cell-empty { background: #F3F5F7; }
+
+  .dialogue-card-item { background: white; border: 1.5px solid var(--border-light); border-left: 5px solid var(--blue-border); border-radius: 12px; padding: 14px 18px; margin-bottom: 12px; }
+  .dialogue-speaker-name { font-size: 0.82rem; font-weight: 700; color: var(--navy-main); margin-bottom: 4px; padding: 2px 8px; border-radius: 8px; display: inline-block; }
+  .dialogue-jp-line { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.22rem; font-weight: 600; color: var(--text-dark); margin-bottom: 6px; line-height: 1.5; }
+  .dialogue-en-line { font-size: 0.88rem; font-weight: 500; color: #334155; }
+  .dialogue-native-line { font-size: 0.82rem; color: #64748B; }
+
+  .tts-btn { background: none; border: 1px solid var(--border-light); border-radius: 50%; width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; color: var(--navy-main); transition: all 0.2s; padding: 0; vertical-align: middle; margin-left: 6px; flex-shrink: 0; }
+  .tts-btn:hover { background: var(--blue-bg); border-color: var(--blue-border); transform: scale(1.1); }
+
+  .grammar-block { margin-bottom: 26px; }
+  .grammar-visual-card { background: white; border: 1.5px solid var(--border-light); border-radius: 14px; padding: 16px 20px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02); }
+  .grammar-card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+  .grammar-tag { font-size: 0.72rem; font-weight: 700; background: var(--pink-bg); color: var(--pink-text); border: 1px solid var(--pink-border); padding: 2px 8px; border-radius: 8px; letter-spacing: 0.3px; }
+  .grammar-formula { font-family: '游ゴシック', 'YuGothic', monospace; font-size: 0.95rem; font-weight: 600; color: var(--text-sub); background: #F6FAFD; padding: 8px 14px; border-radius: 10px; border: 1px solid #E2ECF8; margin-top: 10px; }
+  .grammar-desc-en { font-size: 0.86rem; color: var(--text-dark); margin-bottom: 3px; line-height: 1.5; }
+  .grammar-desc-native { font-size: 0.8rem; color: var(--text-sub); }
+
+  .grammar-diagram { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; background: #F6FAFD; border: 1.5px solid #C4E0F1; border-radius: 12px; padding: 16px 18px; margin: 12px 0; }
+  .diagram-step { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+  .diagram-chip { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.02rem; font-weight: 600; padding: 8px 14px; border-radius: 10px; background: white; border: 2px solid var(--blue-border); color: var(--navy-main); white-space: nowrap; }
+  .diagram-chip.highlight { background: var(--pink-bg); border-color: var(--pink-border); color: var(--pink-text); }
+  .diagram-caption { font-size: 0.68rem; color: var(--text-sub); font-weight: 600; text-align: center; }
+  .diagram-arrow { font-size: 1.3rem; color: var(--teal-main); font-weight: 700; }
+
+  .examples-block { margin: 14px 0 16px; }
+  .examples-label { font-size: 0.72rem; font-weight: 700; color: var(--teal-text); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px; }
+  .example-row { display: flex; align-items: flex-start; gap: 10px; background: var(--teal-bg); border: 1px solid var(--teal-border); border-radius: 10px; padding: 10px 14px; margin-bottom: 8px; }
+  .example-num { flex: 0 0 auto; width: 20px; height: 20px; border-radius: 50%; background: var(--teal-main); color: white; font-size: 0.72rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .example-content { flex: 1; }
+  .example-jp { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.05rem; font-weight: 600; color: var(--text-dark); display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+  .example-en { font-size: 0.82rem; color: var(--text-sub); margin-top: 3px; }
+  .example-native { font-size: 0.78rem; color: #94A3B8; margin-top: 1px; }
+
+  .practice-part-header { display: flex; align-items: center; gap: 10px; margin: 28px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--blue-border); }
+  .practice-part-badge { background: var(--navy-main); color: white; font-size: 0.78rem; font-weight: 700; padding: 3px 10px; border-radius: 12px; }
+  .practice-part-title { font-size: 1.05rem; font-weight: 700; color: var(--navy-main); }
+
+  .toggle-item { background: white; border: 1.5px solid var(--blue-border); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; cursor: pointer; }
+  .toggle-prompt-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .toggle-prompt-text { font-size: 0.95rem; font-weight: 600; color: var(--navy-main); }
+  .btn-check-reveal { background: var(--blue-bg); color: var(--navy-main); border: 1px solid var(--blue-border); padding: 5px 12px; border-radius: 16px; font-size: 0.78rem; font-weight: 600; flex-shrink: 0; }
+  .toggle-answer-box { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border-light); font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.2rem; font-weight: 600; color: var(--navy-main); }
+  .toggle-answer-box.show { display: block; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: translateY(0); } }
+
+  .vocab-filter-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; }
+  .filter-btn-group { display: flex; gap: 6px; }
+  .filter-pill { background: white; border: 1px solid var(--border-light); font-size: 0.78rem; font-weight: 600; padding: 4px 12px; border-radius: 14px; cursor: pointer; color: var(--text-sub); transition: all 0.2s; }
+  .filter-pill.active { background: var(--navy-main); color: white; border-color: var(--navy-main); }
+  .word-pool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
+  .word-pool-card { background: white; border: 1px solid var(--border-light); border-radius: 10px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; }
+  .pool-word-jp { font-family: '游ゴシック', 'YuGothic', sans-serif; font-weight: 600; font-size: 1.1rem; color: var(--navy-main); }
+  .pool-word-trans { font-size: 0.78rem; color: var(--text-sub); }
+  .star-btn { background: none; border: none; font-size: 1.25rem; cursor: pointer; color: #CBD5E0; transition: all 0.2s; }
+  .star-btn.active { color: #E2A03F; transform: scale(1.15); }
+
+  .note-box { background: var(--yellow-bg); border: 1.5px solid var(--yellow-border); border-radius: 12px; padding: 12px 16px; margin: 12px 0; font-size: 0.85rem; color: var(--yellow-title); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title-box">
+      <span class="badge-stage">プレ・ステージ</span>
+      <h1>Basic Rules & Alphabet — ひらがな・カタカナと日本語の基礎</h1>
+    </div>
+    <div class="lang-switcher">
+      <span>🌐</span>
+      <select id="lang-select" onchange="applyLanguage(this.value)">
+        <option value="all" selected>All / 全部</option>
+        <option value="ko">한국어</option>
+        <option value="zhcn">简体中文</option>
+        <option value="zhtw">繁體中文</option>
+        <option value="cant">粵語（香港）</option>
+      </select>
+    </div>
+  </div>
+</header>
+
+<div class="nav-bar">
+  <button class="nav-tab-btn active" onclick="scrollToSection('sec-hiragana')">1. ひらがな</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-katakana')">2. カタカナ</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-pronunciation')">3. 発音のコツ</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-structure')">4. 文の仕組み</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-greetings')">5. あいさつ・数字</button>
+</div>
+
+<div class="container">
+
+  <section class="content-card" id="sec-hiragana">
+    <div class="card-header-row">
+      <div class="step-label">Step 1</div>
+      <div class="card-main-title">ひらがな — Hiragana</div>
+      <div class="card-subtitle-en">Hiragana is the basic phonetic alphabet of Japanese — every sound in Japanese can be written with it. Learn to read these 46 basic characters before anything else.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="히라가나는 일본어의 기본 표음 문자입니다. 다른 것보다 먼저 이 46개의 기본 글자를 읽을 수 있게 되어야 합니다." data-zhcn="平假名是日语最基本的表音文字，所有日语发音都能用它写出来。请先学会读这46个基本假名。" data-zhtw="平假名是日語最基本的表音文字，所有日語發音都能用它寫出來。請先學會讀這46個基本假名。" data-cant="平假名係日文最基本嘅拼音文字，所有日文發音都可以用佢寫出嚟。要先識讀呢46個基本假名。"></div>
+    </div>
+    <div class="conj-group-label">清音（せいおん）— Basic 46 Sounds</div>
+    <table class="conj-table">
+      <tr><th></th><th>あ</th><th>い</th><th>う</th><th>え</th><th>お</th></tr>
+      <tr><td class="conj-group-label" style="border:none;">-</td><td><span class="kana-cell-jp">あ</span><span class="kana-cell-romaji">a</span></td><td><span class="kana-cell-jp">い</span><span class="kana-cell-romaji">i</span></td><td><span class="kana-cell-jp">う</span><span class="kana-cell-romaji">u</span></td><td><span class="kana-cell-jp">え</span><span class="kana-cell-romaji">e</span></td><td><span class="kana-cell-jp">お</span><span class="kana-cell-romaji">o</span></td></tr>
+      <tr><td>k</td><td><span class="kana-cell-jp">か</span><span class="kana-cell-romaji">ka</span></td><td><span class="kana-cell-jp">き</span><span class="kana-cell-romaji">ki</span></td><td><span class="kana-cell-jp">く</span><span class="kana-cell-romaji">ku</span></td><td><span class="kana-cell-jp">け</span><span class="kana-cell-romaji">ke</span></td><td><span class="kana-cell-jp">こ</span><span class="kana-cell-romaji">ko</span></td></tr>
+      <tr><td>s</td><td><span class="kana-cell-jp">さ</span><span class="kana-cell-romaji">sa</span></td><td><span class="kana-cell-jp">し</span><span class="kana-cell-romaji">shi</span></td><td><span class="kana-cell-jp">す</span><span class="kana-cell-romaji">su</span></td><td><span class="kana-cell-jp">せ</span><span class="kana-cell-romaji">se</span></td><td><span class="kana-cell-jp">そ</span><span class="kana-cell-romaji">so</span></td></tr>
+      <tr><td>t</td><td><span class="kana-cell-jp">た</span><span class="kana-cell-romaji">ta</span></td><td><span class="kana-cell-jp">ち</span><span class="kana-cell-romaji">chi</span></td><td><span class="kana-cell-jp">つ</span><span class="kana-cell-romaji">tsu</span></td><td><span class="kana-cell-jp">て</span><span class="kana-cell-romaji">te</span></td><td><span class="kana-cell-jp">と</span><span class="kana-cell-romaji">to</span></td></tr>
+      <tr><td>n</td><td><span class="kana-cell-jp">な</span><span class="kana-cell-romaji">na</span></td><td><span class="kana-cell-jp">に</span><span class="kana-cell-romaji">ni</span></td><td><span class="kana-cell-jp">ぬ</span><span class="kana-cell-romaji">nu</span></td><td><span class="kana-cell-jp">ね</span><span class="kana-cell-romaji">ne</span></td><td><span class="kana-cell-jp">の</span><span class="kana-cell-romaji">no</span></td></tr>
+      <tr><td>h</td><td><span class="kana-cell-jp">は</span><span class="kana-cell-romaji">ha</span></td><td><span class="kana-cell-jp">ひ</span><span class="kana-cell-romaji">hi</span></td><td><span class="kana-cell-jp">ふ</span><span class="kana-cell-romaji">fu</span></td><td><span class="kana-cell-jp">へ</span><span class="kana-cell-romaji">he</span></td><td><span class="kana-cell-jp">ほ</span><span class="kana-cell-romaji">ho</span></td></tr>
+      <tr><td>m</td><td><span class="kana-cell-jp">ま</span><span class="kana-cell-romaji">ma</span></td><td><span class="kana-cell-jp">み</span><span class="kana-cell-romaji">mi</span></td><td><span class="kana-cell-jp">む</span><span class="kana-cell-romaji">mu</span></td><td><span class="kana-cell-jp">め</span><span class="kana-cell-romaji">me</span></td><td><span class="kana-cell-jp">も</span><span class="kana-cell-romaji">mo</span></td></tr>
+      <tr><td>y</td><td><span class="kana-cell-jp">や</span><span class="kana-cell-romaji">ya</span></td><td class="kana-cell-empty"></td><td><span class="kana-cell-jp">ゆ</span><span class="kana-cell-romaji">yu</span></td><td class="kana-cell-empty"></td><td><span class="kana-cell-jp">よ</span><span class="kana-cell-romaji">yo</span></td></tr>
+      <tr><td>r</td><td><span class="kana-cell-jp">ら</span><span class="kana-cell-romaji">ra</span></td><td><span class="kana-cell-jp">り</span><span class="kana-cell-romaji">ri</span></td><td><span class="kana-cell-jp">る</span><span class="kana-cell-romaji">ru</span></td><td><span class="kana-cell-jp">れ</span><span class="kana-cell-romaji">re</span></td><td><span class="kana-cell-jp">ろ</span><span class="kana-cell-romaji">ro</span></td></tr>
+      <tr><td>w</td><td><span class="kana-cell-jp">わ</span><span class="kana-cell-romaji">wa</span></td><td class="kana-cell-empty"></td><td class="kana-cell-empty"></td><td class="kana-cell-empty"></td><td><span class="kana-cell-jp">を</span><span class="kana-cell-romaji">wo</span></td></tr>
+      <tr><td>n</td><td><span class="kana-cell-jp">ん</span><span class="kana-cell-romaji">n</span></td><td class="kana-cell-empty"></td><td class="kana-cell-empty"></td><td class="kana-cell-empty"></td><td class="kana-cell-empty"></td></tr>
+    </table>
+    <div class="conj-group-label">濁音・半濁音（だくおん・はんだくおん）— Voiced & Semi-voiced Sounds</div>
+    <table class="conj-table">
+      <tr><th></th><th>あ</th><th>い</th><th>う</th><th>え</th><th>お</th></tr>
+      <tr><td>g</td><td><span class="kana-cell-jp">が</span><span class="kana-cell-romaji">ga</span></td><td><span class="kana-cell-jp">ぎ</span><span class="kana-cell-romaji">gi</span></td><td><span class="kana-cell-jp">ぐ</span><span class="kana-cell-romaji">gu</span></td><td><span class="kana-cell-jp">げ</span><span class="kana-cell-romaji">ge</span></td><td><span class="kana-cell-jp">ご</span><span class="kana-cell-romaji">go</span></td></tr>
+      <tr><td>z</td><td><span class="kana-cell-jp">ざ</span><span class="kana-cell-romaji">za</span></td><td><span class="kana-cell-jp">じ</span><span class="kana-cell-romaji">ji</span></td><td><span class="kana-cell-jp">ず</span><span class="kana-cell-romaji">zu</span></td><td><span class="kana-cell-jp">ぜ</span><span class="kana-cell-romaji">ze</span></td><td><span class="kana-cell-jp">ぞ</span><span class="kana-cell-romaji">zo</span></td></tr>
+      <tr><td>d</td><td><span class="kana-cell-jp">だ</span><span class="kana-cell-romaji">da</span></td><td><span class="kana-cell-jp">ぢ</span><span class="kana-cell-romaji">ji</span></td><td><span class="kana-cell-jp">づ</span><span class="kana-cell-romaji">zu</span></td><td><span class="kana-cell-jp">で</span><span class="kana-cell-romaji">de</span></td><td><span class="kana-cell-jp">ど</span><span class="kana-cell-romaji">do</span></td></tr>
+      <tr><td>b</td><td><span class="kana-cell-jp">ば</span><span class="kana-cell-romaji">ba</span></td><td><span class="kana-cell-jp">び</span><span class="kana-cell-romaji">bi</span></td><td><span class="kana-cell-jp">ぶ</span><span class="kana-cell-romaji">bu</span></td><td><span class="kana-cell-jp">べ</span><span class="kana-cell-romaji">be</span></td><td><span class="kana-cell-jp">ぼ</span><span class="kana-cell-romaji">bo</span></td></tr>
+      <tr><td>p</td><td><span class="kana-cell-jp">ぱ</span><span class="kana-cell-romaji">pa</span></td><td><span class="kana-cell-jp">ぴ</span><span class="kana-cell-romaji">pi</span></td><td><span class="kana-cell-jp">ぷ</span><span class="kana-cell-romaji">pu</span></td><td><span class="kana-cell-jp">ぺ</span><span class="kana-cell-romaji">pe</span></td><td><span class="kana-cell-jp">ぽ</span><span class="kana-cell-romaji">po</span></td></tr>
+    </table>
+    <div class="conj-group-label">拗音（ようおん）— Combined Sounds (small ゃ ゅ ょ)</div>
+    <table class="conj-table">
+      <tr><th></th><th>ゃ</th><th>ゅ</th><th>ょ</th></tr>
+      <tr><td>ky / gy / sh / j / ch / ny / hy / by / py / my / ry</td><td><span class="kana-cell-jp">きゃ・ぎゃ・しゃ・じゃ...</span></td><td><span class="kana-cell-jp">きゅ・ぎゅ・しゅ・じゅ...</span></td><td><span class="kana-cell-jp">きょ・ぎょ・しょ・じょ...</span></td></tr>
+    </table>
+    <div class="note-box i18n-note" data-en="Example: きゃ (kya), しゅ (shu), ちょ (cho) — a small ゃ/ゅ/ょ after an い-column kana glides the two sounds into one syllable." data-ko="예: きゃ(kya), しゅ(shu), ちょ(cho) — い단 글자 뒤에 작은 ゃ/ゅ/ょ가 오면 두 소리가 하나의 음절로 합쳐집니다." data-zhcn="例：きゃ(kya)、しゅ(shu)、ちょ(cho) —「い段」假名后面接小写的ゃ/ゅ/ょ，两个音会合成一个音节。" data-zhtw="例：きゃ(kya)、しゅ(shu)、ちょ(cho) —「い段」假名後面接小寫的ゃ/ゅ/ょ，兩個音會合成一個音節。" data-cant="例：きゃ(kya)、しゅ(shu)、ちょ(cho) — 「い段」假名後面接細隻嘅ゃ/ゅ/ょ，兩個音會合埋一個音節。">Example: きゃ (kya), しゅ (shu), ちょ (cho) — a small ゃ/ゅ/ょ after an い-column kana glides the two sounds into one syllable.</div>
+  </section>
+
+  <section class="content-card" id="sec-katakana">
+    <div class="card-header-row">
+      <div class="step-label">Step 2</div>
+      <div class="card-main-title">カタカナ — Katakana</div>
+      <div class="card-subtitle-en">Katakana has the exact same sounds as hiragana, just different-looking characters. It's mainly used for loanwords from other languages, foreign names, and onomatopoeia.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="가타카나는 히라가나와 발음이 완전히 같고, 모양만 다릅니다. 주로 외래어, 외국 이름, 의성어에 사용됩니다." data-zhcn="片假名的发音和平假名完全一样，只是字形不同。主要用于外来语、外国人名和拟声词。" data-zhtw="片假名的發音和平假名完全一樣，只是字形不同。主要用於外來語、外國人名和擬聲詞。" data-cant="片假名嘅發音同平假名一樣，淨係字形唔同。主要用嚟寫外來語、外國人名同擬聲詞。"></div>
+    </div>
+    <table class="conj-table">
+      <tr><th></th><th>ア</th><th>イ</th><th>ウ</th><th>エ</th><th>オ</th></tr>
+      <tr><td>-</td><td><span class="kana-cell-jp">ア</span><span class="kana-cell-romaji">a</span></td><td><span class="kana-cell-jp">イ</span><span class="kana-cell-romaji">i</span></td><td><span class="kana-cell-jp">ウ</span><span class="kana-cell-romaji">u</span></td><td><span class="kana-cell-jp">エ</span><span class="kana-cell-romaji">e</span></td><td><span class="kana-cell-jp">オ</span><span class="kana-cell-romaji">o</span></td></tr>
+      <tr><td>k</td><td><span class="kana-cell-jp">カ</span><span class="kana-cell-romaji">ka</span></td><td><span class="kana-cell-jp">キ</span><span class="kana-cell-romaji">ki</span></td><td><span class="kana-cell-jp">ク</span><span class="kana-cell-romaji">ku</span></td><td><span class="kana-cell-jp">ケ</span><span class="kana-cell-romaji">ke</span></td><td><span class="kana-cell-jp">コ</span><span class="kana-cell-romaji">ko</span></td></tr>
+      <tr><td>s</td><td><span class="kana-cell-jp">サ</span><span class="kana-cell-romaji">sa</span></td><td><span class="kana-cell-jp">シ</span><span class="kana-cell-romaji">shi</span></td><td><span class="kana-cell-jp">ス</span><span class="kana-cell-romaji">su</span></td><td><span class="kana-cell-jp">セ</span><span class="kana-cell-romaji">se</span></td><td><span class="kana-cell-jp">ソ</span><span class="kana-cell-romaji">so</span></td></tr>
+      <tr><td>t</td><td><span class="kana-cell-jp">タ</span><span class="kana-cell-romaji">ta</span></td><td><span class="kana-cell-jp">チ</span><span class="kana-cell-romaji">chi</span></td><td><span class="kana-cell-jp">ツ</span><span class="kana-cell-romaji">tsu</span></td><td><span class="kana-cell-jp">テ</span><span class="kana-cell-romaji">te</span></td><td><span class="kana-cell-jp">ト</span><span class="kana-cell-romaji">to</span></td></tr>
+      <tr><td>n</td><td><span class="kana-cell-jp">ナ</span><span class="kana-cell-romaji">na</span></td><td><span class="kana-cell-jp">ニ</span><span class="kana-cell-romaji">ni</span></td><td><span class="kana-cell-jp">ヌ</span><span class="kana-cell-romaji">nu</span></td><td><span class="kana-cell-jp">ネ</span><span class="kana-cell-romaji">ne</span></td><td><span class="kana-cell-jp">ノ</span><span class="kana-cell-romaji">no</span></td></tr>
+      <tr><td>h</td><td><span class="kana-cell-jp">ハ</span><span class="kana-cell-romaji">ha</span></td><td><span class="kana-cell-jp">ヒ</span><span class="kana-cell-romaji">hi</span></td><td><span class="kana-cell-jp">フ</span><span class="kana-cell-romaji">fu</span></td><td><span class="kana-cell-jp">ヘ</span><span class="kana-cell-romaji">he</span></td><td><span class="kana-cell-jp">ホ</span><span class="kana-cell-romaji">ho</span></td></tr>
+      <tr><td>m</td><td><span class="kana-cell-jp">マ</span><span class="kana-cell-romaji">ma</span></td><td><span class="kana-cell-jp">ミ</span><span class="kana-cell-romaji">mi</span></td><td><span class="kana-cell-jp">ム</span><span class="kana-cell-romaji">mu</span></td><td><span class="kana-cell-jp">メ</span><span class="kana-cell-romaji">me</span></td><td><span class="kana-cell-jp">モ</span><span class="kana-cell-romaji">mo</span></td></tr>
+      <tr><td>y</td><td><span class="kana-cell-jp">ヤ</span><span class="kana-cell-romaji">ya</span></td><td class="kana-cell-empty"></td><td><span class="kana-cell-jp">ユ</span><span class="kana-cell-romaji">yu</span></td><td class="kana-cell-empty"></td><td><span class="kana-cell-jp">ヨ</span><span class="kana-cell-romaji">yo</span></td></tr>
+      <tr><td>r</td><td><span class="kana-cell-jp">ラ</span><span class="kana-cell-romaji">ra</span></td><td><span class="kana-cell-jp">リ</span><span class="kana-cell-romaji">ri</span></td><td><span class="kana-cell-jp">ル</span><span class="kana-cell-romaji">ru</span></td><td><span class="kana-cell-jp">レ</span><span class="kana-cell-romaji">re</span></td><td><span class="kana-cell-jp">ロ</span><span class="kana-cell-romaji">ro</span></td></tr>
+      <tr><td>w</td><td><span class="kana-cell-jp">ワ</span><span class="kana-cell-romaji">wa</span></td><td class="kana-cell-empty"></td><td class="kana-cell-empty"></td><td class="kana-cell-empty"></td><td><span class="kana-cell-jp">ヲ</span><span class="kana-cell-romaji">wo</span></td></tr>
+      <tr><td>n</td><td><span class="kana-cell-jp">ン</span><span class="kana-cell-romaji">n</span></td><td class="kana-cell-empty"></td><td class="kana-cell-empty"></td><td class="kana-cell-empty"></td><td class="kana-cell-empty"></td></tr>
+    </table>
+    <div class="examples-block">
+      <div class="examples-label">Common Katakana Words</div>
+      <div class="example-row"><div class="example-num">1</div><div class="example-content"><div class="example-jp">コーヒー<button class="tts-btn" onclick="speakText('コーヒー')" title="Listen">🔊</button></div><div class="example-en">coffee</div></div></div>
+      <div class="example-row"><div class="example-num">2</div><div class="example-content"><div class="example-jp">テレビ<button class="tts-btn" onclick="speakText('テレビ')" title="Listen">🔊</button></div><div class="example-en">television</div></div></div>
+      <div class="example-row"><div class="example-num">3</div><div class="example-content"><div class="example-jp">アメリカ<button class="tts-btn" onclick="speakText('アメリカ')" title="Listen">🔊</button></div><div class="example-en">America</div></div></div>
+    </div>
+  </section>
+
+  <section class="content-card" id="sec-pronunciation">
+    <div class="card-header-row">
+      <div class="step-label">Step 3</div>
+      <div class="card-main-title">発音のコツ — Pronunciation Points</div>
+      <div class="card-subtitle-en">A few rules that change meaning completely if missed — pay close attention to these from day one.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="놓치면 의미가 완전히 바뀌는 몇 가지 규칙입니다 — 처음부터 주의하세요." data-zhcn="以下几点如果忽略，意思会完全改变——请从一开始就多加注意。" data-zhtw="以下幾點如果忽略，意思會完全改變——請從一開始就多加注意。" data-cant="以下幾點如果唔留意，意思會完全唔同——由一開始就要留心。"></div>
+    </div>
+
+    <div class="grammar-block">
+      <div class="grammar-visual-card">
+        <div class="grammar-card-head"><span class="grammar-tag">長音</span><strong>Long Vowels（ちょうおん）</strong></div>
+        <div class="grammar-desc-en">Some vowels are held for twice as long. This is not decoration — it changes the word entirely.</div>
+        <div class="grammar-desc-native i18n-native" data-ko="어떤 모음은 두 배 길게 발음합니다. 장식이 아니라 단어 자체가 완전히 바뀝니다." data-zhcn="有些母音要拉长发音两拍，这不是装饰，而是会变成完全不同的单字。" data-zhtw="有些母音要拉長發音兩拍，這不是裝飾，而是會變成完全不同的單字。" data-cant="有啲母音要拖長兩拍嚟讀，唔係裝飾嚟嘅，會變成完全唔同嘅字。"></div>
+        <div class="examples-block">
+          <div class="examples-label">Examples</div>
+          <div class="example-row"><div class="example-num">1</div><div class="example-content"><div class="example-jp">おばさん<button class="tts-btn" onclick="speakText('おばさん')" title="Listen">🔊</button> ／ おばあさん<button class="tts-btn" onclick="speakText('おばあさん')" title="Listen">🔊</button></div><div class="example-en">aunt / grandmother</div></div></div>
+          <div class="example-row"><div class="example-num">2</div><div class="example-content"><div class="example-jp">ゆき<button class="tts-btn" onclick="speakText('ゆき')" title="Listen">🔊</button> ／ ゆうき<button class="tts-btn" onclick="speakText('ゆうき')" title="Listen">🔊</button></div><div class="example-en">snow / courage</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grammar-block">
+      <div class="grammar-visual-card">
+        <div class="grammar-card-head"><span class="grammar-tag">促音</span><strong>Small っ — the Glottal Stop（そくおん）</strong></div>
+        <div class="grammar-desc-en">A small っ before another consonant means: hold a tiny silent beat, then release into the next sound.</div>
+        <div class="grammar-desc-native i18n-native" data-ko="다음 자음 앞에 작은 っ가 오면, 아주 짧게 숨을 멈췄다가 다음 소리를 내라는 뜻입니다." data-zhcn="小写的っ出现在下一个子音前，代表要先停顿一拍，再发出下一个音。" data-zhtw="小寫的っ出現在下一個子音前，代表要先停頓一拍，再發出下一個音。" data-cant="細隻嘅っ出現喺下一個輔音前面，即係要停一拍先，再讀出下一個音。"></div>
+        <div class="examples-block">
+          <div class="examples-label">Examples</div>
+          <div class="example-row"><div class="example-num">1</div><div class="example-content"><div class="example-jp">きて<button class="tts-btn" onclick="speakText('きて')" title="Listen">🔊</button> ／ きって<button class="tts-btn" onclick="speakText('きって')" title="Listen">🔊</button></div><div class="example-en">come (te-form) / postage stamp</div></div></div>
+          <div class="example-row"><div class="example-num">2</div><div class="example-content"><div class="example-jp">かこ<button class="tts-btn" onclick="speakText('かこ')" title="Listen">🔊</button> ／ かっこいい<button class="tts-btn" onclick="speakText('かっこいい')" title="Listen">🔊</button></div><div class="example-en">the past / cool-looking</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grammar-block">
+      <div class="grammar-visual-card">
+        <div class="grammar-card-head"><span class="grammar-tag">撥音</span><strong>ん — The N Sound（はつおん）</strong></div>
+        <div class="grammar-desc-en">ん is its own full syllable, always exactly one beat, even though it's a consonant with no vowel.</div>
+        <div class="grammar-desc-native i18n-native" data-ko="ん는 독립된 하나의 음절로, 모음이 없는 자음이지만 항상 정확히 한 박자입니다." data-zhcn="ん本身就是一个完整的音节，虽然是没有母音的子音，但永远占一拍。" data-zhtw="ん本身就是一個完整的音節，雖然是沒有母音的子音，但永遠佔一拍。" data-cant="ん本身就係一個完整嘅音節，雖然係冇母音嘅輔音，但永遠佔一拍。"></div>
+        <div class="examples-block">
+          <div class="examples-label">Examples</div>
+          <div class="example-row"><div class="example-num">1</div><div class="example-content"><div class="example-jp">ほん<button class="tts-btn" onclick="speakText('ほん')" title="Listen">🔊</button></div><div class="example-en">book (2 beats: ho-n)</div></div></div>
+          <div class="example-row"><div class="example-num">2</div><div class="example-content"><div class="example-jp">せんせい<button class="tts-btn" onclick="speakText('せんせい')" title="Listen">🔊</button></div><div class="example-en">teacher (4 beats: se-n-se-i)</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-card" id="sec-structure">
+    <div class="card-header-row">
+      <div class="step-label">Step 4</div>
+      <div class="card-main-title">日本語の文の仕組み — How a Japanese Sentence is Built</div>
+      <div class="card-subtitle-en">English word order is Subject → Verb → Object. Japanese word order is Subject → Object → Verb — and small "marker" words called particles (助詞) show each word's role, no matter where it sits in the sentence.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="영어는 주어→동사→목적어 순서지만, 일본어는 주어→목적어→동사 순서입니다. 그리고 조사(助詞)라는 작은 표시어가 문장 속 위치와 상관없이 각 단어의 역할을 알려줍니다." data-zhcn="英语的语序是主语→动词→宾语，日语则是主语→宾语→动词。而且日语用「助词」这种小小的标记词来表示每个词的角色，不受语序影响。" data-zhtw="英語的語序是主詞→動詞→受詞，日語則是主詞→受詞→動詞。而且日語用「助詞」這種小小的標記詞來表示每個詞的角色，不受語序影響。" data-cant="英文嘅語序係主詞→動詞→受詞，但日文係主詞→受詞→動詞。而且日文用「助詞」呢啲細細嘅標記字嚟話你知每個字嘅角色，唔受語序影響。"></div>
+    </div>
+    <div class="grammar-diagram">
+      <div class="diagram-step"><div class="diagram-chip highlight">わたしは</div><div class="diagram-caption">Subject + topic marker は<br>"As for me"</div></div>
+      <div class="diagram-arrow">→</div>
+      <div class="diagram-step"><div class="diagram-chip highlight">すしを</div><div class="diagram-caption">Object + marker を</div></div>
+      <div class="diagram-arrow">→</div>
+      <div class="diagram-step"><div class="diagram-chip highlight">たべます。</div><div class="diagram-caption">Verb (always comes last)</div></div>
+    </div>
+    <div class="examples-block">
+      <div class="examples-label">Full sentence</div>
+      <div class="example-row"><div class="example-num">1</div><div class="example-content"><div class="example-jp">わたしはすしをたべます。<button class="tts-btn" onclick="speakText('わたしはすしをたべます。')" title="Listen">🔊</button></div><div class="example-en">I eat sushi. (literally: "As for me, sushi, eat.")</div></div></div>
+    </div>
+    <div class="note-box i18n-note" data-en="Because particles like は and を mark each word's job, Japanese word order is actually more flexible than English — the verb just always goes at the very end. You'll start learning particles one at a time from Stage 1, beginning with は." data-ko="は나 を같은 조사가 각 단어의 역할을 표시해주기 때문에, 일본어 어순은 사실 영어보다 더 유연합니다. 동사만 항상 맨 끝에 옵니다. Stage 1부터 は를 시작으로 조사를 하나씩 배우게 됩니다." data-zhcn="因为は、を这类助词会标出每个词的作用，日语的语序其实比英语更自由，只有动词永远放在最后。从Stage 1开始会从は起逐一学习助词。" data-zhtw="因為は、を這類助詞會標出每個詞的作用，日語的語序其實比英語更自由，只有動詞永遠放在最後。從Stage 1開始會從は起逐一學習助詞。" data-cant="因為は、を呢啲助詞會標出每個字嘅作用，日文嘅語序其實比英文更自由，淨係動詞永遠擺喺最尾。由Stage 1開始會由は起逐個學助詞。">Because particles like は and を mark each word's job, Japanese word order is actually more flexible than English — the verb just always goes at the very end. You'll start learning particles one at a time from Stage 1, beginning with は.</div>
+  </section>
+
+  <section class="content-card" id="sec-greetings">
+    <div class="card-header-row">
+      <div class="step-label">Step 5</div>
+      <div class="card-main-title">あいさつ・代名詞・数字 — Greetings, Pronouns & Numbers</div>
+      <div class="card-subtitle-en">The words you'll use in every single class from Lesson 1 onward — worth memorizing solidly before we begin.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="1과부터 매 수업마다 쓰게 될 단어들입니다 — 시작하기 전에 확실히 외워두는 것이 좋습니다." data-zhcn="这些是从第1课开始每堂课都会用到的词，建议在正式开始前先熟记。" data-zhtw="這些是從Stage 1 - Lesson 1開始每堂課都會用到的詞，建議在正式開始前先熟記。" data-cant="呢啲係由Stage 1 - Lesson 1開始每堂堂都會用到嘅字，建議正式開始之前要熟記。"></div>
+    </div>
+
+    <div class="practice-part-header"><span class="practice-part-badge">A</span><div class="practice-part-title">自己紹介の会話 — Self-introduction Dialogue</div></div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--blue-bg); color:var(--navy-main); border:1px solid var(--blue-border);">田中</div><button class="tts-btn" onclick="speakText('はじめまして。田中です。よろしくお願いします。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">はじめまして。<ruby>田中<rt>たなか</rt></ruby>です。よろしくお<ruby>願<rt>ねが</rt></ruby>いします。</div>
+      <div class="dialogue-en-line">Nice to meet you. I'm Tanaka. Nice to meet you.</div>
+      <div class="dialogue-native-line i18n-native" data-ko="처음 뵙겠습니다. 다나카입니다. 잘 부탁드립니다." data-zhcn="初次见面。我是田中。请多关照。" data-zhtw="初次見面。我是田中。請多關照。" data-cant="幸會。我係田中。請多多指教。"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--mid-cyan-bg); color:var(--mid-cyan-text); border:1px solid var(--mid-cyan-border);">鈴木</div><button class="tts-btn" onclick="speakText('はじめまして。鈴木です。こちらこそよろしくお願いします。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">はじめまして。<ruby>鈴木<rt>すずき</rt></ruby>です。こちらこそよろしくお<ruby>願<rt>ねが</rt></ruby>いします。</div>
+      <div class="dialogue-en-line">Nice to meet you too. I'm Suzuki. Nice to meet you as well.</div>
+      <div class="dialogue-native-line i18n-native" data-ko="처음 뵙겠습니다. 스즈키입니다. 저야말로 잘 부탁드립니다." data-zhcn="初次见面。我是铃木。彼此彼此，请多关照。" data-zhtw="初次見面。我是鈴木。彼此彼此，請多關照。" data-cant="幸會。我係鈴木。彼此彼此，請多多指教。"></div>
+    </div>
+
+    <div class="practice-part-header"><span class="practice-part-badge">B</span><div class="practice-part-title">教室であいさつ — Classroom Greetings & Useful Phrases</div></div>
+    <div class="vocab-grid">
+      <div class="vocab-item-card"><div class="vocab-jp">はい<button class="tts-btn" onclick="speakText('はい')" title="Listen">🔊</button></div><div class="vocab-en">yes</div><div class="vocab-native i18n-native" data-ko="네" data-zhcn="是／好" data-zhtw="是／好" data-cant="係／好"></div></div>
+      <div class="vocab-item-card"><div class="vocab-jp">いいえ<button class="tts-btn" onclick="speakText('いいえ')" title="Listen">🔊</button></div><div class="vocab-en">no</div><div class="vocab-native i18n-native" data-ko="아니요" data-zhcn="不是／不" data-zhtw="不是／不" data-cant="唔係／唔"></div></div>
+      <div class="vocab-item-card"><div class="vocab-jp">元気ですか<button class="tts-btn" onclick="speakText('元気ですか')" title="Listen">🔊</button></div><div class="vocab-en">How are you?</div><div class="vocab-native i18n-native" data-ko="잘 지내세요?" data-zhcn="你好吗？" data-zhtw="你好嗎？" data-cant="你好嗎？"></div></div>
+      <div class="vocab-item-card"><div class="vocab-jp">元気です<button class="tts-btn" onclick="speakText('元気です')" title="Listen">🔊</button></div><div class="vocab-en">I'm fine</div><div class="vocab-native i18n-native" data-ko="잘 지내요" data-zhcn="我很好" data-zhtw="我很好" data-cant="我幾好"></div></div>
+      <div class="vocab-item-card"><div class="vocab-jp">すみません<button class="tts-btn" onclick="speakText('すみません')" title="Listen">🔊</button></div><div class="vocab-en">excuse me / sorry</div><div class="vocab-native i18n-native" data-ko="저기요／죄송합니다" data-zhcn="不好意思／对不起" data-zhtw="不好意思／對不起" data-cant="唔該／對唔住"></div></div>
+      <div class="vocab-item-card"><div class="vocab-jp">ありがとうございます<button class="tts-btn" onclick="speakText('ありがとうございます')" title="Listen">🔊</button></div><div class="vocab-en">thank you</div><div class="vocab-native i18n-native" data-ko="감사합니다" data-zhcn="谢谢" data-zhtw="謝謝" data-cant="多謝"></div></div>
+      <div class="vocab-item-card"><div class="vocab-jp">わかります<button class="tts-btn" onclick="speakText('わかります')" title="Listen">🔊</button></div><div class="vocab-en">I understand</div><div class="vocab-native i18n-native" data-ko="알겠어요" data-zhcn="我明白" data-zhtw="我明白" data-cant="我明白"></div></div>
+      <div class="vocab-item-card"><div class="vocab-jp">わかりません<button class="tts-btn" onclick="speakText('わかりません')" title="Listen">🔊</button></div><div class="vocab-en">I don't understand</div><div class="vocab-native i18n-native" data-ko="모르겠어요" data-zhcn="我不明白" data-zhtw="我不明白" data-cant="我唔明"></div></div>
+      <div class="vocab-item-card"><div class="vocab-jp">もう一度お願いします<button class="tts-btn" onclick="speakText('もう一度お願いします')" title="Listen">🔊</button></div><div class="vocab-en">please say it again</div><div class="vocab-native i18n-native" data-ko="다시 한 번 부탁드립니다" data-zhcn="请再说一次" data-zhtw="請再說一次" data-cant="唔該再講一次"></div></div>
+      <div class="vocab-item-card"><div class="vocab-jp">ゆっくりお願いします<button class="tts-btn" onclick="speakText('ゆっくりお願いします')" title="Listen">🔊</button></div><div class="vocab-en">please speak slowly</div><div class="vocab-native i18n-native" data-ko="천천히 부탁드립니다" data-zhcn="请说慢一点" data-zhtw="請說慢一點" data-cant="唔該慢慢講"></div></div>
+    </div>
+
+    <div class="practice-part-header"><span class="practice-part-badge">C</span><div class="practice-part-title">代名詞 — Basic Pronouns</div></div>
+    <div class="vocab-grid">
+      <div class="vocab-item-card"><div class="vocab-jp">わたし<button class="tts-btn" onclick="speakText('わたし')" title="Listen">🔊</button></div><div class="vocab-en">I / me</div><div class="vocab-native i18n-native" data-ko="저／나" data-zhcn="我" data-zhtw="我" data-cant="我"></div></div>
+      <div class="vocab-item-card"><div class="vocab-jp">あなた<button class="tts-btn" onclick="speakText('あなた')" title="Listen">🔊</button></div><div class="vocab-en">you</div><div class="vocab-native i18n-native" data-ko="당신" data-zhcn="你" data-zhtw="你" data-cant="你"></div></div>
+      <div class="vocab-item-card"><div class="vocab-jp">あの人<button class="tts-btn" onclick="speakText('あのひと')" title="Listen">🔊</button></div><div class="vocab-en">that person (over there)</div><div class="vocab-native i18n-native" data-ko="저 사람" data-zhcn="那个人" data-zhtw="那個人" data-cant="嗰個人"></div></div>
+      <div class="vocab-item-card"><div class="vocab-jp">〜さん<button class="tts-btn" onclick="speakText('さん')" title="Listen">🔊</button></div><div class="vocab-en">Mr./Ms./Mx. ~ (polite title after a name — never attach to your own name)</div><div class="vocab-native i18n-native" data-ko="~씨 (이름 뒤에 붙이는 존칭, 자기 이름에는 쓰지 않음)" data-zhcn="~先生／小姐（接在姓名后的敬称，绝不用在自己名字上）" data-zhtw="~先生／小姐（接在姓名後的敬稱，絕不用在自己名字上）" data-cant="~先生／小姐（跟喺姓名後面嘅敬稱，唔可以用喺自己個名度）"></div></div>
+    </div>
+
+    <div class="practice-part-header"><span class="practice-part-badge">D</span><div class="practice-part-title">数字 0〜10 — Numbers 0-10</div></div>
+    <table class="conj-table">
+      <tr><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th></tr>
+      <tr>
+        <td><span class="kana-cell-jp">ゼロ・れい</span></td>
+        <td><span class="kana-cell-jp">いち</span></td>
+        <td><span class="kana-cell-jp">に</span></td>
+        <td><span class="kana-cell-jp">さん</span></td>
+        <td><span class="kana-cell-jp">よん・し</span></td>
+        <td><span class="kana-cell-jp">ご</span></td>
+        <td><span class="kana-cell-jp">ろく</span></td>
+        <td><span class="kana-cell-jp">なな・しち</span></td>
+        <td><span class="kana-cell-jp">はち</span></td>
+        <td><span class="kana-cell-jp">きゅう・く</span></td>
+        <td><span class="kana-cell-jp">じゅう</span></td>
+      </tr>
+    </table>
+    <div class="note-box i18n-note" data-en="4, 7, and 9 have two readings each — you'll learn which one to use in which situation as counters are introduced later in the course." data-ko="4, 7, 9는 각각 두 가지 읽는 법이 있습니다 — 나중에 조수사를 배울 때 어느 상황에서 어떤 것을 쓰는지 배우게 됩니다." data-zhcn="4、7、9各有两种读法——之后学到量词时会说明该用哪一种。" data-zhtw="4、7、9各有兩種讀法——之後學到量詞時會說明該用哪一種。" data-cant="4、7、9各有兩種讀法——之後學到量詞嘅時候會講清楚用邊種。">4, 7, and 9 have two readings each — you'll learn which one to use in which situation as counters are introduced later in the course.</div>
+
+    <div class="practice-part-header" style="margin-top:30px;"><span class="practice-part-badge">★</span><div class="practice-part-title">Starred Word Pool</div></div>
+    <div class="vocab-filter-row">
+      <div class="filter-btn-group">
+        <button class="filter-pill active" id="filter-all" onclick="filterVocab('all')">All</button>
+        <button class="filter-pill" id="filter-starred" onclick="filterVocab('starred')">Starred ☆</button>
+      </div>
+    </div>
+    <div class="word-pool-grid" id="word-pool-list">
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">はい</div><div class="pool-word-trans">yes</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">いいえ</div><div class="pool-word-trans">no</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">元気ですか</div><div class="pool-word-trans">How are you?</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">元気です</div><div class="pool-word-trans">I'm fine</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">すみません</div><div class="pool-word-trans">excuse me / sorry</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">ありがとうございます</div><div class="pool-word-trans">thank you</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">わかります</div><div class="pool-word-trans">I understand</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">わかりません</div><div class="pool-word-trans">I don't understand</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">わたし</div><div class="pool-word-trans">I / me</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">あなた</div><div class="pool-word-trans">you</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">〜さん</div><div class="pool-word-trans">Mr./Ms. ~</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">はじめまして</div><div class="pool-word-trans">nice to meet you</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">よろしくお願いします</div><div class="pool-word-trans">nice to meet you / please treat me well</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  let currentOpenId = null;
+  function toggleAnswer(id) {
+    const ans = document.getElementById('ans-' + id);
+    const btn = document.getElementById('btn-' + id);
+    const isOpen = ans.classList.contains('show');
+    if (currentOpenId && currentOpenId !== id) {
+      const prevAns = document.getElementById('ans-' + currentOpenId);
+      const prevBtn = document.getElementById('btn-' + currentOpenId);
+      if (prevAns) { prevAns.classList.remove('show'); prevBtn.innerText = 'Reveal ▼'; }
+    }
+    if (isOpen) { ans.classList.remove('show'); btn.innerText = 'Reveal ▼'; currentOpenId = null; }
+    else { ans.classList.add('show'); btn.innerText = 'Hide ▲'; currentOpenId = id; }
+  }
+  function closeAllAnswers() {
+    document.querySelectorAll('.toggle-answer-box.show').forEach(ans => {
+      ans.classList.remove('show');
+      const id = ans.id.replace('ans-', '');
+      const btn = document.getElementById('btn-' + id);
+      if (btn) btn.innerText = 'Reveal ▼';
+    });
+    currentOpenId = null;
+  }
+  function speakText(text) {
+    if (!('speechSynthesis' in window)) { alert('Your browser does not support audio speech synthesis.'); return; }
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'ja-JP';
+    utterance.rate = 0.92;
+    window.speechSynthesis.speak(utterance);
+  }
+  function toggleStar(btn) {
+    btn.classList.toggle('active');
+    btn.innerText = btn.classList.contains('active') ? '★' : '☆';
+    const card = btn.closest('.word-pool-card');
+    const isStarred = btn.classList.contains('active');
+    card.setAttribute('data-starred', isStarred ? 'true' : 'false');
+    const btnStarred = document.getElementById('filter-starred');
+    if (btnStarred && btnStarred.classList.contains('active') && !isStarred) { card.style.display = 'none'; }
+  }
+  function filterVocab(type) {
+    const cards = document.querySelectorAll('.word-pool-card');
+    const btnAll = document.getElementById('filter-all');
+    const btnStarred = document.getElementById('filter-starred');
+    if (type === 'all') { btnAll.classList.add('active'); btnStarred.classList.remove('active'); cards.forEach(c => c.style.display = 'flex'); }
+    else { btnAll.classList.remove('active'); btnStarred.classList.add('active'); cards.forEach(c => { c.style.display = (c.getAttribute('data-starred') === 'true') ? 'flex' : 'none'; }); }
+  }
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    const tabs = document.querySelectorAll('.nav-tab-btn');
+    tabs.forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+  function applyLanguage(lang) {
+    document.querySelectorAll('.i18n-native').forEach(el => {
+      if (lang === 'all') {
+        const parts = [el.dataset.ko, el.dataset.zhcn, el.dataset.zhtw, el.dataset.cant].filter(Boolean);
+        el.textContent = parts.join(' / ');
+      } else {
+        el.textContent = el.dataset[lang] || '';
+      }
+    });
+    document.querySelectorAll('.i18n-note').forEach(el => {
+      if (lang === 'all') { el.textContent = el.dataset.en; }
+      else { el.textContent = el.dataset[lang] || el.dataset.en; }
+    });
+  }
+  document.addEventListener('DOMContentLoaded', function () { applyLanguage('all'); });
+</script>
+
+</body>
+</html>

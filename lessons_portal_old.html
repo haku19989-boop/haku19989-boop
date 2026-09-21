@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語レッスン一覧 | Japanese Lessons Index</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Klee+One:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-main: #1E5989; --navy-dark: #143D5E;
+    --teal-main: #4FB3BE; --teal-border: #82CBD3; --teal-bg: #F0FAFA; --teal-text: #196168;
+    --pink-bg: #FDF0F3; --pink-border: #D88B9D; --pink-text: #8E3A4F;
+    --blue-bg: #EDF5FB; --blue-border: #89BFE0; --blue-text: #1E5989;
+    --card-bg: #FFFFFF; --text-dark: #232C3A; --text-sub: #576579; --border-light: #E2E8F0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', 'Klee One', sans-serif; background: #F8FAF9; color: var(--text-dark); line-height: 1.6; padding-bottom: 60px; }
+  .jp-font { font-family: 'Klee One', sans-serif; }
+  header { background: var(--navy-main); color: white; padding: 32px 24px; box-shadow: 0 4px 16px rgba(30, 89, 137, 0.12); }
+  .header-inner { max-width: 920px; margin: 0 auto; }
+  .header-inner h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.3px; margin-bottom: 6px; }
+  .header-inner p { font-size: 0.9rem; opacity: 0.85; }
+
+  .container { max-width: 920px; margin: 32px auto; padding: 0 16px; display: flex; flex-direction: column; gap: 20px; }
+
+  .lesson-card {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border-light);
+    border-radius: 16px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(30, 89, 137, 0.04);
+  }
+  .lesson-card:hover {
+    border-color: var(--teal-border);
+    box-shadow: 0 6px 20px rgba(30, 89, 137, 0.1);
+    transform: translateY(-2px);
+  }
+  .lesson-left { display: flex; align-items: center; gap: 16px; }
+  .badge-stage { background: var(--pink-border); color: white; font-size: 0.75rem; padding: 4px 12px; border-radius: 12px; font-weight: 700; letter-spacing: 0.5px; white-space: nowrap; }
+  .lesson-title { font-size: 1.05rem; font-weight: 600; color: var(--navy-dark); }
+  .lesson-sub { font-size: 0.85rem; color: var(--text-sub); margin-top: 2px; }
+  .lesson-arrow { color: var(--teal-main); font-size: 1.2rem; }
+
+  .empty-note {
+    background: var(--blue-bg);
+    border: 1.5px solid var(--blue-border);
+    border-radius: 16px;
+    padding: 18px 24px;
+    color: var(--blue-text);
+    font-size: 0.9rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <h1 class="jp-font">日本語レッスン一覧</h1>
+    <p>Japanese Lessons Index</p>
+  </div>
+</header>
+
+<div class="container">
+
+  <a class="lesson-card" href="yamauchihaku_lesson_naide_kudasai_v2.html">
+    <div class="lesson-left">
+      <span class="badge-stage">LESSON 17</span>
+      <div>
+        <div class="lesson-title jp-font">ないでください・なければなりません・なくてもいいです</div>
+        <div class="lesson-sub">Negative requests, obligation, and permission not to do something</div>
+      </div>
+    </div>
+    <span class="lesson-arrow">&rarr;</span>
+  </a>
+
+  <div class="empty-note">
+    今後のレッスンはここに追加されます。/ Future lessons will be added here.
+  </div>
+
+</div>
+
+</body>
+</html>

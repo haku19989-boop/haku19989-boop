@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stage2-Lesson1：時間・毎日の生活・〜ました</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-main: #1E5989; --navy-dark: #143D5E;
+    --teal-main: #4FB3BE; --teal-border: #82CBD3; --teal-bg: #F0FAFA; --teal-text: #196168;
+    --yellow-bg: #FFFDEB; --yellow-border: #F0D462; --yellow-text: #8C6500; --yellow-title: #6E4F00;
+    --mid-cyan-bg: #EDF8FA; --mid-cyan-border: #79C2D0; --mid-cyan-text: #165E6D;
+    --pink-bg: #FDF0F3; --pink-border: #D88B9D; --pink-text: #8E3A4F;
+    --blue-bg: #EDF5FB; --blue-border: #89BFE0; --blue-text: #1E5989;
+    --card-bg: #FFFFFF; --text-dark: #232C3A; --text-sub: #576579; --border-light: #E2E8F0;
+    --ruby-color: #C4688A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', '游ゴシック', 'YuGothic', sans-serif; background: #F8FAF9; color: var(--text-dark); line-height: 1.6; padding-bottom: 60px; }
+  header { background: var(--navy-main); color: white; padding: 20px 24px; box-shadow: 0 4px 16px rgba(30, 89, 137, 0.12); position: sticky; top: 0; z-index: 100; }
+  .header-inner { max-width: 920px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .header-title-box { display: flex; align-items: center; gap: 12px; }
+  .badge-stage { background: var(--pink-border); color: white; font-size: 0.75rem; padding: 3px 10px; border-radius: 12px; font-weight: 700; letter-spacing: 0.5px; }
+  .header-title-box h1 { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.3px; }
+  .lang-switcher { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); border-radius: 20px; padding: 4px 10px; }
+  .lang-switcher span { font-size: 0.85rem; }
+  .lang-switcher select { background: white; border: none; border-radius: 14px; padding: 4px 10px; font-size: 0.78rem; font-weight: 600; color: var(--navy-main); cursor: pointer; }
+  .nav-bar { max-width: 920px; margin: 18px auto 0; padding: 0 16px; display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; }
+  .nav-tab-btn { background: white; border: 1.5px solid var(--blue-border); padding: 7px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: var(--navy-main); cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+  .nav-tab-btn:hover, .nav-tab-btn.active { background: var(--navy-main); color: white; border-color: var(--navy-main); }
+  .container { max-width: 920px; margin: 22px auto; padding: 0 16px; display: flex; flex-direction: column; gap: 28px; }
+  .content-card { background: var(--card-bg); border-radius: 18px; padding: 26px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03); border: 1.5px solid var(--border-light); }
+  .card-header-row { border-bottom: 2px solid var(--border-light); padding-bottom: 12px; margin-bottom: 18px; }
+  .step-label { font-size: 0.75rem; font-weight: 700; color: var(--navy-main); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 2px; }
+  .card-main-title { font-size: 1.25rem; font-weight: 700; color: var(--navy-main); }
+  .card-subtitle-en { font-size: 0.88rem; color: var(--text-dark); margin-top: 4px; line-height: 1.45; }
+  .card-subtitle-native { font-size: 0.82rem; color: var(--text-sub); margin-top: 2px; }
+  ruby { font-family: '游ゴシック', 'YuGothic', sans-serif; }
+  ruby rt { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 0.65em; color: var(--ruby-color); font-weight: 600; }
+  .conj-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-bottom: 14px; }
+  .conj-table th { background: var(--blue-bg); color: var(--navy-main); padding: 8px 12px; font-weight: 700; border: 1px solid #CBD5E0; text-align: center; font-size: 0.8rem; }
+  .conj-table td { padding: 7px 12px; border: 1px solid var(--border-light); text-align: center; font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.02rem; }
+  .conj-table tr:nth-child(even) { background: #FAFBFD; }
+  .conj-group-label { font-size: 0.78rem; font-weight: 700; color: var(--navy-main); margin: 14px 0 6px; }
+  .dialogue-card-item { background: white; border: 1.5px solid var(--border-light); border-left: 5px solid var(--blue-border); border-radius: 12px; padding: 14px 18px; margin-bottom: 12px; }
+  .dialogue-speaker-name { font-size: 0.82rem; font-weight: 700; color: var(--navy-main); margin-bottom: 4px; padding: 2px 8px; border-radius: 8px; display: inline-block; }
+  .dialogue-jp-line { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.22rem; font-weight: 600; color: var(--text-dark); margin-bottom: 6px; line-height: 1.5; }
+  .dialogue-en-line { font-size: 0.88rem; font-weight: 500; color: #334155; }
+  .dialogue-native-line { font-size: 0.82rem; color: #64748B; }
+  .tts-btn { background: none; border: 1px solid var(--border-light); border-radius: 50%; width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; color: var(--navy-main); transition: all 0.2s; padding: 0; vertical-align: middle; margin-left: 6px; flex-shrink: 0; }
+  .tts-btn:hover { background: var(--blue-bg); border-color: var(--blue-border); transform: scale(1.1); }
+  .grammar-block { margin-bottom: 26px; }
+  .grammar-visual-card { background: white; border: 1.5px solid var(--border-light); border-radius: 14px; padding: 16px 20px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02); }
+  .grammar-card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+  .grammar-tag { font-size: 0.72rem; font-weight: 700; background: var(--pink-bg); color: var(--pink-text); border: 1px solid var(--pink-border); padding: 2px 8px; border-radius: 8px; letter-spacing: 0.3px; }
+  .grammar-formula { font-family: '游ゴシック', 'YuGothic', monospace; font-size: 0.95rem; font-weight: 600; color: var(--text-sub); background: #F6FAFD; padding: 8px 14px; border-radius: 10px; border: 1px solid #E2ECF8; margin-top: 10px; }
+  .grammar-desc-en { font-size: 0.86rem; color: var(--text-dark); margin-bottom: 3px; line-height: 1.5; }
+  .grammar-desc-native { font-size: 0.8rem; color: var(--text-sub); }
+  .grammar-diagram { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; background: #F6FAFD; border: 1.5px solid #C4E0F1; border-radius: 12px; padding: 16px 18px; margin: 12px 0; }
+  .diagram-step { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+  .diagram-chip { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.02rem; font-weight: 600; padding: 8px 14px; border-radius: 10px; background: white; border: 2px solid var(--blue-border); color: var(--navy-main); white-space: nowrap; }
+  .diagram-chip.highlight { background: var(--pink-bg); border-color: var(--pink-border); color: var(--pink-text); }
+  .diagram-caption { font-size: 0.68rem; color: var(--text-sub); font-weight: 600; text-align: center; }
+  .diagram-arrow { font-size: 1.3rem; color: var(--teal-main); font-weight: 700; }
+  .examples-block { margin: 14px 0 16px; }
+  .examples-label { font-size: 0.72rem; font-weight: 700; color: var(--teal-text); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px; }
+  .example-row { display: flex; align-items: flex-start; gap: 10px; background: var(--teal-bg); border: 1px solid var(--teal-border); border-radius: 10px; padding: 10px 14px; margin-bottom: 8px; }
+  .example-num { flex: 0 0 auto; width: 20px; height: 20px; border-radius: 50%; background: var(--teal-main); color: white; font-size: 0.72rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .example-content { flex: 1; }
+  .example-jp { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.05rem; font-weight: 600; color: var(--text-dark); display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+  .example-en { font-size: 0.82rem; color: var(--text-sub); margin-top: 3px; }
+  .example-native { font-size: 0.78rem; color: #94A3B8; margin-top: 1px; }
+  .practice-part-header { display: flex; align-items: center; gap: 10px; margin: 28px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--blue-border); }
+  .practice-part-badge { background: var(--navy-main); color: white; font-size: 0.78rem; font-weight: 700; padding: 3px 10px; border-radius: 12px; }
+  .practice-part-title { font-size: 1.05rem; font-weight: 700; color: var(--navy-main); }
+  .roleplay-card { background: #FAFBFD; border: 1.5px solid var(--border-light); border-radius: 14px; padding: 16px 20px; margin-bottom: 14px; }
+  .roleplay-title { font-size: 0.92rem; font-weight: 700; color: var(--navy-main); margin-bottom: 12px; }
+  .roleplay-bubble { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
+  .roleplay-bubble:last-child { margin-bottom: 0; }
+  .roleplay-speaker { font-size: 0.76rem; font-weight: 700; padding: 3px 8px; border-radius: 8px; min-width: 60px; text-align: center; flex-shrink: 0; }
+  .speaker-a { background: var(--blue-bg); color: var(--navy-main); border: 1px solid var(--blue-border); }
+  .speaker-b { background: var(--mid-cyan-bg); color: var(--mid-cyan-text); border: 1px solid var(--mid-cyan-border); }
+  .roleplay-lines { flex-grow: 1; }
+  .roleplay-jp { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.12rem; font-weight: 600; color: var(--text-dark); margin-bottom: 2px; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+  .roleplay-trans { font-size: 0.82rem; color: var(--text-sub); }
+  .roleplay-native { font-size: 0.78rem; color: #94A3B8; }
+  .toggle-item { background: white; border: 1.5px solid var(--blue-border); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; cursor: pointer; }
+  .toggle-prompt-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .toggle-prompt-text { font-size: 0.95rem; font-weight: 600; color: var(--navy-main); }
+  .btn-check-reveal { background: var(--blue-bg); color: var(--navy-main); border: 1px solid var(--blue-border); padding: 5px 12px; border-radius: 16px; font-size: 0.78rem; font-weight: 600; flex-shrink: 0; }
+  .toggle-answer-box { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border-light); font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 1.2rem; font-weight: 600; color: var(--navy-main); }
+  .toggle-answer-box.show { display: block; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: translateY(0); } }
+  .kanji-display-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
+  .kanji-box-item { background: white; border: 1.5px solid var(--pink-border); border-radius: 14px; padding: 14px 10px; text-align: center; }
+  .kanji-large-char { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 2.5rem; font-weight: 600; color: var(--navy-main); line-height: 1.1; }
+  .kanji-meaning-en { font-size: 0.82rem; font-weight: 600; color: var(--pink-text); margin: 4px 0 2px; }
+  .kanji-readings-text { font-family: '游ゴシック', 'YuGothic', sans-serif; font-size: 0.85rem; color: var(--text-sub); }
+  .vocab-filter-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; }
+  .filter-btn-group { display: flex; gap: 6px; }
+  .filter-pill { background: white; border: 1px solid var(--border-light); font-size: 0.78rem; font-weight: 600; padding: 4px 12px; border-radius: 14px; cursor: pointer; color: var(--text-sub); transition: all 0.2s; }
+  .filter-pill.active { background: var(--navy-main); color: white; border-color: var(--navy-main); }
+  .word-pool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
+  .word-pool-card { background: white; border: 1px solid var(--border-light); border-radius: 10px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; }
+  .pool-word-jp { font-family: '游ゴシック', 'YuGothic', sans-serif; font-weight: 600; font-size: 1.1rem; color: var(--navy-main); }
+  .pool-word-trans { font-size: 0.78rem; color: var(--text-sub); }
+  .star-btn { background: none; border: none; font-size: 1.25rem; cursor: pointer; color: #CBD5E0; transition: all 0.2s; }
+  .star-btn.active { color: #E2A03F; transform: scale(1.15); }
+  .note-box { background: var(--yellow-bg); border: 1.5px solid var(--yellow-border); border-radius: 12px; padding: 12px 16px; margin: 12px 0; font-size: 0.85rem; color: var(--yellow-title); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title-box">
+      <span class="badge-stage">STAGE 2 - LESSON 1</span>
+      <h1>時間・毎日の生活・〜ました — Time & Daily Routine</h1>
+    </div>
+    <div class="lang-switcher">
+      <span>🌐</span>
+      <select id="lang-select" onchange="applyLanguage(this.value)">
+        <option value="all" selected>All / 全部</option>
+        <option value="ko">한국어</option>
+        <option value="zhcn">简体中文</option>
+        <option value="zhtw">繁體中文</option>
+        <option value="cant">粵語（香港）</option>
+      </select>
+    </div>
+  </div>
+</header>
+
+<div class="nav-bar">
+  <button class="nav-tab-btn active" onclick="scrollToSection('sec-system')">1. 時刻の言い方</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-dialogue')">2. Main Dialogue</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-grammar')">3. Grammar & Practice</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-kanji')">4. Kanji</button>
+  <button class="nav-tab-btn" onclick="scrollToSection('sec-pool')">5. Word Pool</button>
+</div>
+
+<div class="container">
+
+  <section class="content-card" id="sec-system">
+    <div class="card-header-row">
+      <div class="step-label">Step 1</div>
+      <div class="card-main-title">Telling Time & the ます／ました Past Tense</div>
+      <div class="card-subtitle-en">〜時〜分 gives the clock time. ました turns any ます-verb into the past — no irregular forms, no conjugation groups to worry about yet.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="〜時〜分는 시계 시간을 나타냅니다. ました는 어떤 ます-동사든 과거형으로 바꿔주며, 아직 불규칙 활용이나 그룹을 걱정할 필요가 없습니다." data-zhcn="〜時〜分表示钟表时间。ました把任何ます动词变成过去式——不用担心不规则变化或动词组。" data-zhtw="〜時〜分表示鐘錶時間。ました把任何ます動詞變成過去式——不用擔心不規則變化或動詞組。" data-cant="〜時〜分表示鐘錶時間。ました將任何ます動詞變成過去式——而家都唔使擔心唔規則變化或者動詞組。"></div>
+    </div>
+    <table class="conj-table">
+      <tr><th>現在肯定</th><th>現在否定</th><th>過去肯定</th><th>過去否定</th></tr>
+      <tr><td>起きます</td><td>起きません</td><td>起きました</td><td>起きませんでした</td></tr>
+      <tr><td>寝ます</td><td>寝ません</td><td>寝ました</td><td>寝ませんでした</td></tr>
+      <tr><td>勉強します</td><td>勉強しません</td><td>勉強しました</td><td>勉強しませんでした</td></tr>
+    </table>
+    <div class="conj-group-label">時刻の言い方 — Clock Time</div>
+    <table class="conj-table">
+      <tr><th>1時</th><th>2時</th><th>3時</th><th>4時</th><th>5時</th><th>6時</th></tr>
+      <tr><td>いちじ</td><td>にじ</td><td>さんじ</td><td>よじ</td><td>ごじ</td><td>ろくじ</td></tr>
+      <tr><th>7時</th><th>8時</th><th>9時</th><th>10時</th><th>11時</th><th>12時</th></tr>
+      <tr><td>しちじ</td><td>はちじ</td><td>くじ</td><td>じゅうじ</td><td>じゅういちじ</td><td>じゅうにじ</td></tr>
+    </table>
+    <div class="note-box i18n-note" data-en="半 (はん) means "half past" — 4時半 = 4:30. Minutes otherwise attach directly: 4時5分 = 4:05." data-ko="半(はん)은 '반'이라는 뜻입니다 — 4時半 = 4시 30분. 그 외에는 분을 그대로 붙입니다: 4時5分 = 4시 5분." data-zhcn="半（はん）表示「半」——4時半＝4点30分。其他情况分钟直接接在后面：4時5分＝4点05分。" data-zhtw="半（はん）表示「半」——4時半＝4點30分。其他情況分鐘直接接在後面：4時5分＝4點05分。" data-cant="半（はん）即係「半」——4時半＝4點半。其他情況分鐘直接跟喺後面：4時5分＝4點05分。">半 (はん) means "half past" — 4時半 = 4:30. Minutes otherwise attach directly: 4時5分 = 4:05.</div>
+  </section>
+
+  <section class="content-card" id="sec-dialogue">
+    <div class="card-header-row">
+      <div class="step-label">Step 2</div>
+      <div class="card-main-title">Main Dialogue: 勤務時間について — About Working Hours</div>
+      <div class="card-subtitle-en">Emma asks Tanaka about the office's working hours and her own daily routine.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="에마가 다나카에게 사무실 근무 시간과 자신의 하루 일과에 대해 물어봅니다." data-zhcn="艾玛问田中办公室的上班时间和她自己的日常作息。" data-zhtw="艾瑪問田中辦公室的上班時間和她自己的日常作息。" data-cant="艾瑪問田中辦公室嘅上班時間同佢自己嘅日常作息。"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--blue-bg); color:var(--navy-main); border:1px solid var(--blue-border);">エマ</div><button class="tts-btn" onclick="speakText('田中さん、会社は何時から何時までですか。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line"><ruby>田中<rt>たなか</rt></ruby>さん、<ruby>会社<rt>かいしゃ</rt></ruby>は<ruby>何時<rt>なんじ</rt></ruby>から<ruby>何時<rt>なんじ</rt></ruby>までですか。</div>
+      <div class="dialogue-en-line">Tanaka, what time does the company run from and to?</div>
+      <div class="dialogue-native-line i18n-native" data-ko="다나카 씨, 회사는 몇 시부터 몇 시까지예요?" data-zhcn="田中小姐，公司是几点到几点？" data-zhtw="田中小姐，公司是幾點到幾點？" data-cant="田中，公司幾點到幾點㗎？"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--mid-cyan-bg); color:var(--mid-cyan-text); border:1px solid var(--mid-cyan-border);">田中</div><button class="tts-btn" onclick="speakText('9時から6時までです。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">9<ruby>時<rt>じ</rt></ruby>から6<ruby>時<rt>じ</rt></ruby>までです。</div>
+      <div class="dialogue-en-line">From 9:00 to 6:00.</div>
+      <div class="dialogue-native-line i18n-native" data-ko="9시부터 6시까지예요." data-zhcn="从9点到6点。" data-zhtw="從9點到6點。" data-cant="9點到6點。"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--blue-bg); color:var(--navy-main); border:1px solid var(--blue-border);">エマ</div><button class="tts-btn" onclick="speakText('田中さんは毎朝何時に起きますか。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line"><ruby>田中<rt>たなか</rt></ruby>さんは<ruby>毎朝<rt>まいあさ</rt></ruby><ruby>何時<rt>なんじ</rt></ruby>に<ruby>起<rt>お</rt></ruby>きますか。</div>
+      <div class="dialogue-en-line">What time do you get up every morning, Tanaka?</div>
+      <div class="dialogue-native-line i18n-native" data-ko="다나카 씨는 매일 아침 몇 시에 일어나요?" data-zhcn="田中小姐每天早上几点起床？" data-zhtw="田中小姐每天早上幾點起床？" data-cant="田中你每朝幾點起身㗎？"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--mid-cyan-bg); color:var(--mid-cyan-text); border:1px solid var(--mid-cyan-border);">田中</div><button class="tts-btn" onclick="speakText('わたしは毎朝6時半に起きます。そして、7時半に家を出ます。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">わたしは<ruby>毎朝<rt>まいあさ</rt></ruby>6<ruby>時半<rt>じはん</rt></ruby>に<ruby>起<rt>お</rt></ruby>きます。そして、7<ruby>時半<rt>じはん</rt></ruby>に<ruby>家<rt>いえ</rt></ruby>を<ruby>出<rt>で</rt></ruby>ます。</div>
+      <div class="dialogue-en-line">I get up at 6:30 every morning. And I leave home at 7:30.</div>
+      <div class="dialogue-native-line i18n-native" data-ko="저는 매일 아침 6시 반에 일어나요. 그리고 7시 반에 집을 나서요." data-zhcn="我每天早上6点半起床。然后7点半出门。" data-zhtw="我每天早上6點半起床。然後7點半出門。" data-cant="我每朝6點半起身。跟住7點半出門口。"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--blue-bg); color:var(--navy-main); border:1px solid var(--blue-border);">エマ</div><button class="tts-btn" onclick="speakText('きのうも6時半に起きましたか。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">きのうも6<ruby>時半<rt>じはん</rt></ruby>に<ruby>起<rt>お</rt></ruby>きましたか。</div>
+      <div class="dialogue-en-line">Did you also get up at 6:30 yesterday?</div>
+      <div class="dialogue-native-line i18n-native" data-ko="어제도 6시 반에 일어났어요?" data-zhcn="昨天也是6点半起床的吗？" data-zhtw="昨天也是6點半起床的嗎？" data-cant="尋日都係6點半起身？"></div>
+    </div>
+    <div class="dialogue-card-item">
+      <div style="display:flex; justify-content:space-between; align-items:center;"><div class="dialogue-speaker-name" style="background:var(--mid-cyan-bg); color:var(--mid-cyan-text); border:1px solid var(--mid-cyan-border);">田中</div><button class="tts-btn" onclick="speakText('いいえ、起きませんでした。きのうは7時に起きました。')" title="Listen">🔊</button></div>
+      <div class="dialogue-jp-line">いいえ、<ruby>起<rt>お</rt></ruby>きませんでした。きのうは7<ruby>時<rt>じ</rt></ruby>に<ruby>起<rt>お</rt></ruby>きました。</div>
+      <div class="dialogue-en-line">No, I didn't. Yesterday I got up at 7:00.</div>
+      <div class="dialogue-native-line i18n-native" data-ko="아니요, 안 일어났어요. 어제는 7시에 일어났어요." data-zhcn="不，不是的。昨天是7点起床的。" data-zhtw="不，不是的。昨天是7點起床的。" data-cant="唔係，尋日冇。尋日7點先起身。"></div>
+    </div>
+  </section>
+
+  <section class="content-card" id="sec-grammar">
+    <div class="card-header-row">
+      <div class="step-label">Step 3</div>
+      <div class="card-main-title">Grammar & Comprehensive Speaking Practice</div>
+      <div class="card-subtitle-en">Work through each pattern's diagram and examples, then try the practice questions, roleplay, and rapid-response challenge.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="각 패턴의 다이어그램과 예문을 익힌 후 연습 문제, 롤플레이, 즉석 챌린지에 도전하세요." data-zhcn="先看懂每个句型的图解和例句，再挑战练习题、角色扮演与即时口说挑战。" data-zhtw="先看懂每個句型的圖解和例句，再挑戰練習題、角色扮演與即時口說挑戰。" data-cant="先睇明每個句型嘅圖解同例句，再挑戰練習題、角色扮演同即時口說挑戰。"></div>
+    </div>
+
+    <div class="practice-part-header"><span class="practice-part-badge">Part 1</span><div class="practice-part-title">Basic Pattern Drills</div></div>
+
+    <div class="grammar-block">
+      <div class="grammar-visual-card">
+        <div class="grammar-card-head"><span class="grammar-tag">Grammar A</span><strong>今〜時〜分です ("It is now ~:~")</strong></div>
+        <div class="grammar-desc-en">The plain way to state the current time. No particle needed between the number and 時/分.</div>
+        <div class="grammar-desc-native i18n-native" data-ko="현재 시각을 말하는 기본적인 방법입니다. 숫자와 時/分 사이에 조사가 필요 없습니다." data-zhcn="说明当前时间的基本说法。数字和時/分之间不需要助词。" data-zhtw="說明目前時間的基本說法。數字和時/分之間不需要助詞。" data-cant="講而家幾點嘅基本講法。數字同時/分之間唔使加助詞。"></div>
+        <div class="grammar-diagram">
+          <div class="diagram-step"><div class="diagram-chip">今</div><div class="diagram-caption">"now"</div></div>
+          <div class="diagram-step"><div class="diagram-chip highlight">4時5分</div><div class="diagram-caption">hour + minute</div></div>
+          <div class="diagram-step"><div class="diagram-chip highlight">です。</div><div class="diagram-caption">"it is"</div></div>
+        </div>
+        <div class="grammar-formula">今 〜時〜分 です。</div>
+        <div class="examples-block">
+          <div class="examples-label">Examples</div>
+          <div class="example-row"><div class="example-num">1</div><div class="example-content"><div class="example-jp">今9<ruby>時<rt>じ</rt></ruby>です。<button class="tts-btn" onclick="speakText('今9時です。')" title="Listen">🔊</button></div><div class="example-en">It is 9:00 now.</div><div class="example-native i18n-native" data-ko="지금 9시예요." data-zhcn="现在9点。" data-zhtw="現在9點。" data-cant="而家9點。"></div></div></div>
+          <div class="example-row"><div class="example-num">2</div><div class="example-content"><div class="example-jp">今<ruby>何時<rt>なんじ</rt></ruby>ですか。<button class="tts-btn" onclick="speakText('今何時ですか。')" title="Listen">🔊</button></div><div class="example-en">What time is it now?</div><div class="example-native i18n-native" data-ko="지금 몇 시예요?" data-zhcn="现在几点？" data-zhtw="現在幾點？" data-cant="而家幾點呀？"></div></div></div>
+          <div class="example-row"><div class="example-num">3</div><div class="example-content"><div class="example-jp">今2<ruby>時半<rt>じはん</rt></ruby>です。<button class="tts-btn" onclick="speakText('今2時半です。')" title="Listen">🔊</button></div><div class="example-en">It is 2:30 now.</div><div class="example-native i18n-native" data-ko="지금 2시 반이에요." data-zhcn="现在2点半。" data-zhtw="現在2點半。" data-cant="而家2點半。"></div></div></div>
+        </div>
+      </div>
+      <div class="toggle-item" onclick="toggleAnswer('a1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">A-1. It is 4:05 now.</div><button class="btn-check-reveal" id="btn-a1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-a1"><span>今4<ruby>時<rt>じ</rt></ruby>5<ruby>分<rt>ふん</rt></ruby>です。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('今4時5分です。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('a2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">A-2. It is 11:00 now.</div><button class="btn-check-reveal" id="btn-a2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-a2"><span>今11<ruby>時<rt>じ</rt></ruby>です。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('今11時です。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('a3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">A-3. What time is it in America now?</div><button class="btn-check-reveal" id="btn-a3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-a3"><span>アメリカは<ruby>今<rt>いま</rt></ruby><ruby>何時<rt>なんじ</rt></ruby>ですか。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('アメリカは今何時ですか。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('a4')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">A-4. It is 7:30 now.</div><button class="btn-check-reveal" id="btn-a4">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-a4"><span>今7<ruby>時半<rt>じはん</rt></ruby>です。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('今7時半です。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('a5')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">A-5. It is 12:20 now.</div><button class="btn-check-reveal" id="btn-a5">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-a5"><span>今12<ruby>時<rt>じ</rt></ruby>20<ruby>分<rt>ぷん</rt></ruby>です。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('今12時20分です。')" title="Listen">🔊</button></div></div>
+    </div>
+
+    <div class="grammar-block">
+      <div class="grammar-visual-card">
+        <div class="grammar-card-head"><span class="grammar-tag">Grammar B</span><strong>時間に 動詞ます ("At [time], I do ~") — the に of a specific point in time</strong></div>
+        <div class="grammar-desc-en">に marks a specific point in time attached to an action — used with clock times and specific dates, but NOT with relative time words like きょう/あした/まいあさ.</div>
+        <div class="grammar-desc-native i18n-native" data-ko="に는 어떤 행동과 결합된 구체적인 시각을 나타냅니다 — 시계 시각이나 특정 날짜에는 쓰지만, きょう/あした/まいあさ 같은 상대적 시간 표현에는 쓰지 않습니다." data-zhcn="に标记与某个动作相连的具体时间点——用于钟点和具体日期，但不用于きょう／あした／まいあさ这类相对时间词。" data-zhtw="に標記與某個動作相連的具體時間點——用於鐘點和具體日期，但不用於きょう／あした／まいあさ這類相對時間詞。" data-cant="に標記同某個動作連埋一齊嘅具體時間點——用喺鐘點同具體日期，但唔用喺きょう／あした／まいあさ呢啲相對時間詞。"></div>
+        <div class="grammar-diagram">
+          <div class="diagram-step"><div class="diagram-chip">6時半</div><div class="diagram-caption">specific time</div></div>
+          <div class="diagram-arrow">+</div>
+          <div class="diagram-step"><div class="diagram-chip highlight">に</div><div class="diagram-caption">"at"</div></div>
+          <div class="diagram-arrow">+</div>
+          <div class="diagram-step"><div class="diagram-chip highlight">起きます。</div><div class="diagram-caption">"get up"</div></div>
+        </div>
+        <div class="grammar-formula">〜時（〜分）に 動詞ます。 ／ 毎朝／毎晩 〜時に 動詞ます。（に不要な場合あり）</div>
+        <div class="examples-block">
+          <div class="examples-label">Examples</div>
+          <div class="example-row"><div class="example-num">1</div><div class="example-content"><div class="example-jp">わたしは<ruby>毎朝<rt>まいあさ</rt></ruby>6<ruby>時<rt>じ</rt></ruby>に<ruby>起<rt>お</rt></ruby>きます。<button class="tts-btn" onclick="speakText('わたしは毎朝6時に起きます。')" title="Listen">🔊</button></div><div class="example-en">I get up at 6:00 every morning.</div><div class="example-native i18n-native" data-ko="저는 매일 아침 6시에 일어나요." data-zhcn="我每天早上6点起床。" data-zhtw="我每天早上6點起床。" data-cant="我每朝6點起身。"></div></div></div>
+          <div class="example-row"><div class="example-num">2</div><div class="example-content"><div class="example-jp"><ruby>高橋<rt>たかはし</rt></ruby><ruby>部長<rt>ぶちょう</rt></ruby>は<ruby>毎晩<rt>まいばん</rt></ruby>11<ruby>時<rt>じ</rt></ruby>に<ruby>寝<rt>ね</rt></ruby>ます。<button class="tts-btn" onclick="speakText('高橋部長は毎晩11時に寝ます。')" title="Listen">🔊</button></div><div class="example-en">Manager Takahashi goes to bed at 11:00 every night.</div><div class="example-native i18n-native" data-ko="다카하시 부장님은 매일 밤 11시에 자요." data-zhcn="高桥部长每晚11点睡觉。" data-zhtw="高橋部長每晚11點睡覺。" data-cant="高橋部長每晚11點瞓覺。"></div></div></div>
+          <div class="example-row"><div class="example-num">3</div><div class="example-content"><div class="example-jp">パクさんは<ruby>毎日<rt>まいにち</rt></ruby><ruby>勉強<rt>べんきょう</rt></ruby>します。<button class="tts-btn" onclick="speakText('パクさんは毎日勉強します。')" title="Listen">🔊</button></div><div class="example-en">Mx. Park studies every day. (no に — まいにち is a relative time word)</div><div class="example-native i18n-native" data-ko="박 씨는 매일 공부해요." data-zhcn="朴先生／小姐每天学习。" data-zhtw="朴先生／小姐每天學習。" data-cant="Park每日都溫書。"></div></div></div>
+        </div>
+      </div>
+      <div class="toggle-item" onclick="toggleAnswer('b1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">B-1. Mx. Suzuki (Ichiro) leaves the office at 6:00.</div><button class="btn-check-reveal" id="btn-b1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-b1"><span><ruby>鈴木<rt>すずき</rt></ruby>さんは6<ruby>時<rt>じ</rt></ruby>に<ruby>事務所<rt>じむしょ</rt></ruby>を<ruby>出<rt>で</rt></ruby>ます。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('鈴木さんは6時に事務所を出ます。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('b2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">B-2. I study every day. (no に)</div><button class="btn-check-reveal" id="btn-b2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-b2"><span>わたしは<ruby>毎日<rt>まいにち</rt></ruby><ruby>勉強<rt>べんきょう</rt></ruby>します。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('わたしは毎日勉強します。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('b3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">B-3. Do you go to bed at 11:30 every night?</div><button class="btn-check-reveal" id="btn-b3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-b3"><span><ruby>毎晩<rt>まいばん</rt></ruby>11<ruby>時半<rt>じはん</rt></ruby>に<ruby>寝<rt>ね</rt></ruby>ますか。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('毎晩11時半に寝ますか。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('b4')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">B-4. Sofia gets up at 7:00 every morning.</div><button class="btn-check-reveal" id="btn-b4">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-b4"><span>ソフィアさんは<ruby>毎朝<rt>まいあさ</rt></ruby>7<ruby>時<rt>じ</rt></ruby>に<ruby>起<rt>お</rt></ruby>きます。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('ソフィアさんは毎朝7時に起きます。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('b5')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">B-5. I rest every day. (no に)</div><button class="btn-check-reveal" id="btn-b5">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-b5"><span>わたしは<ruby>毎日<rt>まいにち</rt></ruby><ruby>休<rt>やす</rt></ruby>みます。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('わたしは毎日休みます。')" title="Listen">🔊</button></div></div>
+    </div>
+
+    <div class="grammar-block">
+      <div class="grammar-visual-card">
+        <div class="grammar-card-head"><span class="grammar-tag">Grammar C</span><strong>〜ました／〜ませんでした ("did ~" / "did not do ~")</strong></div>
+        <div class="grammar-desc-en">Swap the ending of any ます-verb to talk about the past. This is much simpler than English's irregular past tenses — every ます-verb follows the exact same swap.</div>
+        <div class="grammar-desc-native i18n-native" data-ko="어떤 ます-동사든 어미만 바꾸면 과거를 말할 수 있습니다. 영어의 불규칙 과거형보다 훨씬 간단합니다 — 모든 ます-동사가 똑같은 방식으로 바뀝니다." data-zhcn="把任何ます动词的词尾换一下，就能说过去的事。这比英语不规则的过去式简单多了——每个ます动词都用同样的换法。" data-zhtw="把任何ます動詞的詞尾換一下，就能說過去的事。這比英語不規則的過去式簡單多了——每個ます動詞都用同樣的換法。" data-cant="將任何ます動詞嘅字尾換一換，就可以講返過去嘅嘢。呢個比英文唔規則嘅過去式簡單好多——每個ます動詞都係用返同一個換法。"></div>
+        <div class="grammar-diagram">
+          <div class="diagram-step"><div class="diagram-chip">起きます</div><div class="diagram-caption">present</div></div>
+          <div class="diagram-arrow">→</div>
+          <div class="diagram-step"><div class="diagram-chip highlight">起きました</div><div class="diagram-caption">"got up" (past)</div></div>
+          <div class="diagram-arrow">→</div>
+          <div class="diagram-step"><div class="diagram-chip highlight">起きませんでした</div><div class="diagram-caption">"did not get up"</div></div>
+        </div>
+        <div class="grammar-formula">Vます → Vました ／ Vません → Vませんでした</div>
+        <div class="examples-block">
+          <div class="examples-label">Examples</div>
+          <div class="example-row"><div class="example-num">1</div><div class="example-content"><div class="example-jp">きのう<ruby>勉強<rt>べんきょう</rt></ruby>しました。<button class="tts-btn" onclick="speakText('きのう勉強しました。')" title="Listen">🔊</button></div><div class="example-en">I studied yesterday.</div><div class="example-native i18n-native" data-ko="어제 공부했어요." data-zhcn="昨天学习了。" data-zhtw="昨天學習了。" data-cant="尋日溫咗書。"></div></div></div>
+          <div class="example-row"><div class="example-num">2</div><div class="example-content"><div class="example-jp">きのう<ruby>働<rt>はたら</rt></ruby>きませんでした。<button class="tts-btn" onclick="speakText('きのう働きませんでした。')" title="Listen">🔊</button></div><div class="example-en">I did not work yesterday.</div><div class="example-native i18n-native" data-ko="어제 일하지 않았어요." data-zhcn="昨天没有工作。" data-zhtw="昨天沒有工作。" data-cant="尋日冇返工。"></div></div></div>
+          <div class="example-row"><div class="example-num">3</div><div class="example-content"><div class="example-jp"><ruby>何時<rt>なんじ</rt></ruby>に<ruby>寝<rt>ね</rt></ruby>ましたか。<button class="tts-btn" onclick="speakText('何時に寝ましたか。')" title="Listen">🔊</button></div><div class="example-en">What time did you go to bed?</div><div class="example-native i18n-native" data-ko="몇 시에 잤어요?" data-zhcn="几点睡的？" data-zhtw="幾點睡的？" data-cant="幾點瞓㗎？"></div></div></div>
+        </div>
+      </div>
+      <div class="toggle-item" onclick="toggleAnswer('c1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">C-1. I got up at 8:00 yesterday.</div><button class="btn-check-reveal" id="btn-c1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-c1"><span>きのう8<ruby>時<rt>じ</rt></ruby>に<ruby>起<rt>お</rt></ruby>きました。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('きのう8時に起きました。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('c2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">C-2. Mx. Li did not rest yesterday.</div><button class="btn-check-reveal" id="btn-c2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-c2"><span>リーさんはきのう<ruby>休<rt>やす</rt></ruby>みませんでした。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('リーさんはきのう休みませんでした。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('c3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">C-3. What time did you get up yesterday?</div><button class="btn-check-reveal" id="btn-c3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-c3"><span>きのう<ruby>何時<rt>なんじ</rt></ruby>に<ruby>起<rt>お</rt></ruby>きましたか。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('きのう何時に起きましたか。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('c4')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">C-4. Mx. Suzuki (Tomoko) worked yesterday.</div><button class="btn-check-reveal" id="btn-c4">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-c4"><span><ruby>鈴木<rt>すずき</rt></ruby>さんはきのう<ruby>働<rt>はたら</rt></ruby>きました。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('鈴木さんはきのう働きました。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('c5')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">C-5. I didn't study yesterday.</div><button class="btn-check-reveal" id="btn-c5">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-c5"><span>きのう<ruby>勉強<rt>べんきょう</rt></ruby>しませんでした。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('きのう勉強しませんでした。')" title="Listen">🔊</button></div></div>
+    </div>
+
+    <div class="grammar-block">
+      <div class="grammar-visual-card">
+        <div class="grammar-card-head"><span class="grammar-tag">Grammar D</span><strong>から〜まで ("from ~ to ~")</strong></div>
+        <div class="grammar-desc-en">Marks a range, most often for time but also usable for places. から attaches to the starting point, まで to the ending point — and both can be used alone too.</div>
+        <div class="grammar-desc-native i18n-native" data-ko="주로 시간에 쓰이지만 장소에도 쓸 수 있는 범위를 나타냅니다. から는 시작점에, まで는 끝점에 붙으며, 둘 다 단독으로도 쓸 수 있습니다." data-zhcn="标记一个范围，最常用于时间，也能用于地点。から接在起点，まで接在终点——两者也都能单独使用。" data-zhtw="標記一個範圍，最常用於時間，也能用於地點。から接在起點，まで接在終點——兩者也都能單獨使用。" data-cant="標記一個範圍，最常用喺時間，都可以用喺地方。から跟喺起點，まで跟喺終點——兩個都可以獨立用。"></div>
+        <div class="grammar-formula">〜から 〜まで</div>
+        <div class="examples-block">
+          <div class="examples-label">Examples</div>
+          <div class="example-row"><div class="example-num">1</div><div class="example-content"><div class="example-jp">9<ruby>時<rt>じ</rt></ruby>から6<ruby>時<rt>じ</rt></ruby>までです。<button class="tts-btn" onclick="speakText('9時から6時までです。')" title="Listen">🔊</button></div><div class="example-en">It's from 9:00 to 6:00.</div><div class="example-native i18n-native" data-ko="9시부터 6시까지예요." data-zhcn="从9点到6点。" data-zhtw="從9點到6點。" data-cant="9點到6點。"></div></div></div>
+          <div class="example-row"><div class="example-num">2</div><div class="example-content"><div class="example-jp">なんじからなんじまでですか。<button class="tts-btn" onclick="speakText('何時から何時までですか。')" title="Listen">🔊</button></div><div class="example-en">From what time to what time?</div><div class="example-native i18n-native" data-ko="몇 시부터 몇 시까지예요?" data-zhcn="从几点到几点？" data-zhtw="從幾點到幾點？" data-cant="幾點到幾點呀？"></div></div></div>
+          <div class="example-row"><div class="example-num">3</div><div class="example-content"><div class="example-jp"><ruby>会議<rt>かいぎ</rt></ruby>は2<ruby>時<rt>じ</rt></ruby>からです。<button class="tts-btn" onclick="speakText('会議は2時からです。')" title="Listen">🔊</button></div><div class="example-en">The meeting is from 2:00. (から alone)</div><div class="example-native i18n-native" data-ko="회의는 2시부터예요." data-zhcn="会议从2点开始。" data-zhtw="會議從2點開始。" data-cant="會議2點開始。"></div></div></div>
+        </div>
+      </div>
+      <div class="toggle-item" onclick="toggleAnswer('d1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">D-1. From 9:30 to 5:30.</div><button class="btn-check-reveal" id="btn-d1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-d1"><span>9<ruby>時半<rt>じはん</rt></ruby>から5<ruby>時半<rt>じはん</rt></ruby>までです。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('9時半から5時半までです。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('d2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">D-2. What time does the meeting go until?</div><button class="btn-check-reveal" id="btn-d2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-d2"><span><ruby>会議<rt>かいぎ</rt></ruby>は<ruby>何時<rt>なんじ</rt></ruby>までですか。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('会議は何時までですか。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('d3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">D-3. From Tokyo to Osaka.</div><button class="btn-check-reveal" id="btn-d3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-d3"><span><ruby>東京<rt>とうきょう</rt></ruby>から<ruby>大阪<rt>おおさか</rt></ruby>までです。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('東京から大阪までです。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('d4')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">D-4. I work from 9:00 to 6:00 every day.</div><button class="btn-check-reveal" id="btn-d4">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-d4"><span>わたしは<ruby>毎日<rt>まいにち</rt></ruby>9<ruby>時<rt>じ</rt></ruby>から6<ruby>時<rt>じ</rt></ruby>まで<ruby>働<rt>はたら</rt></ruby>きます。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('わたしは毎日9時から6時まで働きます。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('d5')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">D-5. The meeting is from 2:00. (から alone)</div><button class="btn-check-reveal" id="btn-d5">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-d5"><span><ruby>会議<rt>かいぎ</rt></ruby>は2<ruby>時<rt>じ</rt></ruby>からです。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('会議は2時からです。')" title="Listen">🔊</button></div></div>
+    </div>
+
+    <div class="grammar-block">
+      <div class="grammar-visual-card" style="border:2px solid #82CBD3;">
+        <div class="grammar-card-head"><span class="grammar-tag" style="background:#196168; color:white;">Grammar E</span><strong>文末助詞：〜か・〜ね・〜よ の使い分け</strong></div>
+        <div class="grammar-desc-en">Sentence-ending particles change the feeling of a sentence completely: <strong>か</strong> asks a question, <strong>ね</strong> seeks agreement/sympathy ("isn't it?"), and <strong>よ</strong> shares new info or gives a friendly reminder ("I tell you!").</div>
+        <div class="grammar-desc-native i18n-native" data-ko="문말조사는 문장의 뉘앙스를 완전히 바꿉니다: か는 질문, ね는 공감/동의 구하기('그렇죠?'), よ는 상대가 모르는 새 정보를 알려주거나 친절하게 일러줄 때('~예요!') 씁니다." data-zhcn="句末助词能彻底改变句子的语气：か表示疑问，ね表示寻求共鸣或确认（「对吧？」），よ表示告诉对方不知道的新信息或亲切提醒（「~哦！」）。" data-zhtw="句末助詞能徹底改變句子的語氣：か表示疑問，ね表示尋求共鳴或確認（「對吧？」），よ表示告訴對方不知道的新資訊或親切提醒（「~喔！」）。" data-cant="句尾助詞會徹底改變成句嘅語氣：か表示問問題，ね表示尋求共鳴或者確認（「係咪呀？」），よ表示話畀對方知佢唔知嘅新資訊或者親切提醒（「~㗎！」）。"></div>
+        <table class="conj-table" style="margin-top:12px;">
+          <tr><th>助詞</th><th>ニュアンス</th><th>例文</th><th>会話での気持ち</th></tr>
+          <tr><td><strong>〜か</strong></td><td>質問・疑問</td><td>あした会社へ行きます<strong>か</strong>。</td><td>「行きますか？教えてください」</td></tr>
+          <tr><td><strong>〜ね</strong></td><td>共感・同意・確認</td><td>きょうは忙しいです<strong>ね</strong>。</td><td>「大変ですよね、私もそう思います」</td></tr>
+          <tr><td><strong>〜よ</strong></td><td>新情報の伝達・念押し</td><td>会議はもう始まりました<strong>よ</strong>！</td><td>「まだ知らないかもしれないから教えますね」</td></tr>
+        </table>
+      </div>
+      <div class="toggle-item" onclick="toggleAnswer('e1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">E-1. It's a lovely weather today, isn't it? (seeking agreement → ね)</div><button class="btn-check-reveal" id="btn-e1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-e1"><span>きょうはいいてんきです<span class="blank-mark">ね</span>。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('きょうはいいてんきですね。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('e2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">E-2. Tanaka, the meeting is at 2:00, you know! (informing them → よ)</div><button class="btn-check-reveal" id="btn-e2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-e2"><span>田中さん、会議は2時からですよ。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('田中さん、会議は2時からですよ。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('e3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">E-3. Did you wake up at 7:00 yesterday? (question → か)</div><button class="btn-check-reveal" id="btn-e3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-e3"><span>きのう7時に起きました<span class="blank-mark">か</span>。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('きのう7時に起きましたか。')" title="Listen">🔊</button></div></div>
+      <div class="toggle-item" onclick="toggleAnswer('e4')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">E-4. This ramen is really delicious, I tell you! (sharing info → よ)</div><button class="btn-check-reveal" id="btn-e4">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-e4"><span>このラーメンはおいしいです<span class="blank-mark">よ</span>。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('このラーメンはおいしいですよ。')" title="Listen">🔊</button></div></div>
+    </div>
+
+    <div class="practice-part-header"><span class="practice-part-badge">Part 2</span><div class="practice-part-title">Roleplay — Talking Schedules</div></div>
+    <div class="roleplay-card">
+      <div class="roleplay-title">Scene 1: 会議室で — In the Meeting Room (高橋 & リー)</div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-a">高橋</div><div class="roleplay-lines"><div class="roleplay-jp"><ruby>会議<rt>かいぎ</rt></ruby>は<ruby>何時<rt>なんじ</rt></ruby>からですか。<button class="tts-btn" onclick="speakText('会議は何時からですか。')" title="Listen">🔊</button></div><div class="roleplay-trans">What time does the meeting start?</div><div class="roleplay-native i18n-native" data-ko="회의는 몇 시부터예요?" data-zhcn="会议几点开始？" data-zhtw="會議幾點開始？" data-cant="會議幾點開始呀？"></div></div></div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-b">リー</div><div class="roleplay-lines"><div class="roleplay-jp">2<ruby>時<rt>じ</rt></ruby>からです。3<ruby>時半<rt>じはん</rt></ruby>までです。<button class="tts-btn" onclick="speakText('2時からです。3時半までです。')" title="Listen">🔊</button></div><div class="roleplay-trans">From 2:00. It's until 3:30.</div><div class="roleplay-native i18n-native" data-ko="2시부터예요. 3시 반까지예요." data-zhcn="从2点开始。到3点半。" data-zhtw="從2點開始。到3點半。" data-cant="2點開始。到3點半。"></div></div></div>
+    </div>
+    <div class="roleplay-card">
+      <div class="roleplay-title">Scene 2: 朝の挨拶 — Morning Greeting (ソムチャイ & パク)</div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-a">ソムチャイ</div><div class="roleplay-lines"><div class="roleplay-jp">パクさんは<ruby>毎朝<rt>まいあさ</rt></ruby><ruby>何時<rt>なんじ</rt></ruby>に<ruby>起<rt>お</rt></ruby>きますか。<button class="tts-btn" onclick="speakText('パクさんは毎朝何時に起きますか。')" title="Listen">🔊</button></div><div class="roleplay-trans">What time do you get up every morning, Park?</div><div class="roleplay-native i18n-native" data-ko="박 씨는 매일 아침 몇 시에 일어나요?" data-zhcn="朴先生每天早上几点起床？" data-zhtw="朴先生每天早上幾點起床？" data-cant="Park每朝幾點起身呀？"></div></div></div>
+      <div class="roleplay-bubble"><div class="roleplay-speaker speaker-b">パク</div><div class="roleplay-lines"><div class="roleplay-jp">7<ruby>時<rt>じ</rt></ruby>に<ruby>起<rt>お</rt></ruby>きます。でも、きのうは<ruby>起<rt>お</rt></ruby>きませんでした。9<ruby>時<rt>じ</rt></ruby>に<ruby>起<rt>お</rt></ruby>きました。<button class="tts-btn" onclick="speakText('7時に起きます。でも、きのうは起きませんでした。9時に起きました。')" title="Listen">🔊</button></div><div class="roleplay-trans">I get up at 7:00. But yesterday I didn't. I got up at 9:00.</div><div class="roleplay-native i18n-native" data-ko="7시에 일어나요. 근데 어제는 안 일어났어요. 9시에 일어났어요." data-zhcn="7点起床。不过昨天没有。9点才起床。" data-zhtw="7點起床。不過昨天沒有。9點才起床。" data-cant="7點起身。不過尋日冇。9點先起身。"></div></div></div>
+    </div>
+
+    <div class="practice-part-header"><span class="practice-part-badge">Part 3</span><div class="practice-part-title">Rapid Self-Check — Mix It Up</div></div>
+    <div class="toggle-item" onclick="toggleAnswer('r1')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">R-1. It is 5:15 now.</div><button class="btn-check-reveal" id="btn-r1">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-r1"><span>今5<ruby>時<rt>じ</rt></ruby>15<ruby>分<rt>ふん</rt></ruby>です。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('今5時15分です。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('r2')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">R-2. I did not work yesterday. I rested.</div><button class="btn-check-reveal" id="btn-r2">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-r2"><span>きのう<ruby>働<rt>はたら</rt></ruby>きませんでした。<ruby>休<rt>やす</rt></ruby>みました。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('きのう働きませんでした。休みました。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('r3')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">R-3. The company is from 9:00 to 6:00.</div><button class="btn-check-reveal" id="btn-r3">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-r3"><span><ruby>会社<rt>かいしゃ</rt></ruby>は9<ruby>時<rt>じ</rt></ruby>から6<ruby>時<rt>じ</rt></ruby>までです。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('会社は9時から6時までです。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('r4')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">R-4. I go to bed at 11:00 every night.</div><button class="btn-check-reveal" id="btn-r4">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-r4"><span>わたしは<ruby>毎晩<rt>まいばん</rt></ruby>11<ruby>時<rt>じ</rt></ruby>に<ruby>寝<rt>ね</rt></ruby>ます。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('わたしは毎晩11時に寝ます。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('r5')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">R-5. What time did Sofia get up yesterday?</div><button class="btn-check-reveal" id="btn-r5">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-r5"><span>ソフィアさんはきのう<ruby>何時<rt>なんじ</rt></ruby>に<ruby>起<rt>お</rt></ruby>きましたか。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('ソフィアさんはきのう何時に起きましたか。')" title="Listen">🔊</button></div></div>
+    <div class="toggle-item" onclick="toggleAnswer('r6')"><div class="toggle-prompt-row"><div class="toggle-prompt-text">R-6. I study every day, but I didn't study yesterday.</div><button class="btn-check-reveal" id="btn-r6">Reveal ▼</button></div><div class="toggle-answer-box" id="ans-r6"><span>わたしは<ruby>毎日<rt>まいにち</rt></ruby><ruby>勉強<rt>べんきょう</rt></ruby>しますが、きのうは<ruby>勉強<rt>べんきょう</rt></ruby>しませんでした。</span><button class="tts-btn" onclick="event.stopPropagation(); speakText('わたしは毎日勉強しますが、きのうは勉強しませんでした。')" title="Listen">🔊</button></div></div>
+  </section>
+
+  <section class="content-card" id="sec-kanji">
+    <div class="card-header-row">
+      <div class="step-label">Step 4</div>
+      <div class="card-main-title">New Kanji</div>
+      <div class="card-subtitle-en">Time and daily-routine words.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="시간과 일상 관련 단어입니다." data-zhcn="时间与日常作息相关词汇。" data-zhtw="時間與日常作息相關詞彙。" data-cant="時間同日常作息相關詞彙。"></div>
+    </div>
+    <div class="kanji-display-grid">
+      <div class="kanji-box-item"><div class="kanji-large-char">今</div><div class="kanji-meaning-en">now</div><div class="kanji-readings-text">いま</div></div>
+      <div class="kanji-box-item"><div class="kanji-large-char">時</div><div class="kanji-meaning-en">o'clock</div><div class="kanji-readings-text">じ</div></div>
+      <div class="kanji-box-item"><div class="kanji-large-char">分</div><div class="kanji-meaning-en">minute</div><div class="kanji-readings-text">ふん／ぷん</div></div>
+      <div class="kanji-box-item"><div class="kanji-large-char">毎朝</div><div class="kanji-meaning-en">every morning</div><div class="kanji-readings-text">まいあさ</div></div>
+      <div class="kanji-box-item"><div class="kanji-large-char">起きます</div><div class="kanji-meaning-en">to get up</div><div class="kanji-readings-text">おきます</div></div>
+      <div class="kanji-box-item"><div class="kanji-large-char">寝ます</div><div class="kanji-meaning-en">to sleep</div><div class="kanji-readings-text">ねます</div></div>
+      <div class="kanji-box-item"><div class="kanji-large-char">働きます</div><div class="kanji-meaning-en">to work</div><div class="kanji-readings-text">はたらきます</div></div>
+    </div>
+  </section>
+
+  <section class="content-card" id="sec-pool">
+    <div class="card-header-row">
+      <div class="step-label">Step 5</div>
+      <div class="card-main-title">Starred Word Pool</div>
+      <div class="card-subtitle-en">All new words from this lesson. Tap ☆ to save the ones you want to review.</div>
+      <div class="card-subtitle-native i18n-native" data-ko="별표를 눌러 복습할 단어를 저장하세요." data-zhcn="点击☆收藏想复习的字。" data-zhtw="點擊☆收藏想複習的字。" data-cant="㩒☆嚟收藏想溫嘅字。"></div>
+    </div>
+    <div class="vocab-filter-row">
+      <div class="filter-btn-group">
+        <button class="filter-pill active" id="filter-all" onclick="filterVocab('all')">All</button>
+        <button class="filter-pill" id="filter-starred" onclick="filterVocab('starred')">Starred ☆</button>
+      </div>
+    </div>
+    <div class="word-pool-grid" id="word-pool-list">
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">今</div><div class="pool-word-trans">now</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">〜時〜分</div><div class="pool-word-trans">~:~ (time)</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">半</div><div class="pool-word-trans">half past</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">毎朝／毎晩／毎日</div><div class="pool-word-trans">every morning/night/day</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">起きます</div><div class="pool-word-trans">to get up</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">寝ます</div><div class="pool-word-trans">to sleep/go to bed</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">働きます</div><div class="pool-word-trans">to work</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">休みます</div><div class="pool-word-trans">to rest / take a day off</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">勉強します</div><div class="pool-word-trans">to study</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">家を出ます</div><div class="pool-word-trans">to leave home</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">きのう／きょう／あした</div><div class="pool-word-trans">yesterday/today/tomorrow</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">〜から〜まで</div><div class="pool-word-trans">from ~ to ~</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+      <div class="word-pool-card" data-starred="false"><div><div class="pool-word-jp">会議</div><div class="pool-word-trans">meeting</div></div><button class="star-btn" onclick="toggleStar(this)">☆</button></div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  let currentOpenId = null;
+  function toggleAnswer(id) {
+    const ans = document.getElementById('ans-' + id);
+    const btn = document.getElementById('btn-' + id);
+    const isOpen = ans.classList.contains('show');
+    if (currentOpenId && currentOpenId !== id) {
+      const prevAns = document.getElementById('ans-' + currentOpenId);
+      const prevBtn = document.getElementById('btn-' + currentOpenId);
+      if (prevAns) { prevAns.classList.remove('show'); prevBtn.innerText = 'Reveal ▼'; }
+    }
+    if (isOpen) { ans.classList.remove('show'); btn.innerText = 'Reveal ▼'; currentOpenId = null; }
+    else { ans.classList.add('show'); btn.innerText = 'Hide ▲'; currentOpenId = id; }
+  }
+  function speakText(text) {
+    if (!('speechSynthesis' in window)) { alert('Your browser does not support audio speech synthesis.'); return; }
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'ja-JP';
+    utterance.rate = 0.92;
+    window.speechSynthesis.speak(utterance);
+  }
+  function toggleStar(btn) {
+    btn.classList.toggle('active');
+    btn.innerText = btn.classList.contains('active') ? '★' : '☆';
+    const card = btn.closest('.word-pool-card');
+    const isStarred = btn.classList.contains('active');
+    card.setAttribute('data-starred', isStarred ? 'true' : 'false');
+    const btnStarred = document.getElementById('filter-starred');
+    if (btnStarred && btnStarred.classList.contains('active') && !isStarred) { card.style.display = 'none'; }
+  }
+  function filterVocab(type) {
+    const cards = document.querySelectorAll('.word-pool-card');
+    const btnAll = document.getElementById('filter-all');
+    const btnStarred = document.getElementById('filter-starred');
+    if (type === 'all') { btnAll.classList.add('active'); btnStarred.classList.remove('active'); cards.forEach(c => c.style.display = 'flex'); }
+    else { btnAll.classList.remove('active'); btnStarred.classList.add('active'); cards.forEach(c => { c.style.display = (c.getAttribute('data-starred') === 'true') ? 'flex' : 'none'; }); }
+  }
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    const tabs = document.querySelectorAll('.nav-tab-btn');
+    tabs.forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+  function applyLanguage(lang) {
+    document.querySelectorAll('.i18n-native').forEach(el => {
+      if (lang === 'all') {
+        const parts = [el.dataset.ko, el.dataset.zhcn, el.dataset.zhtw, el.dataset.cant].filter(Boolean);
+        el.textContent = parts.join(' / ');
+      } else {
+        el.textContent = el.dataset[lang] || '';
+      }
+    });
+    document.querySelectorAll('.i18n-note').forEach(el => {
+      if (lang === 'all') { el.textContent = el.dataset.en; }
+      else { el.textContent = el.dataset[lang] || el.dataset.en; }
+    });
+  }
+  document.addEventListener('DOMContentLoaded', function () { applyLanguage('all'); });
+</script>
+
+</body>
+</html>
