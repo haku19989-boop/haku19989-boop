@@ -2297,7 +2297,7 @@ rt {
 
         <!-- 入力バー -->
         <div class="chat-input-bar" style="display:flex; gap:10px; padding:12px 14px; background:white; border-top:1.5px solid #E2E8F0; align-items:center; flex-shrink:0;">
-          <input type="text" id="chat-user-input" class="chat-input" placeholder="日本語で話しかけてみよう...（例: 今日何を食べましたか？）" onkeydown="if(event.key==='Enter') sendChatMessage()">
+          <input type="text" id="chat-user-input" class="chat-input" placeholder="日本語や母国語（英語・中国語・韓国語など）で話しかけてね！" onkeydown="if(event.key==='Enter') sendChatMessage()">
           <button class="chat-send-btn" id="chat-send-button" onclick="sendChatMessage()" style="background:#1486AD; color:white; border:none; padding:10px 22px; border-radius:12px; font-weight:700; cursor:pointer; transition:opacity 0.2s; white-space:nowrap;">
             送信
           </button>
@@ -3101,18 +3101,24 @@ rt {
 
   const PERSONAS = {
     friend: {
-      name: '友人 (ソラ)',
+      name: '友人 (山田太郎)',
       avatar: '😊',
       style: 'タメ口・親しい表現',
-      initial: 'やっほー！<ruby>今日<rt>きょう</rt></ruby>はどんな<ruby>一日<rt>いちにち</rt></ruby>だった？なんでも<ruby>気軽<rt>きがる</rt></ruby>に<ruby>日本語<rt>にほんご</rt></ruby>で<ruby>話<rt>はな</rt></ruby>しかけてね！',
+      initial: '<ruby>初<rt>はじ</rt></ruby>めまして！<ruby>私<rt>わたし</rt></ruby>の<ruby>名前<rt>なまえ</rt></ruby>は<ruby>山田<rt>やまだ</rt></ruby><ruby>太郎<rt>たろう</rt></ruby>だよ！あなたのことはなんて<ruby>呼<rt>よ</rt></ruby>んだらいい？',
       initialTranslations: {
-        en: 'Hey! How was your day today? Feel free to talk to me in Japanese about anything!',
-        'zh-TW': '嗨！今天過得如何？用日語想聊什麼都可以輕鬆跟我聊喔！',
-        'zh-CN': '嗨！今天过得怎么样？用日语想聊什么都可以随时跟我聊哦！',
-        ko: '안녕! 오늘은 어떤 하루였어? 일본어로 편하게 뭐든지 말 걸어줘!',
-        ja: '（親しい友人同士の自然なタメ口での挨拶です。「一日」はいちにちと読みます）'
+        en: 'Nice to meet you! My name is Taro Yamada! What should I call you?',
+        'zh-TW': '初次見面！我的名字是山田太郎！我可以怎麼稱呼你呢？',
+        'zh-CN': '初次见面！我的名字是山田太郎！我该怎么称呼你呢？',
+        ko: '처음 뵙겠습니다! 제 이름은 야마다 타로예요! 당신은 뭐라고 부르면 될까요?',
+        ja: '（初対面の自己紹介と、相手の呼び名を尋ねる親しい挨拶です）'
       },
-      systemPrompt: `あなたは日本語学習者の親しい日本人友人「ソラ」です。カジュアルなタメ口（〜だよ、〜だね、〜じゃない？、〜した？）で話してください。絶対に敬語（です・ます・ございます）は使わないでください。
+      systemPrompt: `あなたは日本語学習者の親しい日本人友人「山田太郎」です。カジュアルなタメ口（〜だよ、〜だね、〜じゃない？、〜した？）で話してください。絶対に敬語（です・ます・ございます）は使わないでください。
+
+【最重要：母国語・外国語入力への対応ルール】
+相手（学習者）が英語・中国語・韓国語などの母国語、または外国語混じりで発言した場合は、
+必ずまず文頭で「それは日本語で「【自然な日本語表現】」というよ！」と日本語の自然な言い方を教えてください。
+そして改行した後に、その内容に対する返信（相づちや質問など会話の続き）を続けてください！
+※母国語で言われた場合は、---CORRECTION--- は出力せず、会話の中で「それは日本語で〜というよ！」と教えるだけで十分です。
 
 【ふりがな（ルビ）必須ルール】
 会話文に含まれる全ての漢字に、必ずHTMLのrubyタグを使ってふりがな（ルビ）を振ってください。
@@ -3297,6 +3303,8 @@ Advice: Concise explanation in English why it is corrected.
       clearChatHistory();
     }
     initChatSelectionHandler();
+    // ★ AI特訓を開いたらまず使い方の画面が一番に出てくる！
+    openChatGuideModal();
   }
 
   function setChatPersona(type) {
@@ -3505,102 +3513,126 @@ Advice: Concise explanation in English why it is corrected.
   let currentGuideLang = 'ja';
   const CHAT_GUIDE_TRANSLATIONS = {
     ja: {
-      title: '💡 会話特訓の使い方ガイド',
-      closeBtn: 'わかりました！会話をはじめる',
+      title: '💡 会話特訓の使い方 ＆ 母国語設定',
+      welcomeTitle: '👋 ようこそ！日本語 会話特訓へ',
+      welcomeSub: 'まずはあなたの母国語を選んでください（いつでも切り替え可能です）',
+      closeBtn: '🚀 会話特訓をはじめる！',
+      step0Title: 'わからない時は母国語（英語・中国語・韓国語など）で送ってOK！',
+      step0Desc: '「それは日本語で『〜』というよ！」と日本語の言い方を教えてから、優しくお返事してくれます。日本語に自信がなくても安心して話しかけてみてください！',
       step1Title: '相手のメッセージと単語辞書ボタン',
       step1Desc: '相手の返信の下に、使われている重要単語の「🔍 単語辞書ボタン」が自動表示されます。タップするだけですぐに意味や読みを調べられます。',
       step2Title: '文字を直接なぞって選択（ふりがな干渉なし）',
       step2Desc: 'チャット内の文字を指やマウスでなぞると、その真上に「🔍 辞書で調べる」「🔖 マイリスト保存」バーがポップアップします！',
-      step3Title: '自然な英語訳を見る',
-      step3Desc: '吹き出し右下の「🔤 英語訳を見る」を押すと、文章全体の自然な英訳をいつでも確認できます。',
+      step3Title: '母国語での訳やネイティブ音声を見る・聞く',
+      step3Desc: '吹き出し下の「💬 訳を見る」を押すと選んだ母国語での意味を確認でき、「🔊 聞く」で音声も聴けます。',
       step4Title: '文脈に合った読み方を一番上に表示！',
-      step4Desc: '「一日」のように「いちにち」「いちじつ」など複数の読みがある漢字も、会話の中で使われている読み方を最優先でトップに表示します！',
+      step4Desc: '「一日」のように複数の読みがある漢字も、会話の中で使われている読み方を最優先でトップに表示します！',
       exampleTitle: '実際に試してみよう（実例プレビュー）',
-      exampleSender: '😊 友人 (ソラ)',
+      exampleSender: '😊 友人 (山田太郎)',
       exampleHint: 'ボタンを押したり文字をなぞって試せます！',
-      selectionBadge: '👆「一日」を選択中（操作バー出現）',
-      transBtnShow: '🔤 英語訳を見る',
-      transBtnHide: '🔤 訳を隠す',
-      englishTransText: 'Hey! How was your day today? Feel free to talk to me in Japanese about anything!'
+      selectionBadge: '👆「名前」を選択中（操作バー出現）',
+      transBtnShow: '💬 訳を見る',
+      transBtnHide: '💬 訳を隠す',
+      englishTransText: 'Nice to meet you! My name is Taro Yamada! What should I call you?'
     },
     en: {
-      title: '💡 Conversation Practice Guide',
-      closeBtn: 'Got it! Start Chatting',
+      title: '💡 Conversation Practice Guide & Language Setup',
+      welcomeTitle: '👋 Welcome to Japanese Chat Practice!',
+      welcomeSub: 'Please select your native language (changeable anytime):',
+      closeBtn: '🚀 Start Chat Practice!',
+      step0Title: 'Stuck? Send in your native language anytime!',
+      step0Desc: 'You can chat in English, Chinese, or Korean! Taro will teach you "In Japanese, that is said as [ ... ]!" and then keep the conversation flowing smoothly.',
       step1Title: 'Quick Dictionary Buttons Under Reply',
-      step1Desc: 'Important words used in the partner reply automatically appear as "🔍 Word Dictionary" buttons below. Tap any word to instantly view its meaning, reading, and JLPT level.',
+      step1Desc: 'Important words in the reply appear as "🔍 Dictionary" buttons below. Tap any word to instantly view its meaning, reading, and JLPT level.',
       step2Title: 'Highlight Text Directly Without Furigana Hassle',
       step2Desc: 'Highlight any word in the chat to see the popup toolbar with "🔍 Search Dict" and "🔖 Save to Mylist" appear right above it!',
-      step3Title: 'View Natural English Translations',
-      step3Desc: 'Tap "🔤 View English Translation" at the bottom right of any message to check the natural English meaning whenever you need help.',
+      step3Title: 'Native Translation & Audio Playback',
+      step3Desc: 'Tap "💬 View Translation" to check natural translations in your language, and "🔊 Listen" to hear native audio.',
       step4Title: 'Context-Aware Furigana Priority',
-      step4Desc: 'For words with multiple readings like 一日 ("ichinichi" vs "ichijitsu"), the dictionary always prioritizes the exact reading used in the current conversation at the top!',
+      step4Desc: 'For words with multiple readings, the dictionary always prioritizes the exact reading used in the current conversation at the top!',
       exampleTitle: 'Interactive Preview (Try it out!)',
-      exampleSender: '😊 Friend (Sora)',
+      exampleSender: '😊 Friend (Taro Yamada)',
       exampleHint: 'You can tap the buttons or highlight words right here:',
-      selectionBadge: '👆 "一日" selected (Toolbar appears above)',
-      transBtnShow: '🔤 View English Translation',
-      transBtnHide: '🔤 Hide Translation',
-      englishTransText: 'Hey! How was your day today? Feel free to talk to me in Japanese about anything!'
+      selectionBadge: '👆 "名前" selected (Toolbar appears above)',
+      transBtnShow: '💬 View Translation',
+      transBtnHide: '💬 Hide Translation',
+      englishTransText: 'Nice to meet you! My name is Taro Yamada! What should I call you?'
     },
     'zh-TW': {
-      title: '💡 會話特訓使用指南',
-      closeBtn: '了解！開始對話',
+      title: '💡 會話特訓使用指南 ＆ 語言設定',
+      welcomeTitle: '👋 歡迎來到日語會話特訓！',
+      welcomeSub: '請先選擇您的母語（隨時皆可切換）：',
+      closeBtn: '🚀 開始會話特訓！',
+      step0Title: '遇到不會的日語，直接輸入母語也完全OK！',
+      step0Desc: '如果用中文或英文發問，太郎會先告訴您「這句日文叫做『〜』喔！」，接著繼續與您親切暢聊，完全不用擔心！',
       step1Title: '點擊回覆下方的單字按鈕查字典',
       step1Desc: '對方回覆的下方會自動顯示句子中出現的「🔍 單字字典按鈕」。只需輕輕一點，即可查閱發音、意思與JLPT等級。',
       step2Title: '反白滑鼠選取文字（不干擾假名標音）',
       step2Desc: '反白選取文字時，正上方會立刻彈出「🔍 查字典」與「🔖 存入生詞本」工具列！',
-      step3Title: '查看自然的英語對照翻譯',
-      step3Desc: '點擊對話框右下角的「🔤 查看英語翻譯」，隨時可以確認整句對話的自然英語釋義。',
+      step3Title: '母語對照翻譯與發音朗讀',
+      step3Desc: '點擊對話框下方的「💬 查看翻譯」，即可對照自然中文釋義，並可點擊「🔊 聆聽」播放母語者語音。',
       step4Title: '根據上下文優先顯示最符合的讀音！',
-      step4Desc: '如「一日」同時有「いちにち」「いちじつ」等多種讀音時，字典會絕對優先將文章當下使用的讀音排在最上方！',
+      step4Desc: '字典會絕對優先將文章當下使用的讀音排在最上方！',
       exampleTitle: '實際範例操作（互動預覽）',
-      exampleSender: '😊 朋友 (空)',
+      exampleSender: '😊 朋友 (山田太郎)',
       exampleHint: '可以點擊下方的單字或選取文字試試看：',
-      selectionBadge: '👆 選取「一日」（上方出現操作列）',
-      transBtnShow: '🔤 查看英語翻譯',
-      transBtnHide: '🔤 隱藏翻譯',
-      englishTransText: 'Hey! How was your day today? Feel free to talk to me in Japanese about anything!'
+      selectionBadge: '👆 選取「名前」（上方出現操作列）',
+      transBtnShow: '💬 查看翻譯',
+      transBtnHide: '💬 隱藏翻譯',
+      englishTransText: '初次見面！我的名字是山田太郎！我可以怎麼稱呼你呢？'
     },
     'zh-CN': {
-      title: '💡 对话特训使用指南',
-      closeBtn: '明白了！开始对话',
+      title: '💡 对话特训使用指南 ＆ 语言设置',
+      welcomeTitle: '👋 欢迎来到日语对话特训！',
+      welcomeSub: '请先选择您的母语（随时可切换）：',
+      closeBtn: '🚀 开始对话特训！',
+      step0Title: '遇到不会的日语，直接发送母语也完全OK！',
+      step0Desc: '如果用中文或英文发送，太郎会先贴心告诉您“这句话在日语里叫『〜』哦！”，然后继续与您自然畅聊，无需顾虑！',
       step1Title: '点击回复下方的词汇按钮快捷查词',
       step1Desc: '对方回复的下方会自动生成句子中用到的“🔍 词汇字典按钮”。轻点即可迅速查看假名读音、释义与JLPT级别。',
       step2Title: '直接划选文字（假名不干扰）',
       step2Desc: '划选文字时，正上方会立即弹出“🔍 查字典”与“🔖 存入生词本”工具栏！',
-      step3Title: '查看地道英语译文',
-      step3Desc: '点击气泡右下角的“🔤 查看英语翻译”，即可随时对照整句地道的英语释义。',
+      step3Title: '母语对照翻译与纯正发音',
+      step3Desc: '点击气泡下方的“💬 查看翻译”，即可对照地道中文释义，点击“🔊 播放”收听真人发音。',
       step4Title: '结合语境优先置顶最匹配的读音！',
-      step4Desc: '像“一日”有“いちにち”“いちじつ”等多种读音时，字典会绝对优先将句子中当前使用的读音显示在最前列！',
+      step4Desc: '字典会绝对优先将句子中当前使用的读音显示在最前列！',
       exampleTitle: '真实案例演示（互动体验）',
-      exampleSender: '😊 朋友 (空)',
+      exampleSender: '😊 朋友 (山田太郎)',
       exampleHint: '您可以直接点击下方按钮或划选文字体验：',
-      selectionBadge: '👆 划选“一日”（上方浮现实用工具栏）',
-      transBtnShow: '🔤 查看英语翻译',
-      transBtnHide: '🔤 隐藏翻译',
-      englishTransText: 'Hey! How was your day today? Feel free to talk to me in Japanese about anything!'
+      selectionBadge: '👆 划选“名前”（上方浮现实用工具栏）',
+      transBtnShow: '💬 查看翻译',
+      transBtnHide: '💬 隐藏翻译',
+      englishTransText: '初次见面！我的名字是山田太郎！我该怎么称呼你呢？'
     },
     ko: {
-      title: '💡 회화 특훈 사용 가이드',
-      closeBtn: '확인! 대화 시작하기',
+      title: '💡 회화 특훈 사용 가이드 ＆ 모국어 설정',
+      welcomeTitle: '👋 일본어 회화 특훈에 오신 것을 환영합니다!',
+      welcomeSub: '먼저 모국어를 선택해 주세요 (언제든 변경 가능합니다):',
+      closeBtn: '🚀 회화 특훈 시작하기!',
+      step0Title: '모를 때는 모국어(한국어·영어 등)로 보내도 OK!',
+      step0Desc: '한국어로 보내면 타로가 먼저 "그건 일본어로 『〜』라고 해!"라고 가르쳐 준 뒤 자연스럽게 대화를 이어갑니다. 걱정 말고 편하게 말 걸어보세요!',
       step1Title: '답변 아래의 단어 버튼으로 빠른 사전 검색',
-      step1Desc: '상대방의 메시지 아래에 문장에 사용된 주요 단어 버튼이 자동으로 표시됩니다. 터치 한 번으로 뜻, 발音, JLPT 레벨을 확인할 수 있습니다.',
+      step1Desc: '상대방의 메시지 아래에 문장에 사용된 주요 단어 버튼이 자동으로 표시됩니다. 터치 한 번으로 뜻, 발음, JLPT 레벨을 확인할 수 있습니다.',
       step2Title: '텍스트를 드래그하여 바로 검색 (후리가나 간섭 없음)',
       step2Desc: '말풍선 안의 글자를 드래그하면 바로 머리 위에 "🔍 사전 검색", "🔖 마이리스트 저장" 툴바가 나타납니다!',
-      step3Title: '자연스러운 영어 번역 보기',
-      step3Desc: '말풍선 오른쪽 아래의 "🔤 영어 번역 보기"를 누르면 문장 전체의 자연스러운 영어 의미를 언제든 확인할 수 있습니다.',
+      step3Title: '모국어 번역과 원어민 음성 듣기',
+      step3Desc: '말풍선 아래의 "💬 번역 보기"를 누르면 한국어 번역을 확인하고, "🔊 듣기"로 음성을 들을 수 있습니다.',
       step4Title: '문맥에 맞는 발음을 맨 위에 우선 표시!',
-      step4Desc: '「一日」처럼 "いちにち", "いちじつ" 등 여러 읽는 법이 있는 단어도, 현재 대화에서 쓰인 발음을 최우선으로 상단에 표시합니다!',
+      step4Desc: '현재 대화에서 쓰인 발음을 최우선으로 상단에 표시합니다!',
       exampleTitle: '실제 예시 체험 (인터랙티브 미리보기)',
-      exampleSender: '😊 친구 (소라)',
+      exampleSender: '😊 친구 (야마다 타로)',
       exampleHint: '아래 단어 버튼을 누르거나 글자를 드래그해 보세요:',
-      selectionBadge: '👆 "一日" 선택 중 (상단에 툴바 팝업)',
-      transBtnShow: '🔤 영어 번역 보기',
-      transBtnHide: '🔤 번역 숨기기',
-      englishTransText: 'Hey! How was your day today? Feel free to talk to me in Japanese about anything!'
+      selectionBadge: '👆 "名前" 선택 중 (상단에 툴바 팝업)',
+      transBtnShow: '💬 번역 보기',
+      transBtnHide: '💬 번역 숨기기',
+      englishTransText: '처음 뵙겠습니다! 제 이름은 야마다 타로예요! 당신은 뭐라고 부르면 될까요?'
     }
   };
 
+    function selectOnboardingLang(lang) {
+    setChatNativeLanguage(lang);
+    switchChatGuideLang(lang);
+  }
   function switchChatGuideLang(lang) {
     if (!CHAT_GUIDE_TRANSLATIONS[lang]) lang = 'ja';
     currentGuideLang = lang;
@@ -3620,8 +3652,35 @@ Advice: Concise explanation in English why it is corrected.
     const contentArea = document.getElementById('guide-modal-content-area');
     if (!contentArea) return;
 
+    const activeLang = currentChatNativeLang || 'ja';
+
     contentArea.innerHTML = `
-      <!-- ユーザー様指定のリアル例文プレビューカード -->
+      <!-- ★ 1. 母国語選択ウェルカムカード ★ -->
+      <div style="background:linear-gradient(135deg, #0284C7 0%, #0369A1 100%); color:white; border-radius:16px; padding:16px 18px; box-shadow:0 4px 14px rgba(2,132,199,0.25); text-align:center;">
+        <div style="font-size:1.1rem; font-weight:800; margin-bottom:4px; display:flex; align-items:center; justify-content:center; gap:6px;">
+          <span>${escapeHtml(t.welcomeTitle)}</span>
+        </div>
+        <div style="font-size:0.82rem; opacity:0.95; margin-bottom:12px;">${escapeHtml(t.welcomeSub)}</div>
+        <div style="display:flex; justify-content:center; gap:8px; flex-wrap:wrap;">
+          <button onclick="selectOnboardingLang('en')" style="background:${activeLang==='en'?'#FACC15':'rgba(255,255,255,0.22)'}; color:${activeLang==='en'?'#78350F':'white'}; border:1.5px solid ${activeLang==='en'?'#CA8A04':'rgba(255,255,255,0.45)'}; padding:6px 12px; border-radius:12px; font-weight:800; font-size:0.82rem; cursor:pointer; transition:all 0.15s; display:inline-flex; align-items:center; gap:4px;">
+            🇺🇸 English
+          </button>
+          <button onclick="selectOnboardingLang('zh-TW')" style="background:${activeLang==='zh-TW'?'#FACC15':'rgba(255,255,255,0.22)'}; color:${activeLang==='zh-TW'?'#78350F':'white'}; border:1.5px solid ${activeLang==='zh-TW'?'#CA8A04':'rgba(255,255,255,0.45)'}; padding:6px 12px; border-radius:12px; font-weight:800; font-size:0.82rem; cursor:pointer; transition:all 0.15s; display:inline-flex; align-items:center; gap:4px;">
+            🇹🇼 繁體中文
+          </button>
+          <button onclick="selectOnboardingLang('zh-CN')" style="background:${activeLang==='zh-CN'?'#FACC15':'rgba(255,255,255,0.22)'}; color:${activeLang==='zh-CN'?'#78350F':'white'}; border:1.5px solid ${activeLang==='zh-CN'?'#CA8A04':'rgba(255,255,255,0.45)'}; padding:6px 12px; border-radius:12px; font-weight:800; font-size:0.82rem; cursor:pointer; transition:all 0.15s; display:inline-flex; align-items:center; gap:4px;">
+            🇨🇳 简体中文
+          </button>
+          <button onclick="selectOnboardingLang('ko')" style="background:${activeLang==='ko'?'#FACC15':'rgba(255,255,255,0.22)'}; color:${activeLang==='ko'?'#78350F':'white'}; border:1.5px solid ${activeLang==='ko'?'#CA8A04':'rgba(255,255,255,0.45)'}; padding:6px 12px; border-radius:12px; font-weight:800; font-size:0.82rem; cursor:pointer; transition:all 0.15s; display:inline-flex; align-items:center; gap:4px;">
+            🇰🇷 한국어
+          </button>
+          <button onclick="selectOnboardingLang('ja')" style="background:${activeLang==='ja'?'#FACC15':'rgba(255,255,255,0.22)'}; color:${activeLang==='ja'?'#78350F':'white'}; border:1.5px solid ${activeLang==='ja'?'#CA8A04':'rgba(255,255,255,0.45)'}; padding:6px 12px; border-radius:12px; font-weight:800; font-size:0.82rem; cursor:pointer; transition:all 0.15s; display:inline-flex; align-items:center; gap:4px;">
+            🇯🇵 日本語
+          </button>
+        </div>
+      </div>
+
+      <!-- ★ 2. 山田太郎くんの実例プレビューカード ★ -->
       <div style="background:linear-gradient(180deg, #F8FAFC 0%, #EFF6FF 100%); border:2px solid #BFDBFE; border-radius:16px; padding:14px 16px; box-shadow:0 4px 12px rgba(2,132,199,0.06);">
         <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
           <div style="font-weight:800; color:#0369A1; font-size:0.88rem; display:flex; align-items:center; gap:6px;">
@@ -3630,15 +3689,15 @@ Advice: Concise explanation in English why it is corrected.
           <span style="font-size:0.75rem; color:#64748B;">${escapeHtml(t.exampleHint)}</span>
         </div>
 
-        <!-- チャット吹き出しの実物（文字選択 ＆ ツールバー出現の実演プレビュー） -->
-        <div style="position:relative; margin-top:48px;">
+        <!-- チャット吹き出しの実物（山田太郎くんの挨拶 ＆ ツールバー出現の実演） -->
+        <div style="position:relative; margin-top:46px;">
           <!-- 写真完全再現: なぞった文字の真上に浮き出る黒い操作ツールバー -->
-          <div style="position:absolute; top:-46px; left:50%; transform:translateX(-50%); z-index:10; background:#0F172A; color:white; border-radius:10px; padding:6px 12px; box-shadow:0 8px 24px rgba(15,23,42,0.45); display:inline-flex; align-items:center; gap:8px; font-size:0.8rem; border:1px solid #334155; pointer-events:auto; animation:fadeInUp 0.3s ease-out;">
-            <span style="font-weight:800; color:#38BDF8; font-size:0.86rem; padding:0 2px;">一日</span>
-            <button onclick="openChatDictForWord('一日', 'いちにち')" style="background:#0284C7; color:white; border:none; padding:5px 12px; border-radius:6px; font-weight:700; font-size:0.78rem; cursor:pointer; display:inline-flex; align-items:center; gap:4px; transition:all 0.15s;" onmouseover="this.style.background='#0369A1'" onmouseout="this.style.background='#0284C7'" title="タップして辞書を開く">
+          <div style="position:absolute; top:-44px; left:48%; transform:translateX(-50%); z-index:10; background:#0F172A; color:white; border-radius:10px; padding:6px 12px; box-shadow:0 8px 24px rgba(15,23,42,0.45); display:inline-flex; align-items:center; gap:8px; font-size:0.8rem; border:1px solid #334155; pointer-events:auto; animation:fadeInUp 0.3s ease-out;">
+            <span style="font-weight:800; color:#38BDF8; font-size:0.86rem; padding:0 2px;">名前</span>
+            <button onclick="openChatDictForWord('名前', 'なまえ')" style="background:#0284C7; color:white; border:none; padding:5px 12px; border-radius:6px; font-weight:700; font-size:0.78rem; cursor:pointer; display:inline-flex; align-items:center; gap:4px; transition:all 0.15s;" onmouseover="this.style.background='#0369A1'" onmouseout="this.style.background='#0284C7'" title="タップして辞書を開く">
               🔍 辞書で調べる
             </button>
-            <button onclick="quickSaveWordToMylist('一日')" style="background:#10B981; color:white; border:none; padding:5px 12px; border-radius:6px; font-weight:700; font-size:0.78rem; cursor:pointer; display:inline-flex; align-items:center; gap:4px; transition:all 0.15s;" onmouseover="this.style.background='#059669'" onmouseout="this.style.background='#10B981'" title="タップしてマイリスト保存">
+            <button onclick="quickSaveWordToMylist('名前')" style="background:#10B981; color:white; border:none; padding:5px 12px; border-radius:6px; font-weight:700; font-size:0.78rem; cursor:pointer; display:inline-flex; align-items:center; gap:4px; transition:all 0.15s;" onmouseover="this.style.background='#059669'" onmouseout="this.style.background='#10B981'" title="タップしてマイリスト保存">
               🔖 マイリスト保存
             </button>
             <!-- 吹き出し下三角インジケーター -->
@@ -3646,36 +3705,30 @@ Advice: Concise explanation in English why it is corrected.
           </div>
 
           <div class="chat-bubble ai" style="margin:0; background:white; border:1.5px solid #CBD5E1; box-shadow:0 2px 8px rgba(0,0,0,0.04); padding:14px 16px; border-radius:14px; position:relative;">
-            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
-              <div style="font-size:0.78rem; font-weight:800; color:#64748B;">😊 友人 (ソラ)</div>
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+              <div style="font-size:0.8rem; font-weight:800; color:#64748B;">${escapeHtml(t.exampleSender)}</div>
             </div>
             <div class="chat-text" style="font-size:0.96rem; line-height:2.3; color:#0F172A;">
-              やっほー！<ruby>今日<rt>きょう</rt></ruby>はどんな<span style="background:#BAE6FD; color:#0369A1; padding:2px 4px; border-radius:4px; border:1px dashed #0284C7; font-weight:800; box-shadow:0 1px 4px rgba(2,132,199,0.15);"><ruby>一日<rt style="color:#0284C7; font-weight:800;">いちにち</rt></ruby></span>だった？なんでも<ruby>気軽<rt>きがる</rt></ruby>に<ruby>日本語<rt>にほんご</rt></ruby>で<ruby>話<rt>はな</rt></ruby>しかけてね！
+              <ruby>初<rt>はじ</rt></ruby>めまして！<ruby>私<rt>わたし</rt></ruby>の<span style="background:#BAE6FD; color:#0369A1; padding:2px 4px; border-radius:4px; border:1px dashed #0284C7; font-weight:800; box-shadow:0 1px 4px rgba(2,132,199,0.15);"><ruby>名前<rt style="color:#0284C7; font-weight:800;">なまえ</rt></ruby></span>は<ruby>山田<rt>やまだ</rt></ruby><ruby>太郎<rt>たろう</rt></ruby>だよ！あなたのことはなんて<ruby>呼<rt>よ</rt></ruby>んだらいい？
             </div>
 
-            <!-- 例文の英語訳ボックス -->
+            <!-- 例文の訳ボックス -->
             <div id="guide-example-trans-box" style="display:none; margin-top:8px; padding:8px 12px; background:#F0FDF4; border:1px solid #BBF7D0; border-radius:8px; font-size:0.83rem; color:#166534; line-height:1.5;">
-              <span style="font-weight:700; color:#15803D; margin-right:4px;">🔤 English:</span>
+              <span style="font-weight:700; color:#15803D; margin-right:4px;">💬 訳:</span>
               <span>${escapeHtml(t.englishTransText)}</span>
             </div>
 
             <!-- 例文の単語チップボタン列 -->
             <div style="margin-top:10px; display:flex; flex-wrap:wrap; gap:6px; align-items:center;">
               <span style="font-size:0.75rem; color:#64748B; font-weight:800;">🔍 単語辞書:</span>
-              <button class="chat-quick-word-chip" onclick="openChatDictForWord('一日', 'いちにち')" title="タップして辞書を開く" style="border:1.5px solid #0284C7; background:#EFF6FF; color:#0284C7; font-weight:800;">
-                一日
+              <button class="chat-quick-word-chip" onclick="openChatDictForWord('名前', 'なまえ')" title="タップして辞書を開く" style="border:1.5px solid #0284C7; background:#EFF6FF; color:#0284C7; font-weight:800;">
+                名前
               </button>
-              <button class="chat-quick-word-chip" onclick="openChatDictForWord('今日', 'きょう')" title="タップして辞書を開く">
-                今日
+              <button class="chat-quick-word-chip" onclick="openChatDictForWord('初めまして', 'はじめまして')" title="タップして辞書を開く">
+                初めまして
               </button>
-              <button class="chat-quick-word-chip" onclick="openChatDictForWord('気軽', 'きがる')" title="タップして辞書を開く">
-                気軽
-              </button>
-              <button class="chat-quick-word-chip" onclick="openChatDictForWord('日本語', 'にほんご')" title="タップして辞書を開く">
-                日本語
-              </button>
-              <button class="chat-quick-word-chip" onclick="openChatDictForWord('話す', 'はなす')" title="タップして辞書を開く">
-                話す
+              <button class="chat-quick-word-chip" onclick="openChatDictForWord('呼ぶ', 'よぶ')" title="タップして辞書を開く">
+                呼ぶ
               </button>
             </div>
 
@@ -3688,14 +3741,23 @@ Advice: Concise explanation in English why it is corrected.
         </div>
       </div>
 
-      <!-- 4つの特徴・機能ステップ説明 -->
+      <!-- ★ 3. わかりやすい使い方ステップ ★ -->
       <div style="display:flex; flex-direction:column; gap:10px;">
+        <!-- ⓪ 母国語で送ってOK -->
+        <div style="background:#FEF2F2; border:1.5px solid #FECACA; border-radius:12px; padding:12px 14px; display:flex; gap:12px; align-items:flex-start;">
+          <span style="background:#EF4444; color:white; border-radius:50%; width:26px; height:26px; display:inline-flex; align-items:center; justify-content:center; font-size:0.85rem; font-weight:800; flex-shrink:0;">★</span>
+          <div>
+            <div style="font-weight:800; color:#B91C1C; font-size:0.92rem; margin-bottom:3px;">${escapeHtml(t.step0Title)}</div>
+            <div style="font-size:0.82rem; color:#450A0A; line-height:1.5;">${escapeHtml(t.step0Desc)}</div>
+          </div>
+        </div>
+
         <!-- ① 単語ボタン -->
         <div style="background:#F0F9FF; border:1px solid #BAE6FD; border-radius:12px; padding:10px 14px; display:flex; gap:12px; align-items:flex-start;">
           <span style="background:#0284C7; color:white; border-radius:50%; width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:800; flex-shrink:0;">1</span>
           <div>
-            <div style="font-weight:800; color:#0369A1; font-size:0.9rem; margin-bottom:3px;">${escapeHtml(t.step1Title)}</div>
-            <div style="font-size:0.82rem; color:#334155; line-height:1.5;">${escapeHtml(t.step1Desc)}</div>
+            <div style="font-weight:800; color:#0369A1; font-size:0.88rem; margin-bottom:3px;">${escapeHtml(t.step1Title)}</div>
+            <div style="font-size:0.81rem; color:#334155; line-height:1.5;">${escapeHtml(t.step1Desc)}</div>
           </div>
         </div>
 
@@ -3703,49 +3765,21 @@ Advice: Concise explanation in English why it is corrected.
         <div style="background:#FDF4FF; border:1px solid #F0ABFC; border-radius:12px; padding:10px 14px; display:flex; gap:12px; align-items:flex-start;">
           <span style="background:#A21CAF; color:white; border-radius:50%; width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:800; flex-shrink:0;">2</span>
           <div>
-            <div style="font-weight:800; color:#86198F; font-size:0.9rem; margin-bottom:3px;">${escapeHtml(t.step2Title)}</div>
-            <div style="font-size:0.82rem; color:#334155; line-height:1.5;">${escapeHtml(t.step2Desc)}</div>
+            <div style="font-weight:800; color:#86198F; font-size:0.88rem; margin-bottom:3px;">${escapeHtml(t.step2Title)}</div>
+            <div style="font-size:0.81rem; color:#334155; line-height:1.5;">${escapeHtml(t.step2Desc)}</div>
           </div>
         </div>
 
-        <!-- ③ 英語訳 -->
+        <!-- ③ 訳と音声 -->
         <div style="background:#F0FDF4; border:1px solid #BBF7D0; border-radius:12px; padding:10px 14px; display:flex; gap:12px; align-items:flex-start;">
           <span style="background:#16A34A; color:white; border-radius:50%; width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:800; flex-shrink:0;">3</span>
           <div>
-            <div style="font-weight:800; color:#166534; font-size:0.9rem; margin-bottom:3px;">${escapeHtml(t.step3Title)}</div>
-            <div style="font-size:0.82rem; color:#334155; line-height:1.5;">${escapeHtml(t.step3Desc)}</div>
-          </div>
-        </div>
-
-        <!-- ④ 文脈に合った読み方を一番上 -->
-        <div style="background:#FFFBEB; border:1px solid #FDE68A; border-radius:12px; padding:10px 14px; display:flex; gap:12px; align-items:flex-start;">
-          <span style="background:#D97706; color:white; border-radius:50%; width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:800; flex-shrink:0;">4</span>
-          <div>
-            <div style="font-weight:800; color:#92400E; font-size:0.9rem; margin-bottom:3px;">${escapeHtml(t.step4Title)}</div>
-            <div style="font-size:0.82rem; color:#334155; line-height:1.5;">${escapeHtml(t.step4Desc)}</div>
+            <div style="font-weight:800; color:#166534; font-size:0.88rem; margin-bottom:3px;">${escapeHtml(t.step3Title)}</div>
+            <div style="font-size:0.81rem; color:#334155; line-height:1.5;">${escapeHtml(t.step3Desc)}</div>
           </div>
         </div>
       </div>
     `;
-  }
-
-  function toggleGuideExampleTrans() {
-    const box = document.getElementById('guide-example-trans-box');
-    const btn = document.getElementById('guide-example-trans-btn');
-    if (!box || !btn) return;
-    const t = CHAT_GUIDE_TRANSLATIONS[currentGuideLang] || CHAT_GUIDE_TRANSLATIONS.ja;
-    const isHidden = (box.style.display === 'none' || !box.style.display);
-    box.style.display = isHidden ? 'block' : 'none';
-    btn.innerHTML = isHidden ? escapeHtml(t.transBtnHide) : escapeHtml(t.transBtnShow);
-    if (isHidden) {
-      btn.style.background = '#ECFDF5';
-      btn.style.borderColor = '#86EFAC';
-      btn.style.color = '#166534';
-    } else {
-      btn.style.background = '#F8FAFC';
-      btn.style.borderColor = '#CBD5E1';
-      btn.style.color = '#475569';
-    }
   }
 
   function openChatGuideModal() {
@@ -4048,6 +4082,12 @@ Advice: Concise explanation in English why it is corrected.
         const targetLangName = langInfo.name;
 
         const dynamicSystemPrompt = `${p.systemPrompt}
+
+【最重要：母国語・外国語入力への対応ルール】
+相手（学習者）が英語・中国語・韓国語などの母国語、または外国語混じりで発言した場合は、
+必ずまず文頭で「それは日本語で「【自然な日本語表現】」というよ！」（敬語ペルソナの場合は「それは日本語で「〜」と言いますよ！」）と親切に日本語の自然な言い方を教えてください。
+そして改行した後に、その内容に対する返信（会話の続き）を続けてください！
+※会話文に含まれる全ての漢字には必ず <ruby>漢字<rt>かんじ</rt></ruby> の形式でルビを振ってください。
 
 【訳の出力ルール】
 会話文の直後に必ず改行して「---TRANSLATION---」を出力し、次の行に会話文全体の自然な【${targetLangName}】訳を1行出力してください。
