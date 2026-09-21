@@ -3073,6 +3073,7 @@ rt {
 
   let currentPersona = 'friend';
   let chatConversationHistory = []; // { role: 'user' | 'model', parts: [{ text: ... }] }
+  let chatUserNickName = '';
   let currentSelectedWord = '';
   let currentChatNativeLang = localStorage.getItem('chat_native_lang') || 'en';
 
@@ -3114,11 +3115,14 @@ rt {
       },
       systemPrompt: `あなたは日本語学習者の親しい日本人友人「山田太郎」です。カジュアルなタメ口（〜だよ、〜だね、〜じゃない？、〜した？）で話してください。絶対に敬語（です・ます・ございます）は使わないでください。
 
-【最重要：母国語・外国語入力への対応ルール】
-相手（学習者）が英語・中国語・韓国語などの母国語、または外国語混じりで発言した場合は、
-必ずまず文頭で「それは日本語で「【自然な日本語表現】」というよ！」と日本語の自然な言い方を教えてください。
-そして改行した後に、その内容に対する返信（相づちや質問など会話の続き）を続けてください！
-※母国語で言われた場合は、---CORRECTION--- は出力せず、会話の中で「それは日本語で〜というよ！」と教えるだけで十分です。
+【会話の自然な進行ルール（最重要）】
+1. 最初にお互いの名前を聞いた直後、相手が名前（ニックネーム）を教えてくれたら（例：「はくです」「Alex」「田中って呼んで」など）、
+   必ず「じゃあ「〇〇」って呼ぶね！よろしく！今日はどんな1日だった？」のように相手の呼び名を温かく受け止め、今日の1日について尋ねて会話を広げてください。
+2. 相手が母国語（英語・中国語・韓国語など）で名乗ったり発言した場合は、
+   必ずまず文頭で「それは日本語で「【自然な日本語表現】」というよ！」と親切に教えた上で、
+   改行後に「じゃあ「〇〇」って呼ぶね！今日はどんな1日だった？」等の返信（会話の続き）を続けてください！
+   ※母国語で言われた場合は ---CORRECTION--- は出力せず、会話文内で「それは日本語で〜というよ！」と教えるだけで十分です。
+3. その後の会話でも、相手の返答（仕事、勉強、疲れた、楽しかった、食事など）に温かく共感し、親しい友達として自然な質問を1つ返して会話のキャッチボールを続けてください。
 
 【ふりがな（ルビ）必須ルール】
 会話文に含まれる全ての漢字に、必ずHTMLのrubyタグを使ってふりがな（ルビ）を振ってください。
@@ -3241,7 +3245,8 @@ Advice: Concise explanation in English why it is corrected.
                .replace(/&lt;strong&gt;/gi, '<strong>')
                .replace(/&lt;\/strong&gt;/gi, '</strong>')
                .replace(/&lt;b&gt;/gi, '<b>')
-               .replace(/&lt;\/b&gt;/gi, '</b>');
+               .replace(/&lt;\/b&gt;/gi, '</b>')
+               .replace(/&lt;br\s*\/?&gt;/gi, '<br>');
     return safe.split(String.fromCharCode(10)).join('<br>');
   }
 
@@ -3317,6 +3322,7 @@ Advice: Concise explanation in English why it is corrected.
 
   function clearChatHistory() {
     chatConversationHistory = [];
+    chatUserNickName = '';
     const area = document.getElementById('chat-messages-area');
     if (!area) return;
     const p = PERSONAS[currentPersona];
@@ -4083,10 +4089,12 @@ Advice: Concise explanation in English why it is corrected.
 
         const dynamicSystemPrompt = `${p.systemPrompt}
 
-【最重要：母国語・外国語入力への対応ルール】
-相手（学習者）が英語・中国語・韓国語などの母国語、または外国語混じりで発言した場合は、
-必ずまず文頭で「それは日本語で「【自然な日本語表現】」というよ！」（敬語ペルソナの場合は「それは日本語で「〜」と言いますよ！」）と親切に日本語の自然な言い方を教えてください。
-そして改行した後に、その内容に対する返信（会話の続き）を続けてください！
+【最重要：会話進行＆母国語入力への対応ルール】
+1. 最初にお互いの名前を聞いた直後、相手が名前（ニックネーム）を教えてくれたら（例：「はくです」「Alex」「田中って呼んで」など）、
+   必ず「じゃあ「〇〇」って呼ぶね！よろしく！今日はどんな1日だった？」（敬語の場合は「〇〇様ですね、よろしくお願いいたします！本日はどのような1日をお過ごしでしたか？」）のように相手の呼び名を受け止め、今日の出来事を尋ねて会話を自然に広げてください。
+2. 相手が英語・中国語・韓国語などの母国語、または外国語混じりで発言した場合は、
+   必ずまず文頭で「それは日本語で「【自然な日本語表現】」というよ！」（敬語の場合は「それは日本語で「〜」と言いますよ！」）と親切に日本語の自然な言い方を教えてください。
+   そして改行した後に、その内容に対する返信（会話の続き）を続けてください！
 ※会話文に含まれる全ての漢字には必ず <ruby>漢字<rt>かんじ</rt></ruby> の形式でルビを振ってください。
 
 【訳の出力ルール】
@@ -4193,77 +4201,250 @@ Advice: Explanation in ${targetLangName} why it is corrected.
     }
   }
 
+  function extractUserNameFromInput(rawText) {
+    let t = (rawText || '').trim();
+    if (!t) return 'あなた';
+    // 記号削除
+    let clean = t.replace(/[!?,.！？。、~〜「」『』()（）]/g, ' ').trim();
+    
+    // 英語パターン
+    let m = clean.match(/(?:my name is|i am|call me|i'm)\s+([A-Za-z0-9_\u3040-\u30ff\u4e00-\u9fa5]+)/i);
+    if (m && m[1]) return m[1];
+    // 中国語パターン
+    m = clean.match(/(?:我叫|我是|叫我)\s*([A-Za-z0-9_\u3040-\u30ff\u4e00-\u9fa5]+)/i);
+    if (m && m[1]) return m[1];
+    // 韓国語パターン
+    m = clean.match(/(?:내\s*이름은|나는|난|제\s*이름은)\s*([A-Za-z0-9_\u3040-\u30ff\u4e00-\u9fa5]+)/i);
+    if (m && m[1]) return m[1];
+    m = clean.match(/([A-Za-z0-9_\u3040-\u30ff\u4e00-\u9fa5]+)(?:라고\s*불러|라고\s*해)/i);
+    if (m && m[1]) return m[1];
+
+    // 日本語パターン: 〜って呼んで / 〜と呼んで / 〜でいいよ
+    m = clean.match(/(?:私の名前は|名前は)?\s*([A-Za-z0-9_\u3040-\u30ff\u4e00-\u9fa5]+?)(?:って呼んで|と呼んで|ってよんで|とよんで|で呼んで|でいいよ)/);
+    if (m && m[1]) return m[1];
+    // 日本語パターン: 〜です / 〜だよ / 〜だ / 〜でーす / 〜と申します
+    m = clean.match(/(?:私の名前は|名前は)?\s*([A-Za-z0-9_\u3040-\u30ff\u4e00-\u9fa5]+?)(?:です|だよ|だ|でーす|と申します|ともうします)/);
+    if (m && m[1]) return m[1];
+    // 日本語パターン: 私の名前は〜 / 名前は〜
+    m = clean.match(/(?:私の名前は|名前は)\s*([A-Za-z0-9_\u3040-\u30ff\u4e00-\u9fa5]+)/);
+    if (m && m[1]) return m[1];
+
+    // 1単語のみまたは短い入力
+    const words = clean.split(/\s+/);
+    if (words.length > 0 && words[0].length <= 12) {
+      if (!/(?:こんにちは|おはよう|こんばんは|はじめまして|今日|昨日|明日|仕事|元気|天気)/.test(words[0])) {
+        return words[0];
+      }
+    }
+    return clean.slice(0, 10);
+  }
+
   function generateSmartFallbackReply(text, persona) {
-    const t = text.toLowerCase();
+    const raw = (text || '').trim();
+    const t = raw.toLowerCase();
     let reply = '';
     let englishTrans = '';
     let correction = '';
+    let i18nTrans = null;
 
-    if (/[一-龥぀-ゟ゠-ヿ]+で行きまし/.test(text) || /[一-龥぀-ゟ゠-ヿ]+で行った/.test(text)) {
-      const match = text.match(/([一-龥぀-ゟ゠-ヿ]+)で行/);
+    // 文脈チェック: ユーザーメッセージの往復回数
+    const userMsgCount = chatConversationHistory.filter(m => m.role === 'user').length;
+    const isFirstTurn = userMsgCount <= 1;
+
+    // 母国語での自己紹介や名前入力の判定
+    const isEnglishName = /(?:my name is|i am|call me|i'm)/i.test(raw);
+    const isChineseName = /(?:我叫|我是|叫我)/.test(raw);
+    const isKoreanName = /(?:내 이름은|제 이름은|라고 불러)/.test(raw);
+    const isJapaneseName = /(?:です|だよ|って呼んで|と申します|名前)/.test(raw) || isFirstTurn;
+
+    // 1. 名前のやりとり判定（名前未設定または初回/自己紹介）
+    if (!chatUserNickName && (isFirstTurn || isEnglishName || isChineseName || isKoreanName || isJapaneseName)) {
+      const extracted = extractUserNameFromInput(raw);
+      chatUserNickName = extracted;
+
+      if (persona === 'friend') {
+        let nativePrefix = '';
+        let nativePrefixEn = '';
+        let nativePrefixZhTW = '';
+        let nativePrefixZhCN = '';
+        let nativePrefixKo = '';
+
+        if (isEnglishName || isChineseName || isKoreanName || /^[a-zA-Z\s]+$/.test(raw)) {
+          nativePrefix = `それは日本語で「${extracted}です」というよ！\n`;
+          nativePrefixEn = `In Japanese, you say "${extracted} desu"!\n`;
+          nativePrefixZhTW = `日文的話要說「${extracted} desu（我是${extracted}）」喔！\n`;
+          nativePrefixZhCN = `日语里要说「${extracted} desu（我是${extracted}）」哦！\n`;
+          nativePrefixKo = `일본어로는 "${extracted} desu(입니다)"라고 해요!\n`;
+        }
+
+        reply = `${nativePrefix}じゃあ「${extracted}」って<ruby>呼<rt>よ</rt></ruby>ぶね！よろしく！\n<ruby>今日<rt>きょう</rt></ruby>はどんな1<ruby>日<rt>にち</rt></ruby>だった？何かいいことあった？`;
+        englishTrans = `${nativePrefixEn}Then I'll call you "${extracted}"! Nice to meet you! How was your day today? Anything fun happen?`;
+        i18nTrans = {
+          'zh-TW': `${nativePrefixZhTW}那我以後就叫你「${extracted}」囉！請多指教！今天過得怎麼樣呢？有遇到什麼好事嗎？`,
+          'zh-CN': `${nativePrefixZhCN}那我以后就叫你「${extracted}」啦！请多关照！今天过得怎么样呢？有遇到什么好事吗？`,
+          ko: `${nativePrefixKo}그럼 앞으로 "${extracted}"(이)라고 부를게! 잘 부탁해! 오늘은 어떤 하루였어? 좋은 일 있었어?`,
+          ja: '（呼び名を受け止めて親しく挨拶し、今日の出来事を尋ねるフレンドリートークです）'
+        };
+      } else if (persona === 'colleague') {
+        reply = `「${extracted}」さんですね、承知いたしました！\n改めてよろしくお願いします。<ruby>本日<rt>ほんじつ</rt></ruby>の<ruby>業務<rt>ぎょうむ</rt></ruby>の<ruby>進<rt>すす</rt></ruby>み<ruby>具合<rt>ぐあい</rt></ruby>はいかがですか？`;
+        englishTrans = `Got it, "${extracted}"! Nice to work with you again. How is your work progressing today?`;
+        i18nTrans = {
+          'zh-TW': `原來是「${extracted}」先生/小姐啊，我記住了！請多關照。今天的工作進展順利嗎？`,
+          'zh-CN': `原来是「${extracted}」先生/女士啊，我记住了！请多关照。今天的工作进展顺利吗？`,
+          ko: `"${extracted}" 씨군요, 알겠습니다! 잘 부탁드립니다. 오늘 업무는 어떻게 진행되고 있나요?`,
+          ja: '（同僚としての丁寧な挨拶と業務の進捗を尋ねる表現です）'
+        };
+      } else {
+        reply = `「${extracted}」様でいらっしゃいますね。ご<ruby>来店<rt>らいてん</rt></ruby>いただき<ruby>心<rt>こころ</rt></ruby>より<ruby>感謝<rt>かんしゃ</rt></ruby><ruby>申<rt>もう</rt></ruby>し<ruby>上<rt>あ</rt></ruby>げます。<ruby>本日<rt>ほんじつ</rt></ruby>は何かお<ruby>探<rt>さが</rt></ruby>しの<ruby>品<rt>しな</rt></ruby>はございますか？`;
+        englishTrans = `Welcome, "${extracted}"! Thank you very much for visiting us today. Are you looking for anything in particular?`;
+        i18nTrans = {
+          'zh-TW': `「${extracted}」貴賓您好，衷心感謝您的光臨。請問今天在尋找什麼樣的商品呢？`,
+          'zh-CN': `「${extracted}」贵宾您好，衷心感谢您的光临。请问今天在寻找什么样的商品呢？`,
+          ko: `"${extracted}" 고객님이시군요. 방문해 주셔서 진심으로 감사드립니다. 오늘 찾으시는 물건이 있으신가요?`,
+          ja: '（店員による最高峰の丁寧な接客とご案内の挨拶です）'
+        };
+      }
+    }
+    // 2. 助詞の訂正チェック (場所 + で行きまし/で行った)
+    else if (/[一-龥぀-ゟ゠-ヿ]+で行きまし/.test(raw) || /[一-龥぀-ゟ゠-ヿ]+で行った/.test(raw)) {
+      const match = raw.match(/([一-龥぀-ゟ゠-ヿ]+)で行/);
       const place = match ? match[1] : '場所';
       correction = `Correction: "${place}で行きました" ➔ "${place}に行きました"` + String.fromCharCode(10) +
         `Advice: Use the particle "に (ni)" or "へ (he)" for destinations. "で (de)" indicates means of transportation or where an action happens.`;
+      reply = `いいなあ！<ruby>${place}<rt></rt></ruby>すごく<ruby>楽<rt>たの</rt></ruby>しそう！<ruby>美味<rt>おい</rt></ruby>しいものいっぱい<ruby>食<rt>た</rt></ruby>べた？`;
+      englishTrans = `Sounds awesome! ${place} must have been so fun! Did you eat lots of delicious food?`;
     }
-
-    if (t.includes('福岡') || t.includes('旅行') || t.includes('行きまし') || t.includes('行った')) {
+    // 3. 疲れた・大変・忙しい
+    else if (t.includes('疲れ') || t.includes('つかれ') || t.includes('大変') || t.includes('たいへん') || t.includes('忙し') || t.includes('いそがし') || t.includes('tired') || t.includes('busy') || t.includes('累') || t.includes('辛苦') || t.includes('피곤')) {
+      const nameTag = chatUserNickName ? `「${chatUserNickName}」` : '';
       if (persona === 'friend') {
-        reply = 'いいなあ！<ruby>福岡<rt>ふくおか</rt></ruby>すごく<ruby>楽<rt>たの</rt></ruby>しそう！<ruby>美味<rt>おい</rt></ruby>しいものいっぱい<ruby>食<rt>た</rt></ruby>べた？';
-        englishTrans = 'Sounds awesome! Fukuoka must have been so fun! Did you eat lots of delicious food?';
-      } else if (persona === 'colleague') {
-        reply = 'いいですね！<ruby>福岡<rt>ふくおか</rt></ruby>へ<ruby>行<rt>い</rt></ruby>かれたんですね。<ruby>出張<rt>しゅっちょう</rt></ruby>ですか、それともご<ruby>旅行<rt>りょこう</rt></ruby>ですか？';
-        englishTrans = 'Sounds great! You went to Fukuoka. Was it a business trip or a personal vacation?';
+        reply = `お<ruby>疲<rt>つか</rt></ruby>れ<ruby>様<rt>さま</rt></ruby>！${nameTag}<ruby>今日<rt>きょう</rt></ruby>は<ruby>大変<rt>たいへん</rt></ruby>だったんだね。ゆっくり<ruby>休<rt>やす</rt></ruby>んでね！<ruby>晩<rt>ばん</rt></ruby>ごはんはもう<ruby>食<rt>た</rt></ruby>べた？`;
+        englishTrans = `Good job today! ${nameTag} must have had a tough day. Make sure to get plenty of rest! Have you had dinner already?`;
+        i18nTrans = {
+          'zh-TW': `辛苦啦！${nameTag}今天一定很累了吧。要好好休息喔！晚餐已經吃了嗎？`,
+          'zh-CN': `辛苦啦！${nameTag}今天一定很累了吧。要好好休息哦！晚餐已经吃了吗？`,
+          ko: `수고했어! ${nameTag} 오늘 하루 많이 힘들었겠네. 푹 쉬어! 저녁은 이미 먹었어?`,
+          ja: '（相手の労をねぎらい、休息と夕食を気遣う温かい日常会話です）'
+        };
       } else {
-        reply = '<ruby>福岡<rt>ふくおか</rt></ruby>へ<ruby>行<rt>い</rt></ruby>かれたのでございますね。<ruby>大変<rt>たいへん</rt></ruby><ruby>素敵<rt>すてき</rt></ruby>な<ruby>場所<rt>ばしょ</rt></ruby>ですね。ご<ruby>旅行<rt>りょこう</rt></ruby>はいかがでしたでしょうか？';
-        englishTrans = 'You visited Fukuoka! That is such a wonderful place. How did you enjoy your trip?';
+        reply = `お<ruby>疲<rt>つか</rt></ruby>れ<ruby>様<rt>さま</rt></ruby>でございます。<ruby>本日<rt>ほんじつ</rt></ruby>はお<ruby>忙<rt>いそが</rt></ruby>しかったのですね。どうぞご無理をなさらず、ゆっくりお休みくださいませ。`;
+        englishTrans = 'Thank you for your hard work. You must have had a busy day today. Please take good care of yourself and rest well.';
       }
-    } else if (t.includes('カラオケ') || t.includes('歌')) {
+    }
+    // 4. 楽しかった・良かった・面白かった
+    else if (t.includes('楽し') || t.includes('たのし') || t.includes('よかっ') || t.includes('よかった') || t.includes('面白') || t.includes('おもしろ') || t.includes('最高') || t.includes('fun') || t.includes('great') || t.includes('happy') || t.includes('开心') || t.includes('好玩') || t.includes('즐거')) {
       if (persona === 'friend') {
-        reply = 'カラオケいいね！<ruby>何<rt>なに</rt></ruby>を<ruby>歌<rt>うた</rt></ruby>ったの？<ruby>得意<rt>とくい</rt></ruby>な<ruby>曲<rt>きょく</rt></ruby>とかある？';
-        englishTrans = 'Karaoke is great! What did you sing? Do you have any go-to songs?';
+        reply = `それはよかったね！どんなことがあって<ruby>楽<rt>たの</rt></ruby>しかったの？ぜひ<ruby>詳<rt>くわ</rt></ruby>しく<ruby>教<rt>おし</rt></ruby>えて！`;
+        englishTrans = `That's great! What made it so fun? Please tell me more about it!`;
+        i18nTrans = {
+          'zh-TW': `那太好了！發生了什麼有趣的事情嗎？快跟我詳細說說！`,
+          'zh-CN': `那太好啦！发生了什么有趣的事情吗？快跟我详细说说！`,
+          ko: `그것 참 잘됐다! 어떤 일이 있어서 즐거웠어? 자세히 알려줘!`,
+          ja: '（相手の喜びを共感し、さらに詳しいエピソードを尋ねる表現です）'
+        };
       } else {
-        reply = 'カラオケですか、いいですね！どんなお<ruby>歌<rt>うた</rt></ruby>をお<ruby>歌<rt>うた</rt></ruby>いになるのですか？';
-        englishTrans = 'Karaoke sounds wonderful! What kind of songs do you usually sing?';
+        reply = `それは<ruby>素晴<rt>すばら</rt></ruby>らしいですね！よろしければどのようなことがあったのか、お聞かせいただけますでしょうか？`;
+        englishTrans = 'That sounds wonderful! If you do not mind, could you share what happened?';
       }
-    } else if (t.includes('食べ') || t.includes('ごはん') || t.includes('飯') || t.includes('ランチ') || t.includes('朝食') || t.includes('昼食') || t.includes('夕食')) {
+    }
+    // 5. 仕事・会社・残業
+    else if (t.includes('仕事') || t.includes('しごと') || t.includes('会社') || t.includes('かいしゃ') || t.includes('残業') || t.includes('バイト') || t.includes('work') || t.includes('job') || t.includes('office') || t.includes('上班') || t.includes('工作') || t.includes('회사')) {
       if (persona === 'friend') {
-        reply = '<ruby>今日<rt>きょう</rt></ruby>のお<ruby>昼<rt>ひる</rt></ruby>はカレーライス<ruby>食<rt>た</rt></ruby>べたよ！すごく<ruby>美味<rt>おい</rt></ruby>しかった〜！〇〇は何食べたの？';
-        englishTrans = 'I had curry rice for lunch today! It was super tasty. What did you eat?';
-      } else if (persona === 'colleague') {
-        reply = '<ruby>今日<rt>きょう</rt></ruby>の<ruby>昼休憩<rt>ひるきゅうけい</rt></ruby>は<ruby>近<rt>ちか</rt></ruby>くの<ruby>定食屋<rt>ていしょくや</rt></ruby>さんで<ruby>生姜焼<rt>しょうがや</rt></ruby>き<ruby>定食<rt>ていしょく</rt></ruby>を<ruby>食<rt>た</rt></ruby>べましたよ。美味しくておすすめです！';
-        englishTrans = 'During lunch break, I had ginger pork set meal at a nearby diner. Highly recommended!';
+        reply = `お<ruby>仕事<rt>しごと</rt></ruby>お<ruby>疲<rt>つか</rt></ruby>れ<ruby>様<rt>さま</rt></ruby>！<ruby>毎日<rt>まいにち</rt></ruby><ruby>頑張<rt>がんば</rt></ruby>ってて本当にえらいよ！<ruby>今<rt>いま</rt></ruby>はもうお<ruby>家<rt>うち</rt></ruby>に<ruby>帰<rt>かえ</rt></ruby>った？`;
+        englishTrans = `Great work on your job today! You are doing amazing every single day. Are you already back home now?`;
+        i18nTrans = {
+          'zh-TW': `工作辛苦啦！每天都這麼努力真的很棒耶！現在已經回到家了嗎？`,
+          'zh-CN': `工作辛苦啦！每天都这么努力真的很棒呢！现在已经回到家了吗？`,
+          ko: `오늘 일하느라 수고 많았어! 매일 열심히 하는 모습 정말 대단해! 지금은 집에 들어왔어?`,
+          ja: '（相手の努力を称賛し、現在の帰宅状況を尋ねる親しい友達の言葉です）'
+        };
       } else {
-        reply = '<ruby>本日<rt>ほんじつ</rt></ruby>のお<ruby>昼<rt>ひる</rt></ruby>は<ruby>特製<rt>とくせい</rt></ruby>の<ruby>和風御膳<rt>わふうごぜん</rt></ruby>をいただきました。<ruby>大変<rt>たいへん</rt></ruby><ruby>美味<rt>おい</rt></ruby>しゅうございました。';
-        englishTrans = 'I had a special Japanese meal for lunch today. It was exquisite.';
+        reply = `お<ruby>仕事<rt>しごと</rt></ruby>お<ruby>疲<rt>つか</rt></ruby>れ<ruby>様<rt>さま</rt></ruby>です！<ruby>本日<rt>ほんじつ</rt></ruby>の<ruby>業務<rt>ぎょうむ</rt></ruby>はいかがでしたでしょうか？`;
+        englishTrans = 'Thank you for your hard work today! How did your work go?';
       }
-    } else if (t.includes('こんにちは') || t.includes('おはよう') || t.includes('こんばんは') || t.includes('はじめまして')) {
+    }
+    // 6. 勉強・日本語・学校
+    else if (t.includes('勉強') || t.includes('べんきょう') || t.includes('学校') || t.includes('がっこう') || t.includes('宿題') || t.includes('日本語') || t.includes('にほんご') || t.includes('study') || t.includes('japanese') || t.includes('学习') || t.includes('공부')) {
       if (persona === 'friend') {
-        reply = 'こんにちはー！<ruby>今日<rt>きょう</rt></ruby>も<ruby>会<rt>あ</rt></ruby>えて<ruby>嬉<rt>うれ</rt></ruby>しいよ！<ruby>最近<rt>さいきん</rt></ruby><ruby>調子<rt>ちょうし</rt></ruby>どう？';
-        englishTrans = 'Hello! Great to see you again today! How have you been lately?';
-      } else if (persona === 'colleague') {
-        reply = 'お<ruby>疲<rt>つか</rt></ruby>れ<ruby>様<rt>さま</rt></ruby>です！<ruby>本日<rt>ほんじつ</rt></ruby>もよろしくお願いします。<ruby>業務<rt>ぎょうむ</rt></ruby>の<ruby>進<rt>すす</rt></ruby>み<ruby>具合<rt>ぐあい</rt></ruby>はいかがですか？';
-        englishTrans = 'Good day! Looking forward to working with you. How is your work progressing?';
+        reply = `日本語の<ruby>勉強<rt>べんきょう</rt></ruby>かな？すごくえらい！<ruby>難<rt>むずか</rt></ruby>しいところがあったら、いつでも何でも<ruby>聞<rt>き</rt></ruby>いてね！`;
+        englishTrans = `Studying Japanese? That is so impressive! If there is anything difficult, feel free to ask me anytime!`;
+        i18nTrans = {
+          'zh-TW': `是在學日文嗎？好認真太棒了！如果有不懂的困難地方，隨時都可以問我喔！`,
+          'zh-CN': `是在学日语吗？好认真太棒啦！如果有不懂的困难地方，随时都可以问我哦！`,
+          ko: `일본어 공부하는 중이야? 진짜 대단하다! 어려운 부분 있으면 언제든지 편하게 물어봐!`,
+          ja: '（日本語学習を励まし、質問を歓迎するフレンドリーな声かけです）'
+        };
       } else {
-        reply = 'いらっしゃいませ、こんにちは。ご<ruby>来店<rt>らいてん</rt></ruby>いただき<ruby>心<rt>こころ</rt></ruby>より<ruby>感謝<rt>かんしゃ</rt></ruby><ruby>申<rt>もう</rt></ruby>し<ruby>上<rt>あ</rt></ruby>げます。';
-        englishTrans = 'Welcome, good day. Thank you very much for visiting us.';
+        reply = `ご<ruby>勉強<rt>べんきょう</rt></ruby>お<ruby>疲<rt>つか</rt></ruby>れ<ruby>様<rt>さま</rt></ruby>でございます。<ruby>着実<rt>ちゃくじつ</rt></ruby>に<ruby>前進<rt>ぜんしん</rt></ruby>されていて素晴らしいですね！`;
+        englishTrans = 'Thank you for your diligent studies. You are making wonderful progress!';
       }
-    } else if (t.includes('天気') || t.includes('雨') || t.includes('晴れ') || t.includes('暑い') || t.includes('寒い')) {
+    }
+    // 7. 食べ物・食事・ごはん
+    else if (t.includes('食べ') || t.includes('たべ') || t.includes('ごはん') || t.includes('飯') || t.includes('ランチ') || t.includes('ラーメン') || t.includes('カレー') || t.includes('寿司') || t.includes('おいしい') || t.includes('美味しい') || t.includes('food') || t.includes('eat') || t.includes('dinner') || t.includes('吃') || t.includes('밥') || t.includes('먹')) {
       if (persona === 'friend') {
-        reply = '<ruby>今日<rt>きょう</rt></ruby>いい<ruby>天気<rt>てんき</rt></ruby>だよね〜！どこか<ruby>出<rt>で</rt></ruby>かけたくなるね！そっちは天気どう？';
+        reply = `わ〜！すごく<ruby>美味<rt>おい</rt></ruby>しそう！<ruby>私<rt>わたし</rt></ruby>もお<ruby>腹<rt>なか</rt></ruby>すいてきちゃった！どこで食べたの？`;
+        englishTrans = `Wow, that sounds delicious! Now I am getting hungry too! Where did you eat it?`;
+        i18nTrans = {
+          'zh-TW': `哇～！聽起來好好吃喔！我也開始肚子餓了！你是在哪裡吃的呀？`,
+          'zh-CN': `哇～！听起来好好吃哦！我也开始肚子饿了！你是在哪里吃的呀？`,
+          ko: `와~! 정말 맛있겠다! 나도 배고파졌어! 어디서 먹었어?`,
+          ja: '（食べ物の話題に共感し、場所を尋ねる自然なリアクションです）'
+        };
+      } else {
+        reply = `とても<ruby>美味<rt>おい</rt></ruby>しそうですね。<ruby>素敵<rt>すてき</rt></ruby>なお<ruby>食事<rt>しょくじ</rt></ruby>のお<ruby>時間<rt>じかん</rt></ruby>を過ごされたようで何よりでございます。`;
+        englishTrans = 'That sounds delightful. I am glad you enjoyed such a wonderful meal.';
+      }
+    }
+    // 8. 買い物・お出かけ・散歩・友達
+    else if (t.includes('買') || t.includes('出か') || t.includes('散歩') || t.includes('さんぽ') || t.includes('友達') || t.includes('ともだち') || t.includes('遊') || t.includes('shopping') || t.includes('walk') || t.includes('friends') || t.includes('逛街') || t.includes('친구')) {
+      if (persona === 'friend') {
+        reply = `いいね！どこかにお<ruby>出<rt>で</rt></ruby>かけしたの？何かいいもの<ruby>買<rt>か</rt></ruby>えたり<ruby>見<rt>み</rt></ruby>つけたりできた？`;
+        englishTrans = `Nice! Did you go out somewhere? Did you find or buy anything good?`;
+        i18nTrans = {
+          'zh-TW': `真好呢！有去哪裡走走嗎？有買到或發現什麼好東西嗎？`,
+          'zh-CN': `真好呢！有去哪里走走吗？有买到或发现什么好东西吗？`,
+          ko: `좋겠다! 어디 나들이라도 다녀왔어? 좋은 거 사거나 발견했어?`,
+          ja: '（お出かけの場所や買い物の戦利品を尋ねる楽しい会話です）'
+        };
+      } else {
+        reply = `お<ruby>出<rt>で</rt></ruby>かけになられたのですね。リフレッシュできたようで何よりでございます。`;
+        englishTrans = 'You went out! I am very glad you had a refreshing time.';
+      }
+    }
+    // 9. 旅行・福岡など特定地域
+    else if (t.includes('福岡') || t.includes('旅行') || t.includes('行きまし') || t.includes('行った')) {
+      if (persona === 'friend') {
+        reply = `いいなあ！すごく<ruby>楽<rt>たの</rt></ruby>しそう！<ruby>美味<rt>おい</rt></ruby>しいものいっぱい<ruby>食<rt>た</rt></ruby>べた？`;
+        englishTrans = 'Sounds awesome! Must have been so fun! Did you eat lots of delicious food?';
+      } else {
+        reply = `ご<ruby>旅行<rt>りょこう</rt></ruby>へ<ruby>行<rt>い</rt></ruby>かれたのですね。<ruby>大変<rt>たいへん</rt></ruby><ruby>素晴<rt>すばら</rt></ruby>らしいですね！`;
+        englishTrans = 'You went on a trip! That is truly wonderful.';
+      }
+    }
+    // 10. 天気
+    else if (t.includes('天気') || t.includes('雨') || t.includes('晴れ') || t.includes('暑い') || t.includes('寒い')) {
+      if (persona === 'friend') {
+        reply = `<ruby>今日<rt>きょう</rt></ruby>いい<ruby>天気<rt>てんき</rt></ruby>だよね〜！どこか<ruby>出<rt>で</rt></ruby>かけたくなるね！そっちは天気どう？`;
         englishTrans = 'The weather is great today! Makes you want to go out somewhere! How is the weather there?';
-      } else if (persona === 'colleague') {
-        reply = '<ruby>今日<rt>きょう</rt></ruby>は<ruby>過<rt>す</rt></ruby>ごしやすい<ruby>気候<rt>きこう</rt></ruby>ですね。<ruby>通勤<rt>つうきん</rt></ruby>もしやすくて助かりました。';
-        englishTrans = 'It is very pleasant weather today. The commute was quite comfortable.';
       } else {
-        reply = '<ruby>本日<rt>ほんじつ</rt></ruby>は<ruby>大変<rt>たいへん</rt></ruby><ruby>心地<rt>ここち</rt></ruby>の<ruby>良<rt>よ</rt></ruby>いお<ruby>天気<rt>てんき</rt></ruby>でございますね。<ruby>外出<rt>がいしゅつ</rt></ruby>にはぴったりの<ruby>日和<rt>ひより</rt></ruby>でございます。';
+        reply = `<ruby>本日<rt>ほんじつ</rt></ruby>は<ruby>心地<rt>ここち</rt></ruby>の<ruby>良<rt>よ</rt></ruby>いお<ruby>天気<rt>てんき</rt></ruby>でございますね。<ruby>外出<rt>がいしゅつ</rt></ruby>にはぴったりの<ruby>日和<rt>ひより</rt></ruby>でございます。`;
         englishTrans = 'It is truly delightful weather today. A perfect day for going out.';
       }
-    } else {
+    }
+    // 11. デフォルト: 自然に会話を広げる
+    else {
       if (persona === 'friend') {
-        reply = 'なるほどね！それすごく<ruby>面白<rt>おもしろ</rt></ruby>い！もっと<ruby>詳<rt>くわ</rt></ruby>しく<ruby>教<rt>おし</rt></ruby>えてよ！';
-        englishTrans = 'I see! That is so interesting! Tell me more about it!';
+        const namePart = chatUserNickName ? `「${chatUserNickName}」` : '';
+        reply = `そうなんだ！${namePart}のお<ruby>話<rt>はなし</rt></ruby>もっと<ruby>聞<rt>き</rt></ruby>かせてよ！<ruby>明日<rt>あした</rt></ruby>は何をする予定なの？`;
+        englishTrans = `I see! Tell me more about what you're up to! What are your plans for tomorrow?`;
+        i18nTrans = {
+          'zh-TW': `這樣啊！跟我多聊聊你的事嘛！明天有什麼打算或安排嗎？`,
+          'zh-CN': `这样啊！跟我多聊聊你的事嘛！明天有什么打算或安排吗？`,
+          ko: `그렇구나! 이야기 더 들려줘! 내일은 뭐 할 계획이야?`,
+          ja: '（相づちを打ちつつ、明日の予定を尋ねて会話を広げるフレンドリーな表現です）'
+        };
       } else if (persona === 'colleague') {
-        reply = '<ruby>承知<rt>しょうち</rt></ruby>いたしました。とても<ruby>興味深<rt>きょうみぶか</rt></ruby>いお<ruby>話<rt>はなし</rt></ruby>ですね。ぜひ詳しくお聞かせいただけますか？';
+        reply = `<ruby>承知<rt>しょうち</rt></ruby>いたしました。とても<ruby>興味深<rt>きょうみぶか</rt></ruby>いお<ruby>話<rt>はなし</rt></ruby>ですね。ぜひ詳しくお聞かせいただけますか？`;
         englishTrans = 'I understand. That sounds very interesting. Could you tell me more in detail?';
       } else {
         reply = 'ご<ruby>丁寧<rt>ていねい</rt></ruby>にお<ruby>話<rt>はな</rt></ruby>しいただき<ruby>恐縮<rt>きょうしゅく</rt></ruby>でございます。どうぞごゆっくりお話しくださいませ。';
@@ -4271,30 +4452,20 @@ Advice: Explanation in ${targetLangName} why it is corrected.
       }
     }
 
-    // 多言語フォールバック辞書
+    // 多言語辞書マッチング
     const FALLBACK_I18N = {
-      'Sounds awesome! Fukuoka must have been so fun! Did you eat lots of delicious food?': {
-        'zh-TW': '真好呢！福岡感覺超好玩的！有吃到很多好吃的東西嗎？',
-        'zh-CN': '真好呀！感觉福冈超好玩的！吃了很多好吃的吗？',
-        ko: '좋겠다! 후쿠오카 정말 즐거웠겠네요! 맛있는 것 많이 먹었어요?',
-        ja: '（福岡の感想と食べ物についての自然な質問です）'
-      },
-      'Sounds great! You went to Fukuoka. Was it a business trip or a personal vacation?': {
-        'zh-TW': '真不錯呢！您去了福岡啊。請問是出差還是私人旅行呢？',
-        'zh-CN': '真不错呢！您去福冈了啊。请问是出差还是个人旅行呢？',
-        ko: '좋네요! 후쿠오카에 다녀오셨군요. 출장이셨나요, 아니면 여행이셨나요?',
-        ja: '（出張か旅行かを尋ねる同僚同士の丁寧な会話です）'
-      },
-      'Karaoke is great! What did you sing? Do you have any go-to songs?': {
-        'zh-TW': '卡拉OK很棒呢！唱了什麼歌？有擅長或常唱的拿手歌曲嗎？',
-        'zh-CN': '卡拉OK很棒呢！唱了什么歌？有擅长或常唱的拿手歌吗？',
-        ko: '노래방 좋죠! 무슨 노래 불렀어요? 잘 부르는 애창곡 같은 거 있어요?',
-        ja: '（カラオケの得意な曲を尋ねる親しい表現です）'
+      'Sounds awesome! Must have been so fun! Did you eat lots of delicious food?': {
+        'zh-TW': '真好呢！感覺超好玩的！有吃到很多好吃的東西嗎？',
+        'zh-CN': '真好呀！感觉超好玩的！吃了很多好吃的吗？',
+        ko: '좋겠다! 정말 즐거웠겠네요! 맛있는 것 많이 먹었어요?',
+        ja: '（感想と食べ物についての自然な質問です）'
       }
     };
 
     let targetTrans = englishTrans;
-    if (currentChatNativeLang !== 'en' && FALLBACK_I18N[englishTrans] && FALLBACK_I18N[englishTrans][currentChatNativeLang]) {
+    if (i18nTrans && i18nTrans[currentChatNativeLang]) {
+      targetTrans = i18nTrans[currentChatNativeLang];
+    } else if (currentChatNativeLang !== 'en' && FALLBACK_I18N[englishTrans] && FALLBACK_I18N[englishTrans][currentChatNativeLang]) {
       targetTrans = FALLBACK_I18N[englishTrans][currentChatNativeLang];
     }
 
