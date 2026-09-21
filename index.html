@@ -6,7 +6,7 @@
 <title>Japanese Learning App</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Klee+One:wght@400;600&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="database/jlpt_vocab_all.js"></script>
 <script src="database/expression_multilevel_engine.js"></script>
 <style>
@@ -2548,7 +2548,7 @@ rt {
           </div>
 
           <!-- なぞり書き作業エリア: 左側に五十音表、右側になぞり書きキャンバス -->
-          <div style="display:grid; grid-template-columns: minmax(280px, 1fr) 280px; gap:20px; align-items:start;" id="kana-trace-layout">
+          <div style="display:grid; grid-template-columns: minmax(260px, 1fr) 310px; gap:20px; align-items:start;" id="kana-trace-layout">
             <!-- 左: 五十音グリッド -->
             <div id="kana-grid-picker" style="display:grid; grid-template-columns:repeat(5, 1fr); gap:6px; max-height:420px; overflow-y:auto; padding-right:6px;">
             </div>
@@ -2568,7 +2568,7 @@ rt {
                   <div style="position:absolute; left:50%; top:0; bottom:0; width:1px; border-left:1px dashed #BAE6FD;"></div>
                 </div>
                 <!-- 薄いグレーのお手本文字 -->
-                <div id="kana-trace-ghost" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:130px; font-weight:400; color:#CBD5E1; font-family:'Klee One', 'Hiragino Mincho ProN', serif; line-height:1; user-select:none; pointer-events:none;">
+                <div id="kana-trace-ghost" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:136px; font-weight:400; color:#CBD5E1; font-family:'Klee One', 'YuKyokasho Yoko', 'YuKyokasho', 'UD デジタル 教科書体 N-R', cursive, sans-serif; line-height:1; user-select:none; pointer-events:none;">
                   あ
                 </div>
                 <!-- 手書きCanvas -->
@@ -2587,6 +2587,9 @@ rt {
                   ↺ 戻す
                 </button>
               </div>
+
+              <!-- ★ フォントによる形の違い・手書き推奨ガイド ★ -->
+              <div id="kana-font-notice-box" style="width:100%;"></div>
             </div>
           </div>
         </div>
@@ -4651,11 +4654,85 @@ Advice: Explanation in ${targetLangName} why it is corrected.
       const isSelected = (currentSelectedKana.char === displayChar);
       return `
         <div onclick="selectKanaForTrace('${displayChar}', '${item.r}')" style="background:${isSelected ? '#EFF6FF' : '#F8FAFC'}; border:1.5px solid ${isSelected ? 'var(--kobe-blue)' : '#E2E8F0'}; border-radius:10px; padding:6px 2px; text-align:center; cursor:pointer; transition:all 0.15s;">
-          <div style="font-size:1.15rem; font-weight:800; color:${isSelected ? 'var(--kobe-blue)' : '#1E293B'};">${displayChar}</div>
+          <div style="font-size:1.2rem; font-weight:800; font-family:${currentKanaType === 'hiragana' ? "'Klee One', cursive" : 'inherit'}; color:${isSelected ? 'var(--kobe-blue)' : '#1E293B'};">${displayChar}</div>
           <div style="font-size:0.68rem; color:#64748B;">${item.r}</div>
         </div>
       `;
     }).join('');
+  }
+
+  // フォントによる形の違いデータベース（手書き推奨 vs 印刷活字）
+  const KANA_FONT_VARIATIONS = {
+    'さ': {
+      char: 'さ',
+      handDesc: '下の弧を【離して3画】',
+      printDesc: '下が【繋がっている】',
+      note: '印刷用フォント（ゴシック体など）では下の線が繋がって見えることがありますが、<strong>手で描く（書く）時はこのお手本のように『離して3画』で書くのが通常</strong>です！'
+    },
+    'き': {
+      char: 'き',
+      handDesc: '下の弧を【離して4画】',
+      printDesc: '下が【繋がっている】',
+      note: '活字フォントでは3画目と下の曲線が繋がっているものがありますが、<strong>自分でノートに書く時は下の曲線を『離して4画』で書く</strong>のが基本です！'
+    },
+    'り': {
+      char: 'り',
+      handDesc: '上を【離して2画】',
+      printDesc: '上が【繋がっている】',
+      note: 'パソコンや本のフォントでは上で繋がって見えることが多いですが、<strong>手で描く時はこのお手本のように『離して2画』で書く</strong>のが一般的です！'
+    },
+    'そ': {
+      char: 'そ',
+      handDesc: '一筆でジグザグに書く（1画）',
+      printDesc: '上の点と下が離れる（2画）',
+      note: '『そ』は1画で続けて書く形と、上の点を離して2画で書く形があります。どちらも正解ですが、<strong>手書きではこの1画で書く形がとてもよく使われます</strong>！'
+    },
+    'ふ': {
+      char: 'ふ',
+      handDesc: '4画をそれぞれ離して書く',
+      printDesc: '一部が繋がって見える',
+      note: 'フォントによっては点や中央の線が繋がって見えることがありますが、<strong>手で書く時は4つの画をそれぞれ離してバランスよく書きます</strong>！'
+    }
+  };
+
+  function updateKanaVariationNotice(char) {
+    const box = document.getElementById('kana-font-notice-box');
+    if (!box) return;
+
+    const v = (currentKanaType === 'hiragana') ? KANA_FONT_VARIATIONS[char] : null;
+    if (v) {
+      box.innerHTML = `
+        <div style="background:#FFFBEB; border:1.5px solid #FCD34D; border-radius:12px; padding:10px 12px; width:100%; box-sizing:border-box; margin-top:2px;">
+          <div style="display:flex; align-items:center; gap:6px; font-weight:800; font-size:0.84rem; color:#92400E; margin-bottom:8px;">
+            <span>💡</span>
+            <span>フォントによる形の違い</span>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px;">
+            <!-- 手書き（Klee One: 繋がっていない） -->
+            <div style="background:white; border:1.5px solid #10B981; border-radius:8px; padding:6px 4px; text-align:center;">
+              <div style="font-size:0.68rem; font-weight:800; color:#059669; white-space:nowrap;">✍️ 書く時（通常）</div>
+              <div style="font-family:'Klee One', cursive; font-size:36px; color:#1E293B; line-height:1.2; margin:2px 0;">${v.char}</div>
+              <div style="font-size:0.65rem; color:#047857; font-weight:700;">✅ ${v.handDesc}</div>
+            </div>
+            <!-- 印刷（Noto Sans: 繋がっている） -->
+            <div style="background:#F1F5F9; border:1px solid #CBD5E1; border-radius:8px; padding:6px 4px; text-align:center;">
+              <div style="font-size:0.68rem; font-weight:700; color:#64748B; white-space:nowrap;">💻 本やPC活字</div>
+              <div style="font-family:'Noto Sans JP', sans-serif; font-size:36px; color:#64748B; line-height:1.2; margin:2px 0;">${v.char}</div>
+              <div style="font-size:0.65rem; color:#64748B;">${v.printDesc}</div>
+            </div>
+          </div>
+          <div style="font-size:0.75rem; color:#78350F; line-height:1.45; background:#FEF3C7; padding:8px 10px; border-radius:8px; border:1px solid #FDE68A;">
+            ${v.note}
+          </div>
+        </div>
+      `;
+    } else {
+      box.innerHTML = `
+        <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px; padding:9px 10px; width:100%; box-sizing:border-box; font-size:0.76rem; color:#64748B; line-height:1.4; text-align:center; margin-top:2px;">
+          💡 田字格の十字線を意識して、マスの中心にバランスよく書いてみましょう！
+        </div>
+      `;
+    }
   }
 
   function selectKanaForTrace(char, romaji) {
@@ -4667,6 +4744,7 @@ Advice: Explanation in ${targetLangName} why it is corrected.
 
     clearKanaTrace();
     renderKanaGridPicker();
+    updateKanaVariationNotice(char);
     playCurrentKanaAudio();
   }
 
